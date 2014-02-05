@@ -97,11 +97,11 @@
                         <id>default-minify</id>
                         <configuration>
 							<cssSourceFiles>
-								<cssSourceFile>bootstrap.css</cssSourceFile>
-								<cssSourceFile>datepicker.css</cssSourceFile>
+								<cssSourceFile>libs/bootstrap.css</cssSourceFile>
+								<cssSourceFile>libs/datepicker.css</cssSourceFile>
 								<cssSourceFile>offcanvas.css</cssSourceFile>
-								<cssSourceFile>leaflet.css</cssSourceFile>
-								<cssSourceFile>leafletMarkerCluster.css</cssSourceFile>
+								<cssSourceFile>libs/leaflet.css</cssSourceFile>
+								<cssSourceFile>libs/leafletMarkerCluster.css</cssSourceFile>
 								<cssSourceFile>mainstyles.css</cssSourceFile>
 								<cssSourceFile>list.css</cssSourceFile>
 								<cssSourceFile>map.css</cssSourceFile>
@@ -130,7 +130,7 @@
 							    <jsSourceFile>templates/template.js</jsSourceFile>
 							    <jsSourceFile>helper/time.js</jsSourceFile>
 							    <jsSourceFile>helper/color.js</jsSourceFile>
-							    <jsSourceFile>helper/watch.js</jsSourceFile>
+							    <!-- <jsSourceFile>helper/watch.js</jsSourceFile> -->
 							    <jsSourceFile>helper/rest.js</jsSourceFile>
 							    <jsSourceFile>helper/pages.js</jsSourceFile>
 							    <jsSourceFile>helper/modal.js</jsSourceFile>
