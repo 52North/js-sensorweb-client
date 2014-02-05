@@ -1,0 +1,25 @@
+<div class="legendItem" data-id="{{id}}" style="border-color: #{{color}}">
+	<div style='color: #{{color}}'>
+		<!-- <span class="glyphicon glyphicon-refresh loading icon-spin"></span> -->
+		<span>{{station}}</span>
+	</div>
+	<div class="noDataWarning" style="display: none;">
+		<span class="glyphicon glyphicon-warning-sign"></span>
+		<span class="small"> no Data</span>
+	</div>
+	<div class="small">{{phenomenon}} ({{uom}})</div>
+	<div class="small">{{procedure}}</div>
+	<div class="legendicons">
+		<span class="glyphicon glyphicon-eye-close hideDiagram"></span> 
+		<span class="glyphicon glyphicon-remove delete"></span> 
+		<span class="glyphicon glyphicon-globe inMap"></span>
+		<span class="glyphicon glyphicon-info-sign showInfo"></span>
+	</div>
+	<div class="collapseLegendEntry" style="display: none;">
+		{{#firstValueTime}}<div class="firstLastEntry" data-firstTime="{{firstValueTime}}">First value: {{firstValue}} {{uom}} ({{firstValueTimeFormatted}})</div>{{/firstValueTime}}
+		{{#lastValueTime}}<div class="firstLastEntry" data-lastTime="{{lastValueTime}}">Last value: {{lastValue}} {{uom}} ({{lastValueTimeFormatted}})</div>{{/lastValueTime}}
+		{{#referenceValues}}
+		<div class="refEntry" data-refid="{{id}}" style='border-color: #{{color}}'>{{label}}</div>
+		{{/referenceValues}}
+	</div>
+</div>
