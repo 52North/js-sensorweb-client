@@ -46,6 +46,11 @@ var TableController = {
 		EventManager.subscribe("navigation:open", $.proxy(this.createTable, this));
 		EventManager.subscribe("timeseries:synced", $.proxy(this.createTable, this));
 		EventManager.subscribe("timeseries:remove", $.proxy(this.createTable, this));
+		EventManager.subscribe("timeseries:changeColor", $.proxy(this.changeColor, this));
+	},
+	
+	changeColor : function(event, ts) {
+		this.createTable();
 	},
 
 	createTable : function(event) {

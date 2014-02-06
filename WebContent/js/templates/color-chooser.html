@@ -1,0 +1,22 @@
+<div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<h4 class="modal-title" id="myModalLabel">Color selection</h4>
+		</div>
+		<div class="modal-body">
+			<div>
+				<span>Current color: </span>
+				<button type="button" class="btn btn-primary colorButton"
+					data-color="{{currentColor}}" data-dismiss="modal"
+					style="background-color: #{{currentColor}}"></button>
+			</div>
+			<p>
+			<div>Select a new color:</div>
+			{{#colorList}}
+			<button type="button" class="btn btn-primary colorButton"
+				data-color="{{.}}" data-dismiss="modal" style="background-color: #{{.}}"></button>
+			{{/colorList}}
+		</div>
+	</div>
+</div>

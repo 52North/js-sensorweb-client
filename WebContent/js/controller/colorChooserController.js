@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2014-2014 52°North Initiative for Geospatial Open Source
  * Software GmbH
  *
@@ -26,45 +26,27 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  */
-.legendItem {
-	background-color: white;
-	padding: 3px;
-	border-radius: 5px;
-	margin-bottom: 5px;
-}
+var ColorChooserController = {
 
-.legendItem .small {
-	font-size: 11px;
-}
+	colorList : [ '1abc9c', '27ae60', '2980b9', '8e44ad', '2c3e50', 'f1c40f',
+			'd35400', 'c0392b', '7f8c8d' ],
+		
+	init : function() {
+	},
 
-.legendItem.selected {
-	border-width: 5px;
-	border-style: solid;
-}
-
-.legendicons span {
-	margin: 0 10px;
-	font-size: 18px;
-}
-
-.legendicons span:hover {
-	cursor: pointer;
-}
-
-.firstLastEntry:hover,
-.refEntry:hover {
-	cursor: pointer;
-}
-
-.refEntry.selected {
-	border-style: solid;
-	border-width: 2px;
-	border-radius: 2px;
-	margin: 2px 0px;
-}
-
-.colorButton {
-	height: 30px;
-	width: 50px;
-	margin: 10px;
-}
+	open : function(ts) {
+		// open modal view
+		var data = {
+			currentColor : ts.getColor(),
+			colorList : this.colorList
+		};
+		Modal.show("color-chooser", data);
+		$('.colorButton').on('click', function(e){
+			var color = $(e.target).data('color');
+			if (ts.getColor() != color) {
+				ts.setColor(color);
+				EventManager.publish("timeseries:changeColor", ts);
+			}
+		});
+	}
+};

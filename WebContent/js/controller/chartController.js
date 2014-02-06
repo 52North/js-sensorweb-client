@@ -68,6 +68,7 @@ var ChartController = {
 		EventManager.subscribe("timeseries:show", $.proxy(this.showData, this));
 		EventManager.subscribe("navigation:open", $.proxy(this.hideChart, this));
 		EventManager.subscribe("navigation:close", $.proxy(this.showChart, this));
+		EventManager.subscribe("timeseries:changeColor", $.proxy(this.changeColor, this));
 		
 		$(window).resize($.proxy(function() {
 			var newRatio = $(document).width() / $(document).height();
@@ -119,6 +120,11 @@ var ChartController = {
 		}
 	},
 	
+	changeColor : function(event, ts) {
+		this.loadDataFinished(null, ts);
+		this.plotChart();
+	},
+	
 	loadDataFinished : function(event, ts) {
 		$('#loadingDiagram').find('[data-id=' + ts.getId() + ']').remove();
 		$.each(ts.getRefValues(), $.proxy(function(id, elem) {
@@ -131,6 +137,7 @@ var ChartController = {
 			var temp = this.dataAlreadyIn(ts.getId());
 			if(temp != null) {
 				temp.data = ts.getValues();
+				temp.color = ts.getColor();
 			} else {
 				this.data.push({
 					data : ts.getValues(),

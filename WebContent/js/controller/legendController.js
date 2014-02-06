@@ -35,12 +35,17 @@ var LegendController = {
 		EventManager.subscribe("timeseries:selected", $.proxy(this.selectTS, this));
 		EventManager.subscribe("timeseries:unselectAll", $.proxy(this.deselectAllTS, this));
 		EventManager.subscribe("timeseries:data:loadfinished", $.proxy(this.checkNoData, this));
+		EventManager.subscribe("timeseries:changeColor", $.proxy(this.changeColor, this));
 	},
 
 	addTS : function(event, ts) {
 		var html = this.createEntry(ts);
 		this.removeEntry(ts.getId());
 		$('.legend-entry').append(html);
+		this.addClickEvents(ts);
+	},
+	
+	addClickEvents : function(ts) {
 		$('[data-id=' + ts.getId() + '] .hideDiagram').click($.proxy(function(event){
 			target = $(event.currentTarget);
 			if(target.hasClass('glyphicon-eye-close')) {
@@ -56,6 +61,9 @@ var LegendController = {
 		},this));
 		$('[data-id=' + ts.getId() + '] .inMap').click($.proxy(function(event){
 			EventManager.publish("timeseries:showInMap", ts);
+		},this));
+		$('[data-id=' + ts.getId() + '] .changeColor').click($.proxy(function(event){
+			ColorChooserController.open(ts);
 		},this));
 		$('[data-id=' + ts.getId() + '] .showInfo').click($.proxy(function(event){
 			$('[data-id=' + ts.getId() + ']').find('.collapseLegendEntry').toggle();
@@ -99,6 +107,10 @@ var LegendController = {
 		$('.legend-entry').find('[data-id=' + id + ']').addClass('selected');
 	},
 	
+	changeColor : function(event, ts) {
+		this.updateEntry(ts);
+	},
+	
 	deselectAllTS : function (event) {
 		$('.legend-entry').find('.legendItem.selected').removeClass('selected');
 	},
@@ -113,6 +125,12 @@ var LegendController = {
 	
 	removeEntry : function(id) {
 		$('.legend-entry').find('[data-id=' + id + ']').remove();
+	},
+	
+	updateEntry : function(ts) {
+		var html = this.createEntry(ts);
+		$(html).replaceAll('.legend-entry [data-id=' + ts.getId() + ']');
+		this.addClickEvents(ts);
 	},
 
 	createEntry : function(ts) {
@@ -135,10 +153,10 @@ var LegendController = {
 			procedure : (meta.parameters != null) ? meta.parameters.procedure.label : "",
 			station : (meta.parameters != null) ? meta.station.properties.label : "",
 			firstValueTime : (firstValue != null) ? firstValue.timestamp : "",
-			firstValueTimeFormatted : (firstValue != null) ? moment(firstValue.timestamp).format(TimeController.dateformat) : "",
+			firstValueTimeFormatted : (firstValue != null) ? moment(firstValue.timestamp).format(Settings.dateformat) : "",
 			firstValue : (firstValue != null) ? firstValue.value : "",
 			lastValueTime : (lastValue != null) ? lastValue.timestamp : "",
-			lastValueTimeFormatted : (lastValue != null) ? moment(lastValue.timestamp).format(TimeController.dateformat) : "",
+			lastValueTimeFormatted : (lastValue != null) ? moment(lastValue.timestamp).format(Settings.dateformat) : "",
 			lastValue : (lastValue != null) ? lastValue.value : "",
 			referenceValues : refValues
 		});
