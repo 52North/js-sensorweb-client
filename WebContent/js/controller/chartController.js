@@ -27,6 +27,9 @@
  * Public License for more details.
  */
 var ChartController = {
+		
+	selectedLineWidth : 5,
+	defaultLineWidth : 2,
 
 	options : {
 		series : {
@@ -64,6 +67,8 @@ var ChartController = {
 		EventManager.subscribe("timeseries:remove:referenceValue", $.proxy(this.removeReferenceValue, this));
 		EventManager.subscribe("timeseries:remove", $.proxy(this.removeTS, this));
 		EventManager.subscribe("timeseries:removeAll", $.proxy(this.clearChart, this));
+		EventManager.subscribe("timeseries:selected", $.proxy(this.selectTs, this));
+		EventManager.subscribe("timeseries:unselectAll", $.proxy(this.unselectAll, this));
 		EventManager.subscribe("timeseries:hide", $.proxy(this.hideData, this));
 		EventManager.subscribe("timeseries:show", $.proxy(this.showData, this));
 		EventManager.subscribe("navigation:open", $.proxy(this.hideChart, this));
@@ -105,6 +110,23 @@ var ChartController = {
 		var ts = TimeSeriesController.getTimeseriesCollection()[id];
 		this.loadDataFinished(null, ts);
 		this.plotChart();
+	},
+	
+	selectTs : function(event, id) {
+		$.each(this.plot.getData(), function(index, elem) {
+			debugger;
+			if(elem.id == id) {
+				elem.lines.lineWidth = ChartController.selectedLineWidth;
+			}
+		});
+		this.plot.draw();
+	},
+	
+	unselectAll : function(event) {
+		$.each(this.plot.getData(), function(index, elem) {
+			elem.lines.lineWidth = ChartController.defaultLineWidth;
+		});
+		this.plot.draw();
 	},
 	
 	loadDataForChart : function(event, ts) {
@@ -211,10 +233,10 @@ var ChartController = {
 							});
 							$.each(this.plot.getData(), function(index, elem) {
 								if(elem.yaxis.n == axis.n && target.hasClass("selected")) {
-									elem.lines.lineWidth = 5;
+//									elem.lines.lineWidth = this.selectedLineWidth;
 									EventManager.publish("timeseries:selected", elem.id);
-								} else {
-									elem.lines.lineWidth = 2;
+//								} else {
+//									elem.lines.lineWidth = this.defaultLineWidth;
 								}
 							});
 							this.plot.draw();

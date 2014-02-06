@@ -46,6 +46,14 @@ var LegendController = {
 	},
 	
 	addClickEvents : function(ts) {
+		$('[data-id=' + ts.getId() + '] .legendItemheader').click($.proxy(function(event){
+			if(!$('[data-id=' + ts.getId() + ']').hasClass('selected')){
+				EventManager.publish("timeseries:unselectAll");
+				EventManager.publish("timeseries:selected", ts.getId());	
+			} else {
+				EventManager.publish("timeseries:unselectAll");
+			}
+		},this));
 		$('[data-id=' + ts.getId() + '] .hideDiagram').click($.proxy(function(event){
 			target = $(event.currentTarget);
 			if(target.hasClass('glyphicon-eye-close')) {
