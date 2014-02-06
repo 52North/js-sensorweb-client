@@ -203,7 +203,7 @@ var Map = {
 					service : Status.get('provider'),
 					phenomenon : elem.id
 				}).done($.proxy(function(result){
-					$('.phenomena').toggleClass('active');
+					$('.phenomena').removeClass('active');
 					this.createStationMarker(result);
 				}, this));
 			}, this));
