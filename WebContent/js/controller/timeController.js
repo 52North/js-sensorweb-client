@@ -57,8 +57,8 @@ var TimeController = {
 				Modal.show("time-range-settings", TimeController.timeRangeData);
 				var from = moment(TimeController.currentTimespan.from);
 				var till = moment(TimeController.currentTimespan.till);
-				$('#startPicker').text(from.format(TimeController.dateformat));
-				$('#endPicker').text(till.format(TimeController.dateformat));
+				$('#startPicker').text(from.format(Settings.dateformat));
+				$('#endPicker').text(till.format(Settings.dateformat));
 				$('#startPicker').data('date', from.format("YYYY-MM-DD"));
 				$('#endPicker').data('date', till.format("YYYY-MM-DD"));
 				$('#alertTimeExtent').hide();
@@ -166,7 +166,7 @@ var TimeController = {
 				$('#confirmTimeExtent').removeClass('disabled');
 				startDate = new Date(ev.date);
 			}
-			$(id).text(moment($(id).data('date')).format(TimeController.dateformat));
+			$(id).text(moment($(id).data('date')).format(Settings.dateformat));
 			$(id).datepicker('hide');
 		}
 	},

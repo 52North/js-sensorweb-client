@@ -240,16 +240,19 @@ var Map = {
 	createProviderList : function(results) {
 		var data = {
 			"providers" : $.map(results, function(elem) {
-				return {
-					"name" : elem.label,
-					"version" : elem.version,
-					"stations" : elem.quantities.stations,
-					"timeseries" : elem.quantities.timeseries,
-					"url" : elem.serviceUrl,
-					"id" : elem.id,
-					"selected" : Status.get('provider') == elem.id,
-					"type" : elem.type
-				};
+				var provider = Settings.providerBlackList[elem.id];
+				if (provider == null || !provider) {
+					return {
+						"name" : elem.label,
+						"version" : elem.version,
+						"stations" : elem.quantities.stations,
+						"timeseries" : elem.quantities.timeseries,
+						"url" : elem.serviceUrl,
+						"id" : elem.id,
+						"selected" : Status.get('provider') == elem.id,
+						"type" : elem.type
+					};
+				}
 			})
 		};
 		Modal.show('providers', data);
@@ -265,7 +268,7 @@ var Map = {
 	locateUser : function() {
 		this.map.locate({
 			setView : true,
-			maxZoom : 12
+			maxZoom : Settings.zoom
 		});
 	},
 
@@ -298,7 +301,7 @@ var Map = {
 		});
 		popup.setContent(content);
 		popup.openOn(Map.map);
-		Map.map.setZoom(15);
+		Map.map.setZoom(Settings.zoom);
 		Map.map.panTo(pos);
 	}
 };
