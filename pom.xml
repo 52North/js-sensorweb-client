@@ -57,10 +57,10 @@
                         </manifest>
                         <addMavenDescriptor>false</addMavenDescriptor>
                     </archive> -->
-                    <webXml>WebContent\WEB-INF\web.xml</webXml>
+                    <webXml>WebContent/WEB-INF/web.xml</webXml>
                     <webResources>
 						<resource>
-							<directory>WebContent\</directory>
+							<directory>WebContent/</directory>
 							<filtering>false</filtering>
 							<excludes>
 								<exclude>**/*.css</exclude>
@@ -78,7 +78,7 @@
  						</excludes>
 						</resource>
 	 					<resource>
-						    <directory>WebContent\</directory>
+						    <directory>WebContent/</directory>
 						    <filtering>true</filtering>
 						    <includes>
 						        <include>index.html</include>
@@ -127,6 +127,7 @@
 							    <jsSourceFile>libs/moment.min.js</jsSourceFile>
 							    <jsSourceFile>models/timeseries.js</jsSourceFile>
 							    <jsSourceFile>models/referenceValue.js</jsSourceFile>
+							    <jsSourceFile>models/settings.js</jsSourceFile>
 							    <jsSourceFile>templates/template.js</jsSourceFile>
 							    <jsSourceFile>helper/time.js</jsSourceFile>
 							    <jsSourceFile>helper/color.js</jsSourceFile>
@@ -144,6 +145,7 @@
 							    <jsSourceFile>controller/listSelectionController.js</jsSourceFile>
 							    <jsSourceFile>controller/chartController.js</jsSourceFile>
 							    <jsSourceFile>controller/legendController.js</jsSourceFile>
+							    <jsSourceFile>controller/colorChooserController.js</jsSourceFile>
 							    <jsSourceFile>controller/tableController.js</jsSourceFile>
 							</jsSourceFiles>
 							<jsFinalFile>mswc.${project.version}.js</jsFinalFile>
@@ -155,7 +157,7 @@
                             <yuiDisableOptimizations>true</yuiDisableOptimizations>
                             <skipMinify>true</skipMinify>
                             <webappSourceDir>
-                                ${basedir}\WebContent\
+                                ${basedir}/WebContent/
                             </webappSourceDir>
                         </configuration>
                         <goals>
