@@ -65,6 +65,7 @@ body,html,.container,.row-offcanvas,.mainPanel {
 	height: 45px;
 	width: 100%;
 	text-align: center;
+	padding: 5px;
 }
 
 .fullHeight {

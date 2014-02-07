@@ -92,7 +92,7 @@ var TableController = {
 					} else {
 						var entry = [];
 						entry.push(time);
-						for (var int = 1; int < i; int++) {
+						for (var j = 1; j < i; j++) {
 							entry.push("-");
 						}
 						entry.push(value);

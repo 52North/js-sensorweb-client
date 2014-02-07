@@ -118,7 +118,7 @@ var Map = {
 //					    fillOpacity: 0.2
 //					});
 					var marker = new L.marker([ geom[1], geom[0] ], {
-						id : elem.properties.id,
+						id : elem.properties.id
 					});
 					marker.on('click', that.markerClicked);
 					this.stationMarkers.addLayer(marker);
