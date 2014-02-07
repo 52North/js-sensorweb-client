@@ -114,7 +114,6 @@ var ChartController = {
 	
 	selectTs : function(event, id) {
 		$.each(this.plot.getData(), function(index, elem) {
-			debugger;
 			if(elem.id == id) {
 				elem.lines.lineWidth = ChartController.selectedLineWidth;
 			}

@@ -48,7 +48,6 @@ var SettingsController = {
 				});
 				// permalink
 				$('.permalink .item').on('click', function() {
-					debugger;
 					// url
 					var url = window.location.origin + window.location.pathname;
 					// create timespan
