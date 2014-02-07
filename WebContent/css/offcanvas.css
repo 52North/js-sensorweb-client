@@ -110,6 +110,7 @@ footer {
 
 .rightPanel {
 	overflow: auto;
+	padding-right: 30px;
 }
 
 .swc-main {

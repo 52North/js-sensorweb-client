@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2014-2014 52°North Initiative for Geospatial Open Source
  * Software GmbH
  *
@@ -26,76 +26,10 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  */
-body,html,.container,.row-offcanvas,.mainPanel {
-	height: 100%;
+debugger;
+if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
+	var msViewportStyle = document.createElement('style');
+	msViewportStyle.appendChild(document
+			.createTextNode('@-ms-viewport{width:auto!important}'));
+	document.querySelector('head').appendChild(msViewportStyle);
 }
-
-#map {
-	height: 100%;
-	width: 100%;
-}
-
-.diagram,
-#tableView {
-	position: absolute;
-	top: 0px;
-	bottom: 45px;
-	width: 100%;
-}
-
-/* .btn {
-	font-size: 18px;
-} */
-
-#tableView {
-	overflow: auto;
-}
-
-.timeButtons {
-	position: absolute;
-	left: 0;
-	right: 0;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.buttonFooter {
-	position: absolute;
-	bottom: 0;
-	height: 45px;
-	width: 100%;
-	text-align: center;
-}
-
-.fullHeight {
-	height: 100%;
-	position: relative;
-}
-
-.content {
-	height: 100%;
-	padding-top: 53px;
-}
-
-.leftPanelButton {
-	position: absolute;
-	z-index: 50;
-	right: 20px;
-	top: 5px;
-}
-
-.button-right {
-	float: right;
-	margin-right: 10px;
-}
-
-.panel-group {
-	padding: 5px;
-}
-
-/* fix to support windows phone 8 */
-@-webkit-viewport   { width: device-width; }
-@-moz-viewport      { width: device-width; }
-@-ms-viewport       { width: device-width; }
-@-o-viewport        { width: device-width; }
-@viewport           { width: device-width; }
