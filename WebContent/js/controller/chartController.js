@@ -159,7 +159,7 @@ var ChartController = {
 			var temp = this.dataAlreadyIn(ts.getId());
 			if(temp != null) {
 				temp.data = ts.getValues();
-				temp.color = ts.getColor();
+				temp.color = "#" + ts.getColor();
 			} else {
 				this.data.push({
 					data : ts.getValues(),
@@ -189,7 +189,7 @@ var ChartController = {
 		this.data.push({
 			data : refVal.getValues(),
 			id : refVal.getId(),
-			color : refVal.getColor(),
+			color : "#" + refVal.getColor(),
 			uom : ts.getMetadata().uom
 		});
 		this.plotChart();
