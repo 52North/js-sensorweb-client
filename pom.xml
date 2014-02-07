@@ -7,7 +7,7 @@
 
     <groupId>org.n52.mobileclient</groupId>
     <artifactId>mobileSWC</artifactId>
-    <version>0.0.0-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <name>JavaScript SOS Client</name>
