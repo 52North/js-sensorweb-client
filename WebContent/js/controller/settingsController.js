@@ -37,6 +37,15 @@ var SettingsController = {
 					Status.reset();
 					Modal.hide();
 				});
+				// cluster station option
+				$('.clusteringStations input').attr('checked', Status.get('clusterStations'));
+				$('.clusteringStations').on('change', function(e) {
+					if ($(e.currentTarget).has(':checked').length == 1) {
+						Status.set('clusterStations', true);
+					} else {
+						Status.set('clusterStations', false);
+					}
+				});
 				// permalink
 				$('.permalink .item').on('click', function() {
 					debugger;

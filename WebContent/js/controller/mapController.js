@@ -69,14 +69,16 @@ var Map = {
 	loadStations : function() {
 		Rest.stations(null, {
 			service : Status.get('provider')
-		}).done($.proxy(this.createStationMarker, this));
+		}).done($.proxy(function(result) {
+			this.createStationMarker(result, Status.get('clusterStations'));
+		}, this));
 		// load phenomena list
 		Rest.phenomena(null, {
 			service : Status.get('provider')
 		}).done($.proxy(this.fillPhenomenaList, this));
 	},
 
-	createStationMarker : function(results) {
+	createStationMarker : function(results, clustering) {
 		if (this.stationMarkers != null) {
 			this.map.removeLayer(this.stationMarkers);
 		}
@@ -86,9 +88,13 @@ var Map = {
 			var bottommost = firstElemCoord[1];
 			var leftmost = firstElemCoord[0];
 			var rightmost = firstElemCoord[0];
-			var markers = this.stationMarkers = new L.MarkerClusterGroup();
+			if(clustering) {
+				this.stationMarkers = new L.MarkerClusterGroup();
+			} else {
+				this.stationMarkers = new L.LayerGroup(); 
+			};
 			that = this;
-			$.each(results, function(n, elem) {
+			$.each(results, $.proxy(function(n, elem) {
 				var geom = elem.geometry.coordinates;
 				if (!isNaN(geom[0]) || !isNaN(geom[1])) {
 					if (geom[0] > rightmost) {
@@ -115,10 +121,10 @@ var Map = {
 						id : elem.properties.id,
 					});
 					marker.on('click', that.markerClicked);
-					markers.addLayer(marker);
+					this.stationMarkers.addLayer(marker);
 				}
-			});
-			this.map.addLayer(markers);
+			}, this));
+			this.map.addLayer(this.stationMarkers);
 			this.map.fitBounds([
 					[ parseFloat(bottommost), parseFloat(leftmost) ],
 					[ parseFloat(topmost), parseFloat(rightmost) ] ]);
@@ -204,7 +210,7 @@ var Map = {
 					phenomenon : elem.id
 				}).done($.proxy(function(result){
 					$('.phenomena').removeClass('active');
-					this.createStationMarker(result);
+					this.createStationMarker(result, false);
 				}, this));
 			}, this));
 		}, this));
