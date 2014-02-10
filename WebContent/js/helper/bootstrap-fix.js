@@ -26,8 +26,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  */
-debugger;
 if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
+	debugger;
 	var msViewportStyle = document.createElement('style');
 	msViewportStyle.appendChild(document
 			.createTextNode('@-ms-viewport{width:auto!important}'));

@@ -62,15 +62,18 @@ var Map = {
 		this.map.on('locationerror', this.onLocationError);
 
 		EventManager.subscribe("resetStatus", $.proxy(this.loadStations, this));
+		EventManager.subscribe("clusterStations", $.proxy(this.loadStations, this));
 		EventManager.subscribe("timeseries:showInMap", $.proxy(this.showTsInMap, this));
 	},
 
 	/*----- stations -----*/
 	loadStations : function() {
+		this.loading(true);
 		Rest.stations(null, {
 			service : Status.get('provider')
 		}).done($.proxy(function(result) {
 			this.createStationMarker(result, Status.get('clusterStations'));
+			this.loading(false);
 		}, this));
 		// load phenomena list
 		Rest.phenomena(null, {
@@ -109,18 +112,18 @@ var Map = {
 					if (geom[1] < bottommost) {
 						bottommost = geom[1];
 					}
-//					var marker = new L.circleMarker([ geom[1], geom[0] ], {
-//						id : elem.properties.id,
-//						fillColor: "#000",
-//					    color: "#000",
-//					    opacity: 1,
-//					    weight: 1,
-//					    fillOpacity: 0.2
-//					});
-					var marker = new L.marker([ geom[1], geom[0] ], {
-						id : elem.properties.id
+					var marker = new L.circleMarker([ geom[1], geom[0] ], {
+						id : elem.properties.id,
+						fillColor: "#FF0000",
+					    color: "#000",
+					    opacity: 1,
+					    weight: 2,
+					    fillOpacity: 0.4
 					});
-					marker.on('click', that.markerClicked);
+//					var marker = new L.marker([ geom[1], geom[0] ], {
+//						id : elem.properties.id
+//					});
+					marker.on('click', $.proxy(that.markerClicked, that));
 					this.stationMarkers.addLayer(marker);
 				}
 			}, this));
@@ -130,9 +133,23 @@ var Map = {
 					[ parseFloat(topmost), parseFloat(rightmost) ] ]);
 		}
 	},
+	
+	loading : function(loading) {
+		var button = $('[data-action="provider"] span');
+		if(loading) {
+			button.addClass('icon-spin');
+			button.removeClass('glyphicon-folder-open');
+			button.addClass('glyphicon-refresh');
+		} else {
+			button.removeClass('icon-spin');
+			button.removeClass('glyphicon-refresh');
+			button.addClass('glyphicon-folder-open');
+		}
+	},
 
 	markerClicked : function(marker) {
-		Rest.stations(marker.target.options.id).done(function(results) {
+		this.loading(true);
+		Rest.stations(marker.target.options.id).done($.proxy(function(results) {
 			var tsList = $.map(results.properties.timeseries, function (elem, tsId) {
 				if (Map.selectedPhenomenon == null || Map.selectedPhenomenon == elem.phenomenon.id) {
 					return tsId;
@@ -140,11 +157,13 @@ var Map = {
 			});
 			if (tsList.length == 1) {
 				if (Map.timeseriesCol[tsList[0]] == null) {
-					Rest.timeseriesById(tsList[0]).done(function(timeseries) {
+					Rest.timeseriesById(tsList[0]).done($.proxy(function(timeseries) {
 						Map.addTimeseries(timeseries);
-					});
+						this.loading(false);
+					}, this));
 				} else {
 					Map.addTimeseries(Map.timeseriesCol[tsList[0]]);
+					this.loading(false);
 				}
 			} else {
 				var phenomena = {};
@@ -160,6 +179,7 @@ var Map = {
 						procedure : elem.procedure.label
 					});
 				});
+				this.loading(false);
 				Modal.show("station", {
 					"name" : results.properties.label,
 					"phenomena" : $.map(phenomena, function(id, elem) {
@@ -181,7 +201,7 @@ var Map = {
 					}
 				});
 			}
-		});
+		}, this));
 	},
 
 	addTimeseriesToList : function(timeseries) {
@@ -240,7 +260,8 @@ var Map = {
 	
 	/*----- provider list -----*/
 	openProviderList : function() {
-		Rest.services().done(this.createProviderList);
+		this.loading(true);
+		Rest.services().done($.proxy(this.createProviderList, this));
 	},
 
 	createProviderList : function(results) {
@@ -261,6 +282,7 @@ var Map = {
 				}
 			})
 		};
+		this.loading(false);
 		Modal.show('providers', data);
 		$('.providerItem').on('click', function() {
 			var id = $(this).data('id');
@@ -272,6 +294,10 @@ var Map = {
 
 	/*----- locate user -----*/
 	locateUser : function() {
+		var button = $('[data-action="locate"] span');
+		button.addClass('icon-spin');
+		button.removeClass('glyphicon-map-marker');
+		button.addClass('glyphicon-refresh');
 		this.map.locate({
 			setView : true,
 			maxZoom : Settings.zoom
@@ -279,6 +305,10 @@ var Map = {
 	},
 
 	onLocationFound : function(e) {
+		var button = $('[data-action="locate"] span');
+		button.removeClass('icon-spin');
+		button.removeClass('glyphicon-refresh');
+		button.addClass('glyphicon-map-marker');
 //		if (Map.location != null) {
 //			this.removeLayer(Map.location);
 //		}

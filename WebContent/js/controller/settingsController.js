@@ -40,11 +40,15 @@ var SettingsController = {
 				// cluster station option
 				$('.clusteringStations input').attr('checked', Status.get('clusterStations'));
 				$('.clusteringStations').on('change', function(e) {
+					var clustering;
 					if ($(e.currentTarget).has(':checked').length == 1) {
-						Status.set('clusterStations', true);
+						clustering = true;
 					} else {
-						Status.set('clusterStations', false);
+						clustering = false;
 					}
+					Status.set('clusterStations', clustering);
+					EventManager.publish("clusterStations", clustering);
+					Modal.hide();
 				});
 				// permalink
 				$('.permalink .item').on('click', function() {
