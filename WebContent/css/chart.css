@@ -30,6 +30,14 @@
 	padding: 5px;
 }
 
+#loadingDiagram {
+	background-color: #FFE7E7;
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 10px;
+	position: relative;
+	z-index: 1;
+}
+
 .axisTarget {
 	background-color: red;
 	cursor: pointer;

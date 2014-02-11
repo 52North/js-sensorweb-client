@@ -130,7 +130,7 @@ var ChartController = {
 	
 	loadDataForChart : function(event, ts) {
 		if(this.visible) {
-			$('#placeholder').hide();
+//			$('#placeholder').hide();
 			var label = ts.getMetadata().label;
 			var html = Template.createHtml("data-loading-entry", {
 				id : ts.getId(),
