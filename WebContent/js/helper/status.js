@@ -64,7 +64,16 @@ var Status = (function() {
 		},
 		
 		save : function() {
-			$.totalStorage(this.key, this.current);
+			if(Settings.saveStatusPossible) {
+				try {
+					$.totalStorage(this.key, this.current);
+				} catch (e) {
+					Settings.saveStatusPossible = false;
+					// safari mobile in private mode???
+					// http://davidwalsh.name/quota_exceeded_err
+					alert("No Status saving possible.");
+				}
+			}
 		},
 		
 		reset : function() {

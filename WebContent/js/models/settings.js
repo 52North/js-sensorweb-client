@@ -40,8 +40,16 @@ var Settings = {
 		srv_738111ed219f738cfc85be0c8d87843c : false  // Wupperverband
 	},
 	
+	timeseriesUrl : "http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/",
+//	timeseriesUrl : "http://sosrest.irceline.be/api/v1/",
+//	timeseriesUrl : "http://www.fluggs.de/sos2/api/v1/",
+//	timeseriesUrl : "http://192.168.1.135:8090/sensorwebclient-webapp-3.3.0-SNAPSHOT/api/v1/",
+//	timeseriesUrl : "http://localhost:8090/sensorwebclient-webapp-3.3.0-SNAPSHOT/api/v1/",
+	
 	zoom : 13,
 	
-	dateformat: "DD.MM.YY"
+	dateformat: "DD.MM.YY",
+		
+	saveStatusPossible : true	
 	
 };
