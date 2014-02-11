@@ -29,17 +29,21 @@
 var Status = (function() {
 	var status = {
 
-		key : 'settings',	
+		key : 'settings',
 		defaultValues : {
 //			'provider' : 'srv_1a5bde0a6d702f193f7be463402ec12f',
 			'provider' : 'srv_738111ed219f738cfc85be0c8d87843c',
 			'clusterStations' : true,
 			'timeseries' : {},
-			'timespan' : Time.isoTimespan('today')
+			'timespan' : Time.isoTimespan('today'),
+			'saveStatus' : false
 		},
 		
 		init : function() {
 			this.load();
+			if(!this.get('saveStatus')) {
+				this.reset();
+			}
 		},
 		
 		isSet : function() {

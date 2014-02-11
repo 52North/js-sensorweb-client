@@ -50,6 +50,18 @@ var SettingsController = {
 					EventManager.publish("clusterStations", clustering);
 					Modal.hide();
 				});
+				// save status
+				$('.saveStatus input').attr('checked', Status.get('saveStatus'));
+				$('.saveStatus').on('change', function(e) {
+					var save;
+					if ($(e.currentTarget).has(':checked').length == 1) {
+						save = true;
+					} else {
+						save = false;
+					}
+					Status.set('saveStatus', save);
+					Modal.hide();
+				});
 				// permalink
 				$('.permalink .item').on('click', function() {
 					// url
