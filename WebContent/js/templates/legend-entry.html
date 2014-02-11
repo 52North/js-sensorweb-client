@@ -19,10 +19,10 @@
 		<span class="glyphicon glyphicon-info-sign showInfo"></span>
 	</div>
 	<div class="collapseLegendEntry" style="display: none;">
-		{{#firstValueTime}}<div class="firstLastEntry" data-firstTime="{{firstValueTime}}">First value: {{firstValue}} {{uom}} ({{firstValueTimeFormatted}})</div>{{/firstValueTime}}
-		{{#lastValueTime}}<div class="firstLastEntry" data-lastTime="{{lastValueTime}}">Last value: {{lastValue}} {{uom}} ({{lastValueTimeFormatted}})</div>{{/lastValueTime}}
+		<a>{{#firstValueTime}}<div class="firstLastEntry" data-firstTime="{{firstValueTime}}">First value: {{firstValue}} {{uom}} ({{firstValueTimeFormatted}})</div>{{/firstValueTime}}</a>
+		<a>{{#lastValueTime}}<div class="firstLastEntry" data-lastTime="{{lastValueTime}}">Last value: {{lastValue}} {{uom}} ({{lastValueTimeFormatted}})</div>{{/lastValueTime}}</a>
 		{{#referenceValues}}
-		<div class="refEntry" data-refid="{{id}}" style='border-color: #{{color}}'>{{label}}</div>
+		<a></a><div class="refEntry" data-refid="{{id}}" style='border-color: #{{color}}'>{{label}}</div></a>
 		{{/referenceValues}}
 	</div>
 </div>
