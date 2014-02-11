@@ -34,11 +34,13 @@ var Pages = {
 	
 	navigateToMap : function() {
 		Pages.navigateToPage("#map-page");
+		location.href = "#map";
 		Pages.toggleLegend(false);
 	},
 	
 	navigateToChart : function() {
 		Pages.navigateToPage("#chart-page");
+		location.href = "#chart";
 		Pages.togglePhenomenon(false);
 	},
 	
@@ -85,6 +87,25 @@ var Pages = {
 				Pages.navigateToChart();
 			});
 		});
-		$('.swc-main div.swc-page:first').addClass('swc-page-current');
+		// navigation
+		Pages.routeToPage();
+	},
+	
+	routeToPage : function() {
+		var hash = window.location.hash;
+		if(hash.indexOf('?') != -1) {
+			hash = hash.substring(hash.indexOf('#'), hash.indexOf('?'));	
+		}
+		switch (hash) {
+		case "#map":
+			Pages.navigateToPage("#map-page");
+			break;
+		case "#chart":
+			Pages.navigateToPage("#chart-page");
+			break;
+		default:
+			$('.swc-main div.swc-page:first').addClass('swc-page-current');
+			break;
+		}
 	}
 };

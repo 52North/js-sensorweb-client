@@ -65,7 +65,7 @@ var SettingsController = {
 				// permalink
 				$('.permalink .item').on('click', function() {
 					// url
-					var url = window.location.origin + window.location.pathname;
+					var url = window.location.href;
 					// create timespan
 					var timespan = TimeController.currentTimespan;
 					url = url + "?timespan=" + Time.getRequestTimespan(timespan.from, timespan.till);
@@ -73,8 +73,10 @@ var SettingsController = {
 					var tsList = $.map(TimeSeriesController.getTimeseriesCollection(), function(ts, id){
 						return id;
 					});
-					var timeseries = tsList.join(",");
-					url = url + "&timeseries=" + timeseries;
+					if (tsList.length > 0) {
+						var timeseries = tsList.join(",");
+						url = url + "&timeseries=" + timeseries;
+					};
 					$('.permalink .link').attr('href', url).show();
 					var mailLink = "mailto:?body=" + encodeURIComponent(url); 
 					$('.permalink .mail').attr('href', mailLink).show();

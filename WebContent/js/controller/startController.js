@@ -58,8 +58,9 @@ var StartController = {
 	},
 	
 	getUrlParameter : function (sParam) {
-		var sPageURL = window.location.search.substring(1);
-		var parameters = sPageURL.split('&');
+		var hash = window.location.hash; 
+		hash = hash.substring(hash.indexOf('?') + 1);
+		var parameters = hash.split('&');
 		for (var i = 0; i < parameters.length; i++){
 			var sParameterName = parameters[i].split('=');
 			if (sParameterName[0] == sParam) {
