@@ -213,7 +213,6 @@ var ChartController = {
 				$.each(this.plot.getAxes(), $.proxy(function(i, axis){
 					if(!axis.show) return;
 					var box = axis.box;
-					var start;
 					if(axis.direction == "y") {
 						$("<div class='axisTarget' style='position:absolute; left:" + box.left + "px; top:" + box.top + "px; width:" + box.width +  "px; height:" + box.height + "px'></div>")
 						.data("axis.direction", axis.direction)
@@ -232,10 +231,7 @@ var ChartController = {
 							});
 							$.each(this.plot.getData(), function(index, elem) {
 								if(elem.yaxis.n == axis.n && target.hasClass("selected")) {
-//									elem.lines.lineWidth = this.selectedLineWidth;
 									EventManager.publish("timeseries:selected", elem.id);
-//								} else {
-//									elem.lines.lineWidth = this.defaultLineWidth;
 								}
 							});
 							this.plot.draw();
@@ -244,6 +240,7 @@ var ChartController = {
 				}, this));
 			} else {
 				$("#placeholder").empty();
+				$("#placeholder").append(Template.createHtml('chart-empty'));
 			}
 		}
 	},
