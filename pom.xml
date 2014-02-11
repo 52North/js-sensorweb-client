@@ -110,6 +110,7 @@
 								<cssSourceFile>legend.css</cssSourceFile>
 								<cssSourceFile>selectionList.css</cssSourceFile>
 								<cssSourceFile>animation.css</cssSourceFile>
+								<cssSourceFile>table.css</cssSourceFile>
 							</cssSourceFiles>
 							<cssFinalFile>mswc.${project.version}.css</cssFinalFile>
 							<jsSourceFiles>
