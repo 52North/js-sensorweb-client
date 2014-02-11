@@ -30,26 +30,26 @@ var ListSelectionController = {
 		
 	category : {
 		type : "category",
-		collapse : "categoryColl",
-		heading : "Category"
+		heading : "Category",
+		call : Rest.categories
 	},
 	
 	station : {
-		type : "station",
-		collapse : "stationColl",
-		heading : "Station"
+		type : "feature",
+		heading : "Station",
+		call : Rest.features			
 	},
 	
 	phenomenon : {
 		type : "phenomenon",
-		collapse : "phenomenonColl",
-		heading : "Phenomenon"
+		heading : "Phenomenon",
+		call : Rest.phenomena
 	},
 	
 	procedure : {
 		type : "procedure",
-		collapse : "procedureColl",
-		heading : "Sensor"
+		heading : "Sensor",
+		call : Rest.procedures
 	},
 
 	init : function() {
@@ -79,6 +79,7 @@ var ListSelectionController = {
 			// build html elements
 			$.each(this.entries[tab], function(idx, elem){
 				elem.accordion = accordionId;
+				elem.collapse = accordionId + elem.type;
 				$('#' + tab + ' .panel-group').append(Template.createHtml("list-selection-skeleton", elem));
 			});
 		}, this));
@@ -88,23 +89,7 @@ var ListSelectionController = {
 	startRequest : function(tab, index, data) {
 		var entry = this.entries[tab][index];
 		if (entry != null) {
-			var promise = null;
-			switch (entry.type) {
-			case "category":
-				promise = Rest.categories(null, data);
-				break;
-			case "station":
-				promise = Rest.stations(null, data);
-				break;
-			case "phenomenon":
-				promise = Rest.phenomena(null, data);
-				break;
-			case "procedure":
-				promise = Rest.procedures(null, data);
-				break;
-			default:
-				break;
-			}
+			var promise = entry.call(null, data);
 			promise.done($.proxy(function(result) {
 				$('#' + tab + ' #' + entry.collapse + ' .panel-body').empty();
 				$.each(result, function(idx, e){
@@ -127,7 +112,7 @@ var ListSelectionController = {
 				// onclick
 				$('#' + tab + ' #' + entry.collapse + ' .panel-body div').on('click', $.proxy(function(e){
 					var label = e.target.innerText;
-					$('#' + tab + ' [data-parent=#' + entry.type + ']').text(entry.heading + ' - ' + label);
+					$('#' + tab + ' [href=#' + entry.collapse + ']').text(entry.heading + ' - ' + label);
 					$('#' + tab + ' #' + entry.collapse).collapse('hide');
 					data[entry.type] = e.target.dataset.id;
 					this.startRequest(tab, index + 1, data);
