@@ -59,6 +59,9 @@ var TableController = {
 			var array = this.createValueArray();
 			var colorArray = this.createColorArray();
 			$('#tableView').html(this.createHtmlTable(array, colorArray));
+			// activate sort option for the data table
+			var table = $('table.sortable')[0];
+			sorttable.makeSortable(table);
 		}
 	},
 	
@@ -77,7 +80,7 @@ var TableController = {
 			var uom = ts.getMetadata().uom;
 			var i = (array[0] != null && array[0].length > 0) ? array[0].length : 0;
 			var arrayindex = 0;
-			$.each(values, function(idx, tvpair){
+			$.each(values, function(idx, tvpair) {
 				var time = tvpair[0];
 				var value = tvpair[1] + " " + uom;
 				if(i == 0) {
@@ -106,15 +109,16 @@ var TableController = {
 	},
 	
 	createHtmlTable : function(array, colorArray) {
-		var table = $('<table></table>').addClass('table').addClass('table-condensed');
+		var table = $('<table></table>').addClass('sortable').addClass('table').addClass('table-condensed');
 		var cArray = colorArray;
 		// create header
-//		var header = $('<thead></thead>').append($('<tr></tr>'));
-//		header.append($('<th></th>').text('Time'));
-//		$.each(TimeSeriesController.getTimeseriesCollection(), function(index, elem, test){
-//			header.append($('<th></th>').text(elem.getMetadata().label));
-//		});
-//		table.append(header);
+		var header = $('<thead></thead>');
+		var headerrow = $('<tr></tr>');
+		headerrow.append($('<th></th>').text('Time'));
+		$.each(TimeSeriesController.getTimeseriesCollection(), function(index, elem, test){
+			headerrow.append($('<th></th>').text(elem.getMetadata().label));
+		});
+		table.append(header.append(headerrow));
 		// create content
 		$.each(array, function(tsIndex, elem) {
 //			if(tsIndex <= 10) {

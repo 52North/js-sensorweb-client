@@ -33,3 +33,9 @@
 	}
 }
 
+table.sortable thead {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+

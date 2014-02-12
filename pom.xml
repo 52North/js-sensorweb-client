@@ -126,6 +126,7 @@
 							    <jsSourceFile>libs/jquery.total-storage.js</jsSourceFile>
 							    <jsSourceFile>libs/mustache.js</jsSourceFile>
 							    <jsSourceFile>libs/moment.min.js</jsSourceFile>
+							    <jsSourceFile>libs/sorttable.js</jsSourceFile>
 							    <jsSourceFile>models/timeseries.js</jsSourceFile>
 							    <jsSourceFile>models/referenceValue.js</jsSourceFile>
 							    <jsSourceFile>models/settings.js</jsSourceFile>
