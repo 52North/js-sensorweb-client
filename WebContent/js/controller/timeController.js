@@ -89,6 +89,7 @@ var TimeController = {
 		EventManager.subscribe("timeseries:synced", $.proxy(this.enableButtons, this));
 		EventManager.subscribe("time:start:change", $.proxy(this.startChanged, this));
 		EventManager.subscribe("time:end:change", $.proxy(this.endChanged, this));
+		EventManager.subscribe("timeseries:update:complete", $.proxy(this.updateTimeExtent, this));
 	},
 
 	startChanged : function(event, start) {
@@ -112,7 +113,7 @@ var TimeController = {
 	},
 
 	updateTimeExtent : function() {
-		TimeSeriesController.changeTimeExtent(Time.getRequestTimespan(this.currentTimespan.from, this.currentTimespan.till));
+		EventManager.publish("timeextent:change", Time.getRequestTimespan(this.currentTimespan.from, this.currentTimespan.till));
 		Status.set('timespan', this.currentTimespan);
 		this.setLabel();
 	},

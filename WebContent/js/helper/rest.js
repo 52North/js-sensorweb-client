@@ -61,6 +61,7 @@ var Rest = {
 		return this.request(Settings.timeseriesUrl + "timeseries/" + id
 				+ "/getData", {
 			timespan : timespan,
+			generalize : Status.get('generalizeData'),
 			expanded : true
 		}, function(promise, result) {
 			values = [];

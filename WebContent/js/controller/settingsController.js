@@ -62,6 +62,19 @@ var SettingsController = {
 					Status.set('saveStatus', save);
 					Modal.hide();
 				});
+				// save status
+				$('.generalizeData input').attr('checked', Status.get('generalizeData'));
+				$('.generalizeData').on('change', function(e) {
+					var save;
+					if ($(e.currentTarget).has(':checked').length == 1) {
+						save = true;
+					} else {
+						save = false;
+					}
+					Status.set('generalizeData', save);
+					EventManager.publish("timeseries:update:complete");
+					Modal.hide();
+				});
 				// permalink
 				$('.permalink .item').on('click', function() {
 					// url

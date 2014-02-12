@@ -32,6 +32,7 @@ var TimeSeriesController = {
 
 	init : function() {
 		EventManager.subscribe("resetStatus", $.proxy(this.removeAllTS, this));
+		EventManager.subscribe("timeextent:change", $.proxy(this.changeTimeExtent, this));
 		this.loadSavedTimeseries();
 	},
 	
@@ -86,7 +87,7 @@ var TimeSeriesController = {
 	},
 	
 	/*----- update timeextent -----*/
-	changeTimeExtent : function(timeExtent) {
+	changeTimeExtent : function(event, timeExtent) {
 		this.unsyncTimeseries();
 		$.each(this.timeseries, $.proxy(function(index, elem){
 			this.loadTsData(elem, timeExtent);
