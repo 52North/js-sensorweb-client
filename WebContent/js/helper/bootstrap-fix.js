@@ -26,6 +26,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  */
+/* fix to support windows phone 8 */
 if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
 	debugger;
 	var msViewportStyle = document.createElement('style');

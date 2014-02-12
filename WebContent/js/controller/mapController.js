@@ -52,14 +52,21 @@ var Map = {
 				zoom : 5,
 				layers : [ cloudmade ]
 			});
+			this.map.whenReady(function(map) {
+				// TODO check problem with freezed map while initialize
+				// https://github.com/Leaflet/Leaflet/issues/2085
+				// https://github.com/Leaflet/Leaflet/issues/2021
+				
+				debugger;
+				// load stations for default provider
+				this.loadStations();
+				
+				// locate user methods
+				this.map.on('locationfound', this.onLocationFound);
+				this.map.on('locationerror', this.onLocationError);
+				
+			}, this);
 		}
-
-		// load stations for default provider
-		this.loadStations();
-
-		// locate user methods
-		this.map.on('locationfound', this.onLocationFound);
-		this.map.on('locationerror', this.onLocationError);
 
 		EventManager.subscribe("resetStatus", $.proxy(this.loadStations, this));
 		EventManager.subscribe("clusterStations", $.proxy(this.loadStations, this));
