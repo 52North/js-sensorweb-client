@@ -57,7 +57,6 @@ var Map = {
 				// https://github.com/Leaflet/Leaflet/issues/2085
 				// https://github.com/Leaflet/Leaflet/issues/2021
 				
-				debugger;
 				// load stations for default provider
 				this.loadStations();
 				

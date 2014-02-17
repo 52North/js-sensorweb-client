@@ -45,11 +45,18 @@ var ChartController = {
 		},
 		xaxis : {
 			mode : "time",
+			timezone : "browser",
 			// timeformat: "%Y/%m/%d",
-			tickLength : 5
+			tickLength : 5,
+			tickColor : "#000"
 		},
 		yaxis : {
-			show : true
+			show : true,
+			tickFormatter : function(val, axis) {
+				var factor = axis.tickDecimals ? Math.pow(10, axis.tickDecimals) : 1;
+				var formatted = "" + Math.round(val * factor) / factor;
+				return formatted + "<br>" + this.uom;
+			}
 		},
 		legend : {
 		// show: false
@@ -130,7 +137,6 @@ var ChartController = {
 	
 	loadDataForChart : function(event, ts) {
 		if(this.visible) {
-//			$('#placeholder').hide();
 			var label = ts.getMetadata().label;
 			var html = Template.createHtml("data-loading-entry", {
 				id : ts.getId(),
@@ -207,7 +213,7 @@ var ChartController = {
 	plotChart : function() {
 		if(this.visible){
 			$('#placeholder').show();
-			this.createAxis();
+			this.options.yaxes = this.createAxis();
 			if (this.data.length > 0) {
 				this.plot = $.plot("#placeholder", this.data, this.options);
 				$.each(this.plot.getAxes(), $.proxy(function(i, axis){
@@ -246,13 +252,23 @@ var ChartController = {
 	},
 	
 	createAxis : function() {
-		var axis = {};
+		var axesList = {};
 		$.each(this.data, function(index, elem){
-			if(!axis.hasOwnProperty(elem.uom)) {
-				axis[elem.uom] = ++Object.keys(axis).length;
+			if(!axesList.hasOwnProperty(elem.uom)) {
+				axesList[elem.uom] = {
+					id : ++Object.keys(axesList).length,
+					label : elem.uom
+				};
 			};
-			elem.yaxis = axis[elem.uom];
+			elem.yaxis = axesList[elem.uom].id;
 		});
+		var axes = [];
+		$.each(axesList, function(label, elem){
+			axes.splice(elem.id - 1, 0, {
+				uom : label	
+			});
+		});
+		return axes;
 	},
 	
 	dataAlreadyIn : function(id) {
