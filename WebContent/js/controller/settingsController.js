@@ -38,42 +38,24 @@ var SettingsController = {
 					Modal.hide();
 				});
 				// cluster station option
-				$('.clusteringStations input').attr('checked', Status.get('clusterStations'));
-				$('.clusteringStations').on('change', function(e) {
-					var clustering;
-					if ($(e.currentTarget).has(':checked').length == 1) {
-						clustering = true;
-					} else {
-						clustering = false;
-					}
+				Button.setToggleButton('.clusteringStations', Status.get('clusterStations'));
+				$('.clusteringStations').on('click', function(e) {
+					var clustering = Button.switchToggleButton(e.target);
 					Status.set('clusterStations', clustering);
 					EventManager.publish("clusterStations", clustering);
-					Modal.hide();
 				});
 				// save status
-				$('.saveStatus input').attr('checked', Status.get('saveStatus'));
-				$('.saveStatus').on('change', function(e) {
-					var save;
-					if ($(e.currentTarget).has(':checked').length == 1) {
-						save = true;
-					} else {
-						save = false;
-					}
+				Button.setToggleButton('.saveStatus', Status.get('saveStatus'));
+				$('.saveStatus').on('click', function(e) {
+					var save = Button.switchToggleButton(e.target); 
 					Status.set('saveStatus', save);
-					Modal.hide();
 				});
-				// save status
-				$('.generalizeData input').attr('checked', Status.get('generalizeData'));
-				$('.generalizeData').on('change', function(e) {
-					var save;
-					if ($(e.currentTarget).has(':checked').length == 1) {
-						save = true;
-					} else {
-						save = false;
-					}
-					Status.set('generalizeData', save);
+				// generalize data
+				Button.setToggleButton('.generalizeData', Status.get('generalizeData'));
+				$('.generalizeData').on('click', function(e) {
+					var generalize = Button.switchToggleButton(e.target);
+					Status.set('generalizeData', generalize);
 					EventManager.publish("timeseries:update:complete");
-					Modal.hide();
 				});
 				// permalink
 				$('.permalink .item').on('click', function() {

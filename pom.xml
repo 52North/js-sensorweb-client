@@ -139,6 +139,7 @@
 							    <jsSourceFile>helper/modal.js</jsSourceFile>
 							    <jsSourceFile>helper/event.js</jsSourceFile>
 							    <jsSourceFile>helper/status.js</jsSourceFile>
+							    <jsSourceFile>helper/button.js</jsSourceFile>
 							    <jsSourceFile>helper/bootstrap-fix.js</jsSourceFile>
 							    <jsSourceFile>controller/startController.js</jsSourceFile>
 							    <jsSourceFile>controller/settingsController.js</jsSourceFile>
