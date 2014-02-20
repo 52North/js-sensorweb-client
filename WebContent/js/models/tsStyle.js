@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2014-2014 52°North Initiative for Geospatial Open Source
  * Software GmbH
  *
@@ -26,48 +26,61 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  */
-.legendItem {
-	background-color: white;
-	padding: 3px;
-	border-radius: 5px;
-	margin-bottom: 5px;
-}
+function TimeseriesStyle(chartType, width, color, intervalString) {
+	
+	createInterval = function(interval) {
+		switch (interval) {
+		case "byHour":
+			return 1;
+		case "byDay":
+			return 24;
+		case "byWeek":
+			return 7*24;
+		case "byMonth":
+			return 30*24;
+		default:
+			return 1;
+		}
+	};
+	
+	var interval = createInterval(intervalString);
 
-.legendItem .small {
-	font-size: 11px;
-}
+	this.getColor = function() {
+		return color;
+	};
+	
+	this.setColor = function(setcolor) {
+		color = setcolor;
+	};
+	
+	this.getChartType = function() {
+		return chartType;
+	};
+	
+	this.isBarChart = function() {
+		return chartType == "bar";
+	};
+	
+	this.isLineChart = function() {
+		return chartType == "line";
+	};
+	
+	this.getIntervalByHours = function() {
+		return interval;
+	};
+	
+	this.setIntervalByHours = function(int) {
+		debugger;
+		interval = int;
+	};
 
-.legendItem.selected {
-	border-width: 5px;
-	border-style: solid;
-}
+};
+/* create a default timeseries style constructor */
+TimeseriesStyle.createDefault = function(id) {
+	var chartType = "line";
+	var width = 2;
+	var color = Color.stringToColor(id);
+	var interval = "byHour"; 
+	return new TimeseriesStyle(chartType, width, color, interval);
+};
 
-.legendItemheader {
-	cursor: pointer;
-}
-
-.legendicons span {
-	margin: 0 10px;
-	font-size: 18px;
-}
-
-.legendicons span:hover {
-	cursor: pointer;
-}
-
-.firstLastEntry:hover,
-.refEntry:hover {
-	cursor: pointer;
-}
-
-.refEntry.selected {
-	border-style: solid;
-	border-width: 2px;
-	border-radius: 2px;
-	margin: 2px 0px;
-}
-
-.colorButton {
-	height: 30px;
-	width: 50px;
-}

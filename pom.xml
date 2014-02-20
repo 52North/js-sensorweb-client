@@ -129,6 +129,7 @@
 							    <jsSourceFile>libs/sorttable.js</jsSourceFile>
 							    <jsSourceFile>models/timeseries.js</jsSourceFile>
 							    <jsSourceFile>models/referenceValue.js</jsSourceFile>
+							    <jsSourceFile>models/tsStyle.js</jsSourceFile>
 							    <jsSourceFile>models/settings.js</jsSourceFile>
 							    <jsSourceFile>templates/template.js</jsSourceFile>
 							    <jsSourceFile>helper/time.js</jsSourceFile>
@@ -147,7 +148,7 @@
 							    <jsSourceFile>controller/listSelectionController.js</jsSourceFile>
 							    <jsSourceFile>controller/chartController.js</jsSourceFile>
 							    <jsSourceFile>controller/legendController.js</jsSourceFile>
-							    <jsSourceFile>controller/colorChooserController.js</jsSourceFile>
+							    <jsSourceFile>controller/styleChangeController.js</jsSourceFile>
 							    <jsSourceFile>controller/tableController.js</jsSourceFile>
 							</jsSourceFiles>
 							<jsFinalFile>mswc.${project.version}.js</jsFinalFile>

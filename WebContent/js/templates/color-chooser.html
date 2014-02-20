@@ -6,17 +6,27 @@
 		</div>
 		<div class="modal-body">
 			<div>
-				<span>Current color: </span>
-				<button type="button" class="btn btn-primary colorButton"
-					data-color="{{currentColor}}" data-dismiss="modal"
-					style="background-color: #{{currentColor}}"></button>
+				<div>
+					<span>Current color: </span>
+					<button type="button" class="btn btn-primary colorButton" data-color="{{currentColor}}" data-dismiss="modal" style="background-color: {{currentColor}}"></button>
+				</div>
+				<p>
+				<div>Select a new color:</div>
+				{{#colorList}}
+				<button type="button" class="btn btn-default multiline-buttion colorButton"
+					data-color="{{.}}" data-dismiss="modal" style="background-color: {{.}}"></button>
+				{{/colorList}}
 			</div>
-			<p>
-			<div>Select a new color:</div>
-			{{#colorList}}
-			<button type="button" class="btn btn-primary colorButton"
-				data-color="{{.}}" data-dismiss="modal" style="background-color: #{{.}}"></button>
-			{{/colorList}}
+			{{#bar}}
+			<hr>
+			<div>
+				<div>Select the bar interval:</div>
+				{{#interval}}
+				<button class="btn btn-default multiline-button intervalButton"
+					data-interval="{{value}}" data-dismiss="modal">{{label}}</button>
+				{{/interval}}
+			</div>
+			{{/bar}}
 		</div>
 	</div>
 </div>

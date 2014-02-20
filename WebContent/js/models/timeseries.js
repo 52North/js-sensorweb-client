@@ -28,24 +28,29 @@
  */
 function TimeSeries(id, meta) {
 
-	var color = Color.stringToColor(id);
 	var values = [];
 	var refValues = {};
 	var synced = false;
 	$.each(meta.referenceValues, $.proxy(function(index, elem) {
 		refValues[elem.referenceValueId] = new ReferenceValue(elem.referenceValueId, elem.label);
 	}, this));
+	var style = {};
+	if(meta.hasOwnProperty('renderingHints')) {
+		var chartType = meta.renderingHints.chartType;
+		var width = meta.renderingHints.properties.width;
+		var color = meta.renderingHints.properties.color;
+		var interval = meta.renderingHints.properties.interval;
+		style = new TimeseriesStyle(chartType, width, color, interval);
+	} else {
+		style = TimeseriesStyle.createDefault(id);
+	}
 
 	this.getId = function() {
 		return id;
 	};
 
-	this.getColor = function() {
-		return color;
-	};
-
-	this.setColor = function(setColor) {
-		color = setColor;
+	this.getStyle = function() {
+		return style;
 	};
 	
 	this.isSynced = function() {
@@ -81,7 +86,7 @@ function TimeSeries(id, meta) {
 	
 	this.persist = function() {
 		return {
-			color : color
+			style : style
 		};
 	};
 

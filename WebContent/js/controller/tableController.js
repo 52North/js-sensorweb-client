@@ -46,10 +46,10 @@ var TableController = {
 		EventManager.subscribe("navigation:open", $.proxy(this.createTable, this));
 		EventManager.subscribe("timeseries:synced", $.proxy(this.createTable, this));
 		EventManager.subscribe("timeseries:remove", $.proxy(this.createTable, this));
-		EventManager.subscribe("timeseries:changeColor", $.proxy(this.changeColor, this));
+		EventManager.subscribe("timeseries:changeStyle", $.proxy(this.changeStyle, this));
 	},
 	
-	changeColor : function(event, ts) {
+	changeStyle : function(event, ts) {
 		this.createTable();
 	},
 
@@ -68,7 +68,7 @@ var TableController = {
 	createColorArray : function() {
 		var array = [];
 		$.each(TimeSeriesController.getTimeseriesCollection(), function(index, ts){
-			array.push(ts.getColor());
+			array.push(ts.getStyle().getColor());
 		});
 		return array;
 	},
@@ -127,7 +127,7 @@ var TableController = {
 					if(index == 0) {
 						row.append($('<td></td>').text(moment(value).format("DD-MM-YYYY HH:mm:ss")));
 					} else {
-						row.append($('<td></td>').css('color', '#' + cArray[index-1]).append($('<b></b>').text(value)));
+						row.append($('<td></td>').css('color', cArray[index-1]).append($('<b></b>').text(value)));
 					}
 				});
 				table.append(row);

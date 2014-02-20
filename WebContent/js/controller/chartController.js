@@ -35,7 +35,6 @@ var ChartController = {
 		series : {
 			lines : {
 				show : true,
-//				lineWidth: 1,
 				fill : false
 			},
 			shadowSize : 1
@@ -80,7 +79,7 @@ var ChartController = {
 		EventManager.subscribe("timeseries:show", $.proxy(this.showData, this));
 		EventManager.subscribe("navigation:open", $.proxy(this.hideChart, this));
 		EventManager.subscribe("navigation:close", $.proxy(this.showChart, this));
-		EventManager.subscribe("timeseries:changeColor", $.proxy(this.changeColor, this));
+		EventManager.subscribe("timeseries:changeStyle", $.proxy(this.changeStyle, this));
 		
 		$(window).resize($.proxy(function() {
 			var newRatio = $(document).width() / $(document).height();
@@ -123,6 +122,7 @@ var ChartController = {
 		$.each(this.plot.getData(), function(index, elem) {
 			if(elem.id == id) {
 				elem.lines.lineWidth = ChartController.selectedLineWidth;
+				elem.bars.lineWidth = ChartController.selectedLineWidth;
 			}
 		});
 		this.plot.draw();
@@ -131,6 +131,7 @@ var ChartController = {
 	unselectAll : function(event) {
 		$.each(this.plot.getData(), function(index, elem) {
 			elem.lines.lineWidth = ChartController.defaultLineWidth;
+			elem.bars.lineWidth = ChartController.defaultLineWidth;
 		});
 		this.plot.draw();
 	},
@@ -140,14 +141,15 @@ var ChartController = {
 			var label = ts.getMetadata().label;
 			var html = Template.createHtml("data-loading-entry", {
 				id : ts.getId(),
-				color : ts.getColor(),
+				color : ts.getStyle().getColor(),
 				label : label
 			});
 			$('#loadingDiagram').append(html);
 		}
 	},
 	
-	changeColor : function(event, ts) {
+	changeStyle : function(event, ts) {
+		debugger;
 		this.loadDataFinished(null, ts);
 		this.plotChart();
 	},
@@ -163,18 +165,57 @@ var ChartController = {
 		if(ts.hasData()) {
 			var temp = this.dataAlreadyIn(ts.getId());
 			if(temp != null) {
-				temp.data = ts.getValues();
-				temp.color = "#" + ts.getColor();
+				this.updateData(temp, ts);
 			} else {
-				this.data.push({
-					data : ts.getValues(),
-					id : ts.getId(),
-					color : "#" + ts.getColor(),
-					uom : ts.getMetadata().uom
-				});
+				this.data.push(this.createData(ts));
 			};
 		} else {
 			this.removeData(ts.getId());
+		}
+	},
+	
+	updateData : function(data, ts) {
+		this.addStyleAndValues(data, ts);
+	},
+	
+	createData : function(ts) {
+		var data = {
+			id : ts.getId(),
+			uom : ts.getMetadata().uom
+		};
+		this.addStyleAndValues(data, ts);
+		return data;
+	},
+	
+	addStyleAndValues : function (data, ts) {
+		var style = ts.getStyle();
+		data.color = ts.getStyle().getColor();
+		if (style.getChartType() == "bar") {
+			data.bars = {
+				show : true,
+				barWidth : style.getIntervalByHours() * 60 * 60 * 1000
+			};
+			data.lines = {
+				show : false
+			};
+			var sumvalues = [];
+			var idx = 0;
+			var values = ts.getValues();
+			var entry = values[idx];
+			while(entry != null) {
+				var startInterval = entry[0];
+				var endInterval = moment(entry[0]).add('hours', style.getIntervalByHours());
+				var sum = 0; 
+				while (entry != null && moment(entry[0]).isBefore(endInterval)) {
+					idx++;
+					sum = sum + entry[1];
+					entry = values[idx];
+				}
+				sumvalues.push([startInterval, sum]);
+			}
+			data.data = sumvalues;
+		} else {
+			data.data = ts.getValues();
 		}
 	},
 	
@@ -194,7 +235,7 @@ var ChartController = {
 		this.data.push({
 			data : refVal.getValues(),
 			id : refVal.getId(),
-			color : "#" + refVal.getColor(),
+			color : refVal.getColor(),
 			uom : ts.getMetadata().uom
 		});
 		this.plotChart();

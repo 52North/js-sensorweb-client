@@ -35,7 +35,7 @@ var LegendController = {
 		EventManager.subscribe("timeseries:selected", $.proxy(this.selectTS, this));
 		EventManager.subscribe("timeseries:unselectAll", $.proxy(this.deselectAllTS, this));
 		EventManager.subscribe("timeseries:data:loadfinished", $.proxy(this.checkNoData, this));
-		EventManager.subscribe("timeseries:changeColor", $.proxy(this.changeColor, this));
+		EventManager.subscribe("timeseries:changeStyle", $.proxy(this.changeStyle, this));
 	},
 
 	addTS : function(event, ts) {
@@ -70,8 +70,8 @@ var LegendController = {
 		$('[data-id=' + ts.getId() + '] .inMap').click($.proxy(function(event){
 			EventManager.publish("timeseries:showInMap", ts);
 		},this));
-		$('[data-id=' + ts.getId() + '] .changeColor').click($.proxy(function(event){
-			ColorChooserController.open(ts);
+		$('[data-id=' + ts.getId() + '] .changeStyle').click($.proxy(function(event){
+			StyleChangeController.open(ts);
 		},this));
 		$('[data-id=' + ts.getId() + '] .showInfo').click($.proxy(function(event){
 			$('[data-id=' + ts.getId() + ']').find('.collapseLegendEntry').toggle();
@@ -115,7 +115,7 @@ var LegendController = {
 		$('.legend-entry').find('[data-id=' + id + ']').addClass('selected');
 	},
 	
-	changeColor : function(event, ts) {
+	changeStyle : function(event, ts) {
 		this.updateEntry(ts);
 	},
 	
@@ -154,7 +154,7 @@ var LegendController = {
 		});
 		var html = Template.createHtml("legend-entry", {
 			id : ts.getId(),
-			color : ts.getColor(),
+			color : ts.getStyle().getColor(),
 			synced : ts.isSynced(),
 			uom : (meta.uom != null) ? meta.uom : "",
 			phenomenon : (meta.parameters != null) ? meta.parameters.phenomenon.label : "",

@@ -28,7 +28,7 @@
  */
 var Rest = {
 
-	request : function(url, data, success) {
+	request : function(url, data, success, fail) {
 		var promise = $.Deferred();
 		$.ajax({
 			url : url,
@@ -40,7 +40,9 @@ var Rest = {
 			},
 			error : function(error) {
 				Rest.requestFailed(this.url, this.data);
-				promise.reject(id);
+				if(fail != null) {
+					fail(promise, error);
+				}
 			}
 		});
 		return promise;
@@ -80,6 +82,9 @@ var Rest = {
 				});
 			}
 			promise.resolve(values, refs);
+		}, function(promise, error) {
+			debugger;
+			promise.reject(id);
 		});
 	},
 
