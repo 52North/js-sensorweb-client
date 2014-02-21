@@ -45,13 +45,14 @@ var StyleChangeController = {
 		var style = ts.getStyle();
 		var data = {
 			currentColor : style.getColor(),
-			colorList : this.colorList
+			colorList : this.colorList,
+			zeroScaled : ts.isZeroScaled()
 		};
 		if (style.isBarChart()) {
 			data.bar = true;
 			data.interval = this.intervalList;
 		};
-		Modal.show("color-chooser", data);
+		Modal.show("style-change", data);
 		$('.colorButton').on('click', function(e){
 			var color = $(e.target).data('color');
 			if (style.getColor() != color) {
@@ -65,6 +66,11 @@ var StyleChangeController = {
 				style.setIntervalByHours(interval);
 				EventManager.publish("timeseries:changeStyle", ts);
 			}; 
+		});
+		$('.zeroScaled').on('click', function(e){
+			var zeroScaled = Button.switchToggleButton(e.target);
+			ts.setZeroScaled(zeroScaled);
+			EventManager.publish("timeseries:zeroScaled", ts);
 		});
 	}
 };

@@ -80,6 +80,7 @@ var ChartController = {
 		EventManager.subscribe("navigation:open", $.proxy(this.hideChart, this));
 		EventManager.subscribe("navigation:close", $.proxy(this.showChart, this));
 		EventManager.subscribe("timeseries:changeStyle", $.proxy(this.changeStyle, this));
+		EventManager.subscribe("timeseries:zeroScaled", $.proxy(this.zeroScaled, this));
 		
 		$(window).resize($.proxy(function() {
 			var newRatio = $(document).width() / $(document).height();
@@ -148,8 +149,23 @@ var ChartController = {
 		}
 	},
 	
+	zeroScaled : function(event, ts) {
+		// update all timeseries
+		$.each(TimeSeriesController.getTimeseriesCollection(), function (idx, elem) {
+			if(ts.getUom() == elem.getUom()) {
+				elem.setZeroScaled(ts.isZeroScaled());
+			}
+		});
+		// update data of timeseries
+		$.each(this.data, function(idx, elem){
+			if(elem.uom == ts.getUom()) {
+				elem.zeroScaled = ts.isZeroScaled();
+			}
+		});
+		this.changeStyle(null, ts);
+	},
+	
 	changeStyle : function(event, ts) {
-		debugger;
 		this.loadDataFinished(null, ts);
 		this.plotChart();
 	},
@@ -190,6 +206,7 @@ var ChartController = {
 	addStyleAndValues : function (data, ts) {
 		var style = ts.getStyle();
 		data.color = ts.getStyle().getColor();
+		data.zeroScaled = ts.isZeroScaled();
 		if (style.getChartType() == "bar") {
 			data.bars = {
 				show : true,
@@ -298,7 +315,8 @@ var ChartController = {
 			if(!axesList.hasOwnProperty(elem.uom)) {
 				axesList[elem.uom] = {
 					id : ++Object.keys(axesList).length,
-					label : elem.uom
+					label : elem.uom,
+					zeroScaled : elem.zeroScaled
 				};
 			};
 			elem.yaxis = axesList[elem.uom].id;
@@ -306,7 +324,8 @@ var ChartController = {
 		var axes = [];
 		$.each(axesList, function(label, elem){
 			axes.splice(elem.id - 1, 0, {
-				uom : label	
+				uom : label,
+				min : elem.zeroScaled ? 0 : null
 			});
 		});
 		return axes;

@@ -31,6 +31,7 @@ function TimeSeries(id, meta) {
 	var values = [];
 	var refValues = {};
 	var synced = false;
+	var zeroScaled = false;
 	$.each(meta.referenceValues, $.proxy(function(index, elem) {
 		refValues[elem.referenceValueId] = new ReferenceValue(elem.referenceValueId, elem.label);
 	}, this));
@@ -53,8 +54,20 @@ function TimeSeries(id, meta) {
 		return style;
 	};
 	
+	this.isZeroScaled = function() {
+		return zeroScaled;
+	};
+	
+	this.setZeroScaled = function(bool) {
+		zeroScaled = bool;
+	};
+	
 	this.isSynced = function() {
 		return synced;
+	};
+	
+	this.getUom = function() {
+		return meta.uom;
 	};
 	
 	this.unSynced = function() {
