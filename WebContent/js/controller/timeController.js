@@ -39,7 +39,7 @@ var TimeController = {
 		          {label: 'this month', value: 'thisMonth'},
 		          {label: 'last month', value: 'lastMonth'},
 		          {label: 'this year', value: 'thisYear'},
-		          {label: 'last year', value: 'thisYear'}
+		          {label: 'last year', value: 'lastYear'}
 		        ]
 	},
 
