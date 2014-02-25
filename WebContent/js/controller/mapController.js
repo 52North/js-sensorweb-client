@@ -40,23 +40,24 @@ var Map = {
 			});
 		});
 		if ($("#map").length > 0) {
-			var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', cloudmadeAttribution = '&copy; OpenStreetMap &amp; Contributors', cloudmade = L
-					.tileLayer(cloudmadeUrl, {
-						maxZoom : 17,
-						attribution : false
-					}), latlng = L.latLng(50, 10);
-			L.Icon.Default.imagePath = 'images';
-
-			this.map = L.map('map', {
-				center : latlng,
-				zoom : 5,
-				layers : [ cloudmade ]
-			});
+//			var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', cloudmadeAttribution = '&copy; OpenStreetMap &amp; Contributors', cloudmade = L
+//					.tileLayer(cloudmadeUrl, {
+//						maxZoom : 17,
+//						attribution : false
+//					}), latlng = L.latLng(50, 10);
+//			L.Icon.Default.imagePath = 'images';
+//			this.map = L.map('map', {
+//				center : latlng,
+//				zoom : 5,
+//				layers : [ layer ]
+//			});
+			
+			this.map = L.map('map').setView([51.505, -0.09], 13);
+			L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+			    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+			}).addTo(this.map);
+			
 			this.map.whenReady(function(map) {
-				// TODO check problem with freezed map while initialize
-				// https://github.com/Leaflet/Leaflet/issues/2085
-				// https://github.com/Leaflet/Leaflet/issues/2021
-				
 				// load stations for default provider
 				this.loadStations();
 				
@@ -75,15 +76,16 @@ var Map = {
 	/*----- stations -----*/
 	loadStations : function() {
 		this.loading(true);
-		Rest.stations(null, {
-			service : Status.get('provider')
+		var provider = Status.get('provider');
+		Rest.stations(null, provider.apiUrl, {
+			service : provider.serviceID
 		}).done($.proxy(function(result) {
 			this.createStationMarker(result, Status.get('clusterStations'));
 			this.loading(false);
 		}, this));
 		// load phenomena list
-		Rest.phenomena(null, {
-			service : Status.get('provider')
+		Rest.phenomena(null, provider.apiUrl, {
+			service : provider.serviceID
 		}).done($.proxy(this.fillPhenomenaList, this));
 	},
 
@@ -155,7 +157,8 @@ var Map = {
 
 	markerClicked : function(marker) {
 		this.loading(true);
-		Rest.stations(marker.target.options.id).done($.proxy(function(results) {
+		var apiUrl = Status.get('provider').apiUrl;
+		Rest.stations(marker.target.options.id, apiUrl).done($.proxy(function(results) {
 			var tsList = $.map(results.properties.timeseries, function (elem, tsId) {
 				if (Map.selectedPhenomenon == null || Map.selectedPhenomenon == elem.phenomenon.id) {
 					return tsId;
@@ -163,7 +166,7 @@ var Map = {
 			});
 			if (tsList.length == 1) {
 				if (Map.timeseriesCol[tsList[0]] == null) {
-					Rest.timeseriesById(tsList[0]).done($.proxy(function(timeseries) {
+					Rest.timeseriesById(tsList[0], apiUrl).done($.proxy(function(timeseries) {
 						Map.addTimeseries(timeseries);
 						this.loading(false);
 					}, this));
@@ -199,7 +202,7 @@ var Map = {
 				});
 				$.each(results.properties.timeseries, function(id) {
 					if (Map.timeseriesCol[id] == null) {
-						Rest.timeseriesById(id).done(function(timeseries) {
+						Rest.timeseriesById(id, apiUrl).done(function(timeseries) {
 							Map.addTimeseriesToList(timeseries);
 						});
 					} else {
@@ -231,8 +234,8 @@ var Map = {
 				$('.phenomena-entry').find('.selected').removeClass('selected');
 				$('[data-id=' + elem.id + ']').find('.item').addClass('selected');
 				this.selectedPhenomenon = elem.id;
-				Rest.stations(null, {
-					service : Status.get('provider'),
+				Rest.stations(null, Status.get('provider').apiUrl, {
+					service : Status.get('provider').serviceID,
 					phenomenon : elem.id
 				}).done($.proxy(function(result){
 					$('.phenomena').removeClass('active');
@@ -267,35 +270,55 @@ var Map = {
 	/*----- provider list -----*/
 	openProviderList : function() {
 		this.loading(true);
-		Rest.services().done($.proxy(this.createProviderList, this));
+		this.apiConnectCounter = Settings.restApiUrls.length;
+		this.providerList = [];
+		$.each(Settings.restApiUrls, $.proxy(function(idx, elem) {
+			Rest.services(elem).done($.proxy(this.createProviderList, this, elem));
+		}, this));
 	},
 
-	createProviderList : function(results) {
-		var data = {
-			"providers" : $.map(results, function(elem) {
-				var provider = Settings.providerBlackList[elem.id];
-				if (provider == null || !provider) {
-					return {
-						"name" : elem.label,
-						"version" : elem.version,
-						"stations" : elem.quantities.stations,
-						"timeseries" : elem.quantities.timeseries,
-						"url" : elem.serviceUrl,
-						"id" : elem.id,
-						"selected" : Status.get('provider') == elem.id,
-						"type" : elem.type
-					};
+	createProviderList : function(apiUrl, results) {
+		this.apiConnectCounter--;
+		var currProv = Status.get('provider');
+		$.each(results, $.proxy(function(idx, elem) {
+			var blacklisted = false; 
+			$.each(Settings.providerBlackList, $.proxy(function(idx, black) {
+				if(black.serviceID == elem.id && black.apiUrl == apiUrl) {
+					blacklisted = true;
+					return;
 				}
-			})
-		};
-		this.loading(false);
-		Modal.show('providers', data);
-		$('.providerItem').on('click', function() {
-			var id = $(this).data('id');
-			Status.set('provider', id);
-			Map.loadStations();
-			Modal.hide();
-		});
+			}, this));
+			if (!blacklisted) {
+				this.providerList.push({
+					"name" : elem.label,
+					"version" : elem.version,
+					"stations" : elem.quantities.stations,
+					"timeseries" : elem.quantities.timeseries,
+					"url" : elem.serviceUrl,
+					"apiUrl" : apiUrl,
+					"id" : elem.id,
+					"selected" : currProv.serviceID == elem.id && currProv.apiUrl == apiUrl,
+					"type" : elem.type
+				});
+			};
+		}, this));
+		if(this.apiConnectCounter == 0) {
+			var data = {
+				"providers" : this.providerList
+			};
+			this.loading(false);
+			Modal.show('providers', data);
+			$('.providerItem').on('click', function() {
+				var id = $(this).data('id');
+				var apiUrl = $(this).data('api');
+				Status.set('provider', {
+					serviceID : id,
+					apiUrl : apiUrl
+				});
+				Map.loadStations();
+				Modal.hide();
+			});
+		}
 	},
 
 	/*----- locate user -----*/

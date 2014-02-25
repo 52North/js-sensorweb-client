@@ -74,7 +74,7 @@ var ListSelectionController = {
 			$('#' + tab + ' .panel-group').empty();
 			// send request
 			this.startRequest(tab, 0, {
-				service : Status.get('provider')
+				service : Status.get('provider').serviceID
 			});
 			// build html elements
 			$.each(this.entries[tab], function(idx, elem){
@@ -88,8 +88,9 @@ var ListSelectionController = {
 
 	startRequest : function(tab, index, data) {
 		var entry = this.entries[tab][index];
+		var apiUrl = Status.get('provider').apiUrl;
 		if (entry != null) {
-			var promise = entry.call(null, data);
+			var promise = entry.call(null, apiUrl, data);
 			promise.done($.proxy(function(result) {
 				$('#' + tab + ' #' + entry.collapse + ' .panel-body').empty();
 				$.each(result, function(idx, e){
@@ -120,9 +121,10 @@ var ListSelectionController = {
 			}, this));
 		} else {
 			// load ts
-			Rest.timeseries(null, data).done(function(result) {
+			Rest.timeseries(null, apiUrl, data).done(function(result) {
 				if(result.length == 1) {
-					var ts = new TimeSeries(result[0].id, result[0]);
+					debugger;
+					var ts = new TimeSeries(result[0].id, result[0], apiUrl);
 					TimeSeriesController.addTS(ts);
 					Modal.hide();
 					Pages.navigateToChart();

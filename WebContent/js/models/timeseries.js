@@ -26,7 +26,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  */
-function TimeSeries(id, meta) {
+function TimeSeries(id, meta, apiUrl) {
 
 	var values = [];
 	var refValues = {};
@@ -99,12 +99,14 @@ function TimeSeries(id, meta) {
 	
 	this.persist = function() {
 		return {
-			style : style
+			style : style.persist(),
+			apiUrl : apiUrl,
+			id : id
 		};
 	};
 
 	this.fetchData = function(timespan, complete) {
-		var promise = Rest.tsData(id, timespan);
+		var promise = Rest.tsData(id, apiUrl, timespan);
 		var that = this;
 		promise.done(function(data, refdata) {
 			values = data;

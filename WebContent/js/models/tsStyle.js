@@ -57,6 +57,10 @@ function TimeseriesStyle(chartType, width, color, intervalString) {
 		return chartType;
 	};
 	
+	this.setChartType = function(ct) {
+		chartType = ct;
+	};
+	
 	this.isBarChart = function() {
 		return chartType == "bar";
 	};
@@ -67,6 +71,14 @@ function TimeseriesStyle(chartType, width, color, intervalString) {
 	
 	this.getIntervalByHours = function() {
 		return interval;
+	};
+	
+	this.persist = function() {
+		return {
+			chartType : chartType,
+			color : color,
+			interval : interval
+		};
 	};
 	
 	this.setIntervalByHours = function(int) {

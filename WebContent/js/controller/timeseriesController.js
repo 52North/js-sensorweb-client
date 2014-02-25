@@ -38,11 +38,14 @@ var TimeSeriesController = {
 	
 	loadSavedTimeseries : function() {
 		$.each(Status.getTimeseries(), $.proxy(function(id, elem) {
-			var promise = Rest.timeseriesById(id);
+			var promise = Rest.timeseriesById(id, elem.apiUrl);
 			var that = this;
 			promise.done(function(ts){
-				if(elem.color) {
-					ts.setColor(elem.color);
+				if(elem.style) {
+					var style = ts.getStyle();
+					style.setColor(elem.style.color);
+					style.setChartType(elem.style.chartType);
+					style.setIntervalByHours(elem.style.interval);
 				}
 				that.addTS(ts);
 			});

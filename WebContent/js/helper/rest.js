@@ -52,15 +52,16 @@ var Rest = {
 		alert("URL: " + url + "\n\nData: " + data);
 	},
 
-	timeseriesById : function(id) {
-		return this.request(Settings.timeseriesUrl + "timeseries/" + id, null,
+	timeseriesById : function(id, apiUrl) {
+		debugger;
+		return this.request(apiUrl + "timeseries/" + id, null,
 				function(promise, result) {
-					promise.resolve(new TimeSeries(id, result));
+					promise.resolve(new TimeSeries(id, result, apiUrl));
 				});
 	},
 
-	tsData : function(id, timespan) {
-		return this.request(Settings.timeseriesUrl + "timeseries/" + id
+	tsData : function(id, apiUrl, timespan) {
+		return this.request(apiUrl + "timeseries/" + id
 				+ "/getData", {
 			timespan : timespan,
 			generalize : Status.get('generalizeData'),
@@ -88,52 +89,52 @@ var Rest = {
 		});
 	},
 
-	stations : function(id, data) {
-		return Rest.request(Settings.timeseriesUrl + "stations/"
+	stations : function(id, apiUrl, data) {
+		return Rest.request(apiUrl + "stations/"
 				+ (id == null ? "" : id), data, function(promise, result) {
 			promise.resolve(result);
 		});
 	},
 
-	features : function(id, data) {
-		return Rest.request(Settings.timeseriesUrl + "features/"
+	features : function(id, apiUrl, data) {
+		return Rest.request(apiUrl + "features/"
 				+ (id == null ? "" : id), data, function(promise, result) {
 			promise.resolve(result);
 		});
 	},
 
-	timeseries : function(id, data) {
+	timeseries : function(id, apiUrl, data) {
 		data.expanded = true;
 		data.force_last_values = true;
-		return Rest.request(Settings.timeseriesUrl + "timeseries/"
+		return Rest.request(apiUrl + "timeseries/"
 				+ (id == null ? "" : id), data, function(promise, result) {
 			promise.resolve(result);
 		});
 	},
 
-	categories : function(id, data) {
-		return Rest.request(Settings.timeseriesUrl + "categories/"
+	categories : function(id, apiUrl, data) {
+		return Rest.request(apiUrl + "categories/"
 				+ (id == null ? "" : id), data, function(promise, result) {
 			promise.resolve(result);
 		});
 	},
 
-	phenomena : function(id, data) {
-		return Rest.request(Settings.timeseriesUrl + "phenomena/"
+	phenomena : function(id, apiUrl, data) {
+		return Rest.request(apiUrl + "phenomena/"
 				+ (id == null ? "" : id), data, function(promise, result) {
 			promise.resolve(result);
 		});
 	},
 
-	procedures : function(id, data) {
-		return Rest.request(Settings.timeseriesUrl + "procedures/"
+	procedures : function(id, apiUrl, data) {
+		return Rest.request(apiUrl + "procedures/"
 				+ (id == null ? "" : id), data, function(promise, result) {
 			promise.resolve(result);
 		});
 	},
 
-	services : function() {
-		return Rest.request(Settings.timeseriesUrl + "services", {
+	services : function(apiUrl) {
+		return Rest.request(apiUrl + "services", {
 			expanded : true
 		}, function(promise, result) {
 			promise.resolve(result);
