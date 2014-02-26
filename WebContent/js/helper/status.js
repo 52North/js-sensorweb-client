@@ -92,7 +92,7 @@ var Status = (function() {
 		},
 		
 		addTimeseries : function(ts) {
-			this.current.timeseries[ts.getId()] = ts.persist();
+			this.current.timeseries[ts.getInternalId()] = ts.persist();
 			this.save();
 		},
 		
@@ -107,7 +107,7 @@ var Status = (function() {
 		},
 		
 		removeTimeseries : function(ts) {
-			delete this.current.timeseries[ts.getId()];
+			delete this.current.timeseries[ts.getInternalId()];
 			this.save();
 		},
 		

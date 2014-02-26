@@ -82,7 +82,6 @@ function TimeseriesStyle(chartType, width, color, intervalString) {
 	};
 	
 	this.setIntervalByHours = function(int) {
-		debugger;
 		interval = int;
 	};
 

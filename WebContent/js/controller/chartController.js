@@ -37,6 +37,9 @@ var ChartController = {
 				show : true,
 				fill : false
 			},
+//			points : {
+//				show : true
+//			},
 			shadowSize : 1
 		},
 		selection : {
@@ -141,7 +144,7 @@ var ChartController = {
 		if(this.visible) {
 			var label = ts.getMetadata().label;
 			var html = Template.createHtml("data-loading-entry", {
-				id : ts.getId(),
+				id : ts.getInternalId(),
 				color : ts.getStyle().getColor(),
 				label : label
 			});
@@ -171,7 +174,7 @@ var ChartController = {
 	},
 	
 	loadDataFinished : function(event, ts) {
-		$('#loadingDiagram').find('[data-id=' + ts.getId() + ']').remove();
+		$('#loadingDiagram').find('[data-id=' + ts.getInternalId() + ']').remove();
 		$.each(ts.getRefValues(), $.proxy(function(id, elem) {
 			var refVal = this.dataAlreadyIn(elem.getId());
 			if (refVal != null) {
@@ -179,14 +182,14 @@ var ChartController = {
 			}
 		}, this));
 		if(ts.hasData()) {
-			var temp = this.dataAlreadyIn(ts.getId());
+			var temp = this.dataAlreadyIn(ts.getInternalId());
 			if(temp != null) {
 				this.updateData(temp, ts);
 			} else {
 				this.data.push(this.createData(ts));
 			};
 		} else {
-			this.removeData(ts.getId());
+			this.removeData(ts.getInternalId());
 		}
 	},
 	
@@ -196,7 +199,7 @@ var ChartController = {
 	
 	createData : function(ts) {
 		var data = {
-			id : ts.getId(),
+			id : ts.getInternalId(),
 			uom : ts.getMetadata().uom
 		};
 		this.addStyleAndValues(data, ts);
@@ -237,8 +240,8 @@ var ChartController = {
 	},
 	
 	removeTS : function(event, ts) {
-		$('#loadingDiagram').find('[data-id=' + ts.getId() + ']').remove();
-		this.removeData(ts.getId());
+		$('#loadingDiagram').find('[data-id=' + ts.getInternalId() + ']').remove();
+		this.removeData(ts.getInternalId());
 		// remove ref values
 		$.each(ts.getRefValues(), $.proxy(function(index, elem) {
 			this.removeData(elem.getId());
@@ -271,7 +274,8 @@ var ChartController = {
 	plotChart : function() {
 		if(this.visible){
 			$('#placeholder').show();
-			this.options.yaxes = this.createAxis();
+			this.options.yaxes = this.createYAxis();
+			this.updateXAxis();
 			if (this.data.length > 0) {
 				this.plot = $.plot("#placeholder", this.data, this.options);
 				$.each(this.plot.getAxes(), $.proxy(function(i, axis){
@@ -309,7 +313,12 @@ var ChartController = {
 		}
 	},
 	
-	createAxis : function() {
+	updateXAxis : function() {
+		this.options.xaxis.min = TimeController.getCurrentStartAsMillis(); 
+		this.options.xaxis.max = TimeController.getCurrentEndAsMillis();
+	},
+ 	
+	createYAxis : function() {
 		var axesList = {};
 		$.each(this.data, function(index, elem){
 			if(!axesList.hasOwnProperty(elem.uom)) {

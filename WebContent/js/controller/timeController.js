@@ -111,6 +111,14 @@ var TimeController = {
 		var till = moment(this.currentTimespan.till);
 		return till.diff(from);
 	},
+	
+	getCurrentStartAsMillis : function() {
+		return moment(this.currentTimespan.from).unix() * 1000; 
+	},
+	
+	getCurrentEndAsMillis : function() {
+		return moment(this.currentTimespan.till).unix() * 1000;
+	},
 
 	updateTimeExtent : function() {
 		EventManager.publish("timeextent:change", Time.getRequestTimespan(this.currentTimespan.from, this.currentTimespan.till));

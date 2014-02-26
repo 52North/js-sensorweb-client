@@ -214,8 +214,8 @@ var Map = {
 	},
 
 	addTimeseriesToList : function(timeseries) {
-		$('[data-id=' + timeseries.getId() + ']').addClass('loaded').find(':input').prop('disabled', false);
-		Map.timeseriesCol[timeseries.getId()] = timeseries;
+		$('[data-id=' + timeseries.getTsId() + ']').addClass('loaded').find(':input').prop('disabled', false);
+		Map.timeseriesCol[timeseries.getTsId()] = timeseries;
 	},
 	
 	addTimeseries : function(timeseries) {

@@ -29,10 +29,10 @@
 var Settings = {
 	
 	providerBlackList : [
-	{
-		serviceID : 'srv_6d9ccea8d609ecb74d4a512922bb7cee', // ircel
-		apiUrl : 'http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/'
-	},
+//	{
+//		serviceID : 'srv_6d9ccea8d609ecb74d4a512922bb7cee', // ircel
+//		apiUrl : 'http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/'
+//	},
 	{
 		serviceID : 'srv_cbe54f275d9d993b376783216ff9f431', // ecmwf sos
 		apiUrl : 'http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/'
@@ -55,14 +55,14 @@ var Settings = {
 	}
 	],
 	
-	restApiUrls : [
-		"http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/",
-		"http://sosrest.irceline.be/api/v1/",
-		"http://www.fluggs.de/sos2/api/v1/"
+	restApiUrls : {
+		"http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/" : "52nSensorweb", 
+		"http://sosrest.irceline.be/api/v1/" : "irceline",
+		"http://www.fluggs.de/sos2/api/v1/" : "fluggs"
 //		"http://192.168.1.135:8090/sensorwebclient-webapp-3.3.0-SNAPSHOT/api/v1/",
 //		"http://localhost:8090/sensorwebclient-webapp-3.3.0-SNAPSHOT/api/v1/",
-//		"http://192.168.1.135:8080/sensorwebclient-webapp/api/v1/" 
-	],
+//		"http://192.168.1.135:8080/sensorwebclient-webapp/api/v1/"
+	},
 	
 	defaultProvider : {
 		serviceID : 'srv_738111ed219f738cfc85be0c8d87843c',

@@ -37,8 +37,8 @@ var TimeSeriesController = {
 	},
 	
 	loadSavedTimeseries : function() {
-		$.each(Status.getTimeseries(), $.proxy(function(id, elem) {
-			var promise = Rest.timeseriesById(id, elem.apiUrl);
+		$.each(Status.getTimeseries(), $.proxy(function(internalId, elem) {
+			var promise = Rest.timeseriesById(elem.tsId, elem.apiUrl);
 			var that = this;
 			promise.done(function(ts){
 				if(elem.style) {
@@ -56,7 +56,7 @@ var TimeSeriesController = {
 	addTS : function(ts) {
 		Status.addTimeseries(ts);
 		EventManager.publish("timeseries:add", [ ts ]);
-		this.timeseries[ts.getId()] = ts;
+		this.timeseries[ts.getInternalId()] = ts;
 		// request data
 		var from = TimeController.currentTimespan.from;
 		var till = TimeController.currentTimespan.till;
@@ -106,7 +106,7 @@ var TimeSeriesController = {
 	/*----- remove timeseries -----*/
 	removeTS : function(ts) {
 		Status.removeTimeseries(ts);
-		delete this.timeseries[ts.getId()];
+		delete this.timeseries[ts.getInternalId()];
 		EventManager.publish("timeseries:remove", [ ts ]);
 	},
 

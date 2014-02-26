@@ -53,7 +53,6 @@ var Rest = {
 	},
 
 	timeseriesById : function(id, apiUrl) {
-		debugger;
 		return this.request(apiUrl + "timeseries/" + id, null,
 				function(promise, result) {
 					promise.resolve(new TimeSeries(id, result, apiUrl));

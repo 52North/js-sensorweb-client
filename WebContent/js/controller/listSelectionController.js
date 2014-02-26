@@ -123,7 +123,6 @@ var ListSelectionController = {
 			// load ts
 			Rest.timeseries(null, apiUrl, data).done(function(result) {
 				if(result.length == 1) {
-					debugger;
 					var ts = new TimeSeries(result[0].id, result[0], apiUrl);
 					TimeSeriesController.addTS(ts);
 					Modal.hide();

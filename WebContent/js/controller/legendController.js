@@ -40,43 +40,43 @@ var LegendController = {
 
 	addTS : function(event, ts) {
 		var html = this.createEntry(ts);
-		this.removeEntry(ts.getId());
+		this.removeEntry(ts.getInternalId());
 		$('.legend-entry').append(html);
 		this.addClickEvents(ts);
 	},
 	
 	addClickEvents : function(ts) {
-		$('[data-id=' + ts.getId() + '] .legendItemheader').click($.proxy(function(event){
-			if(!$('[data-id=' + ts.getId() + ']').hasClass('selected')){
+		$('[data-id=' + ts.getInternalId() + '] .legendItemheader').click($.proxy(function(event){
+			if(!$('[data-id=' + ts.getInternalId() + ']').hasClass('selected')){
 				EventManager.publish("timeseries:unselectAll");
-				EventManager.publish("timeseries:selected", ts.getId());	
+				EventManager.publish("timeseries:selected", ts.getInternalId());	
 			} else {
 				EventManager.publish("timeseries:unselectAll");
 			}
 		},this));
-		$('[data-id=' + ts.getId() + '] .hideDiagram').click($.proxy(function(event){
+		$('[data-id=' + ts.getInternalId() + '] .hideDiagram').click($.proxy(function(event){
 			target = $(event.currentTarget);
 			if(target.hasClass('glyphicon-eye-close')) {
-				EventManager.publish("timeseries:hide", ts.getId());
+				EventManager.publish("timeseries:hide", ts.getInternalId());
 			} else {
-				EventManager.publish("timeseries:show", ts.getId());
+				EventManager.publish("timeseries:show", ts.getInternalId());
 			}
 			target.toggleClass('glyphicon-eye-close');
 			target.toggleClass('glyphicon-eye-open');
 		},this));
-		$('[data-id=' + ts.getId() + '] .delete').click($.proxy(function(event){
+		$('[data-id=' + ts.getInternalId() + '] .delete').click($.proxy(function(event){
 			TimeSeriesController.removeTS(ts);
 		},this));
-		$('[data-id=' + ts.getId() + '] .inMap').click($.proxy(function(event){
+		$('[data-id=' + ts.getInternalId() + '] .inMap').click($.proxy(function(event){
 			EventManager.publish("timeseries:showInMap", ts);
 		},this));
-		$('[data-id=' + ts.getId() + '] .changeStyle').click($.proxy(function(event){
+		$('[data-id=' + ts.getInternalId() + '] .changeStyle').click($.proxy(function(event){
 			StyleChangeController.open(ts);
 		},this));
-		$('[data-id=' + ts.getId() + '] .showInfo').click($.proxy(function(event){
-			$('[data-id=' + ts.getId() + ']').find('.collapseLegendEntry').toggle();
+		$('[data-id=' + ts.getInternalId() + '] .showInfo').click($.proxy(function(event){
+			$('[data-id=' + ts.getInternalId() + ']').find('.collapseLegendEntry').toggle();
 		},this));
-		$('[data-id=' + ts.getId() + '] .firstLastEntry').on('click', function(event) {
+		$('[data-id=' + ts.getInternalId() + '] .firstLastEntry').on('click', function(event) {
 			var time = $(event.currentTarget).data('firsttime');
 			if (time != null) {
 				EventManager.publish("time:start:change", time);
@@ -86,7 +86,7 @@ var LegendController = {
 				EventManager.publish("time:end:change", time);
 			}
 		});
-		$('[data-id=' + ts.getId() + '] .refEntry').on('click', function(event){
+		$('[data-id=' + ts.getInternalId() + '] .refEntry').on('click', function(event){
 			var target = $(event.currentTarget);
 			target.toggleClass('selected');
 			var ev;
@@ -96,14 +96,14 @@ var LegendController = {
 				ev = "timeseries:remove:referenceValue";
 			}
 			EventManager.publish(ev, {
-				"tsId" : ts.getId(), 
+				"tsId" : ts.getInternalId(), 
 				"refId" : target.data('refid')
 			});
 		});
 	},
 	
 	checkNoData : function(event, ts) {
-		var warn = $('.legend-entry').find('[data-id=' + ts.getId() + '] .noDataWarning'); 
+		var warn = $('.legend-entry').find('[data-id=' + ts.getInternalId() + '] .noDataWarning'); 
 		if(!ts.hasData()) {
 			warn.show();
 		} else {
@@ -124,7 +124,7 @@ var LegendController = {
 	},
 	
 	removeTS : function(event, ts) {
-		this.removeEntry(ts.getId());
+		this.removeEntry(ts.getInternalId());
 	},
 	
 	removeAll : function(event) {
@@ -137,7 +137,7 @@ var LegendController = {
 	
 	updateEntry : function(ts) {
 		var html = this.createEntry(ts);
-		$(html).replaceAll('.legend-entry [data-id=' + ts.getId() + ']');
+		$(html).replaceAll('.legend-entry [data-id=' + ts.getInternalId() + ']');
 		this.addClickEvents(ts);
 	},
 
@@ -153,7 +153,7 @@ var LegendController = {
 			};
 		});
 		var html = Template.createHtml("legend-entry", {
-			id : ts.getId(),
+			id : ts.getInternalId(),
 			color : ts.getStyle().getColor(),
 			synced : ts.isSynced(),
 			uom : (meta.uom != null) ? meta.uom : "",

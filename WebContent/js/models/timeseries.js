@@ -26,8 +26,10 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  */
-function TimeSeries(id, meta, apiUrl) {
+function TimeSeries(tsId, meta, apiUrl) {
 
+	debugger;
+	var internalId = tsId + "__" + Settings.restApiUrls[apiUrl];
 	var values = [];
 	var refValues = {};
 	var synced = false;
@@ -43,11 +45,15 @@ function TimeSeries(id, meta, apiUrl) {
 		var interval = meta.renderingHints.properties.interval;
 		style = new TimeseriesStyle(chartType, width, color, interval);
 	} else {
-		style = TimeseriesStyle.createDefault(id);
+		style = TimeseriesStyle.createDefault(tsId);
 	}
 
-	this.getId = function() {
-		return id;
+	this.getTsId = function() {
+		return tsId;
+	};
+	
+	this.getInternalId = function() {
+		return internalId;
 	};
 
 	this.getStyle = function() {
@@ -101,12 +107,12 @@ function TimeSeries(id, meta, apiUrl) {
 		return {
 			style : style.persist(),
 			apiUrl : apiUrl,
-			id : id
+			tsId : tsId
 		};
 	};
 
 	this.fetchData = function(timespan, complete) {
-		var promise = Rest.tsData(id, apiUrl, timespan);
+		var promise = Rest.tsData(tsId, apiUrl, timespan);
 		var that = this;
 		promise.done(function(data, refdata) {
 			values = data;
