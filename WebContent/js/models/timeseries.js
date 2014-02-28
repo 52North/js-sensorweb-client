@@ -28,7 +28,7 @@
  */
 function TimeSeries(tsId, meta, apiUrl) {
 
-	var internalId = tsId + "__" + Settings.restApiUrls[apiUrl];
+	var internalId = TimeSeries.createInternalId(tsId, apiUrl);
 	var values = [];
 	var refValues = {};
 	var synced = false;
@@ -83,6 +83,46 @@ function TimeSeries(tsId, meta, apiUrl) {
 		return values;
 	};
 	
+	this.getLastValue = function() {
+		if (meta && meta.lastValue) {
+			return meta.lastValue;
+		}
+		return null;
+	};
+	
+	this.getLastValueFormatted = function() {
+		if (meta && meta.lastValue) {
+			return meta.lastValue.value + " " + meta.uom + " (" + moment(meta.lastValue.timestamp).format(Settings.dateformat) + ")";
+		}
+		return null;
+	};
+	
+	this.getFirstValue = function() {
+		if (meta && meta.firstValue) {
+			return meta.firstValue;
+		}
+		return null;
+	};
+	
+	this.getFirstValueFormatted = function() {
+		if (meta && meta.firstValue) {
+			return meta.firstValue.value + " " + meta.uom + " (" + moment(meta.firstValue.timestamp).format(Settings.dateformat) + ")";
+		}
+		return null;
+	};
+	
+	this.getCoordinates = function() {
+		return meta.station.geometry.coordinates;
+	};
+	
+	this.getStationId = function() {
+		return meta.station.properties.id;
+	};
+	
+	this.getStatusIntervals = function() {
+		return meta.statusIntervals;
+	};
+	
 	this.hasData = function() {
 		return values.length != 0; 
 	};
@@ -123,5 +163,8 @@ function TimeSeries(tsId, meta, apiUrl) {
 		});
 		return promise;
 	};
+};
 
-}
+TimeSeries.createInternalId = function(tsId, apiUrl) {
+	return tsId + "__" + Settings.restApiUrls[apiUrl];
+};

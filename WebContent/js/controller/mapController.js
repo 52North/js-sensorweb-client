@@ -28,7 +28,7 @@
  */
 var Map = {
 
-	timeseriesCol : [],
+	timeseriesCache : [],
 
 	init : function() {
 		$(document).ready(function() {
@@ -135,7 +135,7 @@ var Map = {
 			this.map.removeLayer(this.stationMarkers);
 		}
 		if (results.length > 0) {
-			var firstElemCoord = results[0].station.geometry.coordinates;
+			var firstElemCoord = results[0].getCoordinates();
 			var topmost = firstElemCoord[1];
 			var bottommost = firstElemCoord[1];
 			var leftmost = firstElemCoord[0];
@@ -143,7 +143,7 @@ var Map = {
 			this.stationMarkers = new L.LayerGroup(); 
 			that = this;
 			$.each(results, $.proxy(function(n, elem) {
-				var geom = elem.station.geometry.coordinates;
+				var geom = elem.getCoordinates();
 				if (!isNaN(geom[0]) || !isNaN(geom[1])) {
 					if (geom[0] > rightmost) {
 						rightmost = geom[0];
@@ -160,7 +160,7 @@ var Map = {
 					var interval = this.getMatchingInterval(elem);
 					var fillcolor = interval && interval.color ? interval.color : "#123456";
 					var marker = new L.circleMarker([ geom[1], geom[0] ], {
-						id : elem.station.properties.id,
+						id : elem.getStationId(),
 //						content : "Last Value: " + elem.lastValue.value + " (" + Time.getFormatedTime(elem.lastValue.timestamp) + ")",
 						fillColor : fillcolor,
 					    color: "#000",
@@ -186,23 +186,23 @@ var Map = {
 	},
 	
 	getMatchingInterval : function(elem) {
-		var interval = null;
-		if (elem.lastValue && elem.lastValue.value && elem.statusIntervals) {
-			var lastValue = elem.lastValue.value;
-			$.each(elem.statusIntervals, function(idx, elem) {
-				if (elem.upper == null) {
-					elem.upper = Number.MAX_VALUE;
+		var matchedInterval = null;
+		if (elem.getLastValue() && elem.getStatusIntervals()) {
+			var lastValue = elem.getLastValue().value;
+			$.each(elem.getStatusIntervals(), function(idx, interval) {
+				if (interval.upper == null) {
+					interval.upper = Number.MAX_VALUE;
 				}
-				if (elem.lower == null) {
-					elem.lower = Number.MIN_VALUE;
+				if (interval.lower == null) {
+					interval.lower = Number.MIN_VALUE;
 				}
-				if (!isNaN(elem.upper) && !isNaN(elem.lower) && parseFloat(elem.lower) < lastValue && lastValue < parseFloat(elem.upper)){
-					interval = elem;
+				if (!isNaN(interval.upper) && !isNaN(interval.lower) && parseFloat(interval.lower) < lastValue && lastValue < parseFloat(interval.upper)){
+					matchedInterval = interval;
 					return false;
 				}
 			});
 		}
-		return interval;
+		return matchedInterval;
 	},
 	
 	loading : function(loading) {
@@ -222,63 +222,77 @@ var Map = {
 		this.loading(true);
 		var apiUrl = Status.get('provider').apiUrl;
 		Rest.stations(marker.target.options.id, apiUrl).done($.proxy(function(results) {
-			var tsList = $.map(results.properties.timeseries, function (elem, tsId) {
-				if (Map.selectedPhenomenon == null || Map.selectedPhenomenon == elem.phenomenon.id) {
-					return tsId;
-				}
-			});
-			if (tsList.length == 1) {
-				if (Map.timeseriesCol[tsList[0]] == null) {
-					Rest.timeseriesById(tsList[0], apiUrl).done($.proxy(function(timeseries) {
-						Map.addTimeseries(timeseries);
-						this.loading(false);
-					}, this));
-				} else {
-					Map.addTimeseries(Map.timeseriesCol[tsList[0]]);
-					this.loading(false);
-				}
-			} else {
+//			var tsList = $.map(results.properties.timeseries, function (elem, tsId) {
+//				if (Map.selectedPhenomenon == null || Map.selectedPhenomenon == elem.phenomenon.id) {
+//					return tsId;
+//				}
+//			});
+//			if (tsList.length == 1) {
+//				if (Map.timeseriesCache[tsList[0]] == null) {
+//					Rest.timeseriesById(tsList[0], apiUrl).done($.proxy(function(timeseries) {
+//						Map.addTimeseries(timeseries);
+//						this.loading(false);
+//					}, this));
+//				} else {
+//					Map.addTimeseries(Map.timeseriesCache[tsList[0]]);
+//					this.loading(false);
+//				}
+//			} else {
 				var phenomena = {};
 				$.each(results.properties.timeseries, function(id, elem) {
-					if(!phenomena.hasOwnProperty(elem.phenomenon.id)) {
-						phenomena[elem.phenomenon.id] = {};
-						phenomena[elem.phenomenon.id].timeseries = [];
-						phenomena[elem.phenomenon.id].label = elem.phenomenon.label;
+					if(Map.selectedPhenomenon == null || Map.selectedPhenomenon == elem.phenomenon.id) {
+						if(!phenomena.hasOwnProperty(elem.phenomenon.id)) {
+							phenomena[elem.phenomenon.id] = {};
+							phenomena[elem.phenomenon.id].timeseries = [];
+							phenomena[elem.phenomenon.id].label = elem.phenomenon.label;
+						}
+						debugger;
+						phenomena[elem.phenomenon.id].timeseries.push({
+							id : id,
+							internalId : TimeSeries.createInternalId(id, apiUrl), 
+							selected : Status.hasTimeseriesWithId(id),
+							procedure : elem.procedure.label
+						});
 					}
-					phenomena[elem.phenomenon.id].timeseries.push({
-						id : id,
-						selected : Status.hasTimeseriesWithId(id),
-						procedure : elem.procedure.label
-					});
 				});
 				this.loading(false);
 				Modal.show("station", {
 					"name" : results.properties.label,
-					"phenomena" : $.map(phenomena, function(id, elem) {
-						return id;
+					"phenomena" : $.map(phenomena, function(elem) {
+						return elem;
 					})
 				});
-				$('#confirmTimeseriesSelection').on('click', function(){
+				$('#confirmTimeseriesSelection').on('click', function() {
 					$.each($('.tsItem').has(':checked'), function(id, elem) {
-						Map.addTimeseries(Map.timeseriesCol[$(this).data('id')]);
+						debugger;
+						Map.addTimeseries(Map.timeseriesCache[$(this).data('id')]);
 					});
 				});
-				$.each(results.properties.timeseries, function(id) {
-					if (Map.timeseriesCol[id] == null) {
-						Rest.timeseriesById(id, apiUrl).done(function(timeseries) {
-							Map.addTimeseriesToList(timeseries);
-						});
-					} else {
-						Map.addTimeseriesToList(Map.timeseriesCol[id]);
-					}
+				// TODO add select all button event 
+				$.each(phenomena, function(id, elem) {
+					$.each(elem.timeseries, function(id, elem) {
+						debugger;
+						if (Map.timeseriesCache[elem.internalId] == null) {
+							debugger;
+							Rest.timeseriesById(elem.id, apiUrl).done(function(timeseries) {
+								Map.updateTsEntry(timeseries);
+							});
+						} else {
+							Map.updateTsEntry(Map.timeseriesCache[elem.internalId]);
+						}
+					});
 				});
-			}
+//			}
 		}, this));
 	},
 
-	addTimeseriesToList : function(timeseries) {
+	updateTsEntry : function(timeseries) {
 		$('[data-id=' + timeseries.getTsId() + ']').addClass('loaded').find(':input').prop('disabled', false);
-		Map.timeseriesCol[timeseries.getTsId()] = timeseries;
+		var lastValue = timeseries.getLastValueFormatted();
+		if (lastValue) {
+			$('[data-id=' + timeseries.getTsId() + ']').find('.lastValue').text(lastValue).show();
+		}
+		Map.timeseriesCache[timeseries.getTsId()] = timeseries;
 	},
 	
 	addTimeseries : function(timeseries) {
@@ -308,10 +322,12 @@ var Map = {
 						force_latest_values : true,
 						status_intervals : true
 					}).done($.proxy(function(result) {
+						$.each(result, function(idx, elem) {
+							Map.timeseriesCache[elem.getInternalId()] = elem;
+						});
 						$('.phenomena').removeClass('active');
 						this.createColoredMarkers(result);
 					}, this)).always($.proxy(function() {
-						debugger;
 						$('[data-id=' + elem.id + ']').find('.item').removeClass('loadPhen');
 					}));
 				} else {
@@ -322,7 +338,6 @@ var Map = {
 						$('.phenomena').removeClass('active');
 						this.createStationMarker(result, false);
 					}, this)).always($.proxy(function() {
-						debugger;
 						$('[data-id=' + elem.id + ']').find('.item').removeClass('loadPhen');
 					}));
 				}

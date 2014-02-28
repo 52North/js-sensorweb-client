@@ -55,3 +55,8 @@
 .nav > li > a {
 	padding: 6px 6px;
 }
+
+.lastValue {
+	font-size: 80%;
+	color: grey;
+}

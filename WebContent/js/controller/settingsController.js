@@ -40,27 +40,27 @@ var SettingsController = {
 				// cluster station option
 				Button.setToggleButton('.clusteringStations', Status.get('clusterStations'));
 				$('.clusteringStations').on('click', function(e) {
-					var clustering = Button.switchToggleButton(e.target);
+					var clustering = Button.switchToggleButton(e.currentTarget);
 					Status.set('clusterStations', clustering);
 					EventManager.publish("clusterStations", clustering);
 				});
 				// save status
 				Button.setToggleButton('.saveStatus', Status.get('saveStatus'));
 				$('.saveStatus').on('click', function(e) {
-					var save = Button.switchToggleButton(e.target); 
+					var save = Button.switchToggleButton(e.currentTarget); 
 					Status.set('saveStatus', save);
 				});
 				// generalize data
 				Button.setToggleButton('.generalizeData', Status.get('generalizeData'));
 				$('.generalizeData').on('click', function(e) {
-					var generalize = Button.switchToggleButton(e.target);
+					var generalize = Button.switchToggleButton(e.currentTarget);
 					Status.set('generalizeData', generalize);
 					EventManager.publish("timeseries:update:complete");
 				});
 				// show concentration marker
 				Button.setToggleButton('.concentrationMarker', Status.get('concentrationMarker'));
 				$('.concentrationMarker').on('click', function(e) {
-					var concentMarker = Button.switchToggleButton(e.target);
+					var concentMarker = Button.switchToggleButton(e.currentTarget);
 					Status.set('concentrationMarker', concentMarker);
 				});
 				// permalink

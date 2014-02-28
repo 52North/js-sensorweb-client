@@ -107,7 +107,10 @@ var Rest = {
 		data.force_last_values = true;
 		return Rest.request(apiUrl + "timeseries/"
 				+ (id == null ? "" : id), data, function(promise, result) {
-			promise.resolve(result);
+			var timeseriesList = $.map(result, function(elem) {
+				return new TimeSeries(elem.id, elem, apiUrl);
+			});
+			promise.resolve(timeseriesList);
 		});
 	},
 
