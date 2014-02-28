@@ -147,7 +147,7 @@ var ChartController = {
 	
 	loadDataForChart : function(event, ts) {
 		if(this.visible) {
-			var label = ts.getMetadata().label;
+			var label = ts.getLabel();
 			var html = Template.createHtml("data-loading-entry", {
 				id : ts.getInternalId(),
 				color : ts.getStyle().getColor(),
@@ -205,7 +205,7 @@ var ChartController = {
 	createData : function(ts) {
 		var data = {
 			id : ts.getInternalId(),
-			uom : ts.getMetadata().uom
+			uom : ts.getUom()
 		};
 		this.addStyleAndValues(data, ts);
 		return data;
@@ -261,7 +261,7 @@ var ChartController = {
 			data : refVal.getValues(),
 			id : refVal.getId(),
 			color : refVal.getColor(),
-			uom : ts.getMetadata().uom
+			uom : ts.getUom()
 		});
 		this.plotChart();
 	},

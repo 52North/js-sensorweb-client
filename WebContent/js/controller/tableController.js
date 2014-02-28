@@ -77,7 +77,7 @@ var TableController = {
 		var array = [];
 		$.each(TimeSeriesController.getTimeseriesCollection(), function(index, ts){
 			var values = ts.getValues();
-			var uom = ts.getMetadata().uom;
+			var uom = ts.getUom();
 			var i = (array[0] != null && array[0].length > 0) ? array[0].length : 0;
 			var arrayindex = 0;
 			$.each(values, function(idx, tvpair) {
@@ -116,7 +116,7 @@ var TableController = {
 		var headerrow = $('<tr></tr>');
 		headerrow.append($('<th></th>').text('Time'));
 		$.each(TimeSeriesController.getTimeseriesCollection(), function(index, elem, test){
-			headerrow.append($('<th></th>').text(elem.getMetadata().label));
+			headerrow.append($('<th></th>').text(elem.getLabel()));
 		});
 		table.append(header.append(headerrow));
 		// create content

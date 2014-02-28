@@ -222,67 +222,46 @@ var Map = {
 		this.loading(true);
 		var apiUrl = Status.get('provider').apiUrl;
 		Rest.stations(marker.target.options.id, apiUrl).done($.proxy(function(results) {
-//			var tsList = $.map(results.properties.timeseries, function (elem, tsId) {
-//				if (Map.selectedPhenomenon == null || Map.selectedPhenomenon == elem.phenomenon.id) {
-//					return tsId;
-//				}
-//			});
-//			if (tsList.length == 1) {
-//				if (Map.timeseriesCache[tsList[0]] == null) {
-//					Rest.timeseriesById(tsList[0], apiUrl).done($.proxy(function(timeseries) {
-//						Map.addTimeseries(timeseries);
-//						this.loading(false);
-//					}, this));
-//				} else {
-//					Map.addTimeseries(Map.timeseriesCache[tsList[0]]);
-//					this.loading(false);
-//				}
-//			} else {
-				var phenomena = {};
-				$.each(results.properties.timeseries, function(id, elem) {
-					if(Map.selectedPhenomenon == null || Map.selectedPhenomenon == elem.phenomenon.id) {
-						if(!phenomena.hasOwnProperty(elem.phenomenon.id)) {
-							phenomena[elem.phenomenon.id] = {};
-							phenomena[elem.phenomenon.id].timeseries = [];
-							phenomena[elem.phenomenon.id].label = elem.phenomenon.label;
-						}
-						debugger;
-						phenomena[elem.phenomenon.id].timeseries.push({
-							id : id,
-							internalId : TimeSeries.createInternalId(id, apiUrl), 
-							selected : Status.hasTimeseriesWithId(id),
-							procedure : elem.procedure.label
+			var phenomena = {};
+			$.each(results.properties.timeseries, function(id, elem) {
+				if(Map.selectedPhenomenon == null || Map.selectedPhenomenon == elem.phenomenon.id) {
+					if(!phenomena.hasOwnProperty(elem.phenomenon.id)) {
+						phenomena[elem.phenomenon.id] = {};
+						phenomena[elem.phenomenon.id].timeseries = [];
+						phenomena[elem.phenomenon.id].label = elem.phenomenon.label;
+					}
+					phenomena[elem.phenomenon.id].timeseries.push({
+						id : id,
+						internalId : TimeSeries.createInternalId(id, apiUrl), 
+						selected : Status.hasTimeseriesWithId(id),
+						procedure : elem.procedure.label
+					});
+				}
+			});
+			this.loading(false);
+			Modal.show("station", {
+				"name" : results.properties.label,
+				"phenomena" : $.map(phenomena, function(elem) {
+					return elem;
+				})
+			});
+			$('#confirmTimeseriesSelection').on('click', function() {
+				$.each($('.tsItem').has(':checked'), function(id, elem) {
+					Map.addTimeseries(Map.timeseriesCache[$(this).data('internalid')]);
+				});
+			});
+			// TODO add select all button event 
+			$.each(phenomena, function(id, elem) {
+				$.each(elem.timeseries, function(id, elem) {
+					if (Map.timeseriesCache[elem.internalId] == null) {
+						Rest.timeseries(elem.id, apiUrl).done(function(timeseries) {
+							Map.updateTsEntry(timeseries);
 						});
+					} else {
+						Map.updateTsEntry(Map.timeseriesCache[elem.internalId]);
 					}
 				});
-				this.loading(false);
-				Modal.show("station", {
-					"name" : results.properties.label,
-					"phenomena" : $.map(phenomena, function(elem) {
-						return elem;
-					})
-				});
-				$('#confirmTimeseriesSelection').on('click', function() {
-					$.each($('.tsItem').has(':checked'), function(id, elem) {
-						debugger;
-						Map.addTimeseries(Map.timeseriesCache[$(this).data('id')]);
-					});
-				});
-				// TODO add select all button event 
-				$.each(phenomena, function(id, elem) {
-					$.each(elem.timeseries, function(id, elem) {
-						debugger;
-						if (Map.timeseriesCache[elem.internalId] == null) {
-							debugger;
-							Rest.timeseriesById(elem.id, apiUrl).done(function(timeseries) {
-								Map.updateTsEntry(timeseries);
-							});
-						} else {
-							Map.updateTsEntry(Map.timeseriesCache[elem.internalId]);
-						}
-					});
-				});
-//			}
+			});
 		}, this));
 	},
 
@@ -292,7 +271,7 @@ var Map = {
 		if (lastValue) {
 			$('[data-id=' + timeseries.getTsId() + ']').find('.lastValue').text(lastValue).show();
 		}
-		Map.timeseriesCache[timeseries.getTsId()] = timeseries;
+		Map.timeseriesCache[timeseries.getInternalId()] = timeseries;
 	},
 	
 	addTimeseries : function(timeseries) {
@@ -456,13 +435,13 @@ var Map = {
 	
 	showTsInMap : function(event, ts) {
 		Pages.navigateToMap();
-		var coords = ts.getMetadata().station.geometry.coordinates,
+		var coords = ts.getCoordinates(),
 		pos = L.latLng(coords[1], coords[0]),
 		popup = L.popup().setLatLng(pos);
 		var content = Template.createHtml("station-popup", {
-			station : ts.getMetadata().station.properties.label,
-			timeseries : ts.getMetadata().label,
-			service : ts.getMetadata().parameters.service.label
+			station : ts.getStationLabel(),
+			timeseries : ts.getLabel(),
+			service : ts.getServiceLabel()
 		});
 		popup.setContent(content);
 		popup.openOn(Map.map);

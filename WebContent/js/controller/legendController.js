@@ -144,9 +144,9 @@ var LegendController = {
 	},
 
 	createEntry : function(ts) {
-		var meta = ts.getMetadata();
-		var firstValue = meta.firstValue;
-		var lastValue = meta.lastValue;
+		debugger;
+		var firstValue = ts.getFirstValue();
+		var lastValue = ts.getLastValue();
 		var refValues = $.map(ts.getRefValues(), function(elem, id) {
 			return {
 				id : elem.getId(),
@@ -158,10 +158,10 @@ var LegendController = {
 			id : ts.getInternalId(),
 			color : ts.getStyle().getColor(),
 			synced : ts.isSynced(),
-			uom : (meta.uom != null) ? meta.uom : "",
-			phenomenon : (meta.parameters != null) ? meta.parameters.phenomenon.label : "",
-			procedure : (meta.parameters != null) ? meta.parameters.procedure.label : "",
-			station : (meta.parameters != null) ? meta.station.properties.label : "",
+			uom : this.createText(ts.getUom),
+			phenomenon : this.createText(ts.getPhenomenonLabel()),
+			procedure : this.createText(ts.getProcedureLabel()),
+			station : this.createText(ts.getStationLabel()),
 			firstValueTime : (firstValue != null) ? firstValue.timestamp : "",
 			firstValueTimeFormatted : (firstValue != null) ? moment(firstValue.timestamp).format(Settings.dateformat) : "",
 			firstValue : (firstValue != null) ? firstValue.value : "",
@@ -171,5 +171,9 @@ var LegendController = {
 			referenceValues : refValues
 		});
 		return html;
+	},
+	
+	createText : function(text) {
+		return text != null ? text : "";
 	}
 };

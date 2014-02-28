@@ -75,6 +75,10 @@ function TimeSeries(tsId, meta, apiUrl) {
 		return meta.uom;
 	};
 	
+	this.getLabel = function() {
+		return meta.label;
+	};
+	
 	this.unSynced = function() {
 		synced = false;
 	};
@@ -119,6 +123,22 @@ function TimeSeries(tsId, meta, apiUrl) {
 		return meta.station.properties.id;
 	};
 	
+	this.getStationLabel = function() {
+		return meta.station.properties.label;
+	};
+	
+	this.getServiceLabel = function() {
+		return meta.parameters.service.label;
+	};
+	
+	this.getPhenomenonLabel = function() {
+		return meta.parameters.phenomenon.label;
+	};
+	
+	this.getProcedureLabel = function() {
+		return meta.parameters.procedure.label;
+	};
+	
 	this.getStatusIntervals = function() {
 		return meta.statusIntervals;
 	};
@@ -136,10 +156,6 @@ function TimeSeries(tsId, meta, apiUrl) {
 	
 	this.getRefValues = function(id) {
 		return refValues;
-	};
-	
-	this.getMetadata = function() {
-		return meta;
 	};
 	
 	this.persist = function() {

@@ -123,8 +123,7 @@ var ListSelectionController = {
 			// load ts
 			Rest.timeseries(null, apiUrl, data).done(function(result) {
 				if(result.length == 1) {
-					var ts = new TimeSeries(result[0].id, result[0], apiUrl);
-					TimeSeriesController.addTS(ts);
+					TimeSeriesController.addTS(result[0]);
 					Modal.hide();
 					Pages.navigateToChart();
 				} else {

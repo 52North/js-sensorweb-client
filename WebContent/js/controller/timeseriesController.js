@@ -38,7 +38,7 @@ var TimeSeriesController = {
 	
 	loadSavedTimeseries : function() {
 		$.each(Status.getTimeseries(), $.proxy(function(internalId, elem) {
-			var promise = Rest.timeseriesById(elem.tsId, elem.apiUrl);
+			var promise = Rest.timeseries(elem.tsId, elem.apiUrl);
 			var that = this;
 			promise.done(function(ts){
 				if(elem.style) {

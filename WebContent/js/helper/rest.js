@@ -52,13 +52,6 @@ var Rest = {
 		alert("URL: " + url + "\n\nData: " + data);
 	},
 
-	timeseriesById : function(id, apiUrl) {
-		return this.request(apiUrl + "timeseries/" + id, null,
-				function(promise, result) {
-					promise.resolve(new TimeSeries(id, result, apiUrl));
-				});
-	},
-
 	tsData : function(id, apiUrl, timespan) {
 		return this.request(apiUrl + "timeseries/" + id
 				+ "/getData", {
@@ -103,14 +96,21 @@ var Rest = {
 	},
 
 	timeseries : function(id, apiUrl, data) {
+		if(data == null) {
+			data = {};
+		}
 		data.expanded = true;
 		data.force_last_values = true;
 		return Rest.request(apiUrl + "timeseries/"
 				+ (id == null ? "" : id), data, function(promise, result) {
-			var timeseriesList = $.map(result, function(elem) {
-				return new TimeSeries(elem.id, elem, apiUrl);
-			});
-			promise.resolve(timeseriesList);
+			if ($.isArray(result)) {
+				var timeseriesList = $.map(result, function(elem) {
+					return new TimeSeries(elem.id, elem, apiUrl);
+				});
+				promise.resolve(timeseriesList);
+			} else {
+				promise.resolve(new TimeSeries(result.id, result, apiUrl));
+			}
 		});
 	},
 
