@@ -28,7 +28,6 @@
  */
 function TimeSeries(tsId, meta, apiUrl) {
 
-	debugger;
 	var internalId = tsId + "__" + Settings.restApiUrls[apiUrl];
 	var values = [];
 	var refValues = {};

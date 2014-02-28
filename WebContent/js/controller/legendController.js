@@ -46,7 +46,19 @@ var LegendController = {
 	},
 	
 	addClickEvents : function(ts) {
+		$('[data-id=' + ts.getInternalId() + '] .firstLastEntry').on('click', function(event) {
+			event.stopPropagation();
+			var time = $(event.currentTarget).data('firsttime');
+			if (time != null) {
+				EventManager.publish("time:start:change", time);
+			}
+			time = $(event.currentTarget).data('lasttime');
+			if (time != null) {
+				EventManager.publish("time:end:change", time);
+			}
+		});
 		$('[data-id=' + ts.getInternalId() + '] .legendItemheader').click($.proxy(function(event){
+			debugger;
 			if(!$('[data-id=' + ts.getInternalId() + ']').hasClass('selected')){
 				EventManager.publish("timeseries:unselectAll");
 				EventManager.publish("timeseries:selected", ts.getInternalId());	
@@ -76,16 +88,6 @@ var LegendController = {
 		$('[data-id=' + ts.getInternalId() + '] .showInfo').click($.proxy(function(event){
 			$('[data-id=' + ts.getInternalId() + ']').find('.collapseLegendEntry').toggle();
 		},this));
-		$('[data-id=' + ts.getInternalId() + '] .firstLastEntry').on('click', function(event) {
-			var time = $(event.currentTarget).data('firsttime');
-			if (time != null) {
-				EventManager.publish("time:start:change", time);
-			}
-			time = $(event.currentTarget).data('lasttime');
-			if (time != null) {
-				EventManager.publish("time:end:change", time);
-			}
-		});
 		$('[data-id=' + ts.getInternalId() + '] .refEntry').on('click', function(event){
 			var target = $(event.currentTarget);
 			target.toggleClass('selected');

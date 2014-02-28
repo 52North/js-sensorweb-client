@@ -34,7 +34,7 @@
 }
 
 .legendItem .small {
-	font-size: 11px;
+	font-size: 90%;
 }
 
 .legendItem.selected {
@@ -46,6 +46,10 @@
 	cursor: pointer;
 }
 
+.legend.active {
+	background: rgba(66, 139, 202, 0.5);
+}
+
 .legendicons span {
 	margin: 0 10px;
 	font-size: 18px;
@@ -53,6 +57,29 @@
 
 .legendicons span:hover {
 	cursor: pointer;
+}
+
+/* don't display the hide diagram button on small screens*/
+@media screen and (max-width: 767px) {
+	.hidden-small {
+		display: none;
+	}
+}
+
+@media screen and (max-width: 991px) {
+	.hidden-medium {
+		display: none;
+	}
+}
+
+.noDataWarning {
+	border: red solid 2px;
+	border-radius: 5px;
+	padding: 3px;
+}
+
+.noDataWarning .red {
+	color: red;
 }
 
 .firstLastEntry:hover,

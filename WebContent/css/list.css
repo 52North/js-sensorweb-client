@@ -45,3 +45,11 @@ a:hover {
 	background-color: #428bca;
 	color: white;
 }
+
+.phenomenonItem .loadPhen .loading {
+	display: inline;
+}
+
+.phenomenonItem .loading {
+	display: none;
+}

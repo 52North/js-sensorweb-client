@@ -101,10 +101,6 @@ footer {
 	visibility: visible;
 }
 
-.legend.active {
-	background: rgba(66, 139, 202, 0.5);
-}
-
 .phenomena.active {
 	background: rgba(217, 217, 217, 0.9);
 }
