@@ -123,21 +123,26 @@ var ChartController = {
 	},
 	
 	selectTs : function(event, id) {
-		$.each(this.plot.getData(), function(index, elem) {
-			if(elem.id == id) {
-				elem.lines.lineWidth = ChartController.selectedLineWidth;
-				elem.bars.lineWidth = ChartController.selectedLineWidth;
-			}
-		});
-		this.plot.draw();
+		if (this.plot) {
+			$.each(this.plot.getData(), function(index, elem) {
+				if(elem.id == id) {
+					elem.lines.lineWidth = ChartController.selectedLineWidth;
+					elem.bars.lineWidth = ChartController.selectedLineWidth;
+				}
+			});
+			this.plot.draw();
+		}
 	},
 	
 	unselectAll : function(event) {
-		$.each(this.plot.getData(), function(index, elem) {
-			elem.lines.lineWidth = ChartController.defaultLineWidth;
-			elem.bars.lineWidth = ChartController.defaultLineWidth;
-		});
-		this.plot.draw();
+		debugger;
+		if (this.plot) {
+			$.each(this.plot.getData(), function(index, elem) {
+				elem.lines.lineWidth = ChartController.defaultLineWidth;
+				elem.bars.lineWidth = ChartController.defaultLineWidth;
+			});
+			this.plot.draw();
+		}
 	},
 	
 	loadDataForChart : function(event, ts) {

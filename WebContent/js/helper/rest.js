@@ -138,6 +138,12 @@ var Rest = {
 		}, function(promise, result) {
 			promise.resolve(result);
 		});
+	},
+	
+	abortRequest : function(promise) {
+		if (promise && promise.state() == "pending") {
+			promise.reject();
+		}
 	}
 
 };

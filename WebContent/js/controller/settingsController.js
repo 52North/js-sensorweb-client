@@ -57,6 +57,12 @@ var SettingsController = {
 					Status.set('generalizeData', generalize);
 					EventManager.publish("timeseries:update:complete");
 				});
+				// show concentration marker
+				Button.setToggleButton('.concentrationMarker', Status.get('concentrationMarker'));
+				$('.concentrationMarker').on('click', function(e) {
+					var concentMarker = Button.switchToggleButton(e.target);
+					Status.set('concentrationMarker', concentMarker);
+				});
 				// permalink
 				$('.permalink .item').on('click', function() {
 					// url

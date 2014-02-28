@@ -36,7 +36,8 @@ var Status = (function() {
 			'generalizeData' : false,
 			'timeseries' : {},
 			'timespan' : Time.isoTimespan('today'),
-			'saveStatus' : true
+			'saveStatus' : true,
+			'concentrationMarker' : false
 		},
 		
 		init : function() {

@@ -40,18 +40,6 @@ var Map = {
 			});
 		});
 		if ($("#map").length > 0) {
-//			var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png', cloudmadeAttribution = '&copy; OpenStreetMap &amp; Contributors', cloudmade = L
-//					.tileLayer(cloudmadeUrl, {
-//						maxZoom : 17,
-//						attribution : false
-//					}), latlng = L.latLng(50, 10);
-//			L.Icon.Default.imagePath = 'images';
-//			this.map = L.map('map', {
-//				center : latlng,
-//				zoom : 5,
-//				layers : [ layer ]
-//			});
-			
 			this.map = L.map('map').setView([51.505, -0.09], 13);
 			L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 			    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -126,7 +114,7 @@ var Map = {
 					    color: "#000",
 					    opacity: 1,
 					    weight: 2,
-					    fillOpacity: 0.4
+					    fillOpacity: 0.8
 					});
 //					var marker = new L.marker([ geom[1], geom[0] ], {
 //						id : elem.properties.id
@@ -140,6 +128,81 @@ var Map = {
 					[ parseFloat(bottommost), parseFloat(leftmost) ],
 					[ parseFloat(topmost), parseFloat(rightmost) ] ]);
 		}
+	},
+	
+	createColoredMarkers : function(results) {
+		if (this.stationMarkers != null) {
+			this.map.removeLayer(this.stationMarkers);
+		}
+		if (results.length > 0) {
+			var firstElemCoord = results[0].station.geometry.coordinates;
+			var topmost = firstElemCoord[1];
+			var bottommost = firstElemCoord[1];
+			var leftmost = firstElemCoord[0];
+			var rightmost = firstElemCoord[0];
+			this.stationMarkers = new L.LayerGroup(); 
+			that = this;
+			$.each(results, $.proxy(function(n, elem) {
+				var geom = elem.station.geometry.coordinates;
+				if (!isNaN(geom[0]) || !isNaN(geom[1])) {
+					if (geom[0] > rightmost) {
+						rightmost = geom[0];
+					}
+					if (geom[0] < leftmost) {
+						leftmost = geom[0];
+					}
+					if (geom[1] > topmost) {
+						topmost = geom[1];
+					}
+					if (geom[1] < bottommost) {
+						bottommost = geom[1];
+					}
+					var interval = this.getMatchingInterval(elem);
+					var fillcolor = interval && interval.color ? interval.color : "#123456";
+					var marker = new L.circleMarker([ geom[1], geom[0] ], {
+						id : elem.station.properties.id,
+//						content : "Last Value: " + elem.lastValue.value + " (" + Time.getFormatedTime(elem.lastValue.timestamp) + ")",
+						fillColor : fillcolor,
+					    color: "#000",
+					    opacity: 1,
+					    weight: 2,
+					    fillOpacity: 0.8
+					});
+					marker.on('click', $.proxy(that.markerClicked, that));
+//					marker.on('mouseover', $.proxy(function(e) {
+//						  L.popup()
+//						  	.setLatLng(e.target.getLatLng())
+//						  	.setContent(e.target.options.content)
+//						  	.openOn(this.map);
+//						}, this));
+					this.stationMarkers.addLayer(marker);
+				}
+			}, this));
+			this.map.addLayer(this.stationMarkers);
+			this.map.fitBounds([
+					[ parseFloat(bottommost), parseFloat(leftmost) ],
+					[ parseFloat(topmost), parseFloat(rightmost) ] ]);
+		}
+	},
+	
+	getMatchingInterval : function(elem) {
+		var interval = null;
+		if (elem.lastValue && elem.lastValue.value && elem.statusIntervals) {
+			var lastValue = elem.lastValue.value;
+			$.each(elem.statusIntervals, function(idx, elem) {
+				if (elem.upper == null) {
+					elem.upper = Number.MAX_VALUE;
+				}
+				if (elem.lower == null) {
+					elem.lower = Number.MIN_VALUE;
+				}
+				if (!isNaN(elem.upper) && !isNaN(elem.lower) && parseFloat(elem.lower) < lastValue && lastValue < parseFloat(elem.upper)){
+					interval = elem;
+					return false;
+				}
+			});
+		}
+		return interval;
 	},
 	
 	loading : function(loading) {
@@ -232,15 +295,37 @@ var Map = {
 			$('.phenomena-entry').append(html);
 			$('[data-id=' + elem.id + ']').click($.proxy(function(event){
 				$('.phenomena-entry').find('.selected').removeClass('selected');
-				$('[data-id=' + elem.id + ']').find('.item').addClass('selected');
+				$('[data-id=' + elem.id + ']').find('.item').addClass('selected').addClass('loadPhen');
 				this.selectedPhenomenon = elem.id;
-				Rest.stations(null, Status.get('provider').apiUrl, {
-					service : Status.get('provider').serviceID,
-					phenomenon : elem.id
-				}).done($.proxy(function(result){
-					$('.phenomena').removeClass('active');
-					this.createStationMarker(result, false);
-				}, this));
+				var coloredMarkers = Status.get('concentrationMarker');
+				var provider = Status.get('provider');
+				Rest.abortRequest(this.phenomenonPromise);
+				if (coloredMarkers) {
+					this.phenomenonPromise = Rest.timeseries(null, provider.apiUrl, {
+						service : provider.serviceID,
+						phenomenon : elem.id,
+						expanded: true,
+						force_latest_values : true,
+						status_intervals : true
+					}).done($.proxy(function(result) {
+						$('.phenomena').removeClass('active');
+						this.createColoredMarkers(result);
+					}, this)).always($.proxy(function() {
+						debugger;
+						$('[data-id=' + elem.id + ']').find('.item').removeClass('loadPhen');
+					}));
+				} else {
+					this.phenomenonPromise = Rest.stations(null, provider.apiUrl, {
+						service : provider.serviceID,
+						phenomenon : elem.id
+					}).done($.proxy(function(result){
+						$('.phenomena').removeClass('active');
+						this.createStationMarker(result, false);
+					}, this)).always($.proxy(function() {
+						debugger;
+						$('[data-id=' + elem.id + ']').find('.item').removeClass('loadPhen');
+					}));
+				}
 			}, this));
 		}, this));
 	},
@@ -270,10 +355,10 @@ var Map = {
 	/*----- provider list -----*/
 	openProviderList : function() {
 		this.loading(true);
-		this.apiConnectCounter = Settings.restApiUrls.length;
+		this.apiConnectCounter = Object.keys(Settings.restApiUrls).length;
 		this.providerList = [];
-		$.each(Settings.restApiUrls, $.proxy(function(idx, elem) {
-			Rest.services(elem).done($.proxy(this.createProviderList, this, elem));
+		$.each(Settings.restApiUrls, $.proxy(function(url, elem) {
+			Rest.services(url).done($.proxy(this.createProviderList, this, url));
 		}, this));
 	},
 

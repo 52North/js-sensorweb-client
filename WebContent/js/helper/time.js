@@ -96,5 +96,10 @@ var Time = {
 			till : moment(timespan[1]),
 			mode : 'day'
 		};
+	},
+	
+	getFormatedTime : function (timestamp) {
+		return moment(timestamp).format(Settings.dateformat);
 	}
+	
 };
