@@ -54,11 +54,12 @@ var ChartController = {
 		},
 		yaxis : {
 			show : true,
-			tickFormatter : function(val, axis) {
-				var factor = axis.tickDecimals ? Math.pow(10, axis.tickDecimals) : 1;
-				var formatted = "" + Math.round(val * factor) / factor;
-				return formatted + "<br>" + this.uom;
-			}
+			additionalWidth : 17,
+//			tickFormatter : function(val, axis) {
+//				var factor = axis.tickDecimals ? Math.pow(10, axis.tickDecimals) : 1;
+//				var formatted = "" + Math.round(val * factor) / factor;
+//				return formatted + "<br>" + this.uom;
+//			}
 		},
 		legend : {
 		// show: false
@@ -135,7 +136,6 @@ var ChartController = {
 	},
 	
 	unselectAll : function(event) {
-		debugger;
 		if (this.plot) {
 			$.each(this.plot.getData(), function(index, elem) {
 				elem.lines.lineWidth = ChartController.defaultLineWidth;
@@ -205,7 +205,8 @@ var ChartController = {
 	createData : function(ts) {
 		var data = {
 			id : ts.getInternalId(),
-			uom : ts.getUom()
+			uom : ts.getUom(),
+			phenomenon : ts.getPhenomenonLabel()
 		};
 		this.addStyleAndValues(data, ts);
 		return data;
@@ -282,13 +283,13 @@ var ChartController = {
 			this.options.yaxes = this.createYAxis();
 			this.updateXAxis();
 			if (this.data.length > 0) {
-				this.plot = $.plot("#placeholder", this.data, this.options);
+				this.plot = $.plot('#placeholder', this.data, this.options);
 				$.each(this.plot.getAxes(), $.proxy(function(i, axis){
 					if(!axis.show) return;
 					var box = axis.box;
 					if(axis.direction == "y") {
 						$("<div class='axisTarget' style='position:absolute; left:" + box.left + "px; top:" + box.top + "px; width:" + box.width +  "px; height:" + box.height + "px'></div>")
-						.data("axis.direction", axis.direction)
+//						.data("axis.direction", axis.direction)
 						.data("axis.n", axis.n)
 						.appendTo(this.plot.getPlaceholder())
 						.click($.proxy(function (event) {
@@ -309,6 +310,9 @@ var ChartController = {
 							});
 							this.plot.draw();
 						},this));
+						var yaxisLabel = $("<div class='axisLabel yaxisLabel' style=left:" + box.left + "px;></div>")
+								.text(axis.options.phenomenon + " (" + axis.options.uom + ")").appendTo('#placeholder');
+						yaxisLabel.css("margin-left", -(yaxisLabel.width() - yaxisLabel.height()) / 2);
 					}
 				}, this));
 			} else {
@@ -329,16 +333,18 @@ var ChartController = {
 			if(!axesList.hasOwnProperty(elem.uom)) {
 				axesList[elem.uom] = {
 					id : ++Object.keys(axesList).length,
-					label : elem.uom,
+					uom : elem.uom,
+					phenomenon : elem.phenomenon,
 					zeroScaled : elem.zeroScaled
 				};
 			};
 			elem.yaxis = axesList[elem.uom].id;
 		});
 		var axes = [];
-		$.each(axesList, function(label, elem){
+		$.each(axesList, function(idx, elem){
 			axes.splice(elem.id - 1, 0, {
-				uom : label,
+				uom : elem.uom,
+				phenomenon : elem.phenomenon,
 				min : elem.zeroScaled ? 0 : null
 			});
 		});
