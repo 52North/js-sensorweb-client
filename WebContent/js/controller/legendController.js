@@ -58,7 +58,6 @@ var LegendController = {
 			}
 		});
 		$('[data-id=' + ts.getInternalId() + '] .legendItemheader').click($.proxy(function(event){
-			debugger;
 			if(!$('[data-id=' + ts.getInternalId() + ']').hasClass('selected')){
 				EventManager.publish("timeseries:unselectAll");
 				EventManager.publish("timeseries:selected", ts.getInternalId());	
@@ -144,7 +143,6 @@ var LegendController = {
 	},
 
 	createEntry : function(ts) {
-		debugger;
 		var firstValue = ts.getFirstValue();
 		var lastValue = ts.getLastValue();
 		var refValues = $.map(ts.getRefValues(), function(elem, id) {
