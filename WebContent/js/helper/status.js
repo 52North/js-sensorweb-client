@@ -98,8 +98,21 @@ var Status = (function() {
 		},
 		
 		addTimeseriesById : function(id) {
-			this.current.timeseries[id] = id;
-			this.save();
+			var ids = id.split("__");
+			var apiUrl = null;
+			$.each(Settings.restApiUrls, function(url,id){
+				if(id == ids[1]) {
+					apiUrl = url;
+					return;
+				}
+			});
+			if(apiUrl) {
+				this.current.timeseries[id] = {
+						apiUrl : apiUrl,
+						tsId : ids[0]
+				};
+				this.save();
+			}
 		},
 		
 		clearTimeseries : function() {

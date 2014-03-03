@@ -65,19 +65,7 @@ var SettingsController = {
 				});
 				// permalink
 				$('.permalink .item').on('click', function() {
-					// url
-					var url = window.location.href;
-					// create timespan
-					var timespan = TimeController.currentTimespan;
-					url = url + "?timespan=" + Time.getRequestTimespan(timespan.from, timespan.till);
-					// create timeseries id list
-					var tsList = $.map(TimeSeriesController.getTimeseriesCollection(), function(ts, id){
-						return id;
-					});
-					if (tsList.length > 0) {
-						var timeseries = tsList.join(",");
-						url = url + "&timeseries=" + timeseries;
-					};
+					var url = PermalinkController.createPermalink();
 					$('.permalink .link').attr('href', url).show();
 					var mailLink = "mailto:?body=" + encodeURIComponent(url); 
 					$('.permalink .mail').attr('href', mailLink).show();

@@ -142,6 +142,7 @@
 							    <jsSourceFile>helper/button.js</jsSourceFile>
 							    <jsSourceFile>helper/bootstrap-fix.js</jsSourceFile>
 							    <jsSourceFile>controller/startController.js</jsSourceFile>
+							    <jsSourceFile>controller/permalinkController.js</jsSourceFile>
 							    <jsSourceFile>controller/settingsController.js</jsSourceFile>
 							    <jsSourceFile>controller/timeseriesController.js</jsSourceFile>
 							    <jsSourceFile>controller/timeController.js</jsSourceFile>

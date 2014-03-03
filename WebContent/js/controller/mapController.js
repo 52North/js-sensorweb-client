@@ -253,7 +253,6 @@ var Map = {
 			if ($('.tsItem').length > 1) {
 				$('.selectAllOption').show();
 				$('.selectAllOption .checkbox').on('click', function(event){
-					debugger;
 					var checked = $(event.currentTarget).find(':checkbox').is(':checked');
 					$.each($('.tsItem'), function(idx, elem){
 						$(elem).find(':checkbox').prop('checked', checked);
