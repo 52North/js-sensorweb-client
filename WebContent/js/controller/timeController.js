@@ -95,14 +95,14 @@ var TimeController = {
 	startChanged : function(event, start) {
 		var diff = this.getCurrentDiff();
 		this.currentTimespan.from = moment(start).startOf('day');
-		this.currentTimespan.till = moment(start).add(diff).startOf('day');
+		this.currentTimespan.till = moment(start).add(diff).startOf('day').subtract('ms', 1);
 		this.updateTimeExtent();
 	},
 	
 	endChanged : function(event, end) {
 		var diff = this.getCurrentDiff();
-		this.currentTimespan.from = moment(end).subtract(diff).startOf('day');
-		this.currentTimespan.till = moment(end).startOf('day');
+		this.currentTimespan.from = moment(end).subtract(diff).endOf('day').add('ms', 1);
+		this.currentTimespan.till = moment(end).endOf('day');
 		this.updateTimeExtent();
 	},	
 
