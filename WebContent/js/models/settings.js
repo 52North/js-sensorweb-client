@@ -28,68 +28,37 @@
  */
 var Settings = {
 	
+	// The entries in this list will be removed from the provider list offered to the user
 	providerBlackList : [
-//	{
-//		serviceID : 'srv_6d9ccea8d609ecb74d4a512922bb7cee', // ircel
-//		apiUrl : 'http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/'
-//	},
 	{
-		serviceID : 'srv_cbe54f275d9d993b376783216ff9f431', // ecmwf sos
-		apiUrl : 'http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/'
-	},
-	{
-		serviceID : 'srv_a2f1df1e1f15ecf1ac3ef032fd17602a', // geoviqua sos
+		serviceID : 'srv_6d9ccea8d609ecb74d4a512922bb7cee', // ircel
 		apiUrl : 'http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/'
 	},
 	{
 		serviceID : 'srv_7cabc8c30a85fab035c95882df6db343', // BfG sos
 		apiUrl : 'http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/'
-	},
-	{
-		serviceID : 'srv_5174ab6feff1caf74f92a4f12d2b773e', // Kisters sos
-		apiUrl : 'http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/'
-	},
-	{
-		serviceID : 'srv_75ca5910f9bc20619895032ea01c7e0c', // meraka sos
-		apiUrl : 'http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/'
 	}
 	],
 	
+	// A list of timeseries-API urls and an appropriate identifier to create internal timeseries ids 
 	restApiUrls : {
 		"http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/" : "52nSensorweb", 
 		"http://sosrest.irceline.be/api/v1/" : "irceline",
 		"http://www.fluggs.de/sos2/api/v1/" : "fluggs"
-//		"http://192.168.1.135:8080/sensorwebclient-webapp/api/v1/" : "localhorst"
-//		"http://192.168.1.135:8090/sensorwebclient-webapp-3.3.0-SNAPSHOT/api/v1/",
-//		"http://localhost:8090/sensorwebclient-webapp-3.3.0-SNAPSHOT/api/v1/",
 	},
 	
-//	defaultProvider : {
-//		serviceID : 'srv_738111ed219f738cfc85be0c8d87843c',
-//		apiUrl : 'http://192.168.1.135:8080/sensorwebclient-webapp/api/v1/'
-//	},
-	
+	// default selected provider
 	defaultProvider : {
 		serviceID : 'srv_738111ed219f738cfc85be0c8d87843c',
 		apiUrl : 'http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/'
 	},
 	
-//	defaultProvider : { // WupperVerband
-//		serviceID : '1', 
-//		apiUrl : 'http://www.fluggs.de/sos2/api/v1/'
-//	},
-
-//	defaultProvider : { // WupperVerband
-//		serviceID : 'srv_6d9ccea8d609ecb74d4a512922bb7cee', 
-//		apiUrl : 'http://sosrest.irceline.be/api/v1/'
-//	},
-
+	// zoom level in the map used for user location and station position
 	zoom : 13,
 	
+	// date/time format which is used on several places
 	dateformat: "DD.MM.YY HH:mm",
 		
-	saveStatusPossible : true,
-	
 	// duration after which latest values shall be ignored when rendering marker in the map
 	ignoreAfterDuration : moment.duration(2, 'h')
 	

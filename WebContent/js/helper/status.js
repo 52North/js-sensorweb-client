@@ -41,6 +41,7 @@ var Status = (function() {
 		},
 		
 		init : function() {
+			Settings.saveStatusPossible = true;
 			this.load();
 			if(!this.get('saveStatus')) {
 				this.reset();
