@@ -77,7 +77,6 @@ var TableController = {
 		var array = [];
 		$.each(TimeSeriesController.getTimeseriesCollection(), function(index, ts){
 			var values = ts.getValues();
-			var uom = ts.getUom();
 			var i = (array[0] != null && array[0].length > 0) ? array[0].length : 0;
 			var arrayindex = 0;
 			$.each(values, function(idx, tvpair) {
@@ -123,19 +122,18 @@ var TableController = {
 		table.append(header.append(headerrow));
 		// create content
 		$.each(array, function(tsIndex, elem) {
-//			if(tsIndex <= 10) {
-				var row = $('<tr></tr>');
-				$.each(elem, function(index, value) {
-					if(index == 0) {
-						row.append($('<td></td>').text(moment(value).format(Settings.dateformat)));
-					} else {
-						row.append($('<td></td>').css('color', cArray[index-1]).append($('<b></b>').text(value)));
-					}
-				});
-				table.append(row);
-//			}
+			var row = $('<tr></tr>');
+			$.each(elem, function(index, value) {
+				if (index == 0) {
+					row.append($('<td></td>').text(
+							moment(value).format(Settings.dateformat)));
+				} else {
+					row.append($('<td></td>').css('color', cArray[index - 1])
+							.append($('<b></b>').text(value)));
+				}
+			});
+			table.append(row);
 		});
-//		table.fixedHeaderTable();
 		return table;
 	}
 };
