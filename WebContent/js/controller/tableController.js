@@ -36,10 +36,12 @@ var TableController = {
 			if(this.isVisible == false) {
 				this.isVisible = true;
 				$('#tableView').show();
+				$('[data-toggle="legend"]').hide();
 				EventManager.publish("navigation:open","table");
 			} else {
 				this.isVisible = false;
 				$('#tableView').hide();
+				$('[data-toggle="legend"]').show();
 				EventManager.publish("navigation:close","table");
 			}
 		}, this));
