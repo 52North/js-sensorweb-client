@@ -56,23 +56,23 @@ var Settings = {
 	],
 	
 	restApiUrls : {
-//		"http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/" : "52nSensorweb", 
-//		"http://sosrest.irceline.be/api/v1/" : "irceline",
-//		"http://www.fluggs.de/sos2/api/v1/" : "fluggs",
-		"http://192.168.1.135:8080/sensorwebclient-webapp/api/v1/" : "localhorst"
+		"http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/" : "52nSensorweb", 
+		"http://sosrest.irceline.be/api/v1/" : "irceline",
+		"http://www.fluggs.de/sos2/api/v1/" : "fluggs"
+//		"http://192.168.1.135:8080/sensorwebclient-webapp/api/v1/" : "localhorst"
 //		"http://192.168.1.135:8090/sensorwebclient-webapp-3.3.0-SNAPSHOT/api/v1/",
 //		"http://localhost:8090/sensorwebclient-webapp-3.3.0-SNAPSHOT/api/v1/",
 	},
 	
-	defaultProvider : {
-		serviceID : 'srv_738111ed219f738cfc85be0c8d87843c',
-		apiUrl : 'http://192.168.1.135:8080/sensorwebclient-webapp/api/v1/'
-	},
-	
 //	defaultProvider : {
 //		serviceID : 'srv_738111ed219f738cfc85be0c8d87843c',
-//		apiUrl : 'http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/'
+//		apiUrl : 'http://192.168.1.135:8080/sensorwebclient-webapp/api/v1/'
 //	},
+	
+	defaultProvider : {
+		serviceID : 'srv_738111ed219f738cfc85be0c8d87843c',
+		apiUrl : 'http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/'
+	},
 	
 //	defaultProvider : { // WupperVerband
 //		serviceID : '1', 
@@ -88,6 +88,9 @@ var Settings = {
 	
 	dateformat: "DD.MM.YY HH:mm",
 		
-	saveStatusPossible : true	
+	saveStatusPossible : true,
+	
+	// duration after which latest values shall be ignored when rendering marker in the map
+	ignoreAfterDuration : moment.duration(2, 'h')
 	
 };

@@ -94,6 +94,10 @@ function TimeSeries(tsId, meta, apiUrl) {
 		return null;
 	};
 	
+	this.isCurrent = function() {
+		return this.getLastValue() != null && moment().subtract(Settings.ignoreAfterDuration).isBefore(moment(this.getLastValue().timestamp));
+	}
+	
 	this.getLastValueFormatted = function() {
 		if (meta && meta.lastValue) {
 			return meta.lastValue.value + " " + meta.uom + " (" + moment(meta.lastValue.timestamp).format(Settings.dateformat) + ")";
@@ -172,7 +176,9 @@ function TimeSeries(tsId, meta, apiUrl) {
 		promise.done(function(data, refdata) {
 			values = data;
 			$.each(refdata, function(id, elem) {
-				refValues[id].setValues(elem);
+				if(refValues[id]) {
+					refValues[id].setValues(elem);
+				}
 			});
 			synced = true;
 			complete(that);

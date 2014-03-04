@@ -44,7 +44,7 @@ var Map = {
 			L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 			    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 			}).addTo(this.map);
-			
+			L.Icon.Default.imagePath = 'images';
 			this.map.whenReady(function(map) {
 				// load stations for default provider
 				this.loadStations();
@@ -108,17 +108,17 @@ var Map = {
 					if (geom[1] < bottommost) {
 						bottommost = geom[1];
 					}
-					var marker = new L.circleMarker([ geom[1], geom[0] ], {
-						id : elem.properties.id,
-						fillColor: "#FF0000",
-					    color: "#000",
-					    opacity: 1,
-					    weight: 2,
-					    fillOpacity: 0.8
-					});
-//					var marker = new L.marker([ geom[1], geom[0] ], {
-//						id : elem.properties.id
+//					var marker = new L.circleMarker([ geom[1], geom[0] ], {
+//						id : elem.properties.id,
+//						fillColor: "#FF0000",
+//					    color: "#000",
+//					    opacity: 1,
+//					    weight: 2,
+//					    fillOpacity: 0.8
 //					});
+					var marker = new L.Marker([ geom[1], geom[0] ], {
+						id : elem.properties.id
+					});
 					marker.on('click', $.proxy(that.markerClicked, that));
 					this.stationMarkers.addLayer(marker);
 				}
@@ -157,24 +157,25 @@ var Map = {
 					if (geom[1] < bottommost) {
 						bottommost = geom[1];
 					}
-					var interval = this.getMatchingInterval(elem);
-					var fillcolor = interval && interval.color ? interval.color : "#123456";
-					var marker = new L.circleMarker([ geom[1], geom[0] ], {
-						id : elem.getStationId(),
-//						content : "Last Value: " + elem.lastValue.value + " (" + Time.getFormatedTime(elem.lastValue.timestamp) + ")",
-						fillColor : fillcolor,
-					    color: "#000",
-					    opacity: 1,
-					    weight: 2,
-					    fillOpacity: 0.8
-					});
+					var marker;
+					if (elem.isCurrent()) {
+						var interval = this.getMatchingInterval(elem);
+						var fillcolor = interval && interval.color ? interval.color : "#123456";
+						marker = new L.circleMarker([ geom[1], geom[0] ], {
+							id : elem.getStationId(),
+//							content : "Last Value: " + elem.lastValue.value + " (" + Time.getFormatedTime(elem.lastValue.timestamp) + ")",
+							fillColor : fillcolor,
+						    color: "#000",
+						    opacity: 1,
+						    weight: 2,
+						    fillOpacity: 0.8
+						});
+					} else {
+						marker = new L.Marker([ geom[1], geom[0] ], {
+							id : elem.getStationId()
+						});
+					}
 					marker.on('click', $.proxy(that.markerClicked, that));
-//					marker.on('mouseover', $.proxy(function(e) {
-//						  L.popup()
-//						  	.setLatLng(e.target.getLatLng())
-//						  	.setContent(e.target.options.content)
-//						  	.openOn(this.map);
-//						}, this));
 					this.stationMarkers.addLayer(marker);
 				}
 			}, this));
