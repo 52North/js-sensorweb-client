@@ -47,10 +47,6 @@ body,html,.container,.row-offcanvas,.mainPanel {
 	font-size: 18px;
 } */
 
-#tableView {
-	overflow: auto;
-}
-
 .timeButtons {
 	position: absolute;
 	left: 0;

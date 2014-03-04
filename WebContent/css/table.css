@@ -38,4 +38,6 @@ table.sortable thead {
     cursor: pointer;
 }
 
-
+#tableView {
+	overflow: auto;
+}

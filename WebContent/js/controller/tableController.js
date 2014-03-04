@@ -82,7 +82,7 @@ var TableController = {
 			var arrayindex = 0;
 			$.each(values, function(idx, tvpair) {
 				var time = tvpair[0];
-				var value = tvpair[1] + " " + uom;
+				var value = tvpair[1];
 				if(i == 0) {
 					array.push([time,value]);
 				} else {
@@ -115,8 +115,10 @@ var TableController = {
 		var header = $('<thead></thead>');
 		var headerrow = $('<tr></tr>');
 		headerrow.append($('<th></th>').text('Time'));
-		$.each(TimeSeriesController.getTimeseriesCollection(), function(index, elem, test){
-			headerrow.append($('<th></th>').text(elem.getLabel()));
+		$.each(TimeSeriesController.getTimeseriesCollection(), function(index, elem){
+			var title = $('<div></div>').text(elem.getStationLabel());
+			var subtitle = $('<span></span>').text(elem.getPhenomenonLabel() + " (" + elem.getUom() + ")");
+			headerrow.append($('<th></th>').append(title).append(subtitle));
 		});
 		table.append(header.append(headerrow));
 		// create content
@@ -125,7 +127,7 @@ var TableController = {
 				var row = $('<tr></tr>');
 				$.each(elem, function(index, value) {
 					if(index == 0) {
-						row.append($('<td></td>').text(moment(value).format("DD-MM-YYYY HH:mm:ss")));
+						row.append($('<td></td>').text(moment(value).format(Settings.dateformat)));
 					} else {
 						row.append($('<td></td>').css('color', cArray[index-1]).append($('<b></b>').text(value)));
 					}
@@ -133,6 +135,7 @@ var TableController = {
 				table.append(row);
 //			}
 		});
+//		table.fixedHeaderTable();
 		return table;
 	}
 };
