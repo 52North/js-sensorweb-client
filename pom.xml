@@ -97,10 +97,12 @@
                         <id>default-minify</id>
                         <configuration>
 							<cssSourceFiles>
+								<!-- <cssSourceFile>libs/bootstrap-full.css</cssSourceFile> -->
 								<cssSourceFile>libs/bootstrap.css</cssSourceFile>
 								<cssSourceFile>libs/datepicker.css</cssSourceFile>
 								<cssSourceFile>offcanvas.css</cssSourceFile>
-								<cssSourceFile>libs/leaflet.css</cssSourceFile>
+								<!-- <cssSourceFile>libs/leaflet-full.css</cssSourceFile> -->
+								<cssSourceFile>libs/leaflet-full.css</cssSourceFile>
 								<cssSourceFile>libs/leafletMarkerCluster.css</cssSourceFile>
 								<cssSourceFile>mainstyles.css</cssSourceFile>
 								<cssSourceFile>list.css</cssSourceFile>
@@ -117,9 +119,11 @@
 							    <!-- <jsSourceFile>libs/jquery-2.0.3.js</jsSourceFile> -->
 							    <jsSourceFile>libs/jquery-1.10.2.js</jsSourceFile>
 							    <!-- <jsSourceFile>libs/jquery-1.11.0.js</jsSourceFile> -->
+							    <!-- <jsSourceFile>libs/bootstrap-full.js</jsSourceFile> -->
 							    <jsSourceFile>libs/bootstrap.js</jsSourceFile>
 							    <jsSourceFile>libs/bootstrap-datepicker.js</jsSourceFile>
-							    <jsSourceFile>libs/leaflet-src.js</jsSourceFile>
+							    <jsSourceFile>libs/leaflet-full.js</jsSourceFile>
+							    <!-- <jsSourceFile>libs/leaflet-src.js</jsSourceFile> -->
 							    <jsSourceFile>libs/leaflet.markercluster-src.js</jsSourceFile>
 							    <jsSourceFile>libs/jquery.flot.js</jsSourceFile>
 							    <jsSourceFile>libs/jquery.flot.time.js</jsSourceFile>
