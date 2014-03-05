@@ -313,7 +313,7 @@ var Map = {
 						$.each(result, function(idx, elem) {
 							Map.timeseriesCache[elem.getInternalId()] = elem;
 						});
-						$('.phenomena').removeClass('active');
+						Pages.togglePhenomenon(false);
 						this.createColoredMarkers(result);
 					}, this)).always($.proxy(function() {
 						$('[data-id=' + elem.id + ']').find('.item').removeClass('loadPhen');
@@ -323,7 +323,7 @@ var Map = {
 						service : provider.serviceID,
 						phenomenon : elem.id
 					}).done($.proxy(function(result){
-						$('.phenomena').removeClass('active');
+						Pages.togglePhenomenon(false);
 						this.createStationMarker(result, false);
 					}, this)).always($.proxy(function() {
 						$('[data-id=' + elem.id + ']').find('.item').removeClass('loadPhen');
