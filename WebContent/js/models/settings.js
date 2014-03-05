@@ -60,6 +60,9 @@ var Settings = {
 	dateformat: "DD.MM.YY HH:mm",
 		
 	// duration after which latest values shall be ignored when rendering marker in the map
-	ignoreAfterDuration : moment.duration(2, 'h')
+	ignoreAfterDuration : moment.duration(2, 'h'),
+	
+	// default scaling of loaded diagram
+	defaultZeroScale : true
 	
 };

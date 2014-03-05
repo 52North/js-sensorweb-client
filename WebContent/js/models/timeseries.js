@@ -32,7 +32,7 @@ function TimeSeries(tsId, meta, apiUrl) {
 	var values = [];
 	var refValues = {};
 	var synced = false;
-	var zeroScaled = false;
+	var zeroScaled = Settings.defaultZeroScale;
 	$.each(meta.referenceValues, $.proxy(function(index, elem) {
 		refValues[elem.referenceValueId] = new ReferenceValue(elem.referenceValueId, elem.label);
 	}, this));
