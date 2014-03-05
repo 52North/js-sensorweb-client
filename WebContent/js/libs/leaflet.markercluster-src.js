@@ -1559,7 +1559,7 @@ Retrieved from: http://en.literateprograms.org/Quickhull_(Javascript)?oldid=1843
 (function () {
 	L.QuickHull = {
 
-		/*
+		/**
 		 * @param {Object} cpt a point to be measured from the baseline
 		 * @param {Array} bl the baseline, as represented by a two-element
 		 *   array of latlng objects.
@@ -1571,7 +1571,7 @@ Retrieved from: http://en.literateprograms.org/Quickhull_(Javascript)?oldid=1843
 			return (vX * (cpt.lat - bl[0].lat) + vY * (cpt.lng - bl[0].lng));
 		},
 
-		/*
+		/**
 		 * @param {Array} baseLine a two-element array of latlng objects
 		 *   representing the baseline to project from
 		 * @param {Array} latLngs an array of latlng objects
@@ -1604,7 +1604,7 @@ Retrieved from: http://en.literateprograms.org/Quickhull_(Javascript)?oldid=1843
 		},
 
 
-		/*
+		/**
 		 * Given a baseline, compute the convex hull of latLngs as an array
 		 * of latLngs.
 		 *
@@ -1630,7 +1630,7 @@ Retrieved from: http://en.literateprograms.org/Quickhull_(Javascript)?oldid=1843
 			}
 		},
 
-		/*
+		/**
 		 * Given an array of latlngs, compute a convex hull as an array
 		 * of latlngs
 		 *

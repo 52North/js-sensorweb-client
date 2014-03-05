@@ -81,8 +81,8 @@ function TimeseriesStyle(chartType, width, color, intervalString) {
 		};
 	};
 	
-	this.setIntervalByHours = function(int) {
-		interval = int;
+	this.setIntervalByHours = function(inter) {
+		interval = inter;
 	};
 
 };

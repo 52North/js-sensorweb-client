@@ -54,7 +54,7 @@ var ChartController = {
 		},
 		yaxis : {
 			show : true,
-			additionalWidth : 17,
+			additionalWidth : 17
 //			tickFormatter : function(val, axis) {
 //				var factor = axis.tickDecimals ? Math.pow(10, axis.tickDecimals) : 1;
 //				var formatted = "" + Math.round(val * factor) / factor;
