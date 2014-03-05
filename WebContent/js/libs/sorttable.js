@@ -30,6 +30,7 @@ sorttable = {
     if (!document.createElement || !document.getElementsByTagName) return;
 
     sorttable.DATE_RE = /^(\d\d?)[\/\.-](\d\d?)[\/\.-]((\d\d)?\d\d)$/;
+    sorttable.DATE_RE_DDMMYYHHMM = /^(\d\d?)[\/\.-](\d\d?)[\/\.-]((\d\d)?\d\d) (\d\d)[\:](\d\d)$/;
 
     forEach(document.getElementsByTagName('table'), function(table) {
       if (table.className.search(/\bsortable\b/) != -1) {
@@ -169,13 +170,13 @@ sorttable = {
     for (var i=0; i<table.tBodies[0].rows.length; i++) {
       text = sorttable.getInnerText(table.tBodies[0].rows[i].cells[column]);
       if (text != '') {
-        if (text.match(/^-?[�$�]?[\d,.]+%?$/)) {
-          return sorttable.sort_numeric;
-        }
         // check for a date: dd/mm/yyyy or dd/mm/yy
         // can have / or . or - as separator
         // can be mm/dd as well
-        possdate = text.match(sorttable.DATE_RE)
+    	  if (text.match(sorttable.DATE_RE_DDMMYYHHMM)) {
+    		  return sorttable.sort_ddmmyyhhMM;
+    	  }
+        possdate = text.match(sorttable.DATE_RE);
         if (possdate) {
           // looks like a date
           first = parseInt(possdate[1]);
@@ -190,6 +191,9 @@ sorttable = {
             // that it's dd/mm (English imperialism!) and keep looking
             sortfn = sorttable.sort_ddmm;
           }
+        }
+        if (text.match(/^-?[�$�]?[\d,.]+%?$/)) {
+            return sorttable.sort_numeric;
         }
       }
     }
@@ -270,6 +274,19 @@ sorttable = {
     if (a[0]<b[0]) return -1;
     return 1;
   },
+  sort_ddmmyyhhMM : function(a,b) {
+	  dt1 = sorttable.createDate(a[0].match(sorttable.DATE_RE_DDMMYYHHMM));
+	  dt2 = sorttable.createDate(b[0].match(sorttable.DATE_RE_DDMMYYHHMM));
+	  if (dt1 == dt2) return 0;
+	  if (dt1 < dt2) return -1;
+	  return 1;
+  },
+  createDate:function(match){
+	  var d = match[1], m = match[2], y = match[3], h = match[5], M = match[6];
+	  if (m.length == 1) m = '0' + m;
+	  if (d.length == 1) d = '0' + d;
+	  return y+m+d+h+M;
+  },
   sort_ddmm: function(a,b) {
     mtch = a[0].match(sorttable.DATE_RE);
     y = mtch[3]; m = mtch[2]; d = mtch[1];
@@ -331,7 +348,7 @@ sorttable = {
 
     } // while(swap)
   }
-}
+};
 
 /* ******************************************************************
    Supporting functions: bundled here to avoid depending on a library
@@ -437,7 +454,7 @@ fixEvent.preventDefault = function() {
 };
 fixEvent.stopPropagation = function() {
   this.cancelBubble = true;
-}
+};
 
 // Dean's forEach: http://dean.edwards.name/base/forEach.js
 /*
