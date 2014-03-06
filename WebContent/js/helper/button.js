@@ -44,5 +44,16 @@ var Button = {
 		} else {
 			button.removeClass('btn-primary');
 		}
+	},
+	
+	setLoadingButton : function(button, loading) {
+		var icon = button.find('span');
+		if (loading) {
+			icon.hide();
+			button.append('<span class="glyphicon glyphicon-refresh icon-spin"></span>');
+		} else {
+			icon.show();
+			button.find('.glyphicon.glyphicon-refresh').remove();
+		}
 	}
 };

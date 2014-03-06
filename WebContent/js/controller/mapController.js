@@ -203,16 +203,7 @@ var Map = {
 	},
 	
 	loading : function(loading) {
-		var button = $('[data-action="provider"] span');
-		if(loading) {
-			button.addClass('icon-spin');
-			button.removeClass('glyphicon-folder-open');
-			button.addClass('glyphicon-refresh');
-		} else {
-			button.removeClass('icon-spin');
-			button.removeClass('glyphicon-refresh');
-			button.addClass('glyphicon-folder-open');
-		}
+		Button.setLoadingButton($('[data-action="provider"]'), loading);
 	},
 
 	markerClicked : function(marker) {
@@ -407,10 +398,7 @@ var Map = {
 
 	/*----- locate user -----*/
 	locateUser : function() {
-		var button = $('[data-action="locate"] span');
-		button.addClass('icon-spin');
-		button.removeClass('glyphicon-map-marker');
-		button.addClass('glyphicon-refresh');
+		Button.setLoadingButton($('[data-action="locate"]'), true);
 		this.map.locate({
 			setView : true,
 			maxZoom : Settings.zoom
@@ -418,10 +406,7 @@ var Map = {
 	},
 
 	onLocationFound : function(e) {
-		var button = $('[data-action="locate"] span');
-		button.removeClass('icon-spin');
-		button.removeClass('glyphicon-refresh');
-		button.addClass('glyphicon-map-marker');
+		Button.setLoadingButton($('[data-action="locate"]'), false);
 		var popup = L.popup().setLatLng(e.latlng).setContent('<p>Here is your current location</p>');
 		Map.map.openPopup(popup);
 	},
