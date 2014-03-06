@@ -101,6 +101,7 @@ var Rest = {
 		}
 		data.expanded = true;
 		data.force_last_values = true;
+		data.rendering_hints = true;
 		return Rest.request(apiUrl + "timeseries/"
 				+ (id == null ? "" : id), data, function(promise, result) {
 			if ($.isArray(result)) {
