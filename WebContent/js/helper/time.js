@@ -72,8 +72,8 @@ var Time = {
 			mode = "year";
 			break;
 		case 'lastYear':
-			from = from.subtract('months', 1).startOf('month');
-			till = till.subtract('months', 1).endOf('month');
+			from = from.subtract('years', 1).startOf('year');
+			till = till.subtract('years', 1).endOf('year');
 			mode = "year";
 			break;
 		}
