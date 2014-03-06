@@ -246,6 +246,8 @@ var Map = {
 						$(elem).find(':checkbox').prop('checked', checked);
 					});
 				});
+			} else {
+				$('.tsItem').find(':checkbox').prop('checked', true);
 			};
 			$.each(phenomena, function(id, elem) {
 				$.each(elem.timeseries, function(id, elem) {
