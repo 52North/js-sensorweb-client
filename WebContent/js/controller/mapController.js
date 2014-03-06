@@ -48,11 +48,9 @@ var Map = {
 			this.map.whenReady(function(map) {
 				// load stations for default provider
 				this.loadStations();
-				
 				// locate user methods
 				this.map.on('locationfound', this.onLocationFound);
 				this.map.on('locationerror', this.onLocationError);
-				
 			}, this);
 		}
 
@@ -71,7 +69,6 @@ var Map = {
 			this.createStationMarker(result, Status.get('clusterStations'));
 			this.loading(false);
 		}, this));
-		// load phenomena list
 		Rest.phenomena(null, provider.apiUrl, {
 			service : provider.serviceID
 		}).done($.proxy(this.fillPhenomenaList, this));
@@ -160,10 +157,9 @@ var Map = {
 					var marker;
 					if (elem.isCurrent()) {
 						var interval = this.getMatchingInterval(elem);
-						var fillcolor = interval && interval.color ? interval.color : "#123456";
+						var fillcolor = interval && interval.color ? interval.color : Settings.defaultMarkerColor;
 						marker = new L.circleMarker([ geom[1], geom[0] ], {
 							id : elem.getStationId(),
-//							content : "Last Value: " + elem.lastValue.value + " (" + Time.getFormatedTime(elem.lastValue.timestamp) + ")",
 							fillColor : fillcolor,
 						    color: "#000",
 						    opacity: 1,
@@ -426,14 +422,6 @@ var Map = {
 		button.removeClass('icon-spin');
 		button.removeClass('glyphicon-refresh');
 		button.addClass('glyphicon-map-marker');
-//		if (Map.location != null) {
-//			this.removeLayer(Map.location);
-//		}
-//		Map.location = new L.marker(e.latlng, {
-//			draggable : false
-//		});
-//		
-//		this.addLayer(Map.location);
 		var popup = L.popup().setLatLng(e.latlng).setContent('<p>Here is your current location</p>');
 		Map.map.openPopup(popup);
 	},

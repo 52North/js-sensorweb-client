@@ -53,14 +53,17 @@ var Settings = {
 		apiUrl : 'http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/'
 	},
 	
-	// zoom level in the map used for user location and station position
+	// zoom level in the map, used for user location and station position
 	zoom : 13,
 	
 	// date/time format which is used on several places
-	dateformat: "DD.MM.YY HH:mm",
+	dateformat: 'DD.MM.YY HH:mm',
 		
 	// duration after which latest values shall be ignored when rendering marker in the map
 	ignoreAfterDuration : moment.duration(2, 'h'),
+	
+	// default color for circled marker, when last value is older than 'ignoreAfterDuration' or the timeseries has no last value
+	defaultMarkerColor : '#123456',
 	
 	// default scaling of loaded diagram
 	defaultZeroScale : true
