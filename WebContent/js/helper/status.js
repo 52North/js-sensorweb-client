@@ -72,7 +72,7 @@ var Status = (function() {
 					Settings.saveStatusPossible = false;
 					// safari mobile in private mode???
 					// http://davidwalsh.name/quota_exceeded_err
-					alert("No Status saving possible.");
+//					alert("No Status saving possible.");
 				}
 			}
 		},
