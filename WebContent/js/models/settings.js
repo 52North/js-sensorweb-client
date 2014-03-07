@@ -68,7 +68,7 @@ var Settings = {
 	defaultMarkerColor : '#123456',
 	
 	// default scaling of loaded diagram
-	defaultZeroScale : true,
+	defaultZeroScale : false,
 	
 	// additional parameters which are append to the request urls
 	additionalParameters : {

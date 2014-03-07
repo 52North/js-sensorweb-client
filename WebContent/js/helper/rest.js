@@ -31,6 +31,9 @@ var Rest = {
 	request : function(url, data, success, fail) {
 		var promise = $.Deferred();
 		if (Settings.additionalParameters) {
+			if (!data) {
+				data = {};
+			}
 			$.each(Settings.additionalParameters, function(key, value) {
 				data[key] = value;
 			});

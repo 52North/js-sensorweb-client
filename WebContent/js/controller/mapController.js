@@ -39,24 +39,25 @@ var Map = {
 				Map.locateUser();
 			});
 		});
+		this.loadStations();
+		EventManager.subscribe("resetStatus", $.proxy(this.loadStations, this));
+		EventManager.subscribe("clusterStations", $.proxy(this.loadStations, this));
+		EventManager.subscribe("timeseries:showInMap", $.proxy(this.showTsInMap, this));
+	},
+	
+	createMap : function() {
 		if ($("#map").length > 0) {
-			this.map = L.map('map').setView([51.505, -0.09], 13);
+			this.map = L.map('map');
 			L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 			    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 			}).addTo(this.map);
 			L.Icon.Default.imagePath = 'images';
 			this.map.whenReady(function(map) {
-				// load stations for default provider
-				this.loadStations();
 				// locate user methods
 				this.map.on('locationfound', this.onLocationFound);
 				this.map.on('locationerror', this.onLocationError);
 			}, this);
 		}
-
-		EventManager.subscribe("resetStatus", $.proxy(this.loadStations, this));
-		EventManager.subscribe("clusterStations", $.proxy(this.loadStations, this));
-		EventManager.subscribe("timeseries:showInMap", $.proxy(this.showTsInMap, this));
 	},
 
 	/*----- stations -----*/
@@ -75,6 +76,9 @@ var Map = {
 	},
 
 	createStationMarker : function(results, clustering) {
+		if (!this.map) {
+			this.createMap();
+		}
 		if (this.stationMarkers != null) {
 			this.map.removeLayer(this.stationMarkers);
 		}
@@ -421,7 +425,9 @@ var Map = {
 		Pages.navigateToMap();
 		var coords = ts.getCoordinates(),
 		pos = L.latLng(coords[1], coords[0]),
-		popup = L.popup().setLatLng(pos);
+		popup = L.popup({
+			autoPan : false
+		}).setLatLng(pos);
 		var content = Template.createHtml("station-popup", {
 			station : ts.getStationLabel(),
 			timeseries : ts.getLabel(),
@@ -429,7 +435,6 @@ var Map = {
 		});
 		popup.setContent(content);
 		popup.openOn(Map.map);
-		Map.map.setZoom(Settings.zoom);
-		Map.map.panTo(pos);
+		Map.map.setView(pos, Settings.zoom);
 	}
 };
