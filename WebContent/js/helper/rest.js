@@ -30,6 +30,11 @@ var Rest = {
 
 	request : function(url, data, success, fail) {
 		var promise = $.Deferred();
+		if (Settings.additionalParameters) {
+			$.each(Settings.additionalParameters, function(key, value) {
+				data[key] = value;
+			});
+		}
 		$.ajax({
 			url : url,
 			data : data,

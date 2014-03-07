@@ -42,9 +42,11 @@ var Settings = {
 	
 	// A list of timeseries-API urls and an appropriate identifier to create internal timeseries ids 
 	restApiUrls : {
-		"http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/" : "52nSensorweb", 
-		"http://sosrest.irceline.be/api/v1/" : "irceline",
-		"http://www.fluggs.de/sos2/api/v1/" : "fluggs"
+//		'http://192.168.1.135:8080/sensorwebclient-webapp/api/v1/' : 'localhost'
+//		'http://localhost:8090/sensorwebclient-webapp-3.3.0-SNAPSHOT/api/v1/' : 'localhost'
+		'http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/' : '52nSensorweb', 
+		'http://sosrest.irceline.be/api/v1/' : 'irceline',
+		'http://www.fluggs.de/sos2/api/v1/' : 'fluggs'
 	},
 	
 	// default selected provider
@@ -60,12 +62,17 @@ var Settings = {
 	dateformat: 'DD.MM.YY HH:mm',
 		
 	// duration after which latest values shall be ignored when rendering marker in the map
-	ignoreAfterDuration : moment.duration(2, 'h'),
+	ignoreAfterDuration : moment.duration(1, 'y'),
 	
 	// default color for circled marker, when last value is older than 'ignoreAfterDuration' or the timeseries has no last value
 	defaultMarkerColor : '#123456',
 	
 	// default scaling of loaded diagram
-	defaultZeroScale : true
+	defaultZeroScale : true,
+	
+	// additional parameters which are append to the request urls
+	additionalParameters : {
+		locale : 'de'
+	}
 	
 };
