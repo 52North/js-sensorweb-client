@@ -43,7 +43,7 @@ var PermalinkController = {
 		}
 	},
 	
-	createTimespan : function() {
+	createTimespanParam : function() {
 		var timespan = TimeController.currentTimespan;
 		return this.timespanParam + "=" + Time.getRequestTimespan(timespan.from, timespan.till);
 	},
@@ -58,7 +58,7 @@ var PermalinkController = {
 		}
 	},
 	
-	createTimeseries : function() {
+	createTimeseriesParam : function() {
 		var tsList = $.map(TimeSeriesController.getTimeseriesCollection(), function(ts, id){
 			return id;
 		});
@@ -83,8 +83,8 @@ var PermalinkController = {
 	
 	createPermalink : function() {
 		var url = window.location.href + "?";
-		url = url + this.createTimespan();
-		url = url + "&" + this.createTimeseries();
+		url = url + this.createTimespanParam();
+		url = url + "&" + this.createTimeseriesParam();
 		return url;
 	}
 };

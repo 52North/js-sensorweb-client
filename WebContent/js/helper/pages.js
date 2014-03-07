@@ -59,7 +59,6 @@ var Pages = {
 	},
 	
 	togglePhenomenon : function(active, label) {
-		debugger;
 		var name = label == null ? "Phenomena" : label;
 		if(active) {
 			$('.phenomena').toggleClass('active');
