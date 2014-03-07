@@ -73,6 +73,9 @@ var Settings = {
 	// additional parameters which are append to the request urls
 	additionalParameters : {
 		locale : 'de'
-	}
+	},
+	
+	// should saving the status be possible, 
+	saveStatusPossible : false
 	
 };

@@ -32,23 +32,28 @@ var SettingsController = {
 		$(document).ready(function() {
 			$('[data-target="#settings"]').click(function() {
 				Modal.show("settings");
-				// reset status
-				$('.resetStatus').on('click', function() {
-					Status.reset();
-					Modal.hide();
-				});
+				if(Settings.saveStatusPossible){
+					// reset status
+					$('.resetStatus').on('click', function() {
+						Status.reset();
+						Modal.hide();
+					});
+					// save status
+					Button.setToggleButton('.saveStatus', Status.get('saveStatus'));
+					$('.saveStatus').on('click', function(e) {
+						var save = Button.switchToggleButton(e.currentTarget); 
+						Status.set('saveStatus', save);
+					});
+				} else {
+					$('.resetStatus').remove();
+					$('.saveStatus').remove();
+				}
 				// cluster station option
 				Button.setToggleButton('.clusteringStations', Status.get('clusterStations'));
 				$('.clusteringStations').on('click', function(e) {
 					var clustering = Button.switchToggleButton(e.currentTarget);
 					Status.set('clusterStations', clustering);
 					EventManager.publish("clusterStations", clustering);
-				});
-				// save status
-				Button.setToggleButton('.saveStatus', Status.get('saveStatus'));
-				$('.saveStatus').on('click', function(e) {
-					var save = Button.switchToggleButton(e.currentTarget); 
-					Status.set('saveStatus', save);
 				});
 				// generalize data
 				Button.setToggleButton('.generalizeData', Status.get('generalizeData'));
