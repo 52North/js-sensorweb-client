@@ -283,14 +283,16 @@ var Map = {
 
 	/*----- stations -----*/
 	fillPhenomenaList : function(results) {
+		Pages.togglePhenomenon(false);
 		$('.phenomena-entry').empty();
 		this.createDefaultPhenomenaEntry();
 		$.each(results, $.proxy(function(index, elem) {
 			var html = this.createPhenomenaEntry(elem);
 			$('.phenomena-entry').append(html);
-			$('[data-id=' + elem.id + ']').click($.proxy(function(event){
+			$('[data-id=' + elem.id + ']').click($.proxy(function(event) {
 				$('.phenomena-entry').find('.selected').removeClass('selected');
 				$('[data-id=' + elem.id + ']').find('.item').addClass('selected').addClass('loadPhen');
+				debugger;
 				this.selectedPhenomenon = elem.id;
 				var coloredMarkers = Status.get('concentrationMarker');
 				var provider = Status.get('provider');
@@ -306,7 +308,7 @@ var Map = {
 						$.each(result, function(idx, elem) {
 							Map.timeseriesCache[elem.getInternalId()] = elem;
 						});
-						Pages.togglePhenomenon(false);
+						Pages.togglePhenomenon(false, elem.label);
 						this.createColoredMarkers(result);
 					}, this)).always($.proxy(function() {
 						$('[data-id=' + elem.id + ']').find('.item').removeClass('loadPhen');
@@ -316,7 +318,7 @@ var Map = {
 						service : provider.serviceID,
 						phenomenon : elem.id
 					}).done($.proxy(function(result){
-						Pages.togglePhenomenon(false);
+						Pages.togglePhenomenon(false, elem.label);
 						this.createStationMarker(result, false);
 					}, this)).always($.proxy(function() {
 						$('[data-id=' + elem.id + ']').find('.item').removeClass('loadPhen');
@@ -343,6 +345,7 @@ var Map = {
 		$('[data-id=all]').click($.proxy(function(event, bla){
 			$('.phenomena-entry').find('.selected').removeClass('selected');
 			$('[data-id=all]').find('.item').addClass('selected');
+			Pages.togglePhenomenon(false);
 			Map.loadStations();
 		}));
 		$('[data-id=all]').find('.item').addClass('selected');

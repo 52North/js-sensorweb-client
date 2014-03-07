@@ -58,17 +58,19 @@ var Pages = {
 		}
 	},
 	
-	togglePhenomenon : function(active) {
+	togglePhenomenon : function(active, label) {
+		debugger;
+		var name = label == null ? "Phenomena" : label;
 		if(active) {
 			$('.phenomena').toggleClass('active');
 			if($('.phenomena').hasClass('active')) {
 				$('[data-toggle="phenomena"]').text("X");
 			} else {
-				$('[data-toggle="phenomena"]').text("Phenomena");
+				$('[data-toggle="phenomena"]').text(name);
 			}
 		} else {
 			$('.phenomena').removeClass('active');
-			$('[data-toggle="phenomena"]').text("Phenomena");
+			$('[data-toggle="phenomena"]').text(name);
 		}
 	},
 
