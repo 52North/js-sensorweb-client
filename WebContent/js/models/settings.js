@@ -76,6 +76,6 @@ var Settings = {
 	},
 	
 	// should saving the status be possible, 
-	saveStatusPossible : false
+	saveStatusPossible : true
 	
 };
