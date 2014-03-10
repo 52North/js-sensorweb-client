@@ -82,7 +82,8 @@ var PermalinkController = {
 	},
 	
 	createPermalink : function() {
-		var url = window.location.href + "?";
+		var loc = window.location,
+		url = loc.origin + loc.pathname + "?";
 		url = url + this.createTimespanParam();
 		url = url + "&" + this.createTimeseriesParam();
 		return url;
