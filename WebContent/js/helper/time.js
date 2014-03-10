@@ -91,20 +91,21 @@ var Time = {
 	
 	createTimespan : function (string) {
 		var timespan = string.split('/');
-		if (timespan.length = 2 && moment.isMoment(timespan[0])
-				&& moment.isMoment(timespan[1])) {
-			return {
-				from : moment(timespan[0]),
-				till : moment(timespan[1]),
-				mode : 'day'
-			};
-		} else {
-			return this.isoTimespan(string);
+		if (timespan.length == 2) {
+			var start = moment(timespan[0]);
+			var end = moment(timespan[1]);
+			if (start.isValid() && end.isValid()) {
+				return {
+					from : start,
+					till : end,
+					mode : 'day'
+				};
+			}
 		}
+		return this.isoTimespan(string);
 	},
 	
 	getFormatedTime : function (timestamp) {
 		return moment(timestamp).format(Settings.dateformat);
 	}
-	
 };
