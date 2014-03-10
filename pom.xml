@@ -6,11 +6,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.n52.mobileclient</groupId>
-    <artifactId>mobileSWC</artifactId>
+    <artifactId>jsClient</artifactId>
     <version>0.2.0</version>
     <packaging>war</packaging>
 
-    <name>JavaScript SOS Client</name>
+    <name>JavaScript SensorWeb Client</name>
     <description></description>
     <url></url>
     <inceptionYear>2014</inceptionYear>
@@ -114,7 +114,7 @@
 								<cssSourceFile>animation.css</cssSourceFile>
 								<cssSourceFile>table.css</cssSourceFile>
 							</cssSourceFiles>
-							<cssFinalFile>mswc.${project.version}.css</cssFinalFile>
+							<cssFinalFile>jsc.${project.version}.css</cssFinalFile>
 							<jsSourceFiles>
 							    <!-- <jsSourceFile>libs/jquery-2.0.3.js</jsSourceFile> -->
 							    <jsSourceFile>libs/jquery-1.10.2.js</jsSourceFile>
@@ -157,14 +157,14 @@
 							    <jsSourceFile>controller/styleChangeController.js</jsSourceFile>
 							    <jsSourceFile>controller/tableController.js</jsSourceFile>
 							</jsSourceFiles>
-							<jsFinalFile>mswc.${project.version}.js</jsFinalFile>
+							<jsFinalFile>jsc.${project.version}.js</jsFinalFile>
                             <jsEngine>CLOSURE</jsEngine>
                             <!--closureCompilationLevel>ADVANCED_OPTIMIZATIONS</closureCompilationLevel-->
                             <!--closureExterns>
                                 <closureExtern>extern/external-lib.js</closureExtern>
                             </closureExterns-->
                             <yuiDisableOptimizations>true</yuiDisableOptimizations>
-                            <skipMinify>true</skipMinify>
+                            <skipMinify>${skipMinify}</skipMinify>
                             <webappSourceDir>
                                 ${basedir}/WebContent/
                             </webappSourceDir>
@@ -206,6 +206,16 @@
 			</plugin>
         </plugins>
     </build>
+    
+    <profiles>
+		<profile>
+		    <id>minify</id>
+		    <properties>
+		        <skipMinify>false</skipMinify>
+    			<minifiedPostfix>min.</minifiedPostfix>
+		    </properties>
+		</profile>        
+    </profiles>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -214,5 +224,7 @@
         <maven.compiler.target>1.5</maven.compiler.target>
         <maven.build.timestamp.format>yyyy</maven.build.timestamp.format>
     	<currentYear>${maven.build.timestamp}</currentYear>
+    	<skipMinify>true</skipMinify>
+    	<minifiedPostfix></minifiedPostfix>
     </properties>
 </project>

@@ -4,19 +4,13 @@ This client consumes instances of the [timeseries-api](https://github.com/52nort
 
 ### Build the client
 
-To build a minified version, change the following line in the `pom.xml`
-```
-<skipMinify>true</skipMinify>
-```
-and add the `min` postfix to the css and javascript imports in the index.html:
-```
-<link href="css/mswc.${project.version}.min.css" rel="stylesheet">
-<script src="js/mswc.${project.version}.min.js"></script>
-```
-after that, you can simply build a war-file with
+To build the client as war file:
 ```
 mvn clean install
 ```
+To build a minified version, use the profile 'minify'
+```
+mvn clean install -P minify
 
 ### Contacts
 
