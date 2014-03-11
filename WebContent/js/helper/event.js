@@ -28,15 +28,15 @@
  */
 var EventManager = {
 	subscribe : function(event, fn) {
-		console.log("Subscribe " + event);
+		DEBUG && console.log("Subscribe " + event);
 		$(this).bind(event, fn);
 	},
 	unsubscribe : function(event, fn) {
-		console.log("Unsubscribe " + event);
+		DEBUG && console.log("Unsubscribe " + event);
 		$(this).unbind(event, fn);
 	},
 	publish : function(event, data) {
-		console.log("Publish " + event);
+		DEBUG && console.log("Publish " + event);
 		$(this).trigger(event, data);
 	}
 };

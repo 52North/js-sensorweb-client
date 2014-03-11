@@ -292,7 +292,6 @@ var Map = {
 			$('[data-id=' + elem.id + ']').click($.proxy(function(event) {
 				$('.phenomena-entry').find('.selected').removeClass('selected');
 				$('[data-id=' + elem.id + ']').find('.item').addClass('selected').addClass('loadPhen');
-				debugger;
 				this.selectedPhenomenon = elem.id;
 				var coloredMarkers = Status.get('concentrationMarker');
 				var provider = Status.get('provider');
