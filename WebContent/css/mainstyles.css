@@ -67,6 +67,7 @@ body,html,.container,.row-offcanvas,.mainPanel {
 .fullHeight {
 	height: 100%;
 	position: relative;
+	padding: 0px;
 }
 
 .content {
