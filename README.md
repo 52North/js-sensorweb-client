@@ -11,6 +11,7 @@ mvn clean install
 To build a minified version, use the profile 'minify'
 ```
 mvn clean install -P minify
+```
 
 ### Contacts
 
