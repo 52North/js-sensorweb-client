@@ -99,6 +99,7 @@ var ChartController = {
 			this.renderChart();
 			$('[data-action=selection]').hide();
 		}, this));
+		this.plotChart();
 	},
 	
 	hideChart : function(event, view) {
