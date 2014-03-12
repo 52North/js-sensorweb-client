@@ -109,6 +109,7 @@
 								<cssSourceFile>map.css</cssSourceFile>
 								<cssSourceFile>time.css</cssSourceFile>
 								<cssSourceFile>chart.css</cssSourceFile>
+								<cssSourceFile>settings.css</cssSourceFile>
 								<cssSourceFile>legend.css</cssSourceFile>
 								<cssSourceFile>selectionList.css</cssSourceFile>
 								<cssSourceFile>animation.css</cssSourceFile>
@@ -159,11 +160,10 @@
 							</jsSourceFiles>
 							<jsFinalFile>jsc.${project.version}.js</jsFinalFile>
                             <jsEngine>CLOSURE</jsEngine>
-                            <!--closureCompilationLevel>ADVANCED_OPTIMIZATIONS</closureCompilationLevel-->
+                            <closureCompilationLevel>SIMPLE_OPTIMIZATIONS</closureCompilationLevel>
                             <!--closureExterns>
                                 <closureExtern>extern/external-lib.js</closureExtern>
                             </closureExterns-->
-                            <yuiDisableOptimizations>true</yuiDisableOptimizations>
                             <skipMinify>${skipMinify}</skipMinify>
                             <webappSourceDir>
                                 ${basedir}/WebContent/

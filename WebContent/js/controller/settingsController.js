@@ -69,12 +69,12 @@ var SettingsController = {
 					Status.set('concentrationMarker', concentMarker);
 				});
 				// permalink
-				$('.permalink .item').on('click', function() {
-					var url = PermalinkController.createPermalink();
-					$('.permalink .link').attr('href', url).show();
-					var mailLink = "mailto:?body=" + encodeURIComponent(url); 
-					$('.permalink .mail').attr('href', mailLink).show();
-				});
+				$('.permalink .link').on('click', function(){
+					window.open(PermalinkController.createPermalink(), '_blank');
+				}).show();
+				$('.permalink .mail').on('click', function(){
+					window.location.href = "mailto:?body=" + encodeURIComponent(PermalinkController.createPermalink()); 
+				}).show();
 				// imprint
 			});
 		});
