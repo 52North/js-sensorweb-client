@@ -29,42 +29,130 @@
 var TableController = {
 		
 	isVisible : false,
+	
+	tableButton : $('[data-action="dataTable"]'),
+	
+	tableView : $('#tableView'),
+	
+	pageStart : 0,
+	
+	pageSize : Settings.pagesize || 10,
 
 	init : function() {
-		$('[data-action="dataTable"]').show();
-		$('[data-action="dataTable"]').on('click', $.proxy(function(){
+		this.tableButton.show();
+		this.tableButton.on('click', $.proxy(function(){
+			var legendButton = $('[data-toggle="legend"]');
 			if(this.isVisible == false) {
+				Button.setLoadingButton(this.tableButton, true);
 				this.isVisible = true;
-				$('#tableView').show();
-				$('[data-toggle="legend"]').hide();
+				this.tableView.show();
+				legendButton.hide();
 				EventManager.publish("navigation:open","table");
 			} else {
 				this.isVisible = false;
-				$('#tableView').hide();
-				$('[data-toggle="legend"]').show();
+				this.tableView.hide();
+				legendButton.show();
 				EventManager.publish("navigation:close","table");
 			}
 		}, this));
 		EventManager.subscribe("navigation:open", $.proxy(this.createTable, this));
 		EventManager.subscribe("timeseries:synced", $.proxy(this.createTable, this));
-		EventManager.subscribe("timeseries:remove", $.proxy(this.createTable, this));
-		EventManager.subscribe("timeseries:changeStyle", $.proxy(this.changeStyle, this));
+		EventManager.subscribe("timeseries:remove", $.proxy(this.updateTable, this));
+		EventManager.subscribe("timeseries:changeStyle", $.proxy(this.updateTable, this));
 	},
 	
-	changeStyle : function(event, ts) {
-		this.createTable();
+	createTable : function() {
+		if(this.isVisible) {
+			this.tableView.empty();
+			this.sortingFunc = null;
+			this.pageStart = 0;
+			this.createHtmlTableHeader();
+			this.tableView.append(this.htmltable);
+			this.updateTable();
+			this.createHeaderClickHandler();
+		}
 	},
 
-	createTable : function(event) {
+	updateTable : function() {
 		if(this.isVisible) {
-			$('#tableView').empty();
 			var array = this.createValueArray();
-			var colorArray = this.createColorArray();
-			$('#tableView').html(this.createHtmlTable(array, colorArray));
-			// activate sort option for the data table
-			var table = $('table.sortable')[0];
-			sorttable.makeSortable(table);
+			if (this.sortingFunc) {
+				array.sort(this.sortingFunc);
+			}
+			if (array.length > 0) {
+				var colorArray = this.createColorArray();
+				this.createHtmlTable(array, colorArray);
+			}
+			Button.setLoadingButton(this.tableButton, false);
+			this.createPaging(array.length, this.pageSize, this.pageStart);
+			this.createPagingClickHandler(array.length);
 		}
+	},
+	
+	createHeaderClickHandler : function() {
+		$('.table th').on('click', $.proxy(function(event) {
+			var target = $(event.currentTarget);
+			var index = target.data('index');
+			if (target.hasClass('sortedUp')) {
+				target.removeClass('sortedUp').addClass('sortedDown');
+				this.changeSortLabel(target, false);
+				this.sortingFunc = this.downsort(index);
+			} else if (target.hasClass('sortedDown')) {
+				target.removeClass('sortedDown').addClass('sortedUp');
+				this.changeSortLabel(target, true);
+				this.sortingFunc = this.upsort(index);
+			} else {
+				$('.table th').removeClass('sortedUp').removeClass('sortedDown');
+				target.addClass('sortedUp');
+				this.changeSortLabel(target, true);
+				this.sortingFunc = this.upsort(index);
+			}
+			this.updateTable();
+		}, this));
+	},
+	
+	changeSortLabel : function(target, up) {
+		$('#sorting').remove();
+		var span = $('<span>').attr('id', 'sorting');
+		if(up) {
+			span.html('&nbsp;&#x25BE;');
+		} else {
+			span.html('&nbsp;&#x25B4;');
+		}
+		target.append(span);
+	},
+	
+	createPagingClickHandler : function(length) {
+		$('.pagination li a').on('click', $.proxy(function(event) {
+			var start = $(event.target).data('start');
+			if (typeof(start) !== "undefined" && start >= 0 && start <= length) {
+				this.pageStart = start;
+				this.updateTable();
+			} 
+		}, this));
+	},
+	
+	createPaging : function(arraylength, pagesize, pagestart) {
+		this.tableView.find('div.paging').remove();
+		var div = $('<div class="paging"></div>'),
+		paging = $('<ul class="pagination"></ul>');
+		paging.append(this.pageButton('&laquo;', 0));
+		paging.append(this.pageButton('-10', pagestart - pagesize * 10));
+		paging.append(this.pageButton('-1', pagestart - pagesize));
+		paging.append(this.pageButton(Math.ceil((pagestart + 1)/pagesize) + ' .. ' + Math.ceil(arraylength/pagesize)));
+		paging.append(this.pageButton('+1', pagestart + pagesize));
+		paging.append(this.pageButton('+10', pagestart + pagesize * 10));
+		paging.append(this.pageButton('&raquo;', Math.floor(arraylength / pagesize) * pagesize));
+		div.append(paging);
+		this.tableView.append(div);
+	},
+	
+	pageButton : function(label, start) {
+		var elem = $('<li></li>'),
+		a = $('<a>' + label + '</a>');
+		a.data('start', start);
+		elem.append(a);
+		return elem;
 	},
 	
 	createColorArray : function() {
@@ -100,7 +188,7 @@ var TableController = {
 							entry.push("-");
 						}
 						entry.push(value);
-						array.splice(arrayindex,0,entry);
+						array.splice(arrayindex, 0 ,entry);
 					}
 					arrayindex++;
 				}
@@ -109,21 +197,45 @@ var TableController = {
 		return array;
 	},
 	
-	createHtmlTable : function(array, colorArray) {
-		var table = $('<table></table>').addClass('sortable').addClass('table').addClass('table-condensed');
-		var cArray = colorArray;
-		// create header
+	upsort : function(id) {
+		return function(a,b) {
+			if(isNaN(a[id]) && isNaN(b[id])) return 0;
+			if(isNaN(a[id])) return -1;
+			if(isNaN(b[id])) return 1;
+			return a[id] - b[id];
+		};
+	},
+	
+	downsort : function(id) {
+		return function(a,b) {
+			if(isNaN(a[id]) && isNaN(b[id])) return 0;
+			if(isNaN(a[id])) return 1;
+			if(isNaN(b[id])) return -1;
+			return b[id] - a[id];
+		};
+	},
+	
+	createHtmlTableHeader : function() {
+		this.htmltable = $('<table></table>').addClass('table').addClass('table-condensed');
 		var header = $('<thead></thead>');
 		var headerrow = $('<tr></tr>');
-		headerrow.append($('<th></th>').text('Time'));
-		$.each(TimeSeriesController.getTimeseriesCollection(), function(index, elem){
+		headerrow.append($('<th></th>').data('index', 0).text('Time'));
+		var index = 1;
+		$.each(TimeSeriesController.getTimeseriesCollection(), function(id, elem){
 			var title = $('<div></div>').text(elem.getStationLabel());
 			var subtitle = $('<span></span>').text(elem.getPhenomenonLabel() + " (" + elem.getUom() + ")");
-			headerrow.append($('<th></th>').append(title).append(subtitle));
+			headerrow.append($('<th></th>').data('index', index++).append(title).append(subtitle));
 		});
-		table.append(header.append(headerrow));
-		// create content
-		$.each(array, function(tsIndex, elem) {
+		this.htmltable.append(header.append(headerrow));
+	},
+	
+	createHtmlTable : function(array, colorArray) {
+		this.htmltable.find('tbody tr').remove();
+		var cArray = colorArray;
+		$.each(array, $.proxy(function(tsIndex, elem) {
+			if(tsIndex < this.pageStart || tsIndex >= (this.pageStart + this.pageSize)) {
+				return;
+			}
 			var row = $('<tr></tr>');
 			$.each(elem, function(index, value) {
 				if (index == 0) {
@@ -134,8 +246,8 @@ var TableController = {
 							.append($('<b></b>').text(value)));
 				}
 			});
-			table.append(row);
-		});
-		return table;
+			this.htmltable.append(row);
+		}, this));
+		return this.htmltable;
 	}
 };

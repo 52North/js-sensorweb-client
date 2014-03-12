@@ -33,11 +33,26 @@
 	}
 }
 
-table.sortable thead {
+.table thead {
     font-weight: bold;
     cursor: pointer;
 }
 
+.paging {
+	text-align: center;	
+}
+
+.pagination {
+	margin: 0px;
+}
+
+.pagination a {
+	cursor: pointer;	
+}
+
+.table {
+	margin: 0px;
+}
 #tableView {
 	overflow: auto;
 }

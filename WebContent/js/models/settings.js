@@ -76,6 +76,8 @@ var Settings = {
 	},
 	
 	// should saving the status be possible, 
-	saveStatusPossible : true
+	saveStatusPossible : true,
 	
+	// entries on a page for the values table
+	pagesize : 20
 };
