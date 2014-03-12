@@ -40,18 +40,20 @@ var TableController = {
 
 	init : function() {
 		this.tableButton.show();
-		this.tableButton.on('click', $.proxy(function(){
+		this.tableButton.on('click', $.proxy(function(event){
+			var button = $(event.currentTarget);
 			var legendButton = $('[data-toggle="legend"]');
 			if(this.isVisible == false) {
-				Button.setLoadingButton(this.tableButton, true);
 				this.isVisible = true;
 				this.tableView.show();
+				Button.setNewIcon(button, 'glyphicon-stats');
 				legendButton.hide();
 				EventManager.publish("navigation:open","table");
 			} else {
 				this.isVisible = false;
 				this.tableView.hide();
 				legendButton.show();
+				Button.removeNewIcon(button, 'glyphicon-stats');
 				EventManager.publish("navigation:close","table");
 			}
 		}, this));
@@ -83,7 +85,6 @@ var TableController = {
 				var colorArray = this.createColorArray();
 				this.createHtmlTable(array, colorArray);
 			}
-			Button.setLoadingButton(this.tableButton, false);
 			this.createPaging(array.length, this.pageSize, this.pageStart);
 			this.createPagingClickHandler(array.length);
 		}

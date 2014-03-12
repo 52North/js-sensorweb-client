@@ -55,5 +55,15 @@ var Button = {
 			icon.show();
 			button.find('.glyphicon.glyphicon-refresh').remove();
 		}
+	},
+	
+	setNewIcon : function(button, className) {
+		button.find('span').hide();
+		button.append('<span class="glyphicon ' + className + '"></span>');
+	},
+	
+	removeNewIcon : function(button, className) {
+		button.find('span.' + className).remove();
+		button.find('span').show();
 	}
 };
