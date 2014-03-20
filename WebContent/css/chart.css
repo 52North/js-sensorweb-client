@@ -30,6 +30,14 @@
 	padding: 5px;
 }
 
+#loadingDiagram {
+	background-color: #FFE7E7;
+	border-bottom-right-radius: 10px;
+	border-bottom-left-radius: 10px;
+	position: relative;
+	z-index: 1;
+}
+
 .axisTarget {
 	background-color: red;
 	cursor: pointer;
@@ -42,4 +50,19 @@
 
 .axisTarget.selected {
 	opacity: 0.20;
+}
+
+.axisLabel {
+	position: absolute;
+	font-size: 12px;
+	text-align: center;
+}
+
+.yaxisLabel {
+	top: 50%;
+	transform: rotate(-90deg);
+	-o-transform: rotate(-90deg);
+	-ms-transform: rotate(-90deg);
+	-moz-transform: rotate(-90deg);
+	-webkit-transform: rotate(-90deg);
 }

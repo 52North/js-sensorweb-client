@@ -39,7 +39,7 @@ var TimeController = {
 		          {label: 'this month', value: 'thisMonth'},
 		          {label: 'last month', value: 'lastMonth'},
 		          {label: 'this year', value: 'thisYear'},
-		          {label: 'last year', value: 'thisYear'}
+		          {label: 'last year', value: 'lastYear'}
 		        ]
 	},
 
@@ -89,19 +89,20 @@ var TimeController = {
 		EventManager.subscribe("timeseries:synced", $.proxy(this.enableButtons, this));
 		EventManager.subscribe("time:start:change", $.proxy(this.startChanged, this));
 		EventManager.subscribe("time:end:change", $.proxy(this.endChanged, this));
+		EventManager.subscribe("timeseries:update:complete", $.proxy(this.updateTimeExtent, this));
 	},
 
 	startChanged : function(event, start) {
 		var diff = this.getCurrentDiff();
 		this.currentTimespan.from = moment(start).startOf('day');
-		this.currentTimespan.till = moment(start).add(diff).startOf('day');
+		this.currentTimespan.till = moment(start).add(diff).startOf('day').subtract('ms', 1);
 		this.updateTimeExtent();
 	},
 	
 	endChanged : function(event, end) {
 		var diff = this.getCurrentDiff();
-		this.currentTimespan.from = moment(end).subtract(diff).startOf('day');
-		this.currentTimespan.till = moment(end).startOf('day');
+		this.currentTimespan.from = moment(end).subtract(diff).endOf('day').add('ms', 1);
+		this.currentTimespan.till = moment(end).endOf('day');
 		this.updateTimeExtent();
 	},	
 
@@ -110,9 +111,17 @@ var TimeController = {
 		var till = moment(this.currentTimespan.till);
 		return till.diff(from);
 	},
+	
+	getCurrentStartAsMillis : function() {
+		return moment(this.currentTimespan.from).unix() * 1000; 
+	},
+	
+	getCurrentEndAsMillis : function() {
+		return moment(this.currentTimespan.till).unix() * 1000;
+	},
 
 	updateTimeExtent : function() {
-		TimeSeriesController.changeTimeExtent(Time.getRequestTimespan(this.currentTimespan.from, this.currentTimespan.till));
+		EventManager.publish("timeextent:change", Time.getRequestTimespan(this.currentTimespan.from, this.currentTimespan.till));
 		Status.set('timespan', this.currentTimespan);
 		this.setLabel();
 	},

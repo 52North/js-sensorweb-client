@@ -1371,6 +1371,7 @@ Licensed under the MIT license.
             var opts = axis.options,
                 ticks = axis.ticks || [],
                 labelWidth = opts.labelWidth || 0,
+                additionalWidth = opts.additionalWidth || 0,
                 labelHeight = opts.labelHeight || 0,
                 maxWidth = labelWidth || (axis.direction == "x" ? Math.floor(surface.width / (ticks.length || 1)) : null),
                 legacyStyles = axis.direction + "Axis " + axis.direction + axis.n + "Axis",
@@ -1386,7 +1387,7 @@ Licensed under the MIT license.
 
                 var info = surface.getTextInfo(layer, t.label, font, null, maxWidth);
 
-                labelWidth = Math.max(labelWidth, info.width);
+                labelWidth = Math.max(labelWidth, info.width + (axis.direction == "y" ? additionalWidth : 0));
                 labelHeight = Math.max(labelHeight, info.height);
             }
 

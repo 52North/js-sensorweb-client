@@ -1,10 +1,29 @@
 <div class="modal-dialog">
 	<div class="modal-content">
 		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
 			<h4 class="modal-title" id="myModalLabel">Time Range</h4>
 		</div>
 		<div class="modal-body">
+
+			<div class="panel-group" id="accordionPreset">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a class="accordion-toggle" data-toggle="collapse"
+								data-parent="#accordionPreset" href="#collapsePreset">preset</a>
+						</h4>
+					</div>
+					<div id="collapsePreset" class="panel-collapse collapse in">
+						<div class="panel-body">
+							{{#presets}}
+							<button class="btn btn-default multiline-button preset-btn"
+								data-preset-value="{{value}}">{{label}}</button>
+							{{/presets}}
+						</div>
+					</div>
+				</div>
+			</div>
 
 			<div class="panel-group" id="accordionCustom">
 				<div class="panel panel-default">
@@ -35,26 +54,6 @@
 				</div>
 			</div>
 
-			<!-- <div class="warnings"></div> -->
-
-			<div class="panel-group" id="accordionPreset">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h4 class="panel-title">
-							<a class="accordion-toggle" data-toggle="collapse"
-								data-parent="#accordionPreset" href="#collapsePreset">preset</a>
-						</h4>
-					</div>
-					<div id="collapsePreset" class="panel-collapse collapse in">
-						<div class="panel-body">
-							{{#presets}}
-							<button class="btn btn-default multiline-button preset-btn"
-								data-preset-value="{{value}}">{{label}}</button>
-							{{/presets}}
-						</div>
-					</div>
-				</div>
-			</div>
 		</div>
 	</div>
 </div>

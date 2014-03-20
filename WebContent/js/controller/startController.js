@@ -29,20 +29,10 @@
 var StartController = {
 
 	init : function() {
-		// analyze url parameter		
-		var timespan = this.getUrlParameter('timespan');
-		if(timespan) {
-			Status.set('timespan', Time.createTimespan(timespan));
-		}
-		var timeseries = this.getUrlParameter('timeseries');
-		if(timeseries != null) {
-			Status.clearTimeseries();
-			$.each(timeseries.split(','), function(idx, id) {
-				Status.addTimeseriesById(id);
-			});
-		}
-		// Call all controller
 		jQuery.support.cors = true;
+		
+		// Call all controller
+		PermalinkController.init();
 		Pages.init();
 		Map.init();
 		ListSelectionController.init();
@@ -52,19 +42,5 @@ var StartController = {
 		TimeController.init();
 		ChartController.init();
 		TimeSeriesController.init();
-		
-		// test
-//		ListSelectionController.open();
-	},
-	
-	getUrlParameter : function (sParam) {
-		var sPageURL = window.location.search.substring(1);
-		var parameters = sPageURL.split('&');
-		for (var i = 0; i < parameters.length; i++){
-			var sParameterName = parameters[i].split('=');
-			if (sParameterName[0] == sParam) {
-				return sParameterName[1];
-			}
-		}
 	}
 };

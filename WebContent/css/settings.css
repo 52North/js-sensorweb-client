@@ -26,30 +26,6 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  */
-a:hover {
-	text-decoration: none;
-}
-
-.item {
-	padding: 4px;
-	border-radius: 8px;
-	margin: 3px 0px 3px 0px;
-}
-
-.item:HOVER {
-	background-color: #C7DEF2;
-	cursor: pointer;
-}
-
-.item.selected {
-	background-color: #428bca;
-	color: white;
-}
-
-.phenomenonItem .loadPhen .loading {
-	display: inline;
-}
-
-.phenomenonItem .loading {
-	display: none;
+.permalink {
+	margin-left: 10%;
 }

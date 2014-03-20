@@ -42,39 +42,39 @@ var Time = {
 		switch (type) {
 		case 'today':
 			from = from.startOf('day');
-			mode = "day";
+			mode = 'day';
 			break;
 		case 'yesterday':
 			from = from.subtract('days', 1).startOf('day');
 			till = till.subtract('days', 1).endOf('day');
-			mode = "day";
+			mode = 'day';
 			break;
 		case 'lastWeek':
 			from = from.subtract('weeks', 1).startOf('week');
 			till = till.subtract('weeks', 1).endOf('week');
-			mode = "week";
+			mode = 'week';
 			break;
 		case 'thisWeek':
 			from = from.startOf('week');
-			mode = "week";
+			mode = 'week';
 			break;
 		case 'lastMonth':
 			from = from.subtract('months', 1).startOf('month');
 			till = till.subtract('months', 1).endOf('month');
-			mode = "month";
+			mode = 'month';
 			break;
 		case 'thisMonth':
 			from = from.startOf('month');
-			mode = "month";
+			mode = 'month';
 			break;
 		case 'thisYear':
 			from = from.startOf('year');
-			mode = "year";
+			mode = 'year';
 			break;
 		case 'lastYear':
-			from = from.subtract('months', 1).startOf('month');
-			till = till.subtract('months', 1).endOf('month');
-			mode = "year";
+			from = from.subtract('years', 1).startOf('year');
+			till = till.subtract('years', 1).endOf('year');
+			mode = 'year';
 			break;
 		}
 
@@ -86,15 +86,26 @@ var Time = {
 	},
 	
 	getRequestTimespan : function (from, till) {
-		return moment(from).format("YYYY-MM-DDTHH:mm:ss") + "/" + moment(till).format("YYYY-MM-DDTHH:mm:ss");
+		return moment(from).format('YYYY-MM-DDTHH:mm:ss') + '/' + moment(till).format('YYYY-MM-DDTHH:mm:ss');
 	},
 	
 	createTimespan : function (string) {
-		var timespan = string.split("/");
-		return {
-			from : moment(timespan[0]),
-			till : moment(timespan[1]),
-			mode : 'day'
-		};
+		var timespan = string.split('/');
+		if (timespan.length == 2) {
+			var start = moment(timespan[0]);
+			var end = moment(timespan[1]);
+			if (start.isValid() && end.isValid()) {
+				return {
+					from : start,
+					till : end,
+					mode : 'day'
+				};
+			}
+		}
+		return this.isoTimespan(string);
+	},
+	
+	getFormatedTime : function (timestamp) {
+		return moment(timestamp).format(Settings.dateformat);
 	}
 };

@@ -26,27 +26,44 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  */
-var ColorChooserController = {
-
-	colorList : [ '1abc9c', '27ae60', '2980b9', '8e44ad', '2c3e50', 'f1c40f',
-			'd35400', 'c0392b', '7f8c8d' ],
-		
-	init : function() {
+var Button = {
+	switchToggleButton : function(target) {
+		var button = $(target);
+		button.toggleClass('btn-primary');
+		if (!button.hasClass('btn-primary')) {
+			return false;
+		} else {
+			return true;
+		}
 	},
 
-	open : function(ts) {
-		// open modal view
-		var data = {
-			currentColor : ts.getColor(),
-			colorList : this.colorList
-		};
-		Modal.show("color-chooser", data);
-		$('.colorButton').on('click', function(e){
-			var color = $(e.target).data('color');
-			if (ts.getColor() != color) {
-				ts.setColor(color);
-				EventManager.publish("timeseries:changeColor", ts);
-			}
-		});
+	setToggleButton : function(target, value) {
+		var button = $(target);
+		if (value) {
+			button.addClass('btn-primary');
+		} else {
+			button.removeClass('btn-primary');
+		}
+	},
+	
+	setLoadingButton : function(button, loading) {
+		var icon = button.find('span');
+		if (loading) {
+			icon.hide();
+			button.append('<span class="glyphicon glyphicon-refresh icon-spin"></span>');
+		} else {
+			icon.show();
+			button.find('.glyphicon.glyphicon-refresh').remove();
+		}
+	},
+	
+	setNewIcon : function(button, className) {
+		button.find('span').hide();
+		button.append('<span class="glyphicon ' + className + '"></span>');
+	},
+	
+	removeNewIcon : function(button, className) {
+		button.find('span.' + className).remove();
+		button.find('span').show();
 	}
 };

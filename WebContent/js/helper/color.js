@@ -31,8 +31,8 @@ var Color = (function() {
 
     stringToColor: function(string) {
       if (string == undefined)
-        return "000000";
-      return this.intToColorHex(this.hashCode(string));
+        return "#000000";
+      return "#" + this.intToColorHex(this.hashCode(string));
     },
 
     //M. Jessup, http://stackoverflow.com/questions/2464745/compute-hex-color-code-for-an-arbitrary-string

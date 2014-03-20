@@ -29,16 +29,22 @@
 var Status = (function() {
 	var status = {
 
-		key : 'settings',	
+		key : 'settings',
 		defaultValues : {
-//			'provider' : 'srv_1a5bde0a6d702f193f7be463402ec12f',
-			'provider' : 'srv_738111ed219f738cfc85be0c8d87843c',
+			'provider' : Settings.defaultProvider,
+			'clusterStations' : true,
+			'generalizeData' : false,
 			'timeseries' : {},
-			'timespan' : Time.isoTimespan('today')
+			'timespan' : Time.isoTimespan('today'),
+			'saveStatus' : true,
+			'concentrationMarker' : false
 		},
 		
 		init : function() {
 			this.load();
+			if(!this.get('saveStatus')) {
+				this.reset();
+			}
 		},
 		
 		isSet : function() {
@@ -59,7 +65,16 @@ var Status = (function() {
 		},
 		
 		save : function() {
-			$.totalStorage(this.key, this.current);
+			if(Settings.saveStatusPossible) {
+				try {
+					$.totalStorage(this.key, this.current);
+				} catch (e) {
+					Settings.saveStatusPossible = false;
+					// safari mobile in private mode???
+					// http://davidwalsh.name/quota_exceeded_err
+//					alert("No Status saving possible.");
+				}
+			}
 		},
 		
 		reset : function() {
@@ -78,13 +93,26 @@ var Status = (function() {
 		},
 		
 		addTimeseries : function(ts) {
-			this.current.timeseries[ts.getId()] = ts.persist();
+			this.current.timeseries[ts.getInternalId()] = ts.persist();
 			this.save();
 		},
 		
 		addTimeseriesById : function(id) {
-			this.current.timeseries[id] = id;
-			this.save();
+			var ids = id.split("__");
+			var apiUrl = null;
+			$.each(Settings.restApiUrls, function(url,id){
+				if(id == ids[1]) {
+					apiUrl = url;
+					return;
+				}
+			});
+			if(apiUrl) {
+				this.current.timeseries[id] = {
+						apiUrl : apiUrl,
+						tsId : ids[0]
+				};
+				this.save();
+			}
 		},
 		
 		clearTimeseries : function() {
@@ -93,7 +121,7 @@ var Status = (function() {
 		},
 		
 		removeTimeseries : function(ts) {
-			delete this.current.timeseries[ts.getId()];
+			delete this.current.timeseries[ts.getInternalId()];
 			this.save();
 		},
 		

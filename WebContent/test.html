@@ -39,14 +39,16 @@
 						<a class="navbar-brand"><span
 							class="glyphicon glyphicon-stats"></span> diagram</a>
 						<a type="button"
-							class="btn btn-default navbar-btn button-right"
-							data-target="#map" href="#map">
-							<span class="glyphicon glyphicon-globe"></span>
-						</a>
-						<a type="button"
-							class="btn btn-default navbar-btn button-right"
-							data-target="#settings">
-							<span class="glyphicon glyphicon-cog"></span>
+							class="btn btn-default navbar-btn button-right btn-primary"
+							data-target="#map" href="#map"> <span
+							class="glyphicon glyphicon-globe"></span>
+						</a> <a type="button" class="btn btn-default navbar-btn button-right"
+							data-target="#settings"> <span
+							class="glyphicon glyphicon-cog"></span>
+						</a> 
+						<a type="button" class="btn btn-default navbar-btn button-right"
+							data-action="dataTable" style="display: none"> <span
+							class="glyphicon glyphicon-list"></span>
 						</a>
 					</div>
 				</div>
@@ -66,14 +68,14 @@
 								<div class="btn-group">
 									<a type="button" class="btn btn-default" data-action="before">
 										<span class="glyphicon glyphicon-chevron-left"></span>
-									</a> 
-									<a type="button" class="btn btn-default" data-action="timeextent"></a> 
-									<a type="button" class="btn btn-default" data-action="after"> 
-										<span class="glyphicon glyphicon-chevron-right"></span>
+									</a> <a type="button" class="btn btn-default"
+										data-action="timeextent"></a> <a type="button"
+										class="btn btn-default" data-action="after"> <span
+										class="glyphicon glyphicon-chevron-right"></span>
 									</a>
 								</div>
-								<a type="button" class="btn btn-default" data-action="dataTable" style="display: none">
-									<span class="glyphicon glyphicon-list"></span>
+								<a type="button" class="btn btn-default" data-action="selection" style="display: none">
+										<span class="glyphicon glyphicon-check"></span>
 								</a>
 							</div>
 						</div>
@@ -94,7 +96,7 @@
 							<span class="glyphicon glyphicon-globe"></span> select a station
 						</a>
 						<a type="button"
-							class="btn btn-default navbar-btn button-right"
+							class="btn btn-default navbar-btn button-right btn-primary"
 							data-target="#chart" href="#chart">
 							<span class="glyphicon glyphicon-stats"></span>
 						</a>
@@ -103,6 +105,16 @@
 							data-target="#settings">
 							<span class="glyphicon glyphicon-cog"></span>
 						</button>
+						<a type="button" 
+							class="btn btn-default navbar-btn button-right" 
+							data-action="listSelection" style="display: none">
+							<span class="glyphicon glyphicon-list-alt"></span>
+						</a>
+						<a type="button"
+							class="btn btn-default navbar-btn button-right"
+							data-action="provider">
+								<span class="glyphicon glyphicon-folder-open"></span>
+						</a>
 					</div>
 				</div>
 			</div>
@@ -115,15 +127,9 @@
 						</div>
 						<div id="map"></div>
 						<div class="map-buttons">
-							<a class="btn btn-primary" data-action="provider">
-								<span class="glyphicon glyphicon-folder-open"></span>
-							</a> 
 							<a class="btn btn-primary" data-action="locate">
 								<span class="glyphicon glyphicon-map-marker"></span>
 							</a>
-							<a class="btn btn-primary" data-action="listSelection" style="display: none">
-								<span class="glyphicon glyphicon-list-alt"></span>
-							</a>	
 						</div>
 					</div>
 					<div class="col-xs-6 col-sm-4 col-lg-3 phenomena rightPanel">

@@ -35,9 +35,11 @@ var ChartController = {
 		series : {
 			lines : {
 				show : true,
-//				lineWidth: 1,
 				fill : false
 			},
+//			points : {
+//				show : true
+//			},
 			shadowSize : 1
 		},
 		selection : {
@@ -45,11 +47,19 @@ var ChartController = {
 		},
 		xaxis : {
 			mode : "time",
+			timezone : "browser",
 			// timeformat: "%Y/%m/%d",
-			tickLength : 5
+			tickLength : 5,
+			tickColor : "#000"
 		},
 		yaxis : {
-			show : true
+			show : true,
+			additionalWidth : 17
+//			tickFormatter : function(val, axis) {
+//				var factor = axis.tickDecimals ? Math.pow(10, axis.tickDecimals) : 1;
+//				var formatted = "" + Math.round(val * factor) / factor;
+//				return formatted + "<br>" + this.uom;
+//			}
 		},
 		legend : {
 		// show: false
@@ -73,7 +83,8 @@ var ChartController = {
 		EventManager.subscribe("timeseries:show", $.proxy(this.showData, this));
 		EventManager.subscribe("navigation:open", $.proxy(this.hideChart, this));
 		EventManager.subscribe("navigation:close", $.proxy(this.showChart, this));
-		EventManager.subscribe("timeseries:changeColor", $.proxy(this.changeColor, this));
+		EventManager.subscribe("timeseries:changeStyle", $.proxy(this.changeStyle, this));
+		EventManager.subscribe("timeseries:zeroScaled", $.proxy(this.zeroScaled, this));
 		
 		$(window).resize($.proxy(function() {
 			var newRatio = $(document).width() / $(document).height();
@@ -88,6 +99,7 @@ var ChartController = {
 			this.renderChart();
 			$('[data-action=selection]').hide();
 		}, this));
+		this.plotChart();
 	},
 	
 	hideChart : function(event, view) {
@@ -113,42 +125,62 @@ var ChartController = {
 	},
 	
 	selectTs : function(event, id) {
-		$.each(this.plot.getData(), function(index, elem) {
-			debugger;
-			if(elem.id == id) {
-				elem.lines.lineWidth = ChartController.selectedLineWidth;
-			}
-		});
-		this.plot.draw();
+		if (this.plot) {
+			$.each(this.plot.getData(), function(index, elem) {
+				if(elem.id == id) {
+					elem.lines.lineWidth = ChartController.selectedLineWidth;
+					elem.bars.lineWidth = ChartController.selectedLineWidth;
+				}
+			});
+			this.plot.draw();
+		}
 	},
 	
 	unselectAll : function(event) {
-		$.each(this.plot.getData(), function(index, elem) {
-			elem.lines.lineWidth = ChartController.defaultLineWidth;
-		});
-		this.plot.draw();
+		if (this.plot) {
+			$.each(this.plot.getData(), function(index, elem) {
+				elem.lines.lineWidth = ChartController.defaultLineWidth;
+				elem.bars.lineWidth = ChartController.defaultLineWidth;
+			});
+			this.plot.draw();
+		}
 	},
 	
 	loadDataForChart : function(event, ts) {
 		if(this.visible) {
-			$('#placeholder').hide();
-			var label = ts.getMetadata().label;
+			var label = ts.getLabel();
 			var html = Template.createHtml("data-loading-entry", {
-				id : ts.getId(),
-				color : ts.getColor(),
+				id : ts.getInternalId(),
+				color : ts.getStyle().getColor(),
 				label : label
 			});
 			$('#loadingDiagram').append(html);
 		}
 	},
 	
-	changeColor : function(event, ts) {
+	zeroScaled : function(event, ts) {
+		// update all timeseries
+		$.each(TimeSeriesController.getTimeseriesCollection(), function (idx, elem) {
+			if(ts.getUom() == elem.getUom()) {
+				elem.setZeroScaled(ts.isZeroScaled());
+			}
+		});
+		// update data of timeseries
+		$.each(this.data, function(idx, elem){
+			if(elem.uom == ts.getUom()) {
+				elem.zeroScaled = ts.isZeroScaled();
+			}
+		});
+		this.changeStyle(null, ts);
+	},
+	
+	changeStyle : function(event, ts) {
 		this.loadDataFinished(null, ts);
 		this.plotChart();
 	},
 	
 	loadDataFinished : function(event, ts) {
-		$('#loadingDiagram').find('[data-id=' + ts.getId() + ']').remove();
+		$('#loadingDiagram').find('[data-id=' + ts.getInternalId() + ']').remove();
 		$.each(ts.getRefValues(), $.proxy(function(id, elem) {
 			var refVal = this.dataAlreadyIn(elem.getId());
 			if (refVal != null) {
@@ -156,26 +188,67 @@ var ChartController = {
 			}
 		}, this));
 		if(ts.hasData()) {
-			var temp = this.dataAlreadyIn(ts.getId());
+			var temp = this.dataAlreadyIn(ts.getInternalId());
 			if(temp != null) {
-				temp.data = ts.getValues();
-				temp.color = ts.getColor();
+				this.updateData(temp, ts);
 			} else {
-				this.data.push({
-					data : ts.getValues(),
-					id : ts.getId(),
-					color : "#" + ts.getColor(),
-					uom : ts.getMetadata().uom
-				});
+				this.data.push(this.createData(ts));
 			};
 		} else {
-			this.removeData(ts.getId());
+			this.removeData(ts.getInternalId());
+		}
+	},
+	
+	updateData : function(data, ts) {
+		this.addStyleAndValues(data, ts);
+	},
+	
+	createData : function(ts) {
+		var data = {
+			id : ts.getInternalId(),
+			uom : ts.getUom(),
+			phenomenon : ts.getPhenomenonLabel()
+		};
+		this.addStyleAndValues(data, ts);
+		return data;
+	},
+	
+	addStyleAndValues : function (data, ts) {
+		var style = ts.getStyle();
+		data.color = ts.getStyle().getColor();
+		data.zeroScaled = ts.isZeroScaled();
+		if (style.getChartType() == "bar") {
+			data.bars = {
+				show : true,
+				barWidth : style.getIntervalByHours() * 60 * 60 * 1000
+			};
+			data.lines = {
+				show : false
+			};
+			var sumvalues = [];
+			var idx = 0;
+			var values = ts.getValues();
+			var entry = values[idx];
+			while(entry != null) {
+				var startInterval = entry[0];
+				var endInterval = moment(entry[0]).add('hours', style.getIntervalByHours());
+				var sum = 0; 
+				while (entry != null && moment(entry[0]).isBefore(endInterval)) {
+					idx++;
+					sum = sum + entry[1];
+					entry = values[idx];
+				}
+				sumvalues.push([startInterval, sum]);
+			}
+			data.data = sumvalues;
+		} else {
+			data.data = ts.getValues();
 		}
 	},
 	
 	removeTS : function(event, ts) {
-		$('#loadingDiagram').find('[data-id=' + ts.getId() + ']').remove();
-		this.removeData(ts.getId());
+		$('#loadingDiagram').find('[data-id=' + ts.getInternalId() + ']').remove();
+		this.removeData(ts.getInternalId());
 		// remove ref values
 		$.each(ts.getRefValues(), $.proxy(function(index, elem) {
 			this.removeData(elem.getId());
@@ -190,7 +263,7 @@ var ChartController = {
 			data : refVal.getValues(),
 			id : refVal.getId(),
 			color : refVal.getColor(),
-			uom : ts.getMetadata().uom
+			uom : ts.getUom()
 		});
 		this.plotChart();
 	},
@@ -208,16 +281,16 @@ var ChartController = {
 	plotChart : function() {
 		if(this.visible){
 			$('#placeholder').show();
-			this.createAxis();
+			this.options.yaxes = this.createYAxis();
+			this.updateXAxis();
 			if (this.data.length > 0) {
-				this.plot = $.plot("#placeholder", this.data, this.options);
+				this.plot = $.plot('#placeholder', this.data, this.options);
 				$.each(this.plot.getAxes(), $.proxy(function(i, axis){
 					if(!axis.show) return;
 					var box = axis.box;
-					var start;
 					if(axis.direction == "y") {
 						$("<div class='axisTarget' style='position:absolute; left:" + box.left + "px; top:" + box.top + "px; width:" + box.width +  "px; height:" + box.height + "px'></div>")
-						.data("axis.direction", axis.direction)
+//						.data("axis.direction", axis.direction)
 						.data("axis.n", axis.n)
 						.appendTo(this.plot.getPlaceholder())
 						.click($.proxy(function (event) {
@@ -233,30 +306,50 @@ var ChartController = {
 							});
 							$.each(this.plot.getData(), function(index, elem) {
 								if(elem.yaxis.n == axis.n && target.hasClass("selected")) {
-//									elem.lines.lineWidth = this.selectedLineWidth;
 									EventManager.publish("timeseries:selected", elem.id);
-//								} else {
-//									elem.lines.lineWidth = this.defaultLineWidth;
 								}
 							});
 							this.plot.draw();
 						},this));
+						var yaxisLabel = $("<div class='axisLabel yaxisLabel' style=left:" + box.left + "px;></div>")
+								.text(axis.options.phenomenon + " (" + axis.options.uom + ")").appendTo('#placeholder');
+						yaxisLabel.css("margin-left", -(yaxisLabel.width() - yaxisLabel.height()) / 2);
 					}
 				}, this));
 			} else {
 				$("#placeholder").empty();
+				$("#placeholder").append(Template.createHtml('chart-empty'));
 			}
 		}
 	},
 	
-	createAxis : function() {
-		var axis = {};
+	updateXAxis : function() {
+		this.options.xaxis.min = TimeController.getCurrentStartAsMillis(); 
+		this.options.xaxis.max = TimeController.getCurrentEndAsMillis();
+	},
+ 	
+	createYAxis : function() {
+		var axesList = {};
 		$.each(this.data, function(index, elem){
-			if(!axis.hasOwnProperty(elem.uom)) {
-				axis[elem.uom] = ++Object.keys(axis).length;
+			if(!axesList.hasOwnProperty(elem.uom)) {
+				axesList[elem.uom] = {
+					id : ++Object.keys(axesList).length,
+					uom : elem.uom,
+					phenomenon : elem.phenomenon,
+					zeroScaled : elem.zeroScaled
+				};
 			};
-			elem.yaxis = axis[elem.uom];
+			elem.yaxis = axesList[elem.uom].id;
 		});
+		var axes = [];
+		$.each(axesList, function(idx, elem){
+			axes.splice(elem.id - 1, 0, {
+				uom : elem.uom,
+				phenomenon : elem.phenomenon,
+				min : elem.zeroScaled ? 0 : null
+			});
+		});
+		return axes;
 	},
 	
 	dataAlreadyIn : function(id) {

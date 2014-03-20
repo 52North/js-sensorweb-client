@@ -26,30 +26,57 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  */
-function TimeSeries(id, meta) {
+function TimeSeries(tsId, meta, apiUrl) {
 
-	var color = Color.stringToColor(id);
+	var internalId = TimeSeries.createInternalId(tsId, apiUrl);
 	var values = [];
 	var refValues = {};
 	var synced = false;
+	var zeroScaled = Settings.defaultZeroScale;
 	$.each(meta.referenceValues, $.proxy(function(index, elem) {
 		refValues[elem.referenceValueId] = new ReferenceValue(elem.referenceValueId, elem.label);
 	}, this));
+	var style = {};
+	if(meta.hasOwnProperty('renderingHints')) {
+		var chartType = meta.renderingHints.chartType;
+		var width = meta.renderingHints.properties.width;
+		var color = meta.renderingHints.properties.color;
+		var interval = meta.renderingHints.properties.interval;
+		style = new TimeseriesStyle(chartType, width, color, interval);
+	} else {
+		style = TimeseriesStyle.createDefault(tsId);
+	}
 
-	this.getId = function() {
-		return id;
+	this.getTsId = function() {
+		return tsId;
+	};
+	
+	this.getInternalId = function() {
+		return internalId;
 	};
 
-	this.getColor = function() {
-		return color;
+	this.getStyle = function() {
+		return style;
 	};
-
-	this.setColor = function(setColor) {
-		color = setColor;
+	
+	this.isZeroScaled = function() {
+		return zeroScaled;
+	};
+	
+	this.setZeroScaled = function(bool) {
+		zeroScaled = bool;
 	};
 	
 	this.isSynced = function() {
 		return synced;
+	};
+	
+	this.getUom = function() {
+		return meta.uom;
+	};
+	
+	this.getLabel = function() {
+		return meta.label;
 	};
 	
 	this.unSynced = function() {
@@ -58,6 +85,66 @@ function TimeSeries(id, meta) {
 	
 	this.getValues = function() {
 		return values;
+	};
+	
+	this.getLastValue = function() {
+		if (meta && meta.lastValue) {
+			return meta.lastValue;
+		}
+		return null;
+	};
+	
+	this.isCurrent = function() {
+		return this.getLastValue() != null && moment().subtract(Settings.ignoreAfterDuration).isBefore(moment(this.getLastValue().timestamp));
+	}
+	
+	this.getLastValueFormatted = function() {
+		if (meta && meta.lastValue) {
+			return meta.lastValue.value + " " + meta.uom + " (" + moment(meta.lastValue.timestamp).format(Settings.dateformat) + ")";
+		}
+		return null;
+	};
+	
+	this.getFirstValue = function() {
+		if (meta && meta.firstValue) {
+			return meta.firstValue;
+		}
+		return null;
+	};
+	
+	this.getFirstValueFormatted = function() {
+		if (meta && meta.firstValue) {
+			return meta.firstValue.value + " " + meta.uom + " (" + moment(meta.firstValue.timestamp).format(Settings.dateformat) + ")";
+		}
+		return null;
+	};
+	
+	this.getCoordinates = function() {
+		return meta.station.geometry.coordinates;
+	};
+	
+	this.getStationId = function() {
+		return meta.station.properties.id;
+	};
+	
+	this.getStationLabel = function() {
+		return meta.station.properties.label;
+	};
+	
+	this.getServiceLabel = function() {
+		return meta.parameters.service.label;
+	};
+	
+	this.getPhenomenonLabel = function() {
+		return meta.parameters.phenomenon.label;
+	};
+	
+	this.getProcedureLabel = function() {
+		return meta.parameters.procedure.label;
+	};
+	
+	this.getStatusIntervals = function() {
+		return meta.statusIntervals;
 	};
 	
 	this.hasData = function() {
@@ -75,28 +162,31 @@ function TimeSeries(id, meta) {
 		return refValues;
 	};
 	
-	this.getMetadata = function() {
-		return meta;
-	};
-	
 	this.persist = function() {
 		return {
-			color : color
+			style : style.persist(),
+			apiUrl : apiUrl,
+			tsId : tsId
 		};
 	};
 
 	this.fetchData = function(timespan, complete) {
-		var promise = Rest.tsData(id, timespan);
+		var promise = Rest.tsData(tsId, apiUrl, timespan);
 		var that = this;
 		promise.done(function(data, refdata) {
 			values = data;
 			$.each(refdata, function(id, elem) {
-				refValues[id].setValues(elem);
+				if(refValues[id]) {
+					refValues[id].setValues(elem);
+				}
 			});
 			synced = true;
 			complete(that);
 		});
 		return promise;
 	};
+};
 
-}
+TimeSeries.createInternalId = function(tsId, apiUrl) {
+	return tsId + "__" + Settings.restApiUrls[apiUrl];
+};

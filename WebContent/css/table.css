@@ -26,30 +26,33 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  */
-a:hover {
-	text-decoration: none;
+
+@media screen and (max-width: 767px) {
+	#tableView {
+		font-size: 0.8em;
+	}
 }
 
-.item {
-	padding: 4px;
-	border-radius: 8px;
-	margin: 3px 0px 3px 0px;
+.table thead {
+    font-weight: bold;
+    cursor: pointer;
 }
 
-.item:HOVER {
-	background-color: #C7DEF2;
-	cursor: pointer;
+.paging {
+	text-align: center;	
 }
 
-.item.selected {
-	background-color: #428bca;
-	color: white;
+.pagination {
+	margin: 0px;
 }
 
-.phenomenonItem .loadPhen .loading {
-	display: inline;
+.pagination a {
+	cursor: pointer;	
 }
 
-.phenomenonItem .loading {
-	display: none;
+.table {
+	margin: 0px;
+}
+#tableView {
+	overflow: auto;
 }

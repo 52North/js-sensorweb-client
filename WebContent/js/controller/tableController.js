@@ -29,43 +29,137 @@
 var TableController = {
 		
 	isVisible : false,
+	
+	tableButton : $('[data-action="dataTable"]'),
+	
+	tableView : $('#tableView'),
+	
+	pageStart : 0,
+	
+	pageSize : Settings.pagesize || 10,
 
 	init : function() {
-		$('[data-action="dataTable"]').show();
-		$('[data-action="dataTable"]').on('click', $.proxy(function(){
+		this.tableButton.show();
+		this.tableButton.on('click', $.proxy(function(event){
+			var button = $(event.currentTarget);
+			var legendButton = $('[data-toggle="legend"]');
 			if(this.isVisible == false) {
 				this.isVisible = true;
-				$('#tableView').show();
+				this.tableView.show();
+				Button.setNewIcon(button, 'glyphicon-stats');
+				legendButton.hide();
 				EventManager.publish("navigation:open","table");
 			} else {
 				this.isVisible = false;
-				$('#tableView').hide();
+				this.tableView.hide();
+				legendButton.show();
+				Button.removeNewIcon(button, 'glyphicon-stats');
 				EventManager.publish("navigation:close","table");
 			}
 		}, this));
 		EventManager.subscribe("navigation:open", $.proxy(this.createTable, this));
 		EventManager.subscribe("timeseries:synced", $.proxy(this.createTable, this));
-		EventManager.subscribe("timeseries:remove", $.proxy(this.createTable, this));
-		EventManager.subscribe("timeseries:changeColor", $.proxy(this.changeColor, this));
+		EventManager.subscribe("timeseries:remove", $.proxy(this.updateTable, this));
+		EventManager.subscribe("timeseries:changeStyle", $.proxy(this.updateTable, this));
 	},
 	
-	changeColor : function(event, ts) {
-		this.createTable();
+	createTable : function() {
+		if(this.isVisible) {
+			this.tableView.empty();
+			this.sortingFunc = null;
+			this.pageStart = 0;
+			this.createHtmlTableHeader();
+			this.tableView.append(this.htmltable);
+			this.updateTable();
+			this.createHeaderClickHandler();
+		}
 	},
 
-	createTable : function(event) {
+	updateTable : function() {
 		if(this.isVisible) {
-			$('#tableView').empty();
 			var array = this.createValueArray();
-			var colorArray = this.createColorArray();
-			$('#tableView').html(this.createHtmlTable(array, colorArray));
+			if (this.sortingFunc) {
+				array.sort(this.sortingFunc);
+			}
+			if (array.length > 0) {
+				var colorArray = this.createColorArray();
+				this.createHtmlTable(array, colorArray);
+			}
+			this.createPaging(array.length, this.pageSize, this.pageStart);
+			this.createPagingClickHandler(array.length);
 		}
+	},
+	
+	createHeaderClickHandler : function() {
+		$('.table th').on('click', $.proxy(function(event) {
+			var target = $(event.currentTarget);
+			var index = target.data('index');
+			if (target.hasClass('sortedUp')) {
+				target.removeClass('sortedUp').addClass('sortedDown');
+				this.changeSortLabel(target, false);
+				this.sortingFunc = this.downsort(index);
+			} else if (target.hasClass('sortedDown')) {
+				target.removeClass('sortedDown').addClass('sortedUp');
+				this.changeSortLabel(target, true);
+				this.sortingFunc = this.upsort(index);
+			} else {
+				$('.table th').removeClass('sortedUp').removeClass('sortedDown');
+				target.addClass('sortedUp');
+				this.changeSortLabel(target, true);
+				this.sortingFunc = this.upsort(index);
+			}
+			this.updateTable();
+		}, this));
+	},
+	
+	changeSortLabel : function(target, up) {
+		$('#sorting').remove();
+		var span = $('<span>').attr('id', 'sorting');
+		if(up) {
+			span.html('&nbsp;&#x25BE;');
+		} else {
+			span.html('&nbsp;&#x25B4;');
+		}
+		target.append(span);
+	},
+	
+	createPagingClickHandler : function(length) {
+		$('.pagination li a').on('click', $.proxy(function(event) {
+			var start = $(event.target).data('start');
+			if (typeof(start) !== "undefined" && start >= 0 && start <= length) {
+				this.pageStart = start;
+				this.updateTable();
+			} 
+		}, this));
+	},
+	
+	createPaging : function(arraylength, pagesize, pagestart) {
+		this.tableView.find('div.paging').remove();
+		var div = $('<div class="paging"></div>'),
+		paging = $('<ul class="pagination"></ul>');
+		paging.append(this.pageButton('&laquo;', 0));
+		paging.append(this.pageButton('-10', pagestart - pagesize * 10));
+		paging.append(this.pageButton('-1', pagestart - pagesize));
+		paging.append(this.pageButton(Math.ceil((pagestart + 1)/pagesize) + ' .. ' + Math.ceil(arraylength/pagesize)));
+		paging.append(this.pageButton('+1', pagestart + pagesize));
+		paging.append(this.pageButton('+10', pagestart + pagesize * 10));
+		paging.append(this.pageButton('&raquo;', Math.floor(arraylength / pagesize) * pagesize));
+		div.append(paging);
+		this.tableView.append(div);
+	},
+	
+	pageButton : function(label, start) {
+		var elem = $('<li></li>'),
+		a = $('<a>' + label + '</a>');
+		a.data('start', start);
+		elem.append(a);
+		return elem;
 	},
 	
 	createColorArray : function() {
 		var array = [];
 		$.each(TimeSeriesController.getTimeseriesCollection(), function(index, ts){
-			array.push(ts.getColor());
+			array.push(ts.getStyle().getColor());
 		});
 		return array;
 	},
@@ -74,12 +168,11 @@ var TableController = {
 		var array = [];
 		$.each(TimeSeriesController.getTimeseriesCollection(), function(index, ts){
 			var values = ts.getValues();
-			var uom = ts.getMetadata().uom;
 			var i = (array[0] != null && array[0].length > 0) ? array[0].length : 0;
 			var arrayindex = 0;
-			$.each(values, function(idx, tvpair){
+			$.each(values, function(idx, tvpair) {
 				var time = tvpair[0];
-				var value = tvpair[1] + " " + uom;
+				var value = tvpair[1];
 				if(i == 0) {
 					array.push([time,value]);
 				} else {
@@ -92,11 +185,11 @@ var TableController = {
 					} else {
 						var entry = [];
 						entry.push(time);
-						for (var int = 1; int < i; int++) {
+						for (var j = 1; j < i; j++) {
 							entry.push("-");
 						}
 						entry.push(value);
-						array.splice(arrayindex,0,entry);
+						array.splice(arrayindex, 0 ,entry);
 					}
 					arrayindex++;
 				}
@@ -105,30 +198,57 @@ var TableController = {
 		return array;
 	},
 	
-	createHtmlTable : function(array, colorArray) {
-		var table = $('<table></table>').addClass('table').addClass('table-condensed');
-		var cArray = colorArray;
-		// create header
-//		var header = $('<thead></thead>').append($('<tr></tr>'));
-//		header.append($('<th></th>').text('Time'));
-//		$.each(TimeSeriesController.getTimeseriesCollection(), function(index, elem, test){
-//			header.append($('<th></th>').text(elem.getMetadata().label));
-//		});
-//		table.append(header);
-		// create content
-		$.each(array, function(tsIndex, elem) {
-//			if(tsIndex <= 10) {
-				var row = $('<tr></tr>');
-				$.each(elem, function(index, value) {
-					if(index == 0) {
-						row.append($('<td></td>').text(moment(value).format("DD-MM-YYYY HH:mm:ss")));
-					} else {
-						row.append($('<td></td>').css('color', '#' + cArray[index-1]).append($('<b></b>').text(value)));
-					}
-				});
-				table.append(row);
-//			}
+	upsort : function(id) {
+		return function(a,b) {
+			if(isNaN(a[id]) && isNaN(b[id])) return 0;
+			if(isNaN(a[id])) return -1;
+			if(isNaN(b[id])) return 1;
+			return a[id] - b[id];
+		};
+	},
+	
+	downsort : function(id) {
+		return function(a,b) {
+			if(isNaN(a[id]) && isNaN(b[id])) return 0;
+			if(isNaN(a[id])) return 1;
+			if(isNaN(b[id])) return -1;
+			return b[id] - a[id];
+		};
+	},
+	
+	createHtmlTableHeader : function() {
+		this.htmltable = $('<table></table>').addClass('table').addClass('table-condensed');
+		var header = $('<thead></thead>');
+		var headerrow = $('<tr></tr>');
+		headerrow.append($('<th></th>').data('index', 0).text('Time'));
+		var index = 1;
+		$.each(TimeSeriesController.getTimeseriesCollection(), function(id, elem){
+			var title = $('<div></div>').text(elem.getStationLabel());
+			var subtitle = $('<span></span>').text(elem.getPhenomenonLabel() + " (" + elem.getUom() + ")");
+			headerrow.append($('<th></th>').data('index', index++).append(title).append(subtitle));
 		});
-		return table;
+		this.htmltable.append(header.append(headerrow));
+	},
+	
+	createHtmlTable : function(array, colorArray) {
+		this.htmltable.find('tbody tr').remove();
+		var cArray = colorArray;
+		$.each(array, $.proxy(function(tsIndex, elem) {
+			if(tsIndex < this.pageStart || tsIndex >= (this.pageStart + this.pageSize)) {
+				return;
+			}
+			var row = $('<tr></tr>');
+			$.each(elem, function(index, value) {
+				if (index == 0) {
+					row.append($('<td></td>').text(
+							moment(value).format(Settings.dateformat)));
+				} else {
+					row.append($('<td></td>').css('color', cArray[index - 1])
+							.append($('<b></b>').text(value)));
+				}
+			});
+			this.htmltable.append(row);
+		}, this));
+		return this.htmltable;
 	}
 };

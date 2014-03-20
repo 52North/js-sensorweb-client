@@ -10,7 +10,7 @@
 					<div class="panel-heading">
 						<h4 class="panel-title">
 							<a data-toggle="collapse" data-parent="#accordionSettings"
-								href="#collapseSettings"> Settings </a>
+								href="#collapseSettings">Settings</a>
 						</h4>
 					</div>
 					<div id="collapseSettings" class="panel-collapse collapse in">
@@ -20,13 +20,22 @@
 									<div>Reset Status</div>
 								</div>
 							</div>
+							<div>Create a permalink as:</div>
 							<div class="permalink">
-								<div class="item">
-									<div>Create a permalink</div>
+								<div class="item link">
+									<span class="glyphicon glyphicon-link"></span> link in a new window
 								</div>
-								<a href="" class="glyphicon glyphicon-link link" style="display: none;"></a>
-								<a href="" class="glyphicon glyphicon-envelope mail" style="display: none;"></a>
+								<div class="item mail">
+									<span class="glyphicon glyphicon-envelope"></span> link in a mail
+								</div>
 							</div>
+							<button type="button" class="btn btn-block btn-default clusteringStations" data-dismiss="modal">cluster marker</button>
+							<button type="button" class="btn btn-block btn-default concentrationMarker" data-dismiss="modal">
+								<div>marker with last value information</div>
+								<div class="btn-subtitle">attention - some data provider are very slow</div>
+							</button>
+							<button type="button" class="btn btn-block btn-default saveStatus" data-dismiss="modal">save status</button>
+							<button type="button" class="btn btn-block btn-default generalizeData" data-dismiss="modal">generalize Data</button>
 						</div>
 					</div>
 				</div>
@@ -41,7 +50,7 @@
 					</div>
 					<div id="collapseImprint" class="panel-collapse collapse in">
 						<div class="panel-body">
-							<h2>Imprint</h2>
+							<h4>Imprint</h4>
 							<p>52&deg;North GmbH is responsible for this website.</p>
 							<p>52&deg;North Initiative for Geospatial Open Source Software GmbH<br>Martin-Luther-King-Weg 24<br>48155 Muenster, Germany</p>
 						</div>

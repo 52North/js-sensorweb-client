@@ -39,17 +39,13 @@ body,html,.container,.row-offcanvas,.mainPanel {
 #tableView {
 	position: absolute;
 	top: 0px;
-	bottom: 35px;
+	bottom: 45px;
 	width: 100%;
 }
 
 /* .btn {
 	font-size: 18px;
 } */
-
-#tableView {
-	overflow: auto;
-}
 
 .timeButtons {
 	position: absolute;
@@ -62,13 +58,16 @@ body,html,.container,.row-offcanvas,.mainPanel {
 .buttonFooter {
 	position: absolute;
 	bottom: 0;
-	height: 35px;
+	height: 45px;
 	width: 100%;
+	text-align: center;
+	padding: 5px;
 }
 
 .fullHeight {
 	height: 100%;
 	position: relative;
+	padding: 0px;
 }
 
 .content {
@@ -79,15 +78,35 @@ body,html,.container,.row-offcanvas,.mainPanel {
 .leftPanelButton {
 	position: absolute;
 	z-index: 50;
-	right: 5px;
+	right: 20px;
 	top: 5px;
 }
 
 .button-right {
 	float: right;
 	margin-right: 10px;
-}
+} 
 
 .panel-group {
 	padding: 5px;
 }
+
+.navbar-header {
+    float: none;
+}
+
+.noChart {
+	text-align: center;
+	margin: 30px;
+}
+
+.btn-subtitle {
+	font-size: 70%;
+}
+
+/* fix to support windows phone 8 */
+@-webkit-viewport   { width: device-width; }
+@-moz-viewport      { width: device-width; }
+@-ms-viewport       { width: device-width; }
+@-o-viewport        { width: device-width; }
+@viewport           { width: device-width; }

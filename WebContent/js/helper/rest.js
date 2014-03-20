@@ -27,149 +27,134 @@
  * Public License for more details.
  */
 var Rest = {
-	url : "http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/",
-//	url : "http://sosrest.irceline.be/api/v1/timeseries",
-//	url : "http://192.168.1.135:8090/sensorwebclient-webapp-3.3.0-SNAPSHOT/api/v1/",
-//	url : "http://localhost:8090/sensorwebclient-webapp-3.3.0-SNAPSHOT/api/v1/",
-		
-	timeseriesById : function(id) {
+
+	request : function(url, data, success, fail) {
 		var promise = $.Deferred();
-		$.ajax({
-			url : this.url + "timeseries/" + id,
-			type : "GET",
-			dataType : "json",
-			success : function(result) {
-				promise.resolve(new TimeSeries(id, result));
+		if (Settings.additionalParameters) {
+			if (!data) {
+				data = {};
 			}
-		});
-		return promise;
-	},
-	
-	tsData : function(id, timespan) {
-		var promise = $.Deferred();
+			$.each(Settings.additionalParameters, function(key, value) {
+				data[key] = value;
+			});
+		}
 		$.ajax({
-			url : this.url + "timeseries/" + id + "/getData",
-			data : {
-				timespan : timespan,
-				expanded : true
-			},
+			url : url,
+			data : data,
 			type : "GET",
 			dataType : "json",
 			success : function(result) {
-				values = [];
-				$.each(result[id].values, function(index, elem) {
-					values.push([ elem.timestamp, elem.value ]);
-				});
-				refs = {};
-				if(result[id].extra != null && result[id].extra.referenceValues != null) {
-					$.each(result[id].extra.referenceValues, function(id, elem) {
-						refvalues = [];
-						$.each(elem.values, function(index, elem) {
-							refvalues.push([ elem.timestamp, elem.value ]);
-						});
-						refs[id] = refvalues;
-					});
-				}
-				promise.resolve(values, refs);
+				success(promise, result);
 			},
 			error : function(error) {
-				Rest.requestFailed(error.responseText);
-				promise.reject(id);
+				Rest.requestFailed(this.url, this.data);
+				if(fail != null) {
+					fail(promise, error);
+				}
 			}
 		});
 		return promise;
 	},
-	
-	stations : function(id, data) {
-		var promise = $.Deferred();
-		$.ajax({
-			url : this.url + "stations/" + (id == null ? "" : id),
-			type : "GET",
-			dataType : "json",
-			data : data,
-			success : function(result) {
-				promise.resolve(result);
-			}
-		});
-		return promise;
+
+	requestFailed : function(url, data) {
+		alert("URL: " + url + "\n\nData: " + data);
 	},
-	
-	timeseries : function(id, data) {
-		var promise = $.Deferred();
+
+	tsData : function(id, apiUrl, timespan) {
+		return this.request(apiUrl + "timeseries/" + id
+				+ "/getData", {
+			timespan : timespan,
+			generalize : Status.get('generalizeData'),
+			expanded : true
+		}, function(promise, result) {
+			values = [];
+			$.each(result[id].values, function(index, elem) {
+				values.push([ elem.timestamp, elem.value ]);
+			});
+			refs = {};
+			if (result[id].extra != null
+					&& result[id].extra.referenceValues != null) {
+				$.each(result[id].extra.referenceValues, function(id, elem) {
+					refvalues = [];
+					$.each(elem.values, function(index, elem) {
+						refvalues.push([ elem.timestamp, elem.value ]);
+					});
+					refs[id] = refvalues;
+				});
+			}
+			promise.resolve(values, refs);
+		}, function(promise, error) {
+			debugger;
+			promise.reject(id);
+		});
+	},
+
+	stations : function(id, apiUrl, data) {
+		return Rest.request(apiUrl + "stations/"
+				+ (id == null ? "" : id), data, function(promise, result) {
+			promise.resolve(result);
+		});
+	},
+
+	features : function(id, apiUrl, data) {
+		return Rest.request(apiUrl + "features/"
+				+ (id == null ? "" : id), data, function(promise, result) {
+			promise.resolve(result);
+		});
+	},
+
+	timeseries : function(id, apiUrl, data) {
+		if(data == null) {
+			data = {};
+		}
 		data.expanded = true;
-		data.force_last_values = true;
-		$.ajax({
-			url : this.url + "timeseries/" + (id == null ? "" : id),
-			type : "GET",
-			dataType : "json",
-			data : data,
-			success : function(result) {
-				promise.resolve(result);
+		data.rendering_hints = true;
+		return Rest.request(apiUrl + "timeseries/"
+				+ (id == null ? "" : id), data, function(promise, result) {
+			if ($.isArray(result)) {
+				var timeseriesList = $.map(result, function(elem) {
+					return new TimeSeries(elem.id, elem, apiUrl);
+				});
+				promise.resolve(timeseriesList);
+			} else {
+				promise.resolve(new TimeSeries(result.id, result, apiUrl));
 			}
 		});
-		return promise;
 	},
-	
-	categories : function(id, data) {
-		var promise = $.Deferred();
-		$.ajax({
-			url : this.url + "categories/" + (id == null ? "" : id),
-			type : "GET",
-			dataType : "json",
-			data : data,
-			success : function(result) {
-				promise.resolve(result);
-			}
+
+	categories : function(id, apiUrl, data) {
+		return Rest.request(apiUrl + "categories/"
+				+ (id == null ? "" : id), data, function(promise, result) {
+			promise.resolve(result);
 		});
-		return promise;
 	},
-	
-	phenomena : function(id, data) {
-		var promise = $.Deferred();
-		$.ajax({
-			url : this.url + "phenomena/" + (id == null ? "" : id),
-			type : "GET",
-			dataType : "json",
-			data : data,
-			success : function(result) {
-				promise.resolve(result);
-			}
+
+	phenomena : function(id, apiUrl, data) {
+		return Rest.request(apiUrl + "phenomena/"
+				+ (id == null ? "" : id), data, function(promise, result) {
+			promise.resolve(result);
 		});
-		return promise;
 	},
-	
-	procedures : function(id, data) {
-		var promise = $.Deferred();
-		$.ajax({
-			url : this.url + "procedures/" + (id == null ? "" : id),
-			type : "GET",
-			dataType : "json",
-			data : data,
-			success : function(result) {
-				promise.resolve(result);
-			}
+
+	procedures : function(id, apiUrl, data) {
+		return Rest.request(apiUrl + "procedures/"
+				+ (id == null ? "" : id), data, function(promise, result) {
+			promise.resolve(result);
 		});
-		return promise;
 	},
-	
-	services : function() {
-		var promise = $.Deferred();
-		$.ajax({
-			url : this.url + "services",
-			data : {
-				expanded : true
-			},
-			type : "GET",
-			dataType : "json",
-			success : function(result) {
-				promise.resolve(result);
-			}	
+
+	services : function(apiUrl) {
+		return Rest.request(apiUrl + "services", {
+			expanded : true
+		}, function(promise, result) {
+			promise.resolve(result);
 		});
-		return promise;
 	},
 	
-	requestFailed : function(text) {
-		alert(text);
+	abortRequest : function(promise) {
+		if (promise && promise.state() == "pending") {
+			promise.reject();
+		}
 	}
-	
+
 };

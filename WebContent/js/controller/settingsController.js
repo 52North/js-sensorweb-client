@@ -32,29 +32,49 @@ var SettingsController = {
 		$(document).ready(function() {
 			$('[data-target="#settings"]').click(function() {
 				Modal.show("settings");
-				// reset status
-				$('.resetStatus').on('click', function() {
-					Status.reset();
-					Modal.hide();
+				if(Settings.saveStatusPossible){
+					// reset status
+					$('.resetStatus').on('click', function() {
+						Status.reset();
+						Modal.hide();
+					});
+					// save status
+					Button.setToggleButton('.saveStatus', Status.get('saveStatus'));
+					$('.saveStatus').on('click', function(e) {
+						var save = Button.switchToggleButton(e.currentTarget); 
+						Status.set('saveStatus', save);
+					});
+				} else {
+					$('.resetStatus').remove();
+					$('.saveStatus').remove();
+				}
+				// cluster station option
+				Button.setToggleButton('.clusteringStations', Status.get('clusterStations'));
+				$('.clusteringStations').on('click', function(e) {
+					var clustering = Button.switchToggleButton(e.currentTarget);
+					Status.set('clusterStations', clustering);
+					EventManager.publish("clusterStations", clustering);
+				});
+				// generalize data
+				Button.setToggleButton('.generalizeData', Status.get('generalizeData'));
+				$('.generalizeData').on('click', function(e) {
+					var generalize = Button.switchToggleButton(e.currentTarget);
+					Status.set('generalizeData', generalize);
+					EventManager.publish("timeseries:update:complete");
+				});
+				// show concentration marker
+				Button.setToggleButton('.concentrationMarker', Status.get('concentrationMarker'));
+				$('.concentrationMarker').on('click', function(e) {
+					var concentMarker = Button.switchToggleButton(e.currentTarget);
+					Status.set('concentrationMarker', concentMarker);
 				});
 				// permalink
-				$('.permalink .item').on('click', function() {
-					debugger;
-					// url
-					var url = window.location.origin + window.location.pathname;
-					// create timespan
-					var timespan = TimeController.currentTimespan;
-					url = url + "?timespan=" + Time.getRequestTimespan(timespan.from, timespan.till);
-					// create timeseries id list
-					var tsList = $.map(TimeSeriesController.getTimeseriesCollection(), function(ts, id){
-						return id;
-					});
-					var timeseries = tsList.join(",");
-					url = url + "&timeseries=" + timeseries;
-					$('.permalink .link').attr('href', url).show();
-					var mailLink = "mailto:?body=" + encodeURIComponent(url); 
-					$('.permalink .mail').attr('href', mailLink).show();
-				});
+				$('.permalink .link').on('click', function(){
+					window.open(PermalinkController.createPermalink(), '_blank');
+				}).show();
+				$('.permalink .mail').on('click', function(){
+					window.location.href = "mailto:?body=" + encodeURIComponent(PermalinkController.createPermalink()); 
+				}).show();
 				// imprint
 			});
 		});

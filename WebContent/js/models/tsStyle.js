@@ -26,17 +26,72 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  */
-Array.prototype.remove = function(id) {
-	debugger;
-	for (var i = 0; i < this.length; i++) {
-		if (this[i] === id) return i;
-	}
-	return -1;
+function TimeseriesStyle(chartType, width, color, intervalString) {
+	
+	createInterval = function(interval) {
+		switch (interval) {
+		case "byHour":
+			return 1;
+		case "byDay":
+			return 24;
+		case "byWeek":
+			return 7*24;
+		case "byMonth":
+			return 30*24;
+		default:
+			return 1;
+		}
+	};
+	
+	var interval = createInterval(intervalString);
+
+	this.getColor = function() {
+		return color;
+	};
+	
+	this.setColor = function(setcolor) {
+		color = setcolor;
+	};
+	
+	this.getChartType = function() {
+		return chartType;
+	};
+	
+	this.setChartType = function(ct) {
+		chartType = ct;
+	};
+	
+	this.isBarChart = function() {
+		return chartType == "bar";
+	};
+	
+	this.isLineChart = function() {
+		return chartType == "line";
+	};
+	
+	this.getIntervalByHours = function() {
+		return interval;
+	};
+	
+	this.persist = function() {
+		return {
+			chartType : chartType,
+			color : color,
+			interval : interval
+		};
+	};
+	
+	this.setIntervalByHours = function(inter) {
+		interval = inter;
+	};
+
+};
+/* create a default timeseries style constructor */
+TimeseriesStyle.createDefault = function(id) {
+	var chartType = "line";
+	var width = 2;
+	var color = Color.stringToColor(id);
+	var interval = "byHour"; 
+	return new TimeseriesStyle(chartType, width, color, interval);
 };
 
-Array.prototype.has = function(id) {
-	for (var i = 0; i < this.length; i++) {
-		if (this[i] === id) return true;
-	}
-	return false;
-};

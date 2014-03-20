@@ -6,11 +6,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.n52.mobileclient</groupId>
-    <artifactId>mobileSWC</artifactId>
-    <version>0.0.0-SNAPSHOT</version>
+    <artifactId>jsClient</artifactId>
+    <version>0.2.0</version>
     <packaging>war</packaging>
 
-    <name>JavaScript SOS Client</name>
+    <name>JavaScript SensorWeb Client</name>
     <description></description>
     <url></url>
     <inceptionYear>2014</inceptionYear>
@@ -97,47 +97,57 @@
                         <id>default-minify</id>
                         <configuration>
 							<cssSourceFiles>
+								<!-- <cssSourceFile>libs/bootstrap-full.css</cssSourceFile> -->
 								<cssSourceFile>libs/bootstrap.css</cssSourceFile>
 								<cssSourceFile>libs/datepicker.css</cssSourceFile>
 								<cssSourceFile>offcanvas.css</cssSourceFile>
-								<cssSourceFile>libs/leaflet.css</cssSourceFile>
+								<!-- <cssSourceFile>libs/leaflet-full.css</cssSourceFile> -->
+								<cssSourceFile>libs/leaflet-full.css</cssSourceFile>
 								<cssSourceFile>libs/leafletMarkerCluster.css</cssSourceFile>
 								<cssSourceFile>mainstyles.css</cssSourceFile>
 								<cssSourceFile>list.css</cssSourceFile>
 								<cssSourceFile>map.css</cssSourceFile>
 								<cssSourceFile>time.css</cssSourceFile>
 								<cssSourceFile>chart.css</cssSourceFile>
+								<cssSourceFile>settings.css</cssSourceFile>
 								<cssSourceFile>legend.css</cssSourceFile>
 								<cssSourceFile>selectionList.css</cssSourceFile>
 								<cssSourceFile>animation.css</cssSourceFile>
+								<cssSourceFile>table.css</cssSourceFile>
 							</cssSourceFiles>
-							<cssFinalFile>mswc.${project.version}.css</cssFinalFile>
+							<cssFinalFile>jsc.${project.version}.css</cssFinalFile>
 							<jsSourceFiles>
 							    <!-- <jsSourceFile>libs/jquery-2.0.3.js</jsSourceFile> -->
 							    <jsSourceFile>libs/jquery-1.10.2.js</jsSourceFile>
 							    <!-- <jsSourceFile>libs/jquery-1.11.0.js</jsSourceFile> -->
+							    <!-- <jsSourceFile>libs/bootstrap-full.js</jsSourceFile> -->
 							    <jsSourceFile>libs/bootstrap.js</jsSourceFile>
 							    <jsSourceFile>libs/bootstrap-datepicker.js</jsSourceFile>
-							    <jsSourceFile>libs/leaflet-src.js</jsSourceFile>
+							    <jsSourceFile>libs/leaflet-full.js</jsSourceFile>
+							    <!-- <jsSourceFile>libs/leaflet-src.js</jsSourceFile> -->
 							    <jsSourceFile>libs/leaflet.markercluster-src.js</jsSourceFile>
 							    <jsSourceFile>libs/jquery.flot.js</jsSourceFile>
 							    <jsSourceFile>libs/jquery.flot.time.js</jsSourceFile>
 							    <jsSourceFile>libs/jquery.total-storage.js</jsSourceFile>
 							    <jsSourceFile>libs/mustache.js</jsSourceFile>
 							    <jsSourceFile>libs/moment.min.js</jsSourceFile>
+							    <jsSourceFile>libs/sorttable.js</jsSourceFile>
 							    <jsSourceFile>models/timeseries.js</jsSourceFile>
 							    <jsSourceFile>models/referenceValue.js</jsSourceFile>
+							    <jsSourceFile>models/tsStyle.js</jsSourceFile>
 							    <jsSourceFile>models/settings.js</jsSourceFile>
 							    <jsSourceFile>templates/template.js</jsSourceFile>
 							    <jsSourceFile>helper/time.js</jsSourceFile>
 							    <jsSourceFile>helper/color.js</jsSourceFile>
-							    <!-- <jsSourceFile>helper/watch.js</jsSourceFile> -->
 							    <jsSourceFile>helper/rest.js</jsSourceFile>
 							    <jsSourceFile>helper/pages.js</jsSourceFile>
 							    <jsSourceFile>helper/modal.js</jsSourceFile>
 							    <jsSourceFile>helper/event.js</jsSourceFile>
 							    <jsSourceFile>helper/status.js</jsSourceFile>
+							    <jsSourceFile>helper/button.js</jsSourceFile>
+							    <jsSourceFile>helper/bootstrap-fix.js</jsSourceFile>
 							    <jsSourceFile>controller/startController.js</jsSourceFile>
+							    <jsSourceFile>controller/permalinkController.js</jsSourceFile>
 							    <jsSourceFile>controller/settingsController.js</jsSourceFile>
 							    <jsSourceFile>controller/timeseriesController.js</jsSourceFile>
 							    <jsSourceFile>controller/timeController.js</jsSourceFile>
@@ -145,17 +155,16 @@
 							    <jsSourceFile>controller/listSelectionController.js</jsSourceFile>
 							    <jsSourceFile>controller/chartController.js</jsSourceFile>
 							    <jsSourceFile>controller/legendController.js</jsSourceFile>
-							    <jsSourceFile>controller/colorChooserController.js</jsSourceFile>
+							    <jsSourceFile>controller/styleChangeController.js</jsSourceFile>
 							    <jsSourceFile>controller/tableController.js</jsSourceFile>
 							</jsSourceFiles>
-							<jsFinalFile>mswc.${project.version}.js</jsFinalFile>
+							<jsFinalFile>jsc.${project.version}.js</jsFinalFile>
                             <jsEngine>CLOSURE</jsEngine>
-                            <!--closureCompilationLevel>ADVANCED_OPTIMIZATIONS</closureCompilationLevel-->
+                            <closureCompilationLevel>SIMPLE_OPTIMIZATIONS</closureCompilationLevel>
                             <!--closureExterns>
                                 <closureExtern>extern/external-lib.js</closureExtern>
                             </closureExterns-->
-                            <yuiDisableOptimizations>true</yuiDisableOptimizations>
-                            <skipMinify>true</skipMinify>
+                            <skipMinify>${skipMinify}</skipMinify>
                             <webappSourceDir>
                                 ${basedir}/WebContent/
                             </webappSourceDir>
@@ -197,6 +206,16 @@
 			</plugin>
         </plugins>
     </build>
+    
+    <profiles>
+		<profile>
+		    <id>minify</id>
+		    <properties>
+		        <skipMinify>false</skipMinify>
+    			<minifiedPostfix>min.</minifiedPostfix>
+		    </properties>
+		</profile>        
+    </profiles>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -205,5 +224,7 @@
         <maven.compiler.target>1.5</maven.compiler.target>
         <maven.build.timestamp.format>yyyy</maven.build.timestamp.format>
     	<currentYear>${maven.build.timestamp}</currentYear>
+    	<skipMinify>true</skipMinify>
+    	<minifiedPostfix></minifiedPostfix>
     </properties>
 </project>

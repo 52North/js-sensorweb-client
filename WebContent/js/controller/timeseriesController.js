@@ -32,16 +32,20 @@ var TimeSeriesController = {
 
 	init : function() {
 		EventManager.subscribe("resetStatus", $.proxy(this.removeAllTS, this));
+		EventManager.subscribe("timeextent:change", $.proxy(this.changeTimeExtent, this));
 		this.loadSavedTimeseries();
 	},
 	
 	loadSavedTimeseries : function() {
-		$.each(Status.getTimeseries(), $.proxy(function(id, elem) {
-			var promise = Rest.timeseriesById(id);
+		$.each(Status.getTimeseries(), $.proxy(function(internalId, elem) {
+			var promise = Rest.timeseries(elem.tsId, elem.apiUrl);
 			var that = this;
 			promise.done(function(ts){
-				if(elem.color) {
-					ts.setColor(elem.color);
+				if(elem.style) {
+					var style = ts.getStyle();
+					style.setColor(elem.style.color);
+					style.setChartType(elem.style.chartType);
+					style.setIntervalByHours(elem.style.interval);
 				}
 				that.addTS(ts);
 			});
@@ -52,7 +56,7 @@ var TimeSeriesController = {
 	addTS : function(ts) {
 		Status.addTimeseries(ts);
 		EventManager.publish("timeseries:add", [ ts ]);
-		this.timeseries[ts.getId()] = ts;
+		this.timeseries[ts.getInternalId()] = ts;
 		// request data
 		var from = TimeController.currentTimespan.from;
 		var till = TimeController.currentTimespan.till;
@@ -86,7 +90,7 @@ var TimeSeriesController = {
 	},
 	
 	/*----- update timeextent -----*/
-	changeTimeExtent : function(timeExtent) {
+	changeTimeExtent : function(event, timeExtent) {
 		this.unsyncTimeseries();
 		$.each(this.timeseries, $.proxy(function(index, elem){
 			this.loadTsData(elem, timeExtent);
@@ -102,7 +106,7 @@ var TimeSeriesController = {
 	/*----- remove timeseries -----*/
 	removeTS : function(ts) {
 		Status.removeTimeseries(ts);
-		delete this.timeseries[ts.getId()];
+		delete this.timeseries[ts.getInternalId()];
 		EventManager.publish("timeseries:remove", [ ts ]);
 	},
 
