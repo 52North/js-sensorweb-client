@@ -49,6 +49,10 @@ var Time = {
 			till = till.subtract('days', 1).endOf('day');
 			mode = 'day';
 			break;
+		case 'today&yesterday':
+			from = from.subtract('days', 1).startOf('day');
+			mode = 'day';
+			break;
 		case 'lastWeek':
 			from = from.subtract('weeks', 1).startOf('week');
 			till = till.subtract('weeks', 1).endOf('week');
