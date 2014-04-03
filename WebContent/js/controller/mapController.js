@@ -57,6 +57,17 @@ var Map = {
 				this.map.on('locationfound', this.onLocationFound);
 				this.map.on('locationerror', this.onLocationError);
 			}, this);
+			L.control.scale().addTo(this.map);
+			new L.Control.GeoSearch({
+    			url: 'http://nominatim.openstreetmap.org/search?format=json&q={s}',
+				jsonpParam: 'json_callback',
+				propertyName: 'display_name',
+				propertyLoc: ['lat','lon'],
+				position: 'topcenter',
+				minLength: 2,
+				provider: new L.GeoSearch.Provider.OpenStreetMap(),
+    			zoomLevel: 13
+			}).addTo(this.map);
 		}
 	},
 
