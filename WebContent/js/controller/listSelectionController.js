@@ -55,9 +55,9 @@ var ListSelectionController = {
 	init : function() {
 		this.entries = {
 			category : [ this.category, this.station, this.phenomenon, this.procedure ],
-			sensor : [ this.procedure, this.station, this.phenomenon ],
-			station : [ this.station, this.phenomenon, this.procedure ],
-			phenomenon : [ this.phenomenon, this.station, this.procedure ]
+			sensor : [ this.procedure, this.station, this.category, this.phenomenon ],
+			station : [ this.station, this.category, this.phenomenon, this.procedure ],
+			phenomenon : [ this.phenomenon, this.category, this.station, this.procedure ]
 		};
 		// show button to start list selection
 		$('[data-action="listSelection"]').show();
