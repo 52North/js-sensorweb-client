@@ -59,7 +59,7 @@ var TableController = {
 		}, this));
 		EventManager.subscribe("navigation:open", $.proxy(this.createTable, this));
 		EventManager.subscribe("timeseries:synced", $.proxy(this.createTable, this));
-		EventManager.subscribe("timeseries:remove", $.proxy(this.updateTable, this));
+		EventManager.subscribe("timeseries:remove", $.proxy(this.createTable, this));
 		EventManager.subscribe("timeseries:changeStyle", $.proxy(this.updateTable, this));
 	},
 	
