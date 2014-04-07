@@ -70,7 +70,7 @@ var PermalinkController = {
 	},
 
 	getUrlParameter : function(sParam) {
-		var hash = window.location.hash;
+		var hash = window.location.search;
 		hash = hash.substring(hash.indexOf('?') + 1);
 		var parameters = hash.split('&');
 		for (var i = 0; i < parameters.length; i++) {
