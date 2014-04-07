@@ -143,6 +143,13 @@ function TimeSeries(tsId, meta, apiUrl) {
 		return meta.parameters.procedure.label;
 	};
 	
+	this.getCategoryLabel = function() {
+		if (meta.parameters.phenomenon.label != meta.parameters.category.label) {
+			return meta.parameters.category.label;
+		}
+		return "";
+	};
+	
 	this.getStatusIntervals = function() {
 		return meta.statusIntervals;
 	};
