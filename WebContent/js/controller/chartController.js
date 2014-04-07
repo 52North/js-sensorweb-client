@@ -130,9 +130,15 @@ var ChartController = {
 				if(elem.id == id) {
 					elem.lines.lineWidth = ChartController.selectedLineWidth;
 					elem.bars.lineWidth = ChartController.selectedLineWidth;
+					elem.selected = true;
 				}
 			});
 			this.plot.draw();
+			$.each(this.data, function(index, elem) {
+				if(elem.id == id) {
+					elem.selected = true;
+				}
+			});
 		}
 	},
 	
@@ -141,6 +147,10 @@ var ChartController = {
 			$.each(this.plot.getData(), function(index, elem) {
 				elem.lines.lineWidth = ChartController.defaultLineWidth;
 				elem.bars.lineWidth = ChartController.defaultLineWidth;
+				elem.selected = false;
+			});
+			$.each(this.data, function(index, elem) {
+				elem.selected = false;
 			});
 			this.plot.draw();
 		}
@@ -316,6 +326,17 @@ var ChartController = {
 						yaxisLabel.css("margin-left", -(yaxisLabel.width() - yaxisLabel.height()) / 2);
 					}
 				}, this));
+				var drawNew = false;
+				$.each(this.plot.getData(), function(index, elem) {
+					if(elem.selected) {
+						elem.lines.lineWidth = ChartController.selectedLineWidth;
+						elem.bars.lineWidth = ChartController.selectedLineWidth;
+						drawNew = true;
+					}
+				});
+				if(drawNew) {
+					this.plot.draw();
+				};
 			} else {
 				$("#placeholder").empty();
 				$("#placeholder").append(Template.createHtml('chart-empty'));
