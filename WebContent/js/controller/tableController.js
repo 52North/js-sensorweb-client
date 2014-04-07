@@ -222,8 +222,9 @@ var TableController = {
 		var index = 1;
 		$.each(TimeSeriesController.getTimeseriesCollection(), function(id, elem){
 			var title = $('<div></div>').text(elem.getStationLabel());
-			var subtitle = $('<span></span>').text(elem.getPhenomenonLabel() + " (" + elem.getUom() + ")");
-			headerrow.append($('<th></th>').data('index', index++).append(title).append(subtitle));
+			var phenomenonLabel = $('<span></span>').text(elem.getPhenomenonLabel() + " (" + elem.getUom() + ")");
+			var categoryLabel = $('<div></div>').text(elem.getCategoryLabel());
+			headerrow.append($('<th></th>').data('index', index++).append(title).append(phenomenonLabel).append(categoryLabel));
 		});
 		this.htmltable.append(header.append(headerrow));
 	},
