@@ -171,7 +171,7 @@ function TimeSeries(tsId, meta, apiUrl) {
 	};
 
 	this.fetchData = function(timespan, complete) {
-		var promise = Rest.tsData(tsId, apiUrl, timespan);
+		var promise = Rest.tsData(tsId, apiUrl, timespan, internalId);
 		var that = this;
 		promise.done(function(data, refdata) {
 			values = data;
