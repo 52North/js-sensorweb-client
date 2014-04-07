@@ -112,7 +112,7 @@ var ListSelectionController = {
 				$('#' + tab + ' #' + entry.collapse + '.collapse').collapse('show');
 				// onclick
 				$('#' + tab + ' #' + entry.collapse + ' .panel-body div').on('click', $.proxy(function(e){
-					var label = e.target.innerText;
+					var label = $.trim(e.target.innerHTML);
 					$('#' + tab + ' [href=#' + entry.collapse + ']').text(entry.heading + ' - ' + label);
 					$('#' + tab + ' #' + entry.collapse).collapse('hide');
 					data[entry.type] = e.target.dataset.id;
