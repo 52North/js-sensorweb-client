@@ -322,8 +322,11 @@ var ChartController = {
 							this.plot.draw();
 						},this));
 						var yaxisLabel = $("<div class='axisLabel yaxisLabel' style=left:" + box.left + "px;></div>")
-								.text(axis.options.phenomenon + " (" + axis.options.uom + ")").appendTo('#placeholder');
-						yaxisLabel.css("margin-left", -(yaxisLabel.width() - yaxisLabel.height()) / 2);
+								.text(axis.options.uom).appendTo('#placeholder');
+						$.each(axis.options.tsColors, function(idx, color){
+							$('<span>').html('&nbsp;&#x25CF;').css('color', color).addClass('labelColorMarker').appendTo(yaxisLabel);
+						});
+						yaxisLabel.css("margin-left", -(yaxisLabel.width() - yaxisLabel.height()) / 2 - 3);
 					}
 				}, this));
 				var drawNew = false;
@@ -356,9 +359,11 @@ var ChartController = {
 				axesList[elem.uom] = {
 					id : ++Object.keys(axesList).length,
 					uom : elem.uom,
-					phenomenon : elem.phenomenon,
+					tsColors : [elem.color],
 					zeroScaled : elem.zeroScaled
 				};
+			} else {
+				axesList[elem.uom].tsColors.push(elem.color);
 			};
 			elem.yaxis = axesList[elem.uom].id;
 		});
@@ -366,7 +371,7 @@ var ChartController = {
 		$.each(axesList, function(idx, elem){
 			axes.splice(elem.id - 1, 0, {
 				uom : elem.uom,
-				phenomenon : elem.phenomenon,
+				tsColors : elem.tsColors,
 				min : elem.zeroScaled ? 0 : null
 			});
 		});

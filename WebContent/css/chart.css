@@ -66,3 +66,7 @@
 	-moz-transform: rotate(-90deg);
 	-webkit-transform: rotate(-90deg);
 }
+
+.labelColorMarker {
+	font-size: 150%;
+}

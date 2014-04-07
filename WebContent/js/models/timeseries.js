@@ -144,7 +144,7 @@ function TimeSeries(tsId, meta, apiUrl) {
 	};
 	
 	this.getCategoryLabel = function() {
-		if (meta.parameters.phenomenon.label != meta.parameters.category.label) {
+		if (meta.parameters.category && (meta.parameters.phenomenon.label != meta.parameters.category.label)) {
 			return meta.parameters.category.label;
 		}
 		return "";
