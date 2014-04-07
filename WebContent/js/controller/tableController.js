@@ -138,11 +138,9 @@ var TableController = {
 		var div = $('<div class="paging"></div>'),
 		paging = $('<ul class="pagination"></ul>');
 		paging.append(this.pageButton('&laquo;', 0));
-		paging.append(this.pageButton('-10', pagestart - pagesize * 10));
-		paging.append(this.pageButton('-1', pagestart - pagesize));
-		paging.append(this.pageButton(Math.ceil((pagestart + 1)/pagesize) + ' .. ' + Math.ceil(arraylength/pagesize)));
-		paging.append(this.pageButton('+1', pagestart + pagesize));
-		paging.append(this.pageButton('+10', pagestart + pagesize * 10));
+		paging.append(this.pageButton('&lsaquo;', pagestart - pagesize));
+		paging.append(this.pageButton(Math.ceil((pagestart + 1)/pagesize) + '/' + Math.ceil(arraylength/pagesize)));
+		paging.append(this.pageButton('&rsaquo;', pagestart + pagesize));
 		paging.append(this.pageButton('&raquo;', Math.floor(arraylength / pagesize) * pagesize));
 		div.append(paging);
 		this.tableView.append(div);
