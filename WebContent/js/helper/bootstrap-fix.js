@@ -28,7 +28,6 @@
  */
 /* fix to support windows phone 8 */
 if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
-	debugger;
 	var msViewportStyle = document.createElement('style');
 	msViewportStyle.appendChild(document
 			.createTextNode('@-ms-viewport{width:auto!important}'));

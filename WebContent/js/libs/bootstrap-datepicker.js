@@ -138,7 +138,6 @@
 			if (this.position == 'below') {
 				top = offset.top + this.height;
 			} else {
-				debugger;
 				top = offset.top - this.picker[0].offsetHeight; 
 			}
 			this.picker.css({
