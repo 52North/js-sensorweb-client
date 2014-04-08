@@ -431,6 +431,7 @@ var Map = {
 	},
 
 	onLocationError : function(e) {
+		Button.setLoadingButton($('[data-action="locate"]'), false);
 		alert(e.message);
 	},
 	
