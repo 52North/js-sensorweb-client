@@ -11,6 +11,8 @@
 								click: $.proxy(this.click, this)//,
 								//mousedown: $.proxy(this.mousedown, this)
 							});
+		this.position = options.position || 'below';
+		this.picker.addClass(this.position);
 		this.isInput = this.element.is('input');
 		this.component = this.element.is('.date') ? this.element.find('.add-on') : false;
 		
@@ -132,8 +134,15 @@
 		
 		place: function(){
 			var offset = this.component ? this.component.offset() : this.element.offset();
+			var top;
+			if (this.position == 'below') {
+				top = offset.top + this.height;
+			} else {
+				debugger;
+				top = offset.top - this.picker[0].offsetHeight; 
+			}
 			this.picker.css({
-				top: offset.top + this.height,
+				top: top,
 				left: offset.left
 			});
 		},
