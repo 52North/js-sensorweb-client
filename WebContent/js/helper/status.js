@@ -89,7 +89,10 @@ var Status = (function() {
 		},
 		
 		get : function(key) {
-			return this.current[key];
+			if(this.current[key]) {
+				return this.current[key];
+			}
+			return this.defaultValues[key];
 		},
 		
 		addTimeseries : function(ts) {
