@@ -105,7 +105,11 @@ var Pages = {
 			Pages.navigateToPage("#chart-page");
 			break;
 		default:
-			$('.swc-main div.swc-page:first').addClass('swc-page-current');
+			if (Status.hasTimeseries()) {
+				$('.swc-main div.swc-page:first').addClass('swc-page-current');
+			} else {
+				Pages.navigateToMap();
+			}
 			break;
 		}
 	}

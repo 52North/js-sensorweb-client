@@ -138,6 +138,10 @@ var Status = (function() {
 		
 		getTimeseries : function() {
 			return this.current.timeseries;
+		},
+		
+		hasTimeseries : function() {
+			return $.isEmptyObject(this.current.timeseries) ? false : true; 
 		}
 	};
 
