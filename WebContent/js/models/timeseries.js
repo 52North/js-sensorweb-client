@@ -42,7 +42,8 @@ function TimeSeries(tsId, meta, apiUrl) {
 		var width = meta.renderingHints.properties.width;
 		var color = meta.renderingHints.properties.color;
 		var interval = meta.renderingHints.properties.interval;
-		style = new TimeseriesStyle(chartType, width, color, interval);
+		var lineType = meta.renderingHints.properties.type;
+		style = new TimeseriesStyle(chartType, width, color, interval, lineType);
 	} else {
 		style = TimeseriesStyle.createDefault(tsId);
 	}

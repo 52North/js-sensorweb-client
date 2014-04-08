@@ -26,7 +26,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  */
-function TimeseriesStyle(chartType, width, color, intervalString) {
+function TimeseriesStyle(chartType, width, color, intervalString, lineType) {
 	
 	createInterval = function(interval) {
 		switch (interval) {
@@ -73,11 +73,20 @@ function TimeseriesStyle(chartType, width, color, intervalString) {
 		return interval;
 	};
 	
+	this.getLineType = function() {
+		return lineType;
+	};
+	
+	this.getWidth = function() {
+		return width;
+	};
+	
 	this.persist = function() {
 		return {
 			chartType : chartType,
 			color : color,
-			interval : interval
+			interval : interval,
+			lineType : lineType
 		};
 	};
 	
@@ -91,7 +100,8 @@ TimeseriesStyle.createDefault = function(id) {
 	var chartType = "line";
 	var width = 2;
 	var color = Color.stringToColor(id);
-	var interval = "byHour"; 
-	return new TimeseriesStyle(chartType, width, color, interval);
+	var interval = "byHour";
+	var lineType = "solid";
+	return new TimeseriesStyle(chartType, width, color, interval, lineType);
 };
 

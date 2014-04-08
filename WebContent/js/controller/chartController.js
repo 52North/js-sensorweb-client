@@ -225,9 +225,9 @@ var ChartController = {
 	
 	addStyleAndValues : function (data, ts) {
 		var style = ts.getStyle();
-		data.color = ts.getStyle().getColor();
+		data.color = style.getColor();
 		data.zeroScaled = ts.isZeroScaled();
-		if (style.getChartType() == "bar") {
+		if (style.isBarChart()) {
 			data.bars = {
 				show : true,
 				barWidth : style.getIntervalByHours() * 60 * 60 * 1000
@@ -252,6 +252,24 @@ var ChartController = {
 			}
 			data.data = sumvalues;
 		} else {
+			if (style.getLineType().indexOf("dotted") >= 0) {
+				data.points = {
+					show : true,
+					fill : true,
+					fillColor : style.getColor(),
+					radius : style.getWidth()
+				};
+			}
+			if (style.getLineType().indexOf("solid") >= 0) {
+				data.lines = {
+					show : true,
+					lineWidth : style.getWidth()
+				};
+			} else {
+				data.lines = {
+					show : false
+				};
+			}
 			data.data = ts.getValues();
 		}
 	},
