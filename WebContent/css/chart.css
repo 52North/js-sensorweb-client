@@ -65,6 +65,8 @@
 	-ms-transform: rotate(-90deg);
 	-moz-transform: rotate(-90deg);
 	-webkit-transform: rotate(-90deg);
+	z-index: -9999;
+	padding-bottom: 8px;
 }
 
 .labelColorMarker {
