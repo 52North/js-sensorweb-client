@@ -42,7 +42,8 @@ function TimeSeries(tsId, meta, apiUrl) {
 		var width = meta.renderingHints.properties.width;
 		var color = meta.renderingHints.properties.color;
 		var interval = meta.renderingHints.properties.interval;
-		style = new TimeseriesStyle(chartType, width, color, interval);
+		var lineType = meta.renderingHints.properties.type;
+		style = new TimeseriesStyle(chartType, width, color, interval, lineType);
 	} else {
 		style = TimeseriesStyle.createDefault(tsId);
 	}
@@ -143,6 +144,13 @@ function TimeSeries(tsId, meta, apiUrl) {
 		return meta.parameters.procedure.label;
 	};
 	
+	this.getCategoryLabel = function() {
+		if (meta.parameters.category && (meta.parameters.phenomenon.label != meta.parameters.category.label)) {
+			return meta.parameters.category.label;
+		}
+		return "";
+	};
+	
 	this.getStatusIntervals = function() {
 		return meta.statusIntervals;
 	};
@@ -171,7 +179,7 @@ function TimeSeries(tsId, meta, apiUrl) {
 	};
 
 	this.fetchData = function(timespan, complete) {
-		var promise = Rest.tsData(tsId, apiUrl, timespan);
+		var promise = Rest.tsData(tsId, apiUrl, timespan, internalId);
 		var that = this;
 		promise.done(function(data, refdata) {
 			values = data;

@@ -26,6 +26,22 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  */
-.permalink {
-	margin-left: 10%;
+#collapseSettings {
+	text-align: center;
 }
+
+.resetStatus {
+	margin-bottom: 5px;
+}
+
+.permalink .panel-heading {
+	padding: 3px;
+}
+
+.permalink .panel-body {
+	padding: 5px;
+}
+
+.panel .permalink {
+	margin-bottom: 5px;
+} 

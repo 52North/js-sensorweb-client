@@ -130,9 +130,15 @@ var ChartController = {
 				if(elem.id == id) {
 					elem.lines.lineWidth = ChartController.selectedLineWidth;
 					elem.bars.lineWidth = ChartController.selectedLineWidth;
+					elem.selected = true;
 				}
 			});
 			this.plot.draw();
+			$.each(this.data, function(index, elem) {
+				if(elem.id == id) {
+					elem.selected = true;
+				}
+			});
 		}
 	},
 	
@@ -141,6 +147,10 @@ var ChartController = {
 			$.each(this.plot.getData(), function(index, elem) {
 				elem.lines.lineWidth = ChartController.defaultLineWidth;
 				elem.bars.lineWidth = ChartController.defaultLineWidth;
+				elem.selected = false;
+			});
+			$.each(this.data, function(index, elem) {
+				elem.selected = false;
 			});
 			this.plot.draw();
 		}
@@ -215,9 +225,9 @@ var ChartController = {
 	
 	addStyleAndValues : function (data, ts) {
 		var style = ts.getStyle();
-		data.color = ts.getStyle().getColor();
+		data.color = style.getColor();
 		data.zeroScaled = ts.isZeroScaled();
-		if (style.getChartType() == "bar") {
+		if (style.isBarChart()) {
 			data.bars = {
 				show : true,
 				barWidth : style.getIntervalByHours() * 60 * 60 * 1000
@@ -242,6 +252,24 @@ var ChartController = {
 			}
 			data.data = sumvalues;
 		} else {
+			if (style.getLineType().indexOf("dotted") >= 0) {
+				data.points = {
+					show : true,
+					fill : true,
+					fillColor : style.getColor(),
+					radius : style.getWidth()
+				};
+			}
+			if (style.getLineType().indexOf("solid") >= 0) {
+				data.lines = {
+					show : true,
+					lineWidth : style.getWidth()
+				};
+			} else {
+				data.lines = {
+					show : false
+				};
+			}
 			data.data = ts.getValues();
 		}
 	},
@@ -312,10 +340,24 @@ var ChartController = {
 							this.plot.draw();
 						},this));
 						var yaxisLabel = $("<div class='axisLabel yaxisLabel' style=left:" + box.left + "px;></div>")
-								.text(axis.options.phenomenon + " (" + axis.options.uom + ")").appendTo('#placeholder');
-						yaxisLabel.css("margin-left", -(yaxisLabel.width() - yaxisLabel.height()) / 2);
+								.text(axis.options.uom).appendTo('#placeholder');
+						$.each(axis.options.tsColors, function(idx, color){
+							$('<span>').html('&nbsp;&#x25CF;').css('color', color).addClass('labelColorMarker').appendTo(yaxisLabel);
+						});
+						yaxisLabel.css("margin-left", -(yaxisLabel.width() - yaxisLabel.height()) / 2 - 3);
 					}
 				}, this));
+				var drawNew = false;
+				$.each(this.plot.getData(), function(index, elem) {
+					if(elem.selected) {
+						elem.lines.lineWidth = ChartController.selectedLineWidth;
+						elem.bars.lineWidth = ChartController.selectedLineWidth;
+						drawNew = true;
+					}
+				});
+				if(drawNew) {
+					this.plot.draw();
+				};
 			} else {
 				$("#placeholder").empty();
 				$("#placeholder").append(Template.createHtml('chart-empty'));
@@ -335,9 +377,11 @@ var ChartController = {
 				axesList[elem.uom] = {
 					id : ++Object.keys(axesList).length,
 					uom : elem.uom,
-					phenomenon : elem.phenomenon,
+					tsColors : [elem.color],
 					zeroScaled : elem.zeroScaled
 				};
+			} else {
+				axesList[elem.uom].tsColors.push(elem.color);
 			};
 			elem.yaxis = axesList[elem.uom].id;
 		});
@@ -345,7 +389,7 @@ var ChartController = {
 		$.each(axesList, function(idx, elem){
 			axes.splice(elem.id - 1, 0, {
 				uom : elem.uom,
-				phenomenon : elem.phenomenon,
+				tsColors : elem.tsColors,
 				min : elem.zeroScaled ? 0 : null
 			});
 		});

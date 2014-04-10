@@ -36,7 +36,6 @@ var SettingsController = {
 					// reset status
 					$('.resetStatus').on('click', function() {
 						Status.reset();
-						Modal.hide();
 					});
 					// save status
 					Button.setToggleButton('.saveStatus', Status.get('saveStatus'));

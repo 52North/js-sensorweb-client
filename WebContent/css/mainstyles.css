@@ -95,6 +95,10 @@ body,html,.container,.row-offcanvas,.mainPanel {
     float: none;
 }
 
+.navbar-brand {
+	cursor: default;
+}
+
 .noChart {
 	text-align: center;
 	margin: 30px;

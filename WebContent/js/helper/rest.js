@@ -47,7 +47,7 @@ var Rest = {
 				success(promise, result);
 			},
 			error : function(error) {
-				Rest.requestFailed(this.url, this.data);
+				Rest.requestFailed(error);
 				if(fail != null) {
 					fail(promise, error);
 				}
@@ -56,11 +56,13 @@ var Rest = {
 		return promise;
 	},
 
-	requestFailed : function(url, data) {
-		alert("URL: " + url + "\n\nData: " + data);
+	requestFailed : function(error) {
+		if (error.responseJSON && error.responseJSON.userMessage) {
+			alert(error.responseJSON.userMessage);
+		}
 	},
 
-	tsData : function(id, apiUrl, timespan) {
+	tsData : function(id, apiUrl, timespan, internalId) {
 		return this.request(apiUrl + "timeseries/" + id
 				+ "/getData", {
 			timespan : timespan,
@@ -84,8 +86,7 @@ var Rest = {
 			}
 			promise.resolve(values, refs);
 		}, function(promise, error) {
-			debugger;
-			promise.reject(id);
+			promise.reject(internalId);
 		});
 	},
 

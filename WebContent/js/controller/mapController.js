@@ -388,6 +388,7 @@ var Map = {
 					"version" : elem.version,
 					"stations" : elem.quantities.stations,
 					"timeseries" : elem.quantities.timeseries,
+					"phenomena" : elem.quantities.phenomena,
 					"url" : elem.serviceUrl,
 					"apiUrl" : apiUrl,
 					"id" : elem.id,
@@ -431,6 +432,7 @@ var Map = {
 	},
 
 	onLocationError : function(e) {
+		Button.setLoadingButton($('[data-action="locate"]'), false);
 		alert(e.message);
 	},
 	

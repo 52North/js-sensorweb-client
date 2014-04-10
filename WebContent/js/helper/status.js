@@ -89,7 +89,10 @@ var Status = (function() {
 		},
 		
 		get : function(key) {
-			return this.current[key];
+			if(this.current[key]) {
+				return this.current[key];
+			}
+			return this.defaultValues[key];
 		},
 		
 		addTimeseries : function(ts) {
@@ -135,6 +138,10 @@ var Status = (function() {
 		
 		getTimeseries : function() {
 			return this.current.timeseries;
+		},
+		
+		hasTimeseries : function() {
+			return $.isEmptyObject(this.current.timeseries) ? false : true; 
 		}
 	};
 

@@ -55,9 +55,9 @@ var ListSelectionController = {
 	init : function() {
 		this.entries = {
 			category : [ this.category, this.station, this.phenomenon, this.procedure ],
-			sensor : [ this.procedure, this.station, this.phenomenon ],
-			station : [ this.station, this.phenomenon, this.procedure ],
-			phenomenon : [ this.phenomenon, this.station, this.procedure ]
+			sensor : [ this.procedure, this.station, this.category, this.phenomenon ],
+			station : [ this.station, this.category, this.phenomenon, this.procedure ],
+			phenomenon : [ this.phenomenon, this.category, this.station, this.procedure ]
 		};
 		// show button to start list selection
 		$('[data-action="listSelection"]').show();
@@ -112,7 +112,7 @@ var ListSelectionController = {
 				$('#' + tab + ' #' + entry.collapse + '.collapse').collapse('show');
 				// onclick
 				$('#' + tab + ' #' + entry.collapse + ' .panel-body div').on('click', $.proxy(function(e){
-					var label = e.target.innerText;
+					var label = $.trim(e.target.innerHTML);
 					$('#' + tab + ' [href=#' + entry.collapse + ']').text(entry.heading + ' - ' + label);
 					$('#' + tab + ' #' + entry.collapse).collapse('hide');
 					data[entry.type] = e.target.dataset.id;

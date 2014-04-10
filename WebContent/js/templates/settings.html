@@ -15,18 +15,24 @@
 					</div>
 					<div id="collapseSettings" class="panel-collapse collapse in">
 						<div class="panel-body">
-							<div class="resetStatus">
+							<!-- <div class="resetStatus">
 								<div class="item">
-									<div>Reset Status</div>
+									<span class="glyphicon glyphicon-remove"></span>
+									<span>Reset Status</span>
 								</div>
-							</div>
-							<div>Create a permalink as:</div>
-							<div class="permalink">
-								<div class="item link">
-									<span class="glyphicon glyphicon-link"></span> link in a new window
-								</div>
-								<div class="item mail">
-									<span class="glyphicon glyphicon-envelope"></span> link in a mail
+							</div> -->
+							<button type="button" class="btn btn-block btn-default resetStatus" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>Reset status</button>
+							<div class="panel panel-default permalink">
+								<div class="panel-heading">Create a permalink as:</div>
+								<div class="panel-body">
+									<div class="item link">
+										<span class="glyphicon glyphicon-link"></span>
+										<span>link in a new window</span>
+									</div>
+									<div class="item mail">
+										<span class="glyphicon glyphicon-envelope"></span>
+										<span>link in an email</span>
+									</div>
 								</div>
 							</div>
 							<button type="button" class="btn btn-block btn-default clusteringStations" data-dismiss="modal">cluster marker</button>
@@ -51,7 +57,7 @@
 					<div id="collapseImprint" class="panel-collapse collapse in">
 						<div class="panel-body">
 							<h4>Imprint</h4>
-							<p>52&deg;North GmbH is responsible for this website.</p>
+							<p><a href="http://52north.org" target="_blank">52&deg;North GmbH</a> is responsible for this website.</p>
 							<p>52&deg;North Initiative for Geospatial Open Source Software GmbH<br>Martin-Luther-King-Weg 24<br>48155 Muenster, Germany</p>
 						</div>
 					</div>

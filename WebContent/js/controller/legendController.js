@@ -160,6 +160,7 @@ var LegendController = {
 			phenomenon : this.createText(ts.getPhenomenonLabel()),
 			procedure : this.createText(ts.getProcedureLabel()),
 			station : this.createText(ts.getStationLabel()),
+			category : this.createText(ts.getCategoryLabel()),
 			firstValueTime : (firstValue != null) ? firstValue.timestamp : "",
 			firstValueTimeFormatted : (firstValue != null) ? moment(firstValue.timestamp).format(Settings.dateformat) : "",
 			firstValue : (firstValue != null) ? firstValue.value : "",

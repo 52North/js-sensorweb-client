@@ -59,7 +59,7 @@ var TableController = {
 		}, this));
 		EventManager.subscribe("navigation:open", $.proxy(this.createTable, this));
 		EventManager.subscribe("timeseries:synced", $.proxy(this.createTable, this));
-		EventManager.subscribe("timeseries:remove", $.proxy(this.updateTable, this));
+		EventManager.subscribe("timeseries:remove", $.proxy(this.createTable, this));
 		EventManager.subscribe("timeseries:changeStyle", $.proxy(this.updateTable, this));
 	},
 	
@@ -138,11 +138,9 @@ var TableController = {
 		var div = $('<div class="paging"></div>'),
 		paging = $('<ul class="pagination"></ul>');
 		paging.append(this.pageButton('&laquo;', 0));
-		paging.append(this.pageButton('-10', pagestart - pagesize * 10));
-		paging.append(this.pageButton('-1', pagestart - pagesize));
-		paging.append(this.pageButton(Math.ceil((pagestart + 1)/pagesize) + ' .. ' + Math.ceil(arraylength/pagesize)));
-		paging.append(this.pageButton('+1', pagestart + pagesize));
-		paging.append(this.pageButton('+10', pagestart + pagesize * 10));
+		paging.append(this.pageButton('&lsaquo;', pagestart - pagesize));
+		paging.append(this.pageButton(Math.ceil((pagestart + 1)/pagesize) + '/' + Math.ceil(arraylength/pagesize)));
+		paging.append(this.pageButton('&rsaquo;', pagestart + pagesize));
 		paging.append(this.pageButton('&raquo;', Math.floor(arraylength / pagesize) * pagesize));
 		div.append(paging);
 		this.tableView.append(div);
@@ -224,8 +222,9 @@ var TableController = {
 		var index = 1;
 		$.each(TimeSeriesController.getTimeseriesCollection(), function(id, elem){
 			var title = $('<div></div>').text(elem.getStationLabel());
-			var subtitle = $('<span></span>').text(elem.getPhenomenonLabel() + " (" + elem.getUom() + ")");
-			headerrow.append($('<th></th>').data('index', index++).append(title).append(subtitle));
+			var phenomenonLabel = $('<span></span>').text(elem.getPhenomenonLabel() + " (" + elem.getUom() + ")");
+			var categoryLabel = $('<div></div>').text(elem.getCategoryLabel());
+			headerrow.append($('<th></th>').data('index', index++).append(title).append(phenomenonLabel).append(categoryLabel));
 		});
 		this.htmltable.append(header.append(headerrow));
 	},
