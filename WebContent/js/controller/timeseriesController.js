@@ -105,6 +105,7 @@ var TimeSeriesController = {
 
 	/*----- remove timeseries -----*/
 	removeTS : function(ts) {
+		ts.destroy();
 		Status.removeTimeseries(ts);
 		delete this.timeseries[ts.getInternalId()];
 		EventManager.publish("timeseries:remove", [ ts ]);

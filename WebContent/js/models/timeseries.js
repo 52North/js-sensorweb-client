@@ -97,7 +97,7 @@ function TimeSeries(tsId, meta, apiUrl) {
 	
 	this.isCurrent = function() {
 		return this.getLastValue() != null && moment().subtract(Settings.ignoreAfterDuration).isBefore(moment(this.getLastValue().timestamp));
-	}
+	};
 	
 	this.getLastValueFormatted = function() {
 		if (meta && meta.lastValue) {
@@ -179,9 +179,9 @@ function TimeSeries(tsId, meta, apiUrl) {
 	};
 
 	this.fetchData = function(timespan, complete) {
-		var promise = Rest.tsData(tsId, apiUrl, timespan, internalId);
+		this.promise = Rest.tsData(tsId, apiUrl, timespan, internalId);
 		var that = this;
-		promise.done(function(data, refdata) {
+		this.promise.done(function(data, refdata) {
 			values = data;
 			$.each(refdata, function(id, elem) {
 				if(refValues[id]) {
@@ -191,7 +191,11 @@ function TimeSeries(tsId, meta, apiUrl) {
 			synced = true;
 			complete(that);
 		});
-		return promise;
+		return this.promise;
+	};
+	
+	this.destroy = function() {
+		this.promise.reject(internalId);
 	};
 };
 
