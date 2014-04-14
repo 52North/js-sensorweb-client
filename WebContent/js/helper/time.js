@@ -90,7 +90,7 @@ var Time = {
 	},
 	
 	getRequestTimespan : function (from, till) {
-		return moment(from).format('YYYY-MM-DDTHH:mm:ss') + '/' + moment(till).format('YYYY-MM-DDTHH:mm:ss');
+		return moment(from).format() + '/' + moment(till).format();
 	},
 	
 	createTimespan : function (string) {
