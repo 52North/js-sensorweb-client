@@ -26,22 +26,17 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  */
-var StartController = {
+var Permalink = {
 
-	init : function() {
-		jQuery.support.cors = true;
-		
-		// Call all controller
-		PermalinkController.init();
-		Pages.init();
-		Map.init();
-		ListSelectionController.init();
-		SettingsController.init();
-		LegendController.init();
-		TableController.init();
-		TimeController.init();
-		ChartController.init();
-		TimeSeriesController.init();
-		GuidedTourController.init();
+	getUrlParameter : function(sParam) {
+		var hash = window.location.search;
+		hash = hash.substring(hash.indexOf('?') + 1);
+		var parameters = hash.split('&');
+		for (var i = 0; i < parameters.length; i++) {
+			var sParameterName = parameters[i].split('=');
+			if (sParameterName[0] == sParam) {
+				return sParameterName[1];
+			}
+		}
 	}
 };
