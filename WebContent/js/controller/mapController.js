@@ -65,6 +65,7 @@ var Map = {
 				propertyLoc: ['lat','lon'],
 				position: 'topcenter',
 				minLength: 2,
+				showMarker: false,
 				provider: new L.GeoSearch.Provider.OpenStreetMap(),
     			zoomLevel: 13
 			}).addTo(this.map);
@@ -438,18 +439,35 @@ var Map = {
 	
 	showTsInMap : function(event, ts) {
 		Pages.navigateToMap();
-		var coords = ts.getCoordinates(),
-		pos = L.latLng(coords[1], coords[0]),
-		popup = L.popup({
-			autoPan : false
-		}).setLatLng(pos);
-		var content = Template.createHtml("station-popup", {
+		var coords = ts.getCoordinates(), pos = L.latLng(coords[1], coords[0]);
+		Map.map.setView(pos, Settings.zoom);
+		var station = null;
+		$.each(this.stationMarkers.getLayers(), function(idx, marker) {
+			if (marker.options.id == ts.getStationId()) {
+				station = marker;
+			}
+		});
+		var popup = L.popup({
+			autoPan : false,
+		});
+		popup.setContent(Template.createHtml("station-popup", {
 			station : ts.getStationLabel(),
 			timeseries : ts.getLabel(),
 			service : ts.getServiceLabel()
+		}));
+		if (station) {
+			setTimeout(function() {
+				station.bindPopup(popup).openPopup();
+			}, 1000);
+		} else {
+			popup.setLatLng(pos);
+			popup.openOn(Map.map);
+		}
+		;
+		popup.on('close', function() {
+			if (station) {
+				station.unbindPopup();
+			}
 		});
-		popup.setContent(content);
-		popup.openOn(Map.map);
-		Map.map.setView(pos, Settings.zoom);
 	}
 };
