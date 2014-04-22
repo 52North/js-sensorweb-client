@@ -115,6 +115,7 @@
 								<cssSourceFile>selectionList.css</cssSourceFile>
 								<cssSourceFile>animation.css</cssSourceFile>
 								<cssSourceFile>table.css</cssSourceFile>
+								<cssSourceFile>guidedtour.css</cssSourceFile>
 							</cssSourceFiles>
 							<cssFinalFile>jsc.${project.version}.css</cssFinalFile>
 							<jsSourceFiles>
@@ -148,6 +149,7 @@
 							    <jsSourceFile>helper/event.js</jsSourceFile>
 							    <jsSourceFile>helper/status.js</jsSourceFile>
 							    <jsSourceFile>helper/button.js</jsSourceFile>
+							    <jsSourceFile>helper/permalink.js</jsSourceFile>
 							    <jsSourceFile>helper/bootstrap-fix.js</jsSourceFile>
 							    <jsSourceFile>controller/startController.js</jsSourceFile>
 							    <jsSourceFile>controller/permalinkController.js</jsSourceFile>
@@ -160,6 +162,7 @@
 							    <jsSourceFile>controller/legendController.js</jsSourceFile>
 							    <jsSourceFile>controller/styleChangeController.js</jsSourceFile>
 							    <jsSourceFile>controller/tableController.js</jsSourceFile>
+							    <jsSourceFile>controller/guidedTourController.js</jsSourceFile>
 							</jsSourceFiles>
 							<jsFinalFile>jsc.${project.version}.js</jsFinalFile>
                             <jsEngine>CLOSURE</jsEngine>

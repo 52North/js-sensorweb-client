@@ -225,7 +225,11 @@ var Map = {
 	markerClicked : function(marker) {
 		this.loading(true);
 		var apiUrl = Status.get('provider').apiUrl;
-		Rest.stations(marker.target.options.id, apiUrl).done($.proxy(function(results) {
+		this.openStationWindow(marker.target.options.id, apiUrl);
+	},
+	
+	openStationWindow : function(id, url) {
+		Rest.stations(id, url).done($.proxy(function(results) {
 			var phenomena = {};
 			$.each(results.properties.timeseries, function(id, elem) {
 				if(Map.selectedPhenomenon == null || Map.selectedPhenomenon == elem.phenomenon.id) {
@@ -236,7 +240,7 @@ var Map = {
 					}
 					phenomena[elem.phenomenon.id].timeseries.push({
 						id : id,
-						internalId : TimeSeries.createInternalId(id, apiUrl), 
+						internalId : TimeSeries.createInternalId(id, url), 
 						selected : Status.hasTimeseriesWithId(id),
 						procedure : elem.procedure.label
 					});
@@ -268,7 +272,7 @@ var Map = {
 			$.each(phenomena, function(id, elem) {
 				$.each(elem.timeseries, function(id, elem) {
 					if (Map.timeseriesCache[elem.internalId] == null) {
-						Rest.timeseries(elem.id, apiUrl).done(function(timeseries) {
+						Rest.timeseries(elem.id, url).done(function(timeseries) {
 							Map.updateTsEntry(timeseries);
 						});
 					} else {
@@ -276,6 +280,7 @@ var Map = {
 					}
 				});
 			});
+			EventManager.publish("map:stationLoaded");
 		}, this));
 	},
 

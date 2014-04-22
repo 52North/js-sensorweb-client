@@ -37,7 +37,7 @@ var PermalinkController = {
 	},
 	
 	checkTimespan : function() {
-		var timespan = this.getUrlParameter('timespan');
+		var timespan = Permalink.getUrlParameter('timespan');
 		if (timespan) {
 			Status.set('timespan', Time.createTimespan(timespan));
 		}
@@ -49,7 +49,7 @@ var PermalinkController = {
 	},
 	
 	checkTimeseries : function() {
-		var timeseries = this.getUrlParameter('timeseries');
+		var timeseries = Permalink.getUrlParameter('timeseries');
 		if (timeseries != null) {
 			Status.clearTimeseries();
 			$.each(timeseries.split(','), function(idx, id) {
@@ -69,18 +69,6 @@ var PermalinkController = {
 		return "";
 	},
 
-	getUrlParameter : function(sParam) {
-		var hash = window.location.search;
-		hash = hash.substring(hash.indexOf('?') + 1);
-		var parameters = hash.split('&');
-		for (var i = 0; i < parameters.length; i++) {
-			var sParameterName = parameters[i].split('=');
-			if (sParameterName[0] == sParam) {
-				return sParameterName[1];
-			}
-		}
-	},
-	
 	createPermalink : function() {
 		var loc = window.location;
 		if (!loc.origin) {
