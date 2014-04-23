@@ -62,3 +62,9 @@
 	font-size: 80%;
 	color: grey;
 }
+
+@media screen and (max-width: 767px) {
+	.phenomena.active {
+		background: rgba(217, 217, 217, 0.9);
+	}
+}

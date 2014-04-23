@@ -102,10 +102,6 @@ footer {
 	visibility: visible;
 }
 
-.phenomena.active {
-	background: rgba(217, 217, 217, 0.9);
-}
-
 .rightPanel {
 	overflow: auto;
 	padding-right: 30px;
