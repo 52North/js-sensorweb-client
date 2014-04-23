@@ -131,6 +131,7 @@ var ChartController = {
 					elem.lines.lineWidth = ChartController.selectedLineWidth;
 					elem.bars.lineWidth = ChartController.selectedLineWidth;
 					elem.selected = true;
+					$('.yaxisLabel:contains(' + elem.uom + ')').addClass('selected').css({ "color": elem.color});
 				}
 			});
 			this.plot.draw();
@@ -152,6 +153,7 @@ var ChartController = {
 			$.each(this.data, function(index, elem) {
 				elem.selected = false;
 			});
+			$('.yaxisLabel').removeClass('selected').css({ "color": "#000000"});
 			this.plot.draw();
 		}
 	},
