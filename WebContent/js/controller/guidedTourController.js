@@ -115,7 +115,7 @@ var GuidedTourController = (function() {
 			},{
 				anchor : '.legend-entry',
 				title : 'Legend entry',
-				text : 'Here you see the added time series. You can delete, locate or modify the style of the time series here.',
+				text : 'Here you see the added time series. You can delete or locate the time series or change the color.',
 				arrow : true,
 				previous : false,
 				initStep : function() {
@@ -170,6 +170,7 @@ var GuidedTourController = (function() {
 		},
 
 		start : function() {
+			this.closeLast();
 			this.show(1);
 			Status.reset();
 		},
@@ -180,7 +181,9 @@ var GuidedTourController = (function() {
 		},
 
 		closeLast : function() {
-			this.gtWindow.popover('destroy');
+			if (this.gtWindow) {
+				this.gtWindow.popover('destroy');
+			}
 		},
 
 		show : function(idx) {

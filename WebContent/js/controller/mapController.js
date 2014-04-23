@@ -453,7 +453,7 @@ var Map = {
 			}
 		});
 		var popup = L.popup({
-			autoPan : false,
+			autoPan : false
 		});
 		popup.setContent(Template.createHtml("station-popup", {
 			station : ts.getStationLabel(),
