@@ -42,5 +42,6 @@ var StartController = {
 		TimeController.init();
 		ChartController.init();
 		TimeSeriesController.init();
+		GuidedTourController.init();
 	}
 };

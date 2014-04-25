@@ -108,6 +108,14 @@ body,html,.container,.row-offcanvas,.mainPanel {
 	font-size: 70%;
 }
 
+.modal-title {
+	height: 32px;
+	font-size: 18px;
+	text-align: center;
+	background-repeat: no-repeat;
+	background-image: url("../images/favicon.ico");
+}
+
 /* fix to support windows phone 8 */
 @-webkit-viewport   { width: device-width; }
 @-moz-viewport      { width: device-width; }

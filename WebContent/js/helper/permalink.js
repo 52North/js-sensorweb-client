@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2014-2014 52°North Initiative for Geospatial Open Source
  * Software GmbH
  *
@@ -26,45 +26,17 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  */
-.map-buttons {
-	position: absolute;
-	z-index: 11;
-	bottom: 0;
-	width: 50%;
-	margin: 0 25% 17px;
-	text-align: center;
-}
+var Permalink = {
 
-.map-buttons .btn {
-	font-size: 18px;
-	padding: 4px 10px;
-}
-
-.loaded .loading {
-	display: none;
-}
-
-.providerItem:HOVER {
-	cursor: pointer;
-}
-
-#confirmTimeseriesSelection {
-	float: right;
-	margin-bottom: 5px;
-	margin-right: 5px;
-}
-
-.nav > li > a {
-	padding: 6px 6px;
-}
-
-.lastValue {
-	font-size: 80%;
-	color: grey;
-}
-
-@media screen and (max-width: 767px) {
-	.phenomena.active {
-		background: rgba(217, 217, 217, 0.9);
+	getUrlParameter : function(sParam) {
+		var hash = window.location.search;
+		hash = hash.substring(hash.indexOf('?') + 1);
+		var parameters = hash.split('&');
+		for (var i = 0; i < parameters.length; i++) {
+			var sParameterName = parameters[i].split('=');
+			if (sParameterName[0] == sParam) {
+				return sParameterName[1];
+			}
+		}
 	}
-}
+};

@@ -65,6 +65,7 @@ var Map = {
 				propertyLoc: ['lat','lon'],
 				position: 'topcenter',
 				minLength: 2,
+				showMarker: false,
 				provider: new L.GeoSearch.Provider.OpenStreetMap(),
     			zoomLevel: 13
 			}).addTo(this.map);
@@ -224,7 +225,11 @@ var Map = {
 	markerClicked : function(marker) {
 		this.loading(true);
 		var apiUrl = Status.get('provider').apiUrl;
-		Rest.stations(marker.target.options.id, apiUrl).done($.proxy(function(results) {
+		this.openStationWindow(marker.target.options.id, apiUrl);
+	},
+	
+	openStationWindow : function(id, url) {
+		Rest.stations(id, url).done($.proxy(function(results) {
 			var phenomena = {};
 			$.each(results.properties.timeseries, function(id, elem) {
 				if(Map.selectedPhenomenon == null || Map.selectedPhenomenon == elem.phenomenon.id) {
@@ -235,7 +240,7 @@ var Map = {
 					}
 					phenomena[elem.phenomenon.id].timeseries.push({
 						id : id,
-						internalId : TimeSeries.createInternalId(id, apiUrl), 
+						internalId : TimeSeries.createInternalId(id, url), 
 						selected : Status.hasTimeseriesWithId(id),
 						procedure : elem.procedure.label
 					});
@@ -267,7 +272,7 @@ var Map = {
 			$.each(phenomena, function(id, elem) {
 				$.each(elem.timeseries, function(id, elem) {
 					if (Map.timeseriesCache[elem.internalId] == null) {
-						Rest.timeseries(elem.id, apiUrl).done(function(timeseries) {
+						Rest.timeseries(elem.id, url).done(function(timeseries) {
 							Map.updateTsEntry(timeseries);
 						});
 					} else {
@@ -275,6 +280,7 @@ var Map = {
 					}
 				});
 			});
+			EventManager.publish("map:stationLoaded");
 		}, this));
 	},
 
@@ -438,18 +444,35 @@ var Map = {
 	
 	showTsInMap : function(event, ts) {
 		Pages.navigateToMap();
-		var coords = ts.getCoordinates(),
-		pos = L.latLng(coords[1], coords[0]),
-		popup = L.popup({
+		var coords = ts.getCoordinates(), pos = L.latLng(coords[1], coords[0]);
+		Map.map.setView(pos, Settings.zoom);
+		var station = null;
+		$.each(this.stationMarkers.getLayers(), function(idx, marker) {
+			if (marker.options.id == ts.getStationId()) {
+				station = marker;
+			}
+		});
+		var popup = L.popup({
 			autoPan : false
-		}).setLatLng(pos);
-		var content = Template.createHtml("station-popup", {
+		});
+		popup.setContent(Template.createHtml("station-popup", {
 			station : ts.getStationLabel(),
 			timeseries : ts.getLabel(),
 			service : ts.getServiceLabel()
+		}));
+		if (station) {
+			setTimeout(function() {
+				station.bindPopup(popup).openPopup();
+			}, 1000);
+		} else {
+			popup.setLatLng(pos);
+			popup.openOn(Map.map);
+		}
+		;
+		popup.on('close', function() {
+			if (station) {
+				station.unbindPopup();
+			}
 		});
-		popup.setContent(content);
-		popup.openOn(Map.map);
-		Map.map.setView(pos, Settings.zoom);
 	}
 };
