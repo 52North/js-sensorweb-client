@@ -74,6 +74,9 @@ var SettingsController = {
 				$('.permalink .mail').on('click', function(){
 					window.location.href = "mailto:?body=" + encodeURIComponent(PermalinkController.createPermalink()); 
 				}).show();
+				$('.permalink .clipboard').on('click', function(){
+					window.prompt("Copy to clipboard: Ctrl+C, Enter", PermalinkController.createPermalink()); 
+				}).show();
 				// imprint
 			});
 		});
