@@ -96,7 +96,7 @@ var TimeController = {
 	startChanged : function(event, start) {
 		var diff = this.getCurrentDiff();
 		this.currentTimespan.from = moment(start).startOf('day');
-		this.currentTimespan.till = moment(start).add(diff).startOf('day').subtract('ms', 1);
+		this.currentTimespan.till = moment(start).add(diff).add('s', 1).startOf('day').subtract('ms', 1);
 		this.updateTimeExtent();
 	},
 	
