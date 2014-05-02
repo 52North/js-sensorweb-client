@@ -1,0 +1,23 @@
+<div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			<div class="modal-title">Station: {{name}}</div>
+		</div>
+		<div class="modal-body">
+			{{#ensemble}}
+			<div class="tsItem {{#selected}}selected{{/selected}}" data-ensemble="{{label}}">
+				<div class="checkbox">
+					<label> 
+						<input type="checkbox"> {{label}} 
+					</label>
+					<div class="lastValue">count of time series: {{count}}</div>
+				</div>
+			</div>
+			{{/ensemble}}
+		</div>
+		<div class="modal-footer">
+        	<button type="button" class="btn btn-primary" id="confirmTimeseriesSelection" data-dismiss="modal">OK</button>
+      	</div>
+	</div>
+</div>

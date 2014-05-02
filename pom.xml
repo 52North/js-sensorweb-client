@@ -163,6 +163,7 @@
 							    <jsSourceFile>controller/styleChangeController.js</jsSourceFile>
 							    <jsSourceFile>controller/tableController.js</jsSourceFile>
 							    <jsSourceFile>controller/guidedTourController.js</jsSourceFile>
+							    <jsSourceFile>controller/ecmwfModification.js</jsSourceFile>
 							</jsSourceFiles>
 							<jsFinalFile>jsc.${project.version}.js</jsFinalFile>
                             <jsEngine>CLOSURE</jsEngine>
