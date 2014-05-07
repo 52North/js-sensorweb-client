@@ -295,6 +295,7 @@ var Map = {
 	
 	addTimeseries : function(timeseries) {
 		Pages.navigateToChart();
+		Modal.hide();
 		TimeSeriesController.addTS(timeseries);
 	},
 
