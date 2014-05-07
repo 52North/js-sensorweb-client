@@ -61,18 +61,24 @@ Map.openStationWindow = $.proxy(function(id, url) {
 				})
 			});
 			$('#confirmTimeseriesSelection').on('click', function() {
-				$.each($('.tsItem').has(':checked'), function(id, elem) {
-					$.each(ensembleGroups[$(this).data('ensemble')], function(idx, elem) {
-						if (Map.timeseriesCache[elem.internalId] == null) {
-							Rest.timeseries(elem.id, url).done(function(timeseries) {
-								Map.timeseriesCache[timeseries.getInternalId()] = timeseries;
-								Map.addTimeseries(timeseries);
-							});
-						} else {
-							Map.addTimeseries(Map.timeseriesCache[elem.internalId]);
-						}
+				// show loading info
+				if ($('.tsItem').has(':checked').length > 0) {
+					$('.ecmwf-station-loading').show();
+					$.each($('.tsItem').has(':checked'), function(id, elem) {
+						$.each(ensembleGroups[$(this).data('ensemble')], function(idx, elem) {
+							if (Map.timeseriesCache[elem.internalId] == null) {
+								Rest.timeseries(elem.id, url).done(function(timeseries) {
+									Map.timeseriesCache[timeseries.getInternalId()] = timeseries;
+									Map.addTimeseries(timeseries);
+								});
+							} else {
+								Map.addTimeseries(Map.timeseriesCache[elem.internalId]);
+							}
+						});
 					});
-				});
+				} else {
+					Modal.hide();
+				}
 			});
 			EventManager.publish("map:stationLoaded");
 		}, this));

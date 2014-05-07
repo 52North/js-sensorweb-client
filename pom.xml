@@ -116,6 +116,7 @@
 								<cssSourceFile>animation.css</cssSourceFile>
 								<cssSourceFile>table.css</cssSourceFile>
 								<cssSourceFile>guidedtour.css</cssSourceFile>
+								<cssSourceFile>ecmwfMods.css</cssSourceFile>
 							</cssSourceFiles>
 							<cssFinalFile>jsc.${project.version}.css</cssFinalFile>
 							<jsSourceFiles>
