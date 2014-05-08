@@ -295,6 +295,7 @@ var Map = {
 	
 	addTimeseries : function(timeseries) {
 		Pages.navigateToChart();
+		Modal.hide();
 		TimeSeriesController.addTS(timeseries);
 	},
 
@@ -356,7 +357,7 @@ var Map = {
 	createDefaultPhenomenaEntry : function() {
 		$('.phenomena-entry').append(this.createPhenomenaEntry({
 			id : "all",
-			label : "All phenomenons"
+			label : "All phenomena"
 		}));
 		$('[data-id=all]').click($.proxy(function(event, bla){
 			$('.phenomena-entry').find('.selected').removeClass('selected');

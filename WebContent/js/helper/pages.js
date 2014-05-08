@@ -79,7 +79,8 @@ var Pages = {
 				Pages.toggleLegend(true);
 			});
 			$('[data-toggle=phenomena]').click(function() {
-				Pages.togglePhenomenon(true);
+                                var label = $('.phenomena-entry').find('.selected').text();
+				Pages.togglePhenomenon(true,label);
 			});
 			$('[data-target="#map"]').click(function() {
 				Pages.navigateToMap();
