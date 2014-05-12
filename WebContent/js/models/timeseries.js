@@ -28,7 +28,7 @@
  */
 function TimeSeries(tsId, meta, apiUrl) {
 
-	var internalId = TimeSeries.createInternalId(tsId, apiUrl);
+	var internalId = tsHelper.createInternalId(tsId, apiUrl);
 	var values = [];
 	var refValues = {};
 	var synced = false;
@@ -54,6 +54,10 @@ function TimeSeries(tsId, meta, apiUrl) {
 	
 	this.getInternalId = function() {
 		return internalId;
+	};
+	
+	this.getApiUrl = function() {
+		return apiUrl;
 	};
 
 	this.getStyle = function() {
@@ -180,25 +184,22 @@ function TimeSeries(tsId, meta, apiUrl) {
 
 	this.fetchData = function(timespan, complete) {
 		this.promise = Rest.tsData(tsId, apiUrl, timespan, internalId);
-		var that = this;
-		this.promise.done(function(data, refdata) {
-			values = data;
-			$.each(refdata, function(id, elem) {
-				if(refValues[id]) {
-					refValues[id].setValues(elem);
-				}
-			});
-			synced = true;
-			complete(that);
-		});
+		this.promise.done($.proxy(this.fetchedDataFinished, {context:this, complete:complete}));
 		return this.promise;
 	};
+	
+	this.fetchedDataFinished = function(data, refdata) {
+		values = data;
+		$.each(refdata, function(id, elem) {
+			if(refValues[id]) {
+				refValues[id].setValues(elem);
+			}
+		});
+		synced = true;
+		this.complete(this.context);
+	}; 
 	
 	this.destroy = function() {
 		this.promise.reject(internalId);
 	};
-};
-
-TimeSeries.createInternalId = function(tsId, apiUrl) {
-	return tsId + "__" + Settings.restApiUrls[apiUrl];
 };
