@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2014-2014 52°North Initiative for Geospatial Open Source
  * Software GmbH
  *
@@ -26,45 +26,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  */
-.map-buttons {
-	position: absolute;
-	z-index: 11;
-	bottom: 0;
-	width: 50%;
-	margin: 0 25% 17px;
-	text-align: center;
-}
-
-.map-buttons .btn {
-	font-size: 18px;
-	padding: 4px 10px;
-}
-
-.loaded .loading {
-	display: none;
-}
-
-.providerItem:HOVER {
-	cursor: pointer;
-}
-
-#confirmTimeseriesSelection {
-	float: right;
-	margin-bottom: 5px;
-	margin-right: 5px;
-}
-
-.nav > li > a {
-	padding: 6px 6px;
-}
-
-.tsItem .additionalInfo {
-	font-size: 80%;
-	color: grey;
-}
-
-@media screen and (max-width: 767px) {
-	.phenomena.active {
-		background: rgba(217, 217, 217, 0.9);
+var tsHelper = {
+	createInternalId : function(tsId, apiUrl) {
+		return tsId + "__" + Settings.restApiUrls[apiUrl];
 	}
-}
+};

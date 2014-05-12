@@ -240,7 +240,7 @@ var Map = {
 					}
 					phenomena[elem.phenomenon.id].timeseries.push({
 						id : id,
-						internalId : TimeSeries.createInternalId(id, url), 
+						internalId : tsHelper.createInternalId(id, url), 
 						selected : Status.hasTimeseriesWithId(id),
 						procedure : elem.procedure.label
 					});
