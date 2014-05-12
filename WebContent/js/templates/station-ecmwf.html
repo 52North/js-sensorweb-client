@@ -8,10 +8,13 @@
 			{{#ensemble}}
 			<div class="tsItem {{#selected}}selected{{/selected}}" data-ensemble="{{label}}">
 				<div class="checkbox">
-					<label> 
+					<label>
 						<input type="checkbox"> {{label}} 
 					</label>
-					<div class="lastValue">count of time series: {{count}}</div>
+					<div class="additionalInfo">count of time series: {{count}}</div>
+				</div>
+				<div class="resultTimeSelection"> 
+					<span class="glyphicon glyphicon-refresh loading icon-spin"></span> loading result time
 				</div>
 			</div>
 			{{/ensemble}}
