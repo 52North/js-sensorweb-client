@@ -35,6 +35,7 @@
 
 .legendItem .small {
 	font-size: 90%;
+	word-break: break-all;
 }
 
 .legendItem.selected {
