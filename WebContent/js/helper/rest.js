@@ -62,13 +62,17 @@ var Rest = {
 		}
 	},
 
-	tsData : function(id, apiUrl, timespan, internalId) {
-		return this.request(apiUrl + "timeseries/" + id
-				+ "/getData", {
+	tsData : function(id, apiUrl, timespan, internalId, extendedData) {
+		var data = {
 			timespan : timespan,
 			generalize : Status.get('generalizeData'),
 			expanded : true
-		}, function(promise, result) {
+		};
+		if(extendedData) {
+			data = $.extend(data, extendedData);
+		}
+		return this.request(apiUrl + "timeseries/" + id
+				+ "/getData", data, function(promise, result) {
 			values = [];
 			$.each(result[id].values, function(index, elem) {
 				values.push([ elem.timestamp, elem.value ]);

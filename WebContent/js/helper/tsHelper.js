@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2014-2014 52°North Initiative for Geospatial Open Source
  * Software GmbH
  *
@@ -26,31 +26,8 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  */
-a:hover {
-	text-decoration: none;
-}
-
-.item {
-	padding: 4px;
-	border-radius: 8px;
-	margin: 3px 0px 3px 0px;
-	word-break: break-all;
-}
-
-.item:HOVER {
-	background-color: #C7DEF2;
-	cursor: pointer;
-}
-
-.item.selected {
-	background-color: #428bca;
-	color: white;
-}
-
-.phenomenonItem .loadPhen .loading {
-	display: inline;
-}
-
-.phenomenonItem .loading {
-	display: none;
-}
+var tsHelper = {
+	createInternalId : function(tsId, apiUrl) {
+		return tsId + "__" + Settings.restApiUrls[apiUrl];
+	}
+};

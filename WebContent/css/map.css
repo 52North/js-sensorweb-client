@@ -58,7 +58,7 @@
 	padding: 6px 6px;
 }
 
-.lastValue {
+.tsItem .additionalInfo {
 	font-size: 80%;
 	color: grey;
 }
