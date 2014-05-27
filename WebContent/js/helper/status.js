@@ -89,10 +89,10 @@ var Status = (function() {
 		},
 		
 		get : function(key) {
-			if(this.current[key]) {
-				return this.current[key];
+			if(this.current[key] == undefined) {
+				return this.defaultValues[key];
 			}
-			return this.defaultValues[key];
+			return this.current[key];
 		},
 		
 		addTimeseries : function(ts) {
