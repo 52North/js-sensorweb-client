@@ -49,7 +49,7 @@ var Time = {
 			till = till.subtract('days', 1).endOf('day');
 			mode = 'day';
 			break;
-		case 'today&yesterday':
+		case 'today_yesterday':
 			from = from.subtract('days', 1).startOf('day');
 			mode = 'day';
 			break;
