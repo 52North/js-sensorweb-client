@@ -32,7 +32,8 @@ function TimeSeries(tsId, meta, apiUrl) {
 	var values = [];
 	var refValues = {};
 	var synced = false;
-	var zeroScaled = Settings.defaultZeroScale;
+	var zeroScaled = Settings.defaultZeroScale || false;
+	var timeBuffer = Settings.timeseriesDataBuffer || moment.duration(2, 'h');
 	$.each(meta.referenceValues, $.proxy(function(index, elem) {
 		refValues[elem.referenceValueId] = new ReferenceValue(elem.referenceValueId, elem.label);
 	}, this));
@@ -183,12 +184,16 @@ function TimeSeries(tsId, meta, apiUrl) {
 	};
 
 	this.fetchData = function(timespan, complete) {
+		var from = moment(timespan.from).subtract(timeBuffer);
+		var till = moment(timespan.till).add(timeBuffer);
+		timespan = Time.getRequestTimespan(from, till);
 		this.promise = Rest.tsData(tsId, apiUrl, timespan, internalId);
 		this.promise.done($.proxy(this.fetchedDataFinished, {context:this, complete:complete}));
 		return this.promise;
 	};
 	
 	this.fetchedDataFinished = function(data, refdata) {
+		this.context.createTimeBuffer(data);
 		values = data;
 		$.each(refdata, function(id, elem) {
 			if(refValues[id]) {
@@ -197,7 +202,13 @@ function TimeSeries(tsId, meta, apiUrl) {
 		});
 		synced = true;
 		this.complete(this.context);
-	}; 
+	};
+	
+	this.createTimeBuffer = function(data) {
+		if (data.length >= 2) {
+			timeBuffer = moment.duration(data[1][0] - data[0][0]);
+		}
+	};
 	
 	this.destroy = function() {
 		this.promise.reject(internalId);
