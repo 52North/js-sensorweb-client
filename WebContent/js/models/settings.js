@@ -43,10 +43,11 @@ var Settings = {
 	// A list of timeseries-API urls and an appropriate identifier to create internal timeseries ids 
 	restApiUrls : {
 //		'http://192.168.1.135:8080/sensorwebclient-webapp/api/v1/' : 'localhost'
-//		'http://localhost:8090/sensorwebclient-webapp-3.3.0-SNAPSHOT/api/v1/' : 'localhost'
-		'http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/' : '52nSensorweb', 
-		'http://sosrest.irceline.be/api/v1/' : 'irceline',
-		'http://www.fluggs.de/sos2/api/v1/' : 'fluggs'
+//		'http://localhost:8090/sensorwebclient-webapp-3.3.0-SNAPSHOT/api/v1/' : 'localhost',
+    'http://localhost:9080/restful-timeseries-webapp/api/v1/': 'localhost'
+//		'http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/' : '52nSensorweb', 
+//		'http://sosrest.irceline.be/api/v1/' : 'irceline',
+//		'http://www.fluggs.de/sos2/api/v1/' : 'fluggs'
 	},
 	
 	// default selected provider
