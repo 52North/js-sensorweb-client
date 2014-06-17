@@ -60,7 +60,10 @@ var TimeSeriesController = {
 		// request data
 		var from = TimeController.currentTimespan.from;
 		var till = TimeController.currentTimespan.till;
-		this.loadTsData(ts, Time.getRequestTimespan(from, till));
+		this.loadTsData(ts, {
+			from: from,
+			till: till
+		});
 	},
 
 	loadTsData : function(ts, timespan) {

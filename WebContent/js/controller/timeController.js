@@ -34,7 +34,7 @@ var TimeController = {
 		presets: [
 		          {label: 'today', value: 'today'},
 		          {label: 'yesterday', value: 'yesterday'},
-		          {label: 'today & yesterday', value: 'today&yesterday'},
+		          {label: 'today & yesterday', value: 'today_yesterday'},
 		          {label: 'this week', value: 'thisWeek'},
 		          {label: 'last week', value: 'lastWeek'},
 		          {label: 'this month', value: 'thisMonth'},
@@ -122,7 +122,10 @@ var TimeController = {
 	},
 
 	updateTimeExtent : function() {
-		EventManager.publish("timeextent:change", Time.getRequestTimespan(this.currentTimespan.from, this.currentTimespan.till));
+		EventManager.publish("timeextent:change", {
+			from:this.currentTimespan.from, 
+			till:this.currentTimespan.till
+		});
 		Status.set('timespan', this.currentTimespan);
 		this.setLabel();
 	},
