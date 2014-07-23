@@ -10,7 +10,7 @@
 				<span class="small">no Data available</span>
 			</div>
 			{{#lastValueTime}}
-			<div class="firstLastEntry" data-lastTime="{{lastValueTime}}">
+			<div class="firstLastEntry additionalLegendEntry" data-lastTime="{{lastValueTime}}">
 				<span class="glyphicon glyphicon-chevron-right"></span>
 				<span class="small">jump to last value</span>
 			</div>
@@ -24,14 +24,15 @@
 	</div>
 	<div class="legendicons">
 		<span class="glyphicon glyphicon-eye-close hidden-small hideDiagram"></span> 
-		<span class="glyphicon glyphicon-remove delete"></span> 
 		<span class="glyphicon glyphicon-map-marker inMap"></span>
 		<span class="glyphicon glyphicon-pencil changeStyle" style='color: {{color}}'></span>
 		<span class="glyphicon glyphicon-info-sign showInfo"></span>
+                <span class="glyphicon glyphicon-remove delete"></span> 
+
 	</div>
 	<div class="collapseLegendEntry small" style="display: none;">
 		{{#firstValueTime}}
-		<div class="firstLastEntry" data-firstTime="{{firstValueTime}}">
+		<div class="firstLastEntry additionalLegendEntry" data-firstTime="{{firstValueTime}}">
 			<span class="glyphicon glyphicon-chevron-right"></span>
 			<span>First value at</span>
 			<span>{{firstValueTimeFormatted}}</span>
@@ -39,7 +40,7 @@
 		</div>
 		{{/firstValueTime}}
 		{{#lastValueTime}}
-		<div class="firstLastEntry" data-lastTime="{{lastValueTime}}">
+		<div class="firstLastEntry additionalLegendEntry" data-lastTime="{{lastValueTime}}">
 			<span class="glyphicon glyphicon-chevron-right"></span>
 			<span>Last value at</span>
 			<span>{{lastValueTimeFormatted}}</span>
@@ -47,7 +48,7 @@
 		</div>
 		{{/lastValueTime}}
 		{{#referenceValues}}
-		<div class="refEntry" data-refid="{{id}}" style='border-color: {{color}}'>
+		<div class="refEntry additionalLegendEntry" data-refid="{{id}}" style='border-color: {{color}}'>
 			<span class="glyphicon glyphicon-chevron-right"></span>
 			<span>{{label}}</span>
 		</div>

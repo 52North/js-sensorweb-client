@@ -35,6 +35,7 @@
 
 .legendItem .small {
 	font-size: 90%;
+	word-break: break-all;
 }
 
 .legendItem.selected {
@@ -81,8 +82,7 @@
 	color: red;
 }
 
-.firstLastEntry:hover,
-.refEntry:hover {
+.additionalLegendEntry:hover{
 	cursor: pointer;
 }
 

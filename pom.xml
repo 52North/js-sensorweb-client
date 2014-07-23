@@ -164,6 +164,7 @@
 							    <jsSourceFile>controller/legendController.js</jsSourceFile>
 							    <jsSourceFile>controller/styleChangeController.js</jsSourceFile>
 							    <jsSourceFile>controller/tableController.js</jsSourceFile>
+							    <jsSourceFile>controller/exportController.js</jsSourceFile>
 							    <jsSourceFile>controller/guidedTourController.js</jsSourceFile>
 							    <jsSourceFile>controller/ecmwfModification.js</jsSourceFile>
 							</jsSourceFiles>

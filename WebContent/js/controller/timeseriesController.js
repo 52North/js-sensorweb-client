@@ -51,6 +51,14 @@ var TimeSeriesController = {
 			});
 		}, this));
 	},
+        
+        addTSbyId: function(tsId, apiUrl) {
+            var promise = Rest.timeseries(tsId, apiUrl);
+            var that = this;
+            promise.done(function(ts) {
+                that.addTS(ts);
+            });
+        },
 
 	/*----- add timeseries -----*/
 	addTS : function(ts) {
@@ -60,7 +68,10 @@ var TimeSeriesController = {
 		// request data
 		var from = TimeController.currentTimespan.from;
 		var till = TimeController.currentTimespan.till;
-		this.loadTsData(ts, Time.getRequestTimespan(from, till));
+		this.loadTsData(ts, {
+			from: from,
+			till: till
+		});
 	},
 
 	loadTsData : function(ts, timespan) {
