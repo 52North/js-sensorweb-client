@@ -51,6 +51,14 @@ var TimeSeriesController = {
 			});
 		}, this));
 	},
+        
+        addTSbyId: function(tsId, apiUrl) {
+            var promise = Rest.timeseries(tsId, apiUrl);
+            var that = this;
+            promise.done(function(ts) {
+                that.addTS(ts);
+            });
+        },
 
 	/*----- add timeseries -----*/
 	addTS : function(ts) {
