@@ -64,6 +64,9 @@ var Settings = {
 	// duration after which latest values shall be ignored when rendering marker in the map
 	ignoreAfterDuration : moment.duration(1, 'y'),
 	
+	// duration buffer for time series request
+	timeseriesDataBuffer : moment.duration(2, 'h'),
+	
 	// default color for circled marker, when last value is older than 'ignoreAfterDuration' or the timeseries has no last value
 	defaultMarkerColor : '#123456',
 	

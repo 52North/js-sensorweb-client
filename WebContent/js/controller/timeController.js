@@ -122,7 +122,10 @@ var TimeController = {
 	},
 
 	updateTimeExtent : function() {
-		EventManager.publish("timeextent:change", Time.getRequestTimespan(this.currentTimespan.from, this.currentTimespan.till));
+		EventManager.publish("timeextent:change", {
+			from:this.currentTimespan.from, 
+			till:this.currentTimespan.till
+		});
 		Status.set('timespan', this.currentTimespan);
 		this.setLabel();
 	},

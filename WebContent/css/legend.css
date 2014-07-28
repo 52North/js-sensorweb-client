@@ -82,8 +82,7 @@
 	color: red;
 }
 
-.firstLastEntry:hover,
-.refEntry:hover {
+.additionalLegendEntry:hover{
 	cursor: pointer;
 }
 

@@ -29,19 +29,20 @@
 var StartController = {
 
 	init : function() {
-		jQuery.support.cors = true;
-		
-		// Call all controller
-		PermalinkController.init();
-		Pages.init();
-		Map.init();
-		ListSelectionController.init();
-		SettingsController.init();
-		LegendController.init();
-		TableController.init();
-		TimeController.init();
-		ChartController.init();
-		TimeSeriesController.init();
-		GuidedTourController.init();
-	}
+        jQuery.support.cors = true;
+
+        // Call all controller
+        PermalinkController.init();
+        Pages.init();
+        Map.init();
+        ListSelectionController.init();
+        SettingsController.init();
+        LegendController.init();
+        TableController.init();
+        TimeController.init();
+        ChartController.init();
+        TimeSeriesController.init();
+        GuidedTourController.init();
+        ExportController.init();
+    }
 };

@@ -47,10 +47,11 @@ var ChartController = {
 		},
 		xaxis : {
 			mode : "time",
-			timezone : "browser",
-			// timeformat: "%Y/%m/%d",
-			tickLength : 5,
-			tickColor : "#000"
+			timezone : "browser"
+//			// timeformat: "%Y/%m/%d",
+//			use these the following two lines to have small ticks at the bottom ob the diagram
+//			tickLength : 5,
+//			tickColor : "#000"
 		},
 		yaxis : {
 			show : true,

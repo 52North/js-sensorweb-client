@@ -6,12 +6,13 @@
 		</div>
 		<div class="modal-body">
 			{{#phenomena}}
-			<h4>{{label}}</h4>
+                        <h4>{{label}}</h4>
 			{{#timeseries}}
 			<div class="tsItem {{#selected}}selected{{/selected}}" data-id="{{id}}" data-internalid="{{internalId}}">
 				<div class="checkbox">
 					<label> 
 						<span class="glyphicon glyphicon-refresh loading icon-spin"></span><input type="checkbox" disabled> {{procedure}}
+                                                {{#category}}<span>({{category}})</span>{{/category}}
 					</label>
 					<div class="additionalInfo" style="display: none;"></div>
 				</div>
