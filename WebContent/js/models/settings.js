@@ -37,6 +37,10 @@ var Settings = {
 	{
 		serviceID : 'srv_7cabc8c30a85fab035c95882df6db343', // BfG sos
 		apiUrl : 'http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/'
+	},
+        {
+		serviceID : 'srv_7cabc8c30a85fab035c95882df6db343', // Wupperverbands-SOS
+		apiUrl : 'http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/'
 	}
 	],
 	
@@ -46,7 +50,8 @@ var Settings = {
 //		'http://localhost:8090/sensorwebclient-webapp-3.3.0-SNAPSHOT/api/v1/' : 'localhost'
 		'http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/' : '52nSensorweb', 
 		'http://sosrest.irceline.be/api/v1/' : 'irceline',
-		'http://www.fluggs.de/sos2/api/v1/' : 'fluggs'
+		'http://www.fluggs.de/sos2/api/v1/' : 'fluggs',
+                'http://sensors.geonovum.nl/sos/api/v1/' : 'geonovum'
 	},
 	
 	// default selected provider
