@@ -27,8 +27,7 @@
  * Public License for more details.
  */
 var StartController = {
-
-	init : function() {
+    init: function() {
         jQuery.support.cors = true;
 
         // Call all controller

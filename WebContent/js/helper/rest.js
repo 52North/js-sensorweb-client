@@ -27,8 +27,7 @@
  * Public License for more details.
  */
 var Rest = {
-
-	request : function(url, data, success, fail) {
+    request: function(url, data, success, fail) {
         var promise = $.Deferred();
         if (Settings.additionalParameters) {
             if (!data) {

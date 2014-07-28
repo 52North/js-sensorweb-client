@@ -27,16 +27,14 @@
  * Public License for more details.
  */
 var Modal = {
-	show : function(template, data) {
-		$('#modalWindow').html(Template.createHtml(template, data));
-		$('#modalWindow').modal('show');
-	},
-	
-	hide : function() {
-		$('#modalWindow').modal('hide');
-	},
-	
-	append : function(template, data) {
-		$('.modal-body').append(Template.createHtml(template,data));
-	}	
+    show: function(template, data) {
+        $('#modalWindow').html(Template.createHtml(template, data));
+        $('#modalWindow').modal('show');
+    },
+    hide: function() {
+        $('#modalWindow').modal('hide');
+    },
+    append: function(template, data) {
+        $('.modal-body').append(Template.createHtml(template, data));
+    }
 };

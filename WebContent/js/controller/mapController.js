@@ -372,7 +372,7 @@ var Map = {
         $.each(results, $.proxy(function(idx, elem) {
             var blacklisted = false;
             $.each(Settings.providerBlackList, $.proxy(function(idx, black) {
-				if(black.serviceID == elem.id && black.apiUrl == apiUrl) {
+                if (black.serviceID == elem.id && black.apiUrl == apiUrl) {
                     blacklisted = true;
                     return;
                 }

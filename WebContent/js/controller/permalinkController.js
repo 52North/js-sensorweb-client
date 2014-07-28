@@ -81,7 +81,8 @@ var PermalinkController = {
                             foundTimeseriesId = timeseries[0].id;
                             foundService = url;
                         }
-                    };
+                    }
+                    ;
                     requestLength--;
                     if (requestLength === 0) {
                         if (!$.isEmptyObject(foundTimeseriesId)) {

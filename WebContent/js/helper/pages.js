@@ -27,91 +27,85 @@
  * Public License for more details.
  */
 var Pages = {
-	navigateToPage : function(toPage) {
-		$(".swc-page-current").removeClass('swc-page-current');
-		$(toPage).addClass('swc-page-current');
-	},
-	
-	navigateToMap : function() {
-		Pages.navigateToPage("#map-page");
-		location.href = "#map";
-		Pages.toggleLegend(false);
-	},
-	
-	navigateToChart : function() {
-		Pages.navigateToPage("#chart-page");
-		location.href = "#chart";
-		Pages.togglePhenomenon(false);
-	},
-	
-	toggleLegend : function(active) {
-		if(active) {
-			$('.legend').toggleClass('active');
-			if($('.legend').hasClass('active')) {
-				$('[data-toggle="legend"]').text("X");
-			} else {
-				$('[data-toggle="legend"]').text("Legend");
-			}
-		} else {
-			$('.legend').removeClass('active');
-			$('[data-toggle="legend"]').text("Legend");
-		}
-	},
-	
-	togglePhenomenon : function(active, label) {
-		var name = label == null ? "Phenomena" : label;
-		if(active) {
-			$('.phenomena').toggleClass('active');
-			if($('.phenomena').hasClass('active')) {
-				$('[data-toggle="phenomena"]').text("X");
-			} else {
-				$('[data-toggle="phenomena"]').text(name);
-			}
-		} else {
-			$('.phenomena').removeClass('active');
-			$('[data-toggle="phenomena"]').text(name);
-		}
-	},
-
-	init : function() {
-		$(document).ready(function() {
-			$('[data-toggle=legend]').click(function() {
-				Pages.toggleLegend(true);
-			});
-			$('[data-toggle=phenomena]').click(function() {
-                                var label = $('.phenomena-entry').find('.selected').text();
-				Pages.togglePhenomenon(true,label);
-			});
-			$('[data-target="#map"]').click(function() {
-				Pages.navigateToMap();
-			});
-			$('[data-target="#chart"]').click(function() {
-				Pages.navigateToChart();
-			});
-		});
-		// navigation
-		Pages.routeToPage();
-	},
-	
-	routeToPage : function() {
-		var hash = window.location.hash;
-		if(hash.indexOf('?') != -1) {
-			hash = hash.substring(hash.indexOf('#'), hash.indexOf('?'));	
-		}
-		switch (hash) {
-		case "#map":
-			Pages.navigateToPage("#map-page");
-			break;
-		case "#chart":
-			Pages.navigateToPage("#chart-page");
-			break;
-		default:
-			if (Status.hasTimeseries()) {
-				$('.swc-main div.swc-page:first').addClass('swc-page-current');
-			} else {
-				Pages.navigateToMap();
-			}
-			break;
-		}
-	}
+    navigateToPage: function(toPage) {
+        $(".swc-page-current").removeClass('swc-page-current');
+        $(toPage).addClass('swc-page-current');
+    },
+    navigateToMap: function() {
+        Pages.navigateToPage("#map-page");
+        location.href = "#map";
+        Pages.toggleLegend(false);
+    },
+    navigateToChart: function() {
+        Pages.navigateToPage("#chart-page");
+        location.href = "#chart";
+        Pages.togglePhenomenon(false);
+    },
+    toggleLegend: function(active) {
+        if (active) {
+            $('.legend').toggleClass('active');
+            if ($('.legend').hasClass('active')) {
+                $('[data-toggle="legend"]').text("X");
+            } else {
+                $('[data-toggle="legend"]').text("Legend");
+            }
+        } else {
+            $('.legend').removeClass('active');
+            $('[data-toggle="legend"]').text("Legend");
+        }
+    },
+    togglePhenomenon: function(active, label) {
+        var name = label == null ? "Phenomena" : label;
+        if (active) {
+            $('.phenomena').toggleClass('active');
+            if ($('.phenomena').hasClass('active')) {
+                $('[data-toggle="phenomena"]').text("X");
+            } else {
+                $('[data-toggle="phenomena"]').text(name);
+            }
+        } else {
+            $('.phenomena').removeClass('active');
+            $('[data-toggle="phenomena"]').text(name);
+        }
+    },
+    init: function() {
+        $(document).ready(function() {
+            $('[data-toggle=legend]').click(function() {
+                Pages.toggleLegend(true);
+            });
+            $('[data-toggle=phenomena]').click(function() {
+                var label = $('.phenomena-entry').find('.selected').text();
+                Pages.togglePhenomenon(true, label);
+            });
+            $('[data-target="#map"]').click(function() {
+                Pages.navigateToMap();
+            });
+            $('[data-target="#chart"]').click(function() {
+                Pages.navigateToChart();
+            });
+        });
+        // navigation
+        Pages.routeToPage();
+    },
+    routeToPage: function() {
+        var hash = window.location.hash;
+        if (hash.indexOf('?') != -1) {
+            hash = hash.substring(hash.indexOf('#'), hash.indexOf('?'));
+        }
+        switch (hash) {
+            case "#map":
+                Pages.navigateToPage("#map-page");
+                break;
+            case "#chart":
+                Pages.navigateToPage("#chart-page");
+                break;
+            default:
+                if (Status.hasTimeseries()) {
+                    $('.swc-main div.swc-page:first').addClass('swc-page-current');
+                } else {
+                    Pages.navigateToMap();
+                }
+                break;
+        }
+    }
 };

@@ -27,16 +27,15 @@
  * Public License for more details.
  */
 var Permalink = {
-
-	getUrlParameter : function(sParam) {
-		var hash = window.location.search;
-		hash = hash.substring(hash.indexOf('?') + 1);
-		var parameters = hash.split('&');
-		for (var i = 0; i < parameters.length; i++) {
-			var sParameterName = parameters[i].split('=');
-			if (sParameterName[0] == sParam) {
-				return sParameterName[1];
-			}
-		}
-	}
+    getUrlParameter: function(sParam) {
+        var hash = window.location.search;
+        hash = hash.substring(hash.indexOf('?') + 1);
+        var parameters = hash.split('&');
+        for (var i = 0; i < parameters.length; i++) {
+            var sParameterName = parameters[i].split('=');
+            if (sParameterName[0] == sParam) {
+                return sParameterName[1];
+            }
+        }
+    }
 };

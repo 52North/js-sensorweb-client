@@ -27,43 +27,39 @@
  * Public License for more details.
  */
 var Button = {
-	switchToggleButton : function(target) {
-		var button = $(target);
-		button.toggleClass('btn-primary');
-		if (!button.hasClass('btn-primary')) {
-			return false;
-		} else {
-			return true;
-		}
-	},
-
-	setToggleButton : function(target, value) {
-		var button = $(target);
-		if (value) {
-			button.addClass('btn-primary');
-		} else {
-			button.removeClass('btn-primary');
-		}
-	},
-	
-	setLoadingButton : function(button, loading) {
-		var icon = button.find('span');
-		if (loading) {
-			icon.hide();
-			button.append('<span class="glyphicon glyphicon-refresh icon-spin"></span>');
-		} else {
-			icon.show();
-			button.find('.glyphicon.glyphicon-refresh').remove();
-		}
-	},
-	
-	setNewIcon : function(button, className) {
-		button.find('span').hide();
-		button.append('<span class="glyphicon ' + className + '"></span>');
-	},
-	
-	removeNewIcon : function(button, className) {
-		button.find('span.' + className).remove();
-		button.find('span').show();
-	}
+    switchToggleButton: function(target) {
+        var button = $(target);
+        button.toggleClass('btn-primary');
+        if (!button.hasClass('btn-primary')) {
+            return false;
+        } else {
+            return true;
+        }
+    },
+    setToggleButton: function(target, value) {
+        var button = $(target);
+        if (value) {
+            button.addClass('btn-primary');
+        } else {
+            button.removeClass('btn-primary');
+        }
+    },
+    setLoadingButton: function(button, loading) {
+        var icon = button.find('span');
+        if (loading) {
+            icon.hide();
+            button.append('<span class="glyphicon glyphicon-refresh icon-spin"></span>');
+        } else {
+            icon.show();
+            button.find('.glyphicon.glyphicon-refresh').remove();
+        }
+    },
+    setNewIcon: function(button, className) {
+        button.find('span').hide();
+        button.append('<span class="glyphicon ' + className + '"></span>');
+    },
+    removeNewIcon: function(button, className) {
+        button.find('span.' + className).remove();
+        button.find('span').show();
+    }
 };

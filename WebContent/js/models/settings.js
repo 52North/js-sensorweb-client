@@ -27,65 +27,53 @@
  * Public License for more details.
  */
 var Settings = {
-	
-	// The entries in this list will be removed from the provider list offered to the user
-	providerBlackList : [
-	{
-		serviceID : 'srv_6d9ccea8d609ecb74d4a512922bb7cee', // ircel
-		apiUrl : 'http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/'
-	},
-	{
-		serviceID : 'srv_7cabc8c30a85fab035c95882df6db343', // BfG sos
-		apiUrl : 'http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/'
-	},
+    // The entries in this list will be removed from the provider list offered to the user
+    providerBlackList: [
         {
-		serviceID : 'srv_7cabc8c30a85fab035c95882df6db343', // Wupperverbands-SOS
-		apiUrl : 'http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/'
-	}
-	],
-	
-	// A list of timeseries-API urls and an appropriate identifier to create internal timeseries ids 
-	restApiUrls : {
+            serviceID: 'srv_6d9ccea8d609ecb74d4a512922bb7cee', // ircel
+            apiUrl: 'http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/'
+        },
+        {
+            serviceID: 'srv_7cabc8c30a85fab035c95882df6db343', // BfG sos
+            apiUrl: 'http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/'
+        },
+        {
+            serviceID: 'srv_7cabc8c30a85fab035c95882df6db343', // Wupperverbands-SOS
+            apiUrl: 'http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/'
+        }
+    ],
+    // A list of timeseries-API urls and an appropriate identifier to create internal timeseries ids 
+    restApiUrls: {
 //		'http://192.168.1.135:8080/sensorwebclient-webapp/api/v1/' : 'localhost'
 //		'http://localhost:8090/sensorwebclient-webapp-3.3.0-SNAPSHOT/api/v1/' : 'localhost'
-		'http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/' : '52nSensorweb', 
-		'http://sosrest.irceline.be/api/v1/' : 'irceline',
-		'http://www.fluggs.de/sos2/api/v1/' : 'fluggs',
-                'http://sensors.geonovum.nl/sos/api/v1/' : 'geonovum'
-	},
-	
-	// default selected provider
-	defaultProvider : {
-		serviceID : 'srv_738111ed219f738cfc85be0c8d87843c',
-		apiUrl : 'http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/'
-	},
-	
-	// zoom level in the map, used for user location and station position
-	zoom : 13,
-	
-	// date/time format which is used on several places
-	dateformat: 'DD.MM.YY HH:mmZ',
-		
-	// duration after which latest values shall be ignored when rendering marker in the map
-	ignoreAfterDuration : moment.duration(1, 'y'),
-	
-	// duration buffer for time series request
-	timeseriesDataBuffer : moment.duration(2, 'h'),
-	
-	// default color for circled marker, when last value is older than 'ignoreAfterDuration' or the timeseries has no last value
-	defaultMarkerColor : '#123456',
-	
-	// default scaling of loaded diagram
-	defaultZeroScale : false,
-	
-	// additional parameters which are append to the request urls
-	additionalParameters : {
-		locale : 'de'
-	},
-	
-	// should saving the status be possible, 
-	saveStatusPossible : true,
-	
-	// entries on a page for the values table
-	pagesize : 20
+        'http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/': '52nSensorweb',
+        'http://sosrest.irceline.be/api/v1/': 'irceline',
+        'http://www.fluggs.de/sos2/api/v1/': 'fluggs',
+        'http://sensors.geonovum.nl/sos/api/v1/': 'geonovum'
+    },
+    // default selected provider
+    defaultProvider: {
+        serviceID: 'srv_738111ed219f738cfc85be0c8d87843c',
+        apiUrl: 'http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/'
+    },
+    // zoom level in the map, used for user location and station position
+    zoom: 13,
+    // date/time format which is used on several places
+    dateformat: 'DD.MM.YY HH:mmZ',
+    // duration after which latest values shall be ignored when rendering marker in the map
+    ignoreAfterDuration: moment.duration(1, 'y'),
+    // duration buffer for time series request
+    timeseriesDataBuffer: moment.duration(2, 'h'),
+    // default color for circled marker, when last value is older than 'ignoreAfterDuration' or the timeseries has no last value
+    defaultMarkerColor: '#123456',
+    // default scaling of loaded diagram
+    defaultZeroScale: false,
+    // additional parameters which are append to the request urls
+    additionalParameters: {
+        locale: 'de'
+    },
+    // should saving the status be possible, 
+    saveStatusPossible: true,
+    // entries on a page for the values table
+    pagesize: 20
 };

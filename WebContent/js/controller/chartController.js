@@ -47,7 +47,7 @@ var ChartController = {
             mode: "time",
             timezone: "browser"
 //            timeformat: "%Y/%m/%d",
-            //use these the following two lines to have small ticks at the bottom ob the diagram
+                    //use these the following two lines to have small ticks at the bottom ob the diagram
 //            tickLength: 5,
 //            tickColor: "#000"
         },

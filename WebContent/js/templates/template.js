@@ -27,21 +27,20 @@
  * Public License for more details.
  */
 var Template = {
-	getTemplate : function(name) {
-		var template = "";
-		$.ajax({
-			url : 'js/templates/' + name + '.html',
-			success : function(data) {
-				template = data;
-			},
-			dataType : "text",
-			async : false
-		});
-		return template;
-	},
-
-	createHtml : function(templateID, data) {
-		var template = Template.getTemplate(templateID);
-		return Mustache.to_html(template, data);
-	}
+    getTemplate: function(name) {
+        var template = "";
+        $.ajax({
+            url: 'js/templates/' + name + '.html',
+            success: function(data) {
+                template = data;
+            },
+            dataType: "text",
+            async: false
+        });
+        return template;
+    },
+    createHtml: function(templateID, data) {
+        var template = Template.getTemplate(templateID);
+        return Mustache.to_html(template, data);
+    }
 };
