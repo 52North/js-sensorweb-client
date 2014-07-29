@@ -35,6 +35,7 @@ var LegendController = {
         EventManager.subscribe("timeseries:unselectAll", $.proxy(this.deselectAllTS, this));
         EventManager.subscribe("timeseries:data:loadfinished", $.proxy(this.checkNoData, this));
         EventManager.subscribe("timeseries:changeStyle", $.proxy(this.changeStyle, this));
+        EventManager.subscribe("timeseries:synced", $.proxy(this.syncedTS, this));
     },
     addTS: function(event, ts) {
         var html = this.createEntry(ts);
@@ -129,6 +130,17 @@ var LegendController = {
         var html = this.createEntry(ts);
         $(html).replaceAll('.legend-entry [data-id=' + ts.getInternalId() + ']');
         this.addClickEvents(ts);
+    },
+    syncedTS: function() {
+        var noData = true;
+        $.each(TimeSeriesController.timeseries, function(idx, elem){
+            if (elem.hasData()) {
+                noData = false;
+            }
+        });
+        if (noData) {
+            Pages.toggleLegend(true);
+        }
     },
     createEntry: function(ts) {
         var firstValue = ts.getFirstValue();
