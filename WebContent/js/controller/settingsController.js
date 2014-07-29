@@ -76,6 +76,13 @@ var SettingsController = {
                 $('.permalink .clipboard').on('click', function() {
                     window.prompt(_('settings.permalink.clipboardInfo'), PermalinkController.createPermalink());
                 }).show();
+                $('.permalink .qr').on('click', function() {
+                    var img = qr.image({
+                        value: PermalinkController.createPermalink(),
+                        size: 5
+                    });
+                    $('.qr-code').append($(img));
+                }).show();
                 // imprint
             });
         });

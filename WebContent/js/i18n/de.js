@@ -121,7 +121,8 @@ i18n.de = {
             inWindow: 'öffnen im neuen Fenster',
             inMail: 'öffnen in leerer Mail',
             inClipboard: 'Link in die Zwischenablage',
-            clipboardInfo: 'Kopiere in die Zwischenablage: Ctrl+C, Enter'
+            clipboardInfo: 'Kopiere in die Zwischenablage: Ctrl+C, Enter',
+            inQrCode: 'als QR-Code'
         },
         clusterMarker: 'Marker gruppieren',
         markerWithLastInfo: {

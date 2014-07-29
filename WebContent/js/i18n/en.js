@@ -121,7 +121,8 @@ i18n.en = {
             inWindow: 'link in a new window',
             inMail: 'link in an email',
             inClipboard: 'Link to clipboard',
-            clipboardInfo: 'Copy to clipboard: Ctrl+C, Enter'
+            clipboardInfo: 'Copy to clipboard: Ctrl+C, Enter',
+            inQrCode: 'as QR-Code'
         },
         clusterMarker: 'cluster marker',
         markerWithLastInfo: {
