@@ -98,7 +98,7 @@ var Rest = {
     },
     features: function(id, apiUrl, data) {
         return Rest.request(apiUrl + "features/"
-                + this._createIdString(id), data, function(promise, result) {
+                + Rest._createIdString(id), data, function(promise, result) {
             promise.resolve(result);
         });
     },
@@ -122,19 +122,19 @@ var Rest = {
     },
     categories: function(id, apiUrl, data) {
         return Rest.request(apiUrl + "categories/"
-                + this._createIdString(id), data, function(promise, result) {
+                + Rest._createIdString(id), data, function(promise, result) {
             promise.resolve(result);
         });
     },
     phenomena: function(id, apiUrl, data) {
         return Rest.request(apiUrl + "phenomena/"
-                + this._createIdString(id), data, function(promise, result) {
+                + Rest._createIdString(id), data, function(promise, result) {
             promise.resolve(result);
         });
     },
     procedures: function(id, apiUrl, data) {
         return Rest.request(apiUrl + "procedures/"
-                + this._createIdString(id), data, function(promise, result) {
+                + Rest._createIdString(id), data, function(promise, result) {
             promise.resolve(result);
         });
     },

@@ -117,14 +117,6 @@ var Map = {
                     if (geom[1] < bottommost) {
                         bottommost = geom[1];
                     }
-//					var marker = new L.circleMarker([ geom[1], geom[0] ], {
-//						id : elem.properties.id,
-//						fillColor: "#FF0000",
-//					    color: "#000",
-//					    opacity: 1,
-//					    weight: 2,
-//					    fillOpacity: 0.8
-//					});
                     var marker = new L.Marker([geom[1], geom[0]], {
                         id: elem.properties.id
                     });
@@ -421,7 +413,7 @@ var Map = {
     },
     onLocationFound: function(e) {
         Button.setLoadingButton($('[data-action="locate"]'), false);
-        var popup = L.popup().setLatLng(e.latlng).setContent('<p>Here is your current location</p>');
+        var popup = L.popup().setLatLng(e.latlng).setContent('<p>' + _('map.userLocation') + '</p>');
         Map.map.openPopup(popup);
     },
     onLocationError: function(e) {

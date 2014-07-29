@@ -31,15 +31,15 @@ var TimeController = {
     currentTimespan: {},
     timeRangeData: {
         presets: [
-            {label: 'today', value: 'today'},
-            {label: 'yesterday', value: 'yesterday'},
-            {label: 'today & yesterday', value: 'today_yesterday'},
-            {label: 'this week', value: 'thisWeek'},
-            {label: 'last week', value: 'lastWeek'},
-            {label: 'this month', value: 'thisMonth'},
-            {label: 'last month', value: 'lastMonth'},
-            {label: 'this year', value: 'thisYear'},
-            {label: 'last year', value: 'lastYear'}
+            {label: _('timeSelection.presets.today'), value: 'today'},
+            {label: _('timeSelection.presets.yesterday'), value: 'yesterday'},
+            {label: _('timeSelection.presets.todayYesterday'), value: 'today_yesterday'},
+            {label: _('timeSelection.presets.thisWeek'), value: 'thisWeek'},
+            {label: _('timeSelection.presets.lastWeek'), value: 'lastWeek'},
+            {label: _('timeSelection.presets.thisMonth'), value: 'thisMonth'},
+            {label: _('timeSelection.presets.lastMonth'), value: 'lastMonth'},
+            {label: _('timeSelection.presets.thisYear'), value: 'thisYear'},
+            {label: _('timeSelection.presets.lastYear'), value: 'lastYear'}
         ]
     },
     init: function(timespan) {
@@ -162,11 +162,11 @@ var TimeController = {
             if (moment($('#startPicker').data('date')).isAfter($('#endPicker').data('date'))) {
                 $('#alertTimeExtent').show();
                 $('#confirmTimeExtent').addClass('disabled');
-                $('#alertTimeExtent').text('The start date can not be greater then the end date');
+                $('#alertTimeExtent').text(_('timeSelection.warning.startBeforeEnd'));
             } else if (Math.abs(moment($('#startPicker').data('date')).diff($('#endPicker').data('date'), 'years', true)) > 1) {
                 $('#alertTimeExtent').show();
                 $('#confirmTimeExtent').addClass('disabled');
-                $('#alertTimeExtent').text('The time range can not be greater then one year');
+                $('#alertTimeExtent').text(_('timeSelection.warning.maxTimeRange'));
             } else {
                 $('#alertTimeExtent').hide();
                 $('#confirmTimeExtent').removeClass('disabled');

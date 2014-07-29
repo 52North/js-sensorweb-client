@@ -30,10 +30,10 @@ var StyleChangeController = {
     colorList: ['#1abc9c', '#27ae60', '#2980b9', '#8e44ad', '#2c3e50', '#f1c40f',
         '#d35400', '#c0392b', '#7f8c8d'],
     intervalList: [
-        {label: 'Hour', value: 1},
-        {label: 'Day', value: 24},
-        {label: 'Week', value: 7 * 24},
-        {label: 'Month', value: 30 * 24}
+        {label: _('styleChange.barChartInterval.hour'), value: 1},
+        {label: _('styleChange.barChartInterval.day'), value: 24},
+        {label: _('styleChange.barChartInterval.week'), value: 7 * 24},
+        {label: _('styleChange.barChartInterval.month'), value: 30 * 24}
     ],
     init: function() {
     },

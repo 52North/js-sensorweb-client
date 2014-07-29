@@ -2,14 +2,14 @@
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <div class="modal-title">Select timeseries by list</div>
+            <div class="modal-title">{{_i}}listSelection.header{{/i}}</div>
         </div>
         <div class="modal-body">
             <ul id="selectionList" class="nav nav-tabs">
-                <li><a href="#category" data-toggle="tab" data-tab="category">Category</a></li>
-                <li><a href="#sensor" data-toggle="tab" data-tab="sensor">Sensor</a></li>
-                <li><a href="#station" data-toggle="tab" data-tab="station">Station</a></li>
-                <li><a href="#phenomenon" data-toggle="tab" data-tab="phenomenon">Phenomenon</a></li>
+                <li><a href="#category" data-toggle="tab" data-tab="category">{{_i}}listSelection.headers.category{{/i}}</a></li>
+                <li><a href="#sensor" data-toggle="tab" data-tab="sensor">{{_i}}listSelection.headers.procedure{{/i}}</a></li>
+                <li><a href="#station" data-toggle="tab" data-tab="station">{{_i}}listSelection.headers.station{{/i}}</a></li>
+                <li><a href="#phenomenon" data-toggle="tab" data-tab="phenomenon">{{_i}}listSelection.headers.phenomenon{{/i}}</a></li>
             </ul>
             <div class="tab-content selectionListContent">
                 <div class="tab-pane fade" id="category">

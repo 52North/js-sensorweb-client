@@ -72,6 +72,8 @@ var Settings = {
     additionalParameters: {
         locale: 'de'
     },
+    // default language for i18n
+    defaultLanguage: 'en',
     // should saving the status be possible, 
     saveStatusPossible: true,
     // entries on a page for the values table

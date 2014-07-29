@@ -88,7 +88,7 @@ var PermalinkController = {
                         if (!$.isEmptyObject(foundTimeseriesId)) {
                             TimeSeriesController.addTSbyId(foundTimeseriesId, foundService);
                         } else {
-                            window.alert("No matching timeseries is found.");
+                            window.alert(_('permalink.noMatchingTimeseriesFound'));
                         }
                     }
                 }, this));

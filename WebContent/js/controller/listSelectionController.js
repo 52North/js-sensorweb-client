@@ -29,22 +29,22 @@
 var ListSelectionController = {
     category: {
         type: "category",
-        heading: "Category",
+        heading: _('listSelection.headers.category'),
         call: Rest.categories
     },
     station: {
         type: "feature",
-        heading: "Station",
+        heading: _('listSelection.headers.station'),
         call: Rest.features
     },
     phenomenon: {
         type: "phenomenon",
-        heading: "Phenomenon",
+        heading: _('listSelection.headers.phenomenon'),
         call: Rest.phenomena
     },
     procedure: {
         type: "procedure",
-        heading: "Sensor",
+        heading: _('listSelection.headers.procedure'),
         call: Rest.procedures
     },
     init: function() {
@@ -120,7 +120,7 @@ var ListSelectionController = {
                     Modal.hide();
                     Pages.navigateToChart();
                 } else {
-                    alert("found more than one timeseries");
+                    alert(_('listSelection.warning.moreThanOneTimeseries'));
                 }
             });
         }

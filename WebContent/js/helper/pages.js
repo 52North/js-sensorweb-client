@@ -47,15 +47,15 @@ var Pages = {
             if ($('.legend').hasClass('active')) {
                 $('[data-toggle="legend"]').text("X");
             } else {
-                $('[data-toggle="legend"]').text("Legend");
+                $('[data-toggle="legend"]').text(_('main.legend'));
             }
         } else {
             $('.legend').removeClass('active');
-            $('[data-toggle="legend"]').text("Legend");
+            $('[data-toggle="legend"]').text(_('main.legend'));
         }
     },
     togglePhenomenon: function(active, label) {
-        var name = label == null ? "Phenomena" : label;
+        var name = label == null ? _('map.phenomena') : label;
         if (active) {
             $('.phenomena').toggleClass('active');
             if ($('.phenomena').hasClass('active')) {

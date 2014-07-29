@@ -54,59 +54,59 @@ var GuidedTourController = (function() {
     var steps = [
         {
             anchor: '.navbar-header.chart',
-            title: 'JavaScript Client - Guided Tour',
-            text: 'This is the JavaScript Client of 52°North. This tour gives in a few steps an overview how to use this client. First we add a timeseries from the map.',
+            title: _('guide.step1.header'),
+            text: _('guide.step1.text'),
             initStep: function() {
                 Pages.navigateToChart();
             }
         }, {
             anchor: '[data-target="#map"]',
-            title: 'Go to the map',
-            text: 'Here we switch the view to get a map.',
+            title: _('guide.step2.header'),
+            text: _('guide.step2.text'),
             arrow: true,
             initStep: function() {
                 Pages.navigateToChart();
             }
         }, {
             anchor: '.navbar-header.map',
-            title: 'Map view',
-            text: 'This is the map view. In the map you can see markers or markergroups.',
+            title: _('guide.step3.header'),
+            text: _('guide.step3.text'),
             initStep: function() {
                 Pages.navigateToMap();
             }
         }, {
             anchor: '[data-action="provider"]',
-            title: 'Change Provider',
-            text: 'Here you can select another timeseries provider.',
+            title: _('guide.step4.header'),
+            text: _('guide.step4.text'),
             arrow: true,
             initStep: function() {
             }
         }, {
             anchor: '[data-action="locate"]',
-            title: 'Show location',
-            text: 'And here you can locate your device on the map.',
+            title: _('guide.step5.header'),
+            text: _('guide.step5.text'),
             arrow: true,
             initStep: function() {
             }
         }, {
             anchor: '[data-action="listSelection"]',
-            title: 'List selection',
-            text: 'Here you can select a timeseries out of ordered lists.',
+            title: _('guide.step6.header'),
+            text: _('guide.step6.text'),
             arrow: true,
             initStep: function() {
             }
         }, {
             anchor: '.navbar-header.map',
-            title: 'Select a station',
-            text: 'Please select now a station on the map.',
+           title: _('guide.step7.header'),
+            text: _('guide.step7.text'),
             next: false,
             initStep: function(context) {
                 EventManager.subscribe("map:stationLoaded", $.proxy(stationLoaded, context));
             }
         }, {
             anchor: '.tsItem input',
-            title: 'Select timeseries',
-            text: 'Select this checkbox. If there is only one timeseries for this station, the checkbox is already checked. Now you can go on with the "OK" button to load the timeseries.',
+            title: _('guide.step8.header'),
+            text: _('guide.step8.text'),
             previous: false,
             next: false,
             arrow: true,
@@ -115,8 +115,8 @@ var GuidedTourController = (function() {
             }
         }, {
             anchor: '.legend-entry',
-            title: 'Legend entry',
-            text: 'Here you see the added time series. You can delete or locate the time series or change the color.',
+            title: _('guide.step9.header'),
+            text: _('guide.step9.text'),
             arrow: true,
             previous: false,
             initStep: function() {
@@ -124,29 +124,29 @@ var GuidedTourController = (function() {
             }
         }, {
             anchor: '.navbar-header.chart',
-            title: 'Chart',
-            text: 'This is the chart of the selected time series.',
+            title: _('guide.step10.header'),
+            text: _('guide.step10.text'),
             initStep: function() {
                 Pages.toggleLegend(false);
             }
         }, {
             anchor: '.btn-group.timeSelection',
-            title: 'Change time',
-            text: 'Here you can change the time extent for your selected time series.',
+            title: _('guide.step11.header'),
+            text: _('guide.step11.text'),
             arrow: true,
             initStep: function() {
             }
         }, {
             anchor: '[data-action="dataTable"]',
-            title: 'Table View',
-            text: 'Here you get a table of the raw data values to your selected time series.',
+            title: _('guide.step12.header'),
+            text: _('guide.step12.text'),
             arrow: true,
             initStep: function() {
             }
         }, {
             anchor: '.navbar-header.chart',
-            title: 'Finished',
-            text: 'Well done!<br> This client is a product of <a href="http://52north.org" target="_blank">52&deg;North GmbH</a>. You can find the source code on <a href="https://github.com/52North/js-sensorweb-client" target="_blank">GitHub</a>.',
+            title: _('guide.step13.header'),
+            text: _('guide.step13.text'),
             initStep: function() {
             }
         }];

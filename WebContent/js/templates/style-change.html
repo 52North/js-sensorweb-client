@@ -2,17 +2,17 @@
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <div class="modal-title">Color selection</div>
+            <div class="modal-title">{{_i}}styleChange.header{{/i}}</div>
         </div>
         <div class="modal-body">
             <div>
                 <div>
-                    <span>Current color: </span>
+                    <span>{{_i}}styleChange.currentColor{{/i}}: </span>
                     <button type="button" class="btn btn-primary colorButton" data-color="{{currentColor}}" 
                             data-dismiss="modal" style="background-color: {{currentColor}}"></button>
                 </div>
                 <p>
-                <div>Select a new color:</div>
+                <div>{{_i}}styleChange.selectColor{{/i}}:</div>
                 {{#colorList}}
                 <button type="button" class="btn btn-default multiline-buttion colorButton"
                         data-color="{{.}}" data-dismiss="modal" style="background-color: {{.}}"></button>
@@ -21,7 +21,7 @@
             {{#bar}}
             <hr>
             <div>
-                <div>Select the bar interval:</div>
+                <div>{{_i}}styleChange.selectBarInterval{{/i}}:</div>
                 {{#interval}}
                 <button class="btn btn-default multiline-button intervalButton"
                         data-interval="{{value}}" data-dismiss="modal">{{label}}</button>
@@ -30,7 +30,7 @@
             {{/bar}}
             <hr>
             <button type="button" class="btn btn-block btn-default zeroScaled 
-                    {{#zeroScaled}}btn-primary{{/zeroScaled}}" data-dismiss="modal">zero scaled Y-axis</button>
+                    {{#zeroScaled}}btn-primary{{/zeroScaled}}" data-dismiss="modal">{{_i}}styleChange.zeroScaled{{/i}}</button>
         </div>
     </div>
 </div>

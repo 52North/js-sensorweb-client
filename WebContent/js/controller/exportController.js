@@ -35,7 +35,7 @@ var ExportController = {
     },
     loadTimeseries: function(event, ts) {
         tsId = ts.getInternalId();
-        var button = $('<div class="additionalLegendEntry"><span class="glyphicon glyphicon-download"></span><span> get data as CSV-File</span></div>');
+        var button = $('<div class="additionalLegendEntry"><span class="glyphicon glyphicon-download"></span><span> ' + _('export.label') + '</span></div>');
         $('.legendItem[data-id="' + tsId + '"]').find('.collapseLegendEntry').append(button);
         button.on('click', $.proxy(function() {
             this.createCSVforTS(ts);
