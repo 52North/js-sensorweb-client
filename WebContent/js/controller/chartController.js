@@ -130,12 +130,16 @@ var ChartController = {
     },
     selectTs: function(event, id) {
         if (this.plot) {
-            $.each(this.plot.getData(), function(index, elem) {
-                if (elem.id == id) {
-                    elem.lines.lineWidth = ChartController.selectedLineWidth;
-                    elem.bars.lineWidth = ChartController.selectedLineWidth;
-                    elem.selected = true;
-                    $('.yaxisLabel:contains(' + elem.uom + ')').addClass('selected').css({"color": elem.color});
+            $.each(this.plot.getData(), function(idx, ts) {
+                if (ts.id == id) {
+                    ts.lines.lineWidth = ChartController.selectedLineWidth;
+                    ts.bars.lineWidth = ChartController.selectedLineWidth;
+                    ts.selected = true;
+                    $.each($('.axisTarget'), function(idx, axis) {
+                        if (ts.yaxis.n === $(axis).data('axis.n')) {
+                            $(axis).toggleClass("selected");
+                        }
+                    });
                 }
             });
             this.plot.draw();
@@ -156,7 +160,7 @@ var ChartController = {
             $.each(this.data, function(index, elem) {
                 elem.selected = false;
             });
-            $('.yaxisLabel').removeClass('selected').css({"color": "#000000"});
+            $('.axisTarget').removeClass('selected');
             this.plot.draw();
         }
     },
@@ -313,22 +317,20 @@ var ChartController = {
                     var box = axis.box;
                     if (axis.direction == "y") {
                         $("<div class='axisTarget' style='position:absolute; left:" + box.left + "px; top:" + box.top + "px; width:" + box.width + "px; height:" + box.height + "px'></div>")
-//						.data("axis.direction", axis.direction)
                                 .data("axis.n", axis.n)
                                 .appendTo(this.plot.getPlaceholder())
                                 .click($.proxy(function(event) {
                                     var target = $(event.currentTarget);
-                                    EventManager.publish("timeseries:unselectAll");
+                                    var selected = false;
                                     $.each($('.axisTarget'), function(index, elem) {
                                         elem = $(elem);
                                         if (target.data('axis.n') == elem.data('axis.n')) {
-                                            elem.toggleClass("selected");
-                                        } else {
-                                            elem.removeClass("selected");
+                                            selected = elem.hasClass("selected");
                                         }
                                     });
+                                    EventManager.publish("timeseries:unselectAll");
                                     $.each(this.plot.getData(), function(index, elem) {
-                                        if (elem.yaxis.n == axis.n && target.hasClass("selected")) {
+                                        if (elem.yaxis.n == axis.n && !selected) {
                                             EventManager.publish("timeseries:selected", elem.id);
                                         }
                                     });
