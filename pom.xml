@@ -96,80 +96,7 @@
                     <execution>
                         <id>default-minify</id>
                         <configuration>
-<<<<<<< .mine							<cssSourceFiles>
-								<!-- <cssSourceFile>libs/bootstrap-full.css</cssSourceFile> -->
-								<cssSourceFile>libs/bootstrap.css</cssSourceFile>
-								<cssSourceFile>libs/datepicker.css</cssSourceFile>
-								<cssSourceFile>offcanvas.css</cssSourceFile>
-								<!-- <cssSourceFile>libs/leaflet-full.css</cssSourceFile> -->
-								<cssSourceFile>libs/leaflet-full.css</cssSourceFile>
-								<cssSourceFile>libs/leafletMarkerCluster.css</cssSourceFile>
-								<cssSourceFile>libs/l.geosearch.css</cssSourceFile>
-								<cssSourceFile>mainstyles.css</cssSourceFile>
-								<cssSourceFile>list.css</cssSourceFile>
-								<cssSourceFile>map.css</cssSourceFile>
-								<cssSourceFile>time.css</cssSourceFile>
-								<cssSourceFile>chart.css</cssSourceFile>
-								<cssSourceFile>settings.css</cssSourceFile>
-								<cssSourceFile>legend.css</cssSourceFile>
-								<cssSourceFile>selectionList.css</cssSourceFile>
-								<cssSourceFile>animation.css</cssSourceFile>
-								<cssSourceFile>table.css</cssSourceFile>
-								<cssSourceFile>guidedtour.css</cssSourceFile>
-								<cssSourceFile>ecmwfMods.css</cssSourceFile>
-							</cssSourceFiles>
-							<cssFinalFile>jsc.${project.version}.css</cssFinalFile>
-							<jsSourceFiles>
-							    <!-- <jsSourceFile>libs/jquery-2.0.3.js</jsSourceFile> -->
-							    <jsSourceFile>libs/jquery-1.10.2.js</jsSourceFile>
-							    <!-- <jsSourceFile>libs/jquery-1.11.0.js</jsSourceFile> -->
-							    <!-- <jsSourceFile>libs/bootstrap-full.js</jsSourceFile> -->
-							    <jsSourceFile>libs/bootstrap.js</jsSourceFile>
-							    <jsSourceFile>libs/bootstrap-datepicker.js</jsSourceFile>
-							    <jsSourceFile>libs/leaflet-full.js</jsSourceFile>
-							    <!-- <jsSourceFile>libs/leaflet-src.js</jsSourceFile> -->
-							    <jsSourceFile>libs/leaflet.markercluster-src.js</jsSourceFile>
-							    <jsSourceFile>libs/l.control.geosearch.js</jsSourceFile>
-							    <jsSourceFile>libs/l.geosearch.provider.openstreetmap.js</jsSourceFile>
-							    <jsSourceFile>libs/jquery.flot.js</jsSourceFile>
-							    <jsSourceFile>libs/jquery.flot.time.js</jsSourceFile>
-							    <jsSourceFile>libs/jquery.total-storage.js</jsSourceFile>
-							    <jsSourceFile>libs/mustache.js</jsSourceFile>
-							    <jsSourceFile>libs/moment.min.js</jsSourceFile>
-							    <jsSourceFile>libs/sorttable.js</jsSourceFile>
-							    <jsSourceFile>models/timeseries.js</jsSourceFile>
-							    <jsSourceFile>models/referenceValue.js</jsSourceFile>
-							    <jsSourceFile>models/tsStyle.js</jsSourceFile>
-							    <jsSourceFile>models/settings.js</jsSourceFile>
-							    <jsSourceFile>templates/template.js</jsSourceFile>
-							    <jsSourceFile>helper/time.js</jsSourceFile>
-							    <jsSourceFile>helper/color.js</jsSourceFile>
-							    <jsSourceFile>helper/rest.js</jsSourceFile>
-							    <jsSourceFile>helper/pages.js</jsSourceFile>
-							    <jsSourceFile>helper/modal.js</jsSourceFile>
-							    <jsSourceFile>helper/event.js</jsSourceFile>
-							    <jsSourceFile>helper/status.js</jsSourceFile>
-							    <jsSourceFile>helper/button.js</jsSourceFile>
-							    <jsSourceFile>helper/permalink.js</jsSourceFile>
-							    <jsSourceFile>helper/bootstrap-fix.js</jsSourceFile>
-							    <jsSourceFile>helper/tsHelper.js</jsSourceFile>
-							    <jsSourceFile>controller/startController.js</jsSourceFile>
-							    <jsSourceFile>controller/permalinkController.js</jsSourceFile>
-							    <jsSourceFile>controller/settingsController.js</jsSourceFile>
-							    <jsSourceFile>controller/timeseriesController.js</jsSourceFile>
-							    <jsSourceFile>controller/timeController.js</jsSourceFile>
-							    <jsSourceFile>controller/mapController.js</jsSourceFile>
-							    <jsSourceFile>controller/listSelectionController.js</jsSourceFile>
-							    <jsSourceFile>controller/chartController.js</jsSourceFile>
-							    <jsSourceFile>controller/legendController.js</jsSourceFile>
-							    <jsSourceFile>controller/styleChangeController.js</jsSourceFile>
-							    <jsSourceFile>controller/tableController.js</jsSourceFile>
-							    <jsSourceFile>controller/exportController.js</jsSourceFile>
-							    <jsSourceFile>controller/guidedTourController.js</jsSourceFile>
-							    <jsSourceFile>controller/ecmwfModification.js</jsSourceFile>
-							</jsSourceFiles>
-							<jsFinalFile>jsc.${project.version}.js</jsFinalFile>
-=======                            <cssSourceFiles>
+                            <cssSourceFiles>
                                 <!-- <cssSourceFile>libs/bootstrap-full.css</cssSourceFile> -->
                                 <cssSourceFile>libs/bootstrap.css</cssSourceFile>
                                 <cssSourceFile>libs/datepicker.css</cssSourceFile>
@@ -246,7 +173,7 @@
                                 <jsSourceFile>controller/guidedTourController.js</jsSourceFile>
                             </jsSourceFiles>
                             <jsFinalFile>jsc.${project.version}.js</jsFinalFile>
->>>>>>> .theirs                            <jsEngine>CLOSURE</jsEngine>
+                            <jsEngine>CLOSURE</jsEngine>
                             <closureCompilationLevel>SIMPLE_OPTIMIZATIONS</closureCompilationLevel>
                             <!--closureExterns>
                                 <closureExtern>extern/external-lib.js</closureExtern>
