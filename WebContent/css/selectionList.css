@@ -27,10 +27,10 @@
  * Public License for more details.
  */
 .selectionListContent .panel-body {
-	overflow: auto;
-	max-height: 200px;
+    overflow: auto;
+    max-height: 200px;
 }
 
 .selectionListContent .panel-body div {
-	cursor: pointer;
+    cursor: pointer;
 }

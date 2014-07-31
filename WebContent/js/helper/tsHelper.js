@@ -27,7 +27,7 @@
  * Public License for more details.
  */
 var tsHelper = {
-	createInternalId : function(tsId, apiUrl) {
-		return tsId + "__" + Settings.restApiUrls[apiUrl];
-	}
+    createInternalId: function(tsId, apiUrl) {
+        return tsId + "__" + Settings.restApiUrls[apiUrl];
+    }
 };

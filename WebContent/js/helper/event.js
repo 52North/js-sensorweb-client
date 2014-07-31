@@ -27,16 +27,16 @@
  * Public License for more details.
  */
 var EventManager = {
-	subscribe : function(event, fn) {
-		DEBUG && console.log("Subscribe " + event);
-		$(this).bind(event, fn);
-	},
-	unsubscribe : function(event, fn) {
-		DEBUG && console.log("Unsubscribe " + event);
-		$(this).unbind(event, fn);
-	},
-	publish : function(event, data) {
-		DEBUG && console.log("Publish " + event);
-		$(this).trigger(event, data);
-	}
+    subscribe: function(event, fn) {
+        DEBUG && console.log("Subscribe " + event);
+        $(this).bind(event, fn);
+    },
+    unsubscribe: function(event, fn) {
+        DEBUG && console.log("Unsubscribe " + event);
+        $(this).unbind(event, fn);
+    },
+    publish: function(event, data) {
+        DEBUG && console.log("Publish " + event);
+        $(this).trigger(event, data);
+    }
 };

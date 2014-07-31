@@ -27,8 +27,7 @@
  * Public License for more details.
  */
 var Rest = {
-
-	request : function(url, data, success, fail) {
+    request: function(url, data, success, fail) {
         var promise = $.Deferred();
         if (Settings.additionalParameters) {
             if (!data) {
@@ -48,7 +47,7 @@ var Rest = {
             },
             error: function(error) {
                 Rest.requestFailed(error);
-                if (fail !== null) {
+                if (fail != null) {
                     fail(promise, error);
                 }
             }
@@ -76,8 +75,8 @@ var Rest = {
                         values.push([elem.timestamp, elem.value]);
                     });
                     refs = {};
-                    if (result[id].extra !== null
-                            && result[id].extra.referenceValues !== null) {
+                    if (result[id].extra != null
+                            && result[id].extra.referenceValues != null) {
                         $.each(result[id].extra.referenceValues, function(id, elem) {
                             refvalues = [];
                             $.each(elem.values, function(index, elem) {
@@ -93,13 +92,13 @@ var Rest = {
     },
     stations: function(id, apiUrl, data) {
         return Rest.request(apiUrl + "stations/"
-                + ($.isEmptyObject(id) ? "" : id), data, function(promise, result) {
+                + this._createIdString(id), data, function(promise, result) {
             promise.resolve(result);
         });
     },
     features: function(id, apiUrl, data) {
         return Rest.request(apiUrl + "features/"
-                + ($.isEmptyObject(id) ? "" : id), data, function(promise, result) {
+                + Rest._createIdString(id), data, function(promise, result) {
             promise.resolve(result);
         });
     },
@@ -110,7 +109,7 @@ var Rest = {
         data.expanded = true;
         data.rendering_hints = true;
         return Rest.request(apiUrl + "timeseries/"
-                + ($.isEmptyObject(id) ? "" : id), data, function(promise, result) {
+                + this._createIdString(id), data, function(promise, result) {
             if ($.isArray(result)) {
                 var timeseriesList = $.map(result, function(elem) {
                     return new TimeSeries(elem.id, elem, apiUrl);
@@ -123,19 +122,19 @@ var Rest = {
     },
     categories: function(id, apiUrl, data) {
         return Rest.request(apiUrl + "categories/"
-                + ($.isEmptyObject(id) ? "" : id), data, function(promise, result) {
+                + Rest._createIdString(id), data, function(promise, result) {
             promise.resolve(result);
         });
     },
     phenomena: function(id, apiUrl, data) {
         return Rest.request(apiUrl + "phenomena/"
-                + ($.isEmptyObject(id) ? "" : id), data, function(promise, result) {
+                + Rest._createIdString(id), data, function(promise, result) {
             promise.resolve(result);
         });
     },
     procedures: function(id, apiUrl, data) {
         return Rest.request(apiUrl + "procedures/"
-                + ($.isEmptyObject(id) ? "" : id), data, function(promise, result) {
+                + Rest._createIdString(id), data, function(promise, result) {
             promise.resolve(result);
         });
     },
@@ -157,5 +156,8 @@ var Rest = {
         if (promise && promise.state() === "pending") {
             promise.reject();
         }
+    },
+    _createIdString: function(id) {
+        return (id === null ? "" : id);
     }
 };

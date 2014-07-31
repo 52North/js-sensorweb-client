@@ -28,9 +28,9 @@
  */
 
 @media screen and (max-width: 767px) {
-	#tableView {
-		font-size: 0.8em;
-	}
+    #tableView {
+        font-size: 0.8em;
+    }
 }
 
 .table thead {
@@ -39,20 +39,20 @@
 }
 
 .paging {
-	text-align: center;	
+    text-align: center;	
 }
 
 .pagination {
-	margin: 0px;
+    margin: 0px;
 }
 
 .pagination a {
-	cursor: pointer;	
+    cursor: pointer;	
 }
 
 .table {
-	margin: 0px;
+    margin: 0px;
 }
 #tableView {
-	overflow: auto;
+    overflow: auto;
 }

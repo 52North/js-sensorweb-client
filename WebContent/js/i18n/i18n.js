@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2014-2014 52°North Initiative for Geospatial Open Source
  * Software GmbH
  *
@@ -26,51 +26,37 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  */
-.icon-spin {
-    display: inline-block;
-    -moz-animation: spin 2s infinite linear;
-    -o-animation: spin 2s infinite linear;
-    -webkit-animation: spin 2s infinite linear;
-    animation: spin 2s infinite linear;
+var i18n = {};
+
+var langParam = Permalink.getUrlParameter('lang');
+
+function _(key) {
+    var lang = langParam || navigator.language || navigator.userLanguage;
+    var text = readI18n(lang, key) || readI18n(Settings.defaultLanguage, key);
+    if ($.isEmptyObject(text)) {
+        return key;
+    } else {
+        return text;
+    }
 }
 
-@-moz-keyframes spin {
-    0% {
-        -moz-transform: rotate(0deg);
-    }
-    100% {
-        -moz-transform: rotate(359deg);
-    }
-}
-@-webkit-keyframes spin {
-    0% {
-        -webkit-transform: rotate(0deg);
-    }
-    100% {
-        -webkit-transform: rotate(359deg);
-    }
-}
-@-o-keyframes spin {
-    0% {
-        -o-transform: rotate(0deg);
-    }
-    100% {
-        -o-transform: rotate(359deg);
+function readI18n(lang, key) {
+    try {
+        var keyArray = key.split('.');
+        var value = i18n[lang];
+        while (keyArray.length != 0) {
+            var property = keyArray.splice(0, 1);
+            value = read_prop(value, property[0]);
+        }
+        if ($.isEmptyObject(value)) {
+            console.error("Don't find the i18n key '" + key + "' for language " + lang);
+        }
+        return value;
+    } catch (ex) {
+        console.error("Don't find the i18n key '" + key + "' for language " + lang);
     }
 }
-@-ms-keyframes spin {
-    0% {
-        -ms-transform: rotate(0deg);
-    }
-    100% {
-        -ms-transform: rotate(359deg);
-    }
-}
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(359deg);
-    }
+
+function read_prop(obj, prop) {
+    return obj[prop];
 }

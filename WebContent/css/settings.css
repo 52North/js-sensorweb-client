@@ -27,21 +27,21 @@
  * Public License for more details.
  */
 #collapseSettings {
-	text-align: center;
+    text-align: center;
 }
 
 .resetStatus {
-	margin-bottom: 5px;
+    margin-bottom: 5px;
 }
 
 .permalink .panel-heading {
-	padding: 3px;
+    padding: 3px;
 }
 
 .permalink .panel-body {
-	padding: 5px;
+    padding: 5px;
 }
 
 .panel .permalink {
-	margin-bottom: 5px;
+    margin-bottom: 5px;
 } 

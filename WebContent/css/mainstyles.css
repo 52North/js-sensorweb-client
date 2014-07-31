@@ -27,68 +27,68 @@
  * Public License for more details.
  */
 body,html,.container,.row-offcanvas,.mainPanel {
-	height: 100%;
+    height: 100%;
 }
 
 #map {
-	height: 100%;
-	width: 100%;
+    height: 100%;
+    width: 100%;
 }
 
 .diagram,
 #tableView {
-	position: absolute;
-	top: 0px;
-	bottom: 45px;
-	width: 100%;
+    position: absolute;
+    top: 0px;
+    bottom: 45px;
+    width: 100%;
 }
 
 /* .btn {
-	font-size: 18px;
+        font-size: 18px;
 } */
 
 .timeButtons {
-	position: absolute;
-	left: 0;
-	right: 0;
-	margin-left: auto;
-	margin-right: auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .buttonFooter {
-	position: absolute;
-	bottom: 0;
-	height: 45px;
-	width: 100%;
-	text-align: center;
-	padding: 5px;
+    position: absolute;
+    bottom: 0;
+    height: 45px;
+    width: 100%;
+    text-align: center;
+    padding: 5px;
 }
 
 .fullHeight {
-	height: 100%;
-	position: relative;
-	padding: 0px;
+    height: 100%;
+    position: relative;
+    padding: 0px;
 }
 
 .content {
-	height: 100%;
-	padding-top: 53px;
+    height: 100%;
+    padding-top: 53px;
 }
 
 .leftPanelButton {
-	position: absolute;
-	z-index: 50;
-	right: 20px;
-	top: 5px;
+    position: absolute;
+    z-index: 50;
+    right: 20px;
+    top: 5px;
 }
 
 .button-right {
-	float: right;
-	margin-right: 10px;
+    float: right;
+    margin-right: 10px;
 } 
 
 .panel-group {
-	padding: 5px;
+    padding: 5px;
 }
 
 .navbar-header {
@@ -96,24 +96,24 @@ body,html,.container,.row-offcanvas,.mainPanel {
 }
 
 .navbar-brand {
-	cursor: default;
+    cursor: default;
 }
 
 .noChart {
-	text-align: center;
-	margin: 30px;
+    text-align: center;
+    margin: 30px;
 }
 
 .btn-subtitle {
-	font-size: 70%;
+    font-size: 70%;
 }
 
 .modal-title {
-	height: 32px;
-	font-size: 18px;
-	text-align: center;
-	background-repeat: no-repeat;
-	background-image: url("../images/favicon.ico");
+    height: 32px;
+    font-size: 18px;
+    text-align: center;
+    background-repeat: no-repeat;
+    background-image: url("../images/favicon.ico");
 }
 
 /* fix to support windows phone 8 */

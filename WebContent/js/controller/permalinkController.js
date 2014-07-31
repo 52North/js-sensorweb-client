@@ -81,15 +81,14 @@ var PermalinkController = {
                             foundTimeseriesId = timeseries[0].id;
                             foundService = url;
                         }
-                    };
+                    }
+                    ;
                     requestLength--;
-                    debugger;
                     if (requestLength === 0) {
                         if (!$.isEmptyObject(foundTimeseriesId)) {
-                            debugger;
                             TimeSeriesController.addTSbyId(foundTimeseriesId, foundService);
                         } else {
-                            window.alert("No matching timeseries is found.");
+                            window.alert(_('permalink.noMatchingTimeseriesFound'));
                         }
                     }
                 }, this));

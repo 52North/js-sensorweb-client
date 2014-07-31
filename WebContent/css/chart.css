@@ -27,52 +27,52 @@
  * Public License for more details.
  */
 .dataLoadingItem {
-	padding: 5px;
+    padding: 5px;
 }
 
 #loadingDiagram {
-	background-color: #FFE7E7;
-	border-bottom-right-radius: 10px;
-	border-bottom-left-radius: 10px;
-	position: relative;
-	z-index: 1;
+    background-color: #FFE7E7;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    position: relative;
+    z-index: 1;
 }
 
 .axisTarget {
-	background-color: red;
-	cursor: pointer;
-	opacity: 0;
+    background-color: red;
+    cursor: pointer;
+    opacity: 0;
 }
 
 .axisTarget:hover {
-	/* opacity: 0.20; */
+    /* opacity: 0.20; */
 }
 
 .axisTarget.selected {
-	opacity: 0.20;
+    opacity: 0.20;
 }
 
 .axisLabel {
-	position: absolute;
-	font-size: 12px;
-	text-align: center;
+    position: absolute;
+    font-size: 12px;
+    text-align: center;
 }
 
 .yaxisLabel {
-	top: 50%;
-	transform: rotate(-90deg);
-	-o-transform: rotate(-90deg);
-	-ms-transform: rotate(-90deg);
-	-moz-transform: rotate(-90deg);
-	-webkit-transform: rotate(-90deg);
-	z-index: -9999;
-	padding-bottom: 8px;
+    top: 50%;
+    transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+    z-index: -9999;
+    padding-bottom: 8px;
 }
 
 .yaxisLabel.selected {
-	font-weight: bold;
+    font-weight: bold;
 }
 
 .labelColorMarker {
-	font-size: 150%;
+    font-size: 150%;
 }

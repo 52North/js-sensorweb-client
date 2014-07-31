@@ -27,108 +27,95 @@
  * Public License for more details.
  */
 var TimeSeriesController = {
-
-	timeseries : {},
-
-	init : function() {
-		EventManager.subscribe("resetStatus", $.proxy(this.removeAllTS, this));
-		EventManager.subscribe("timeextent:change", $.proxy(this.changeTimeExtent, this));
-		this.loadSavedTimeseries();
-	},
-	
-	loadSavedTimeseries : function() {
-		$.each(Status.getTimeseries(), $.proxy(function(internalId, elem) {
-			var promise = Rest.timeseries(elem.tsId, elem.apiUrl);
-			var that = this;
-			promise.done(function(ts){
-				if(elem.style) {
-					var style = ts.getStyle();
-					style.setColor(elem.style.color);
-					style.setChartType(elem.style.chartType);
-					style.setIntervalByHours(elem.style.interval);
-				}
-				that.addTS(ts);
-			});
-		}, this));
-	},
-        
-        addTSbyId: function(tsId, apiUrl) {
-            var promise = Rest.timeseries(tsId, apiUrl);
+    timeseries: {},
+    init: function() {
+        EventManager.subscribe("resetStatus", $.proxy(this.removeAllTS, this));
+        EventManager.subscribe("timeextent:change", $.proxy(this.changeTimeExtent, this));
+        this.loadSavedTimeseries();
+    },
+    loadSavedTimeseries: function() {
+        $.each(Status.getTimeseries(), $.proxy(function(internalId, elem) {
+            var promise = Rest.timeseries(elem.tsId, elem.apiUrl);
             var that = this;
             promise.done(function(ts) {
+                if (elem.style) {
+                    var style = ts.getStyle();
+                    style.setColor(elem.style.color);
+                    style.setChartType(elem.style.chartType);
+                    style.setIntervalByHours(elem.style.interval);
+                }
                 that.addTS(ts);
             });
-        },
-
-	/*----- add timeseries -----*/
-	addTS : function(ts) {
-		Status.addTimeseries(ts);
-		EventManager.publish("timeseries:add", [ ts ]);
-		this.timeseries[ts.getInternalId()] = ts;
-		// request data
-		var from = TimeController.currentTimespan.from;
-		var till = TimeController.currentTimespan.till;
-		this.loadTsData(ts, {
-			from: from,
-			till: till
-		});
-	},
-
-	loadTsData : function(ts, timespan) {
-		EventManager.publish("timeseries:data:load", [ ts ]);
-		ts.fetchData(timespan, $.proxy(this.finishedGetData, this)).fail($.proxy(function(id){
-			this.removeTS(this.timeseries[id]);
-			this.checkSyncedStatus();
-		}, this));
-	},
-	
-	finishedGetData : function(ts) {
-		EventManager.publish("timeseries:data:loadfinished", [ ts ]);
-		this.checkSyncedStatus();
-	},
-	
-	checkSyncedStatus : function() {
-		var syncedComplete = true;
-		$.each(this.timeseries, function (index, elem) {
-			if (!elem.isSynced()) {
-				syncedComplete = false;
-				return;
-			}
-		});
-		if (syncedComplete) {
-			EventManager.publish("timeseries:synced", [ this.timeseries ]);
-		}
-	},
-	
-	/*----- update timeextent -----*/
-	changeTimeExtent : function(event, timeExtent) {
-		this.unsyncTimeseries();
-		$.each(this.timeseries, $.proxy(function(index, elem){
-			this.loadTsData(elem, timeExtent);
-		}, this));
-	},
-	
-	unsyncTimeseries : function(){
-		$.each(this.timeseries, function(index, elem){
-			elem.unSynced();
-		});
-	},
-
-	/*----- remove timeseries -----*/
-	removeTS : function(ts) {
-		ts.destroy();
-		Status.removeTimeseries(ts);
-		delete this.timeseries[ts.getInternalId()];
-		EventManager.publish("timeseries:remove", [ ts ]);
-	},
-
-	/*----- remove all timeseries -----*/
-	removeAllTS : function() {
-		this.timeseries = {};
-		EventManager.publish("timeseries:removeAll");
-	},
-	
-	getTimeseriesCollection : function() {
-		return this.timeseries;
-	}
+        }, this));
+    },
+    addTSbyId: function(tsId, apiUrl) {
+        var promise = Rest.timeseries(tsId, apiUrl);
+        var that = this;
+        promise.done(function(ts) {
+            that.addTS(ts);
+        });
+    },
+    /*----- add timeseries -----*/
+    addTS: function(ts) {
+        Status.addTimeseries(ts);
+        EventManager.publish("timeseries:add", [ts]);
+        this.timeseries[ts.getInternalId()] = ts;
+        // request data
+        var from = TimeController.currentTimespan.from;
+        var till = TimeController.currentTimespan.till;
+        this.loadTsData(ts, {
+            from: from,
+            till: till
+        });
+    },
+    loadTsData: function(ts, timespan) {
+        EventManager.publish("timeseries:data:load", [ts]);
+        ts.fetchData(timespan, $.proxy(this.finishedGetData, this)).fail($.proxy(function(id) {
+            this.removeTS(this.timeseries[id]);
+            this.checkSyncedStatus();
+        }, this));
+    },
+    finishedGetData: function(ts) {
+        EventManager.publish("timeseries:data:loadfinished", [ts]);
+        this.checkSyncedStatus();
+    },
+    checkSyncedStatus: function() {
+        var syncedComplete = true;
+        $.each(this.timeseries, function(index, elem) {
+            if (!elem.isSynced()) {
+                syncedComplete = false;
+                return;
+            }
+        });
+        if (syncedComplete) {
+            EventManager.publish("timeseries:synced", [this.timeseries]);
+        }
+    },
+    /*----- update timeextent -----*/
+    changeTimeExtent: function(event, timeExtent) {
+        this.unsyncTimeseries();
+        $.each(this.timeseries, $.proxy(function(index, elem) {
+            this.loadTsData(elem, timeExtent);
+        }, this));
+    },
+    unsyncTimeseries: function() {
+        $.each(this.timeseries, function(index, elem) {
+            elem.unSynced();
+        });
+    },
+    /*----- remove timeseries -----*/
+    removeTS: function(ts) {
+        ts.destroy();
+        Status.removeTimeseries(ts);
+        delete this.timeseries[ts.getInternalId()];
+        EventManager.publish("timeseries:remove", [ts]);
+    },
+    /*----- remove all timeseries -----*/
+    removeAllTS: function() {
+        this.timeseries = {};
+        EventManager.publish("timeseries:removeAll");
+    },
+    getTimeseriesCollection: function() {
+        return this.timeseries;
+    }
 };

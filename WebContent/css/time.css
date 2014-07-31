@@ -27,18 +27,18 @@
  * Public License for more details.
  */
 #confirmTimeExtent {
-	float: right;
+    float: right;
 }
 
 .time-entry {
-	padding: 3px;
+    padding: 3px;
 }
 
 .preset-btn {
-	margin: 3px;
+    margin: 3px;
 }
 
 /* show datpicker dropdown menu in modal window */
 .datepicker.dropdown-menu {
-	z-index: 2000 !important;
+    z-index: 2000 !important;
 }

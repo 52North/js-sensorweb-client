@@ -28,35 +28,35 @@
  */
 function ReferenceValue(id, label) {
 
-	var color = Color.stringToColor(id);
-	var values = [];
-	var selected = false;
+    var color = Color.stringToColor(id);
+    var values = [];
+    var selected = false;
 
-	this.getId = function() {
-		return id;
-	};
-	
-	this.getLabel = function() {
-		return label;
-	};
+    this.getId = function() {
+        return id;
+    };
 
-	this.getColor = function() {
-		return color;
-	};
+    this.getLabel = function() {
+        return label;
+    };
 
-	this.getValues = function() {
-		return values;
-	};
-	
-	this.setValues = function(v) {
-		values = v;
-	};
-	
-	this.isSelected = function() {
-		return selected;
-	};
-	
-	this.selected = function(s) {
-		selected = s;
-	};
+    this.getColor = function() {
+        return color;
+    };
+
+    this.getValues = function() {
+        return values;
+    };
+
+    this.setValues = function(v) {
+        values = v;
+    };
+
+    this.isSelected = function() {
+        return selected;
+    };
+
+    this.selected = function(s) {
+        selected = s;
+    };
 }
