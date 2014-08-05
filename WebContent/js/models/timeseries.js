@@ -64,6 +64,10 @@ function TimeSeries(tsId, meta, apiUrl) {
     this.getStyle = function() {
         return style;
     };
+    
+    this.getTimeBuffer = function() {
+        return timeBuffer;
+    };
 
     this.isZeroScaled = function() {
         return zeroScaled;

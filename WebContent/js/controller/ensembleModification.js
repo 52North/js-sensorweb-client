@@ -26,13 +26,22 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  */
+
+// list of services where the ensemble mechanism should work
+var serviceIDs = ["srv_5447754640fd3a7f04c094b54a9e9bf6"];
+
 var oldOpenStationWindow = $.proxy(Map.openStationWindow, Map);
 Map.openStationWindow = $.proxy(function(id, url) {
-    if (Status.get('provider').serviceID == "srv_cbe54f275d9d993b376783216ff9f431") {
+    if ($.inArray(Status.get('provider').serviceID, serviceIDs) > -1) {
         Rest.stations(id, url).done($.proxy(function(results) {
             var phenomena = {};
             var ensembleGroups = {};
             $.each(results.properties.timeseries, function(id, elem) {
+                /////////// to test only the CMA-ENS1 //////
+                if (id != "ts_da3a67b4b8b642a036ed30cdb83cca2") {
+                    return;
+                }
+                /////////// to test only the CMA-ENS1 //////
                 if (Map.selectedPhenomenon == null || Map.selectedPhenomenon == elem.phenomenon.id) {
                     if (!phenomena.hasOwnProperty(elem.phenomenon.id)) {
                         phenomena[elem.phenomenon.id] = {};
@@ -62,7 +71,7 @@ Map.openStationWindow = $.proxy(function(id, url) {
                 }, this));
             });
             this.loading(false);
-            Modal.show("station-ecmwf", {
+            Modal.show("station-ensemble", {
                 "name": results.properties.label,
                 "ensemble": $.map(ensembleGroups, function(timeseries, label) {
                     return {
@@ -74,9 +83,8 @@ Map.openStationWindow = $.proxy(function(id, url) {
             $('#confirmTimeseriesSelection').on('click', function() {
                 // show loading info
                 if ($('.tsItem').has('.checkbox :checked').length > 0) {
-                    $('.ecmwf-station-loading').show();
+                    $('.ensemble-station-loading').show();
                     $.each($('.tsItem').has('.checkbox :checked'), function(id, elem) {
-                        debugger;
                         var resultTime = $(elem).find('.form-control :selected').data('time');
                         // TODO check the selected result time
                         $.each(ensembleGroups[$(this).data('ensemble')], $.proxy(function(idx, elem) {
@@ -87,6 +95,7 @@ Map.openStationWindow = $.proxy(function(id, url) {
                                     Map.addTimeseries(timeseries);
                                 });
                             } else {
+                                Map.timeseriesCache[elem.internalId].setResultTime(resultTime);
                                 Map.addTimeseries(Map.timeseriesCache[elem.internalId]);
                             }
                         }, this));
@@ -104,9 +113,12 @@ Map.openStationWindow = $.proxy(function(id, url) {
 
 Rest.resulttime = function(id, apiUrl, data) {
     return Rest.request(apiUrl + "timeseries/"
-            + (id == null ? "" : id), data, function(promise, result) {
-        // TODO update with real request
-        promise.resolve([1399413600000, 1399435200000, 1399456800000, 1399478400000]);
+            + (id == null ? "" : id) + "/extras", {
+        request: "resultTime",
+        start: moment(TimeController.currentTimespan.from).format(),
+        end: moment(TimeController.currentTimespan.till).format()
+    }, function(promise, result) {
+        promise.resolve(result);
     });
 };
 
@@ -120,8 +132,11 @@ TimeSeries = function() {
     this.setResultTime = function(rt) {
         resultTime = rt;
     };
-
+    
     this.fetchData = function(timespan, complete) {
+        var from = moment(timespan.from).subtract(this.getTimeBuffer());
+        var till = moment(timespan.till).add(this.getTimeBuffer());
+        timespan = Time.getRequestTimespan(from, till);
         this.promise = Rest.tsData(this.getTsId(), this.getApiUrl(), timespan, this.getInternalId(), {'resultTime': resultTime});
         this.promise.done($.proxy(this.fetchedDataFinished, {context: this, complete: complete}));
         return this.promise;

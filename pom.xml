@@ -116,6 +116,7 @@
                                 <cssSourceFile>animation.css</cssSourceFile>
                                 <cssSourceFile>table.css</cssSourceFile>
                                 <cssSourceFile>guidedtour.css</cssSourceFile>
+                                <cssSourceFile>ensembleMods.css</cssSourceFile>
                             </cssSourceFiles>
                             <cssFinalFile>jsc.${project.version}.css</cssFinalFile>
                             <jsSourceFiles>
@@ -171,6 +172,7 @@
                                 <jsSourceFile>controller/tableController.js</jsSourceFile>
                                 <jsSourceFile>controller/exportController.js</jsSourceFile>
                                 <jsSourceFile>controller/guidedTourController.js</jsSourceFile>
+                                <jsSourceFile>controller/ensembleModification.js</jsSourceFile>
                             </jsSourceFiles>
                             <jsFinalFile>jsc.${project.version}.js</jsFinalFile>
                             <jsEngine>CLOSURE</jsEngine>
