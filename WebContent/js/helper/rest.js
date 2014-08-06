@@ -63,29 +63,17 @@ var Rest = {
         var data = {
             timespan: timespan,
             generalize: Status.get('generalizeData'),
-            expanded: true
+            expanded: true,
+            format: 'highcharts'
         };
         if (extendedData) {
             data = $.extend(data, extendedData);
         }
         return this.request(apiUrl + "timeseries/" + id
                 + "/getData", data, function(promise, result) {
-                    values = [];
-                    $.each(result[id].values, function(index, elem) {
-                        values.push([elem.timestamp, elem.value]);
-                    });
-                    refs = {};
-                    if (result[id].extra != null
-                            && result[id].extra.referenceValues != null) {
-                        $.each(result[id].extra.referenceValues, function(id, elem) {
-                            refvalues = [];
-                            $.each(elem.values, function(index, elem) {
-                                refvalues.push([elem.timestamp, elem.value]);
-                            });
-                            refs[id] = refvalues;
-                        });
-                    }
-                    promise.resolve(values, refs);
+                    var values = tsHelper.createDataOfResult(result, id);
+                    var refValues = tsHelper.createRefDataOfResult(result, id);
+                    promise.resolve(values, refValues);
                 }, function(promise, error) {
             promise.reject(internalId);
         });

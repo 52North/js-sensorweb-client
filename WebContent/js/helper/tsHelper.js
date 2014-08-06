@@ -29,5 +29,52 @@
 var tsHelper = {
     createInternalId: function(tsId, apiUrl) {
         return tsId + "__" + Settings.restApiUrls[apiUrl];
+    },
+    createDataOfResult: function(result, tsId) {
+        // kvp format of the timeseries-api
+        if (result[tsId] && result[tsId].values) {
+            return this._createValues(result[tsId].values);
+        }
+        // highchart format of the timeseries-api
+        var values = [];
+        if (result instanceof Array) {
+            var that = this;
+            $.each(result, function(idx, elem) {
+                if (elem.name == tsId) {
+                    values = that._createValues(elem.data);
+                }
+            });
+        }
+        return values;
+    },
+    createRefDataOfResult: function(result, id) {
+        var refs = {};
+        var that = this;
+        // kvp format of the timeseries-api
+        if (result[id] && result[id].extra && result[id].extra.referenceValues) {
+            $.each(result[id].extra.referenceValues, function(id, elem) {
+                refs[id] = that._createValues(elem.values);
+            });
+        }
+        // highchart format of the timeseries-api
+        if (result instanceof Array){
+            $.each(result, function(idx, elem) {
+                if (elem.name.indexOf('ref_') == 0) {
+                    refs[elem.name] = that._createValues(elem.data);
+                }
+            });
+        }
+        return refs;
+    },
+    _createValues: function(array) {
+        var values = [];
+        if (array[0] instanceof Array) {
+            return array;
+        } else {
+            $.each(array, function(index, elem) {
+                values.push([elem.timestamp, elem.value]);
+            });
+        }
+        return values;
     }
 };
