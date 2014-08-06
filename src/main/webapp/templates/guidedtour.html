@@ -1,0 +1,17 @@
+<div class="guidedtour-title">{{title}}
+    <span class="close"><span class="glyphicon glyphicon-remove"></span></span>
+</div>
+<div class="guidedtour-content">
+    {{{text}}}
+    <div class="paging guidedtour">
+        <ul class="pagination">
+            {{#previous}}
+            <li><a data-step="{{previous}}">&lsaquo;</a></li>
+            {{/previous}}
+            <li><a>{{step}}/{{steps}}</a></li> 
+            {{#next}}
+            <li><a data-step="{{next}}">&rsaquo;</a></li>
+            {{/next}}
+        </ul>
+    </div>
+</div>

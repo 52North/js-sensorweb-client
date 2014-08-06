@@ -5,7 +5,7 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.n52.mobileclient</groupId>
+    <groupId>org.n52.jsc</groupId>
     <artifactId>jsClient</artifactId>
     <version>0.2.0</version>
     <packaging>war</packaging>
@@ -57,10 +57,10 @@
                         </manifest>
                         <addMavenDescriptor>false</addMavenDescriptor>
                     </archive> -->
-                    <webXml>WebContent/WEB-INF/web.xml</webXml>
+                    <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
                     <webResources>
                         <resource>
-                            <directory>WebContent/</directory>
+                            <directory>src/main/webapp/</directory>
                             <filtering>false</filtering>
                             <excludes>
                                 <exclude>**/*.css</exclude>
@@ -78,7 +78,7 @@
                             </excludes>
                         </resource>
                         <resource>
-                            <directory>WebContent/</directory>
+                            <directory>src/main/webapp/</directory>
                             <filtering>true</filtering>
                             <includes>
                                 <include>index.html</include>
@@ -180,7 +180,7 @@
                             </closureExterns-->
                             <skipMinify>${skipMinify}</skipMinify>
                             <webappSourceDir>
-                                ${basedir}/WebContent/
+                                src/main/
                             </webappSourceDir>
                         </configuration>
                         <goals>
@@ -194,7 +194,7 @@
                 <artifactId>license-maven-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
-                    <header>misc/license_header.txt</header>
+                    <header>src/main/resources/misc/license_header.txt</header>
                     <properties>
                         <inceptionYear>${project.inceptionYear}</inceptionYear>
                         <latestYearOfContribution>${currentYear}</latestYearOfContribution>
@@ -219,6 +219,7 @@
                 </executions>
             </plugin>
         </plugins>
+        <sourceDirectory>src/main/js</sourceDirectory>
     </build>
     
     <profiles>
