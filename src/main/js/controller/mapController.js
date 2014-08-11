@@ -59,6 +59,8 @@ var Map = {
                 url: 'http://nominatim.openstreetmap.org/search?format=json&q={s}',
                 jsonpParam: 'json_callback',
                 propertyName: 'display_name',
+                searchLabel: _('map.search.label'),
+                notFoundMessage: _('map.search.noResult'),
                 propertyLoc: ['lat', 'lon'],
                 position: 'topcenter',
                 minLength: 2,

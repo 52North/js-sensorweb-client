@@ -57,6 +57,10 @@ i18n.en = {
             stations: 'Stations',
             timeseries: 'Timeseries',
             phenomena: 'Phenomena'
+        },
+        search: {
+            label: 'search for address ...',
+            noResult: 'Sorry, that address could not be found.'
         }
     },
     listSelection: {

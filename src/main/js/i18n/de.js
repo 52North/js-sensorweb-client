@@ -57,6 +57,10 @@ i18n.de = {
             stations: 'Stationen',
             timeseries: 'Zeitreihen',
             phenomena: 'Phänomene'
+        },
+        search: {
+            label: 'suche Addresse ...',
+            noResult: 'Sorry, es konnte keine Adresse gefunden werden.'
         }
     },
     listSelection: {
