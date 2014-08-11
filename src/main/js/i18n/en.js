@@ -29,13 +29,19 @@
 i18n.en = {
     ok: 'OK',
     main: {
-        legend: 'Legend'
+        legend: 'Legend',
+        diagram: 'Diagram',
+        mapView: 'Map view',
+        settings: 'Settings',
+        stationSelection: 'Select a station',
+        chartView: 'Chart view',
+        phenomena: 'Phenomena',
+        phenomenon: 'Phenomenon'
     },
     chart: {
         noTimeseriesSelected: 'You have selected no timeseries or the selected timeseries have no values in the given time range.'
     },
     map: {
-        phenomena: 'Phenomena',
         userLocation: 'Here is your current location',
         stationSelection: {
             station: 'Station',

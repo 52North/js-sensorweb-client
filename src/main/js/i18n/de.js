@@ -29,13 +29,19 @@
 i18n.de = {
     ok: 'OK',
     main: {
-        legend: 'Legende'
+        legend: 'Legende',
+        diagram: 'Diagramm',
+        mapView: 'Kartenansicht',
+        settings: 'Einstellungen',
+        stationSelection: 'Wähle eine Station aus',
+        chartView: 'Diagrammansicht',
+        phenomena: 'Phänomene',
+        phenomenon: 'Phänomen'
     },
     chart: {
         noTimeseriesSelected: 'Sie haben keine Zeitreihe ausgewählt oder die gewählten Zeitreihen haben keine Werte in dem derzeitigen Zeitraum.'
     },
     map: {
-        phenomena: 'Phänomene',
         userLocation: 'Hier ist ihr Standort',
         stationSelection: {
             station: 'Station',

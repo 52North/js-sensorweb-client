@@ -30,6 +30,7 @@ var StartController = {
     init: function() {
         jQuery.support.cors = true;
 
+        this.loadMainPage();
         // Call all controller
         PermalinkController.init();
         Pages.init();
@@ -43,5 +44,9 @@ var StartController = {
         TimeSeriesController.init();
         GuidedTourController.init();
         ExportController.init();
+    },
+    loadMainPage: function(){
+        var main = Template.createHtml("main");
+        $('.jsc-main').append(main);
     }
 };

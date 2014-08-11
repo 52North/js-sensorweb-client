@@ -55,7 +55,7 @@ var Pages = {
         }
     },
     togglePhenomenon: function(active, label) {
-        var name = label == null ? _('map.phenomena') : label;
+        var name = label == null ? _('main.phenomena') : label;
         if (active) {
             $('.phenomena').toggleClass('active');
             if ($('.phenomena').hasClass('active')) {
