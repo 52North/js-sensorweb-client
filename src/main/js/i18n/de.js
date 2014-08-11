@@ -120,7 +120,7 @@ i18n.de = {
         zeroScaled: 'Nullbasierte Y-Achse'
     },
     settings: {
-        header: 'Einstellung',
+        header: 'Einstellungen',
         resetStatus: 'Lösche den Status',
         permalink: {
             create: 'Erstelle Permalink',
