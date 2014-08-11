@@ -74,7 +74,8 @@
                                 <exclude>config.xml</exclude>
                                 <exclude>res/**</exclude> -->
                                 <exclude>index.html</exclude>
-                                <exclude>test.html</exclude>
+                                <exclude>**/*.xml</exclude>
+                                <exclude>version-info.txt</exclude>
                             </excludes>
                         </resource>
                         <resource>
@@ -82,11 +83,38 @@
                             <filtering>true</filtering>
                             <includes>
                                 <include>index.html</include>
-                                <include>test.html</include>
+                                <include>**/web.xml</include>
+                                <include>version-info.txt</include>
                             </includes>
                         </resource>
                     </webResources>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <version>2.1.9</version>
+                <executions>
+                    <execution>
+                        <id>git-commit-id</id>
+                        <goals>
+                            <goal>revision</goal>
+                        </goals>
+                        <phase>validate</phase>
+                        <configuration>
+                            <dateFormat>yyyy-MM-dd HH:mm:ssZ</dateFormat>
+                            <!-- Only changing prefix since properties conflicts with jgit above
+                            <prefix>git-commit-id</prefix>-->
+                            <!-- We're using a pom in this example
+                            <skipPoms>false</skipPoms>-->
+                            <gitDescribe>
+                                <!-- Faster to get just branch if skip = true -->
+                                <skip>false</skip>
+                            </gitDescribe>
+                            <timestampFormat>{0,date,yyyy-MM-dd HH:mm:ss}</timestampFormat>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>com.samaxes.maven</groupId>
