@@ -27,10 +27,11 @@
  * Public License for more details.
  */
 var StartController = {
-    init: function() {
+    init: function(settings) {
         jQuery.support.cors = true;
-
         this.loadMainPage();
+        // merge settings
+        $.extend(Settings, settings);
         // Call all controller
         PermalinkController.init();
         Pages.init();
@@ -44,6 +45,7 @@ var StartController = {
         TimeSeriesController.init();
         GuidedTourController.init();
         ExportController.init();
+        StyleChangeController.init();
     },
     loadMainPage: function(){
         var main = Template.createHtml("main");

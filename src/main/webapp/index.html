@@ -49,7 +49,26 @@
         <script src="js/jsc.${project.version}.${minifiedPostfix}js"></script>
         <script>
             $(function() {
-                StartController.init();
+                var settings = {};
+                //settings.chartOptions = {
+                //    series: {
+                //        points: {
+                //            radius: 4,
+                //            symbol: function cross(ctx, x, y, radius, shadow) {
+                //                var size = radius * Math.sqrt(Math.PI) / 2;
+                //                ctx.moveTo(x - size, y - size);
+                //                ctx.lineTo(x + size, y + size);
+                //                ctx.moveTo(x - size, y + size);
+                //                ctx.lineTo(x + size, y - size);
+                //            },
+                //            show: true
+                //        }
+                //    }
+                //};
+                $.getJSON("settings.json", function(json) {
+                    $.extend(settings, json);
+                    StartController.init(settings);
+                });
             });
         </script>
     </body>

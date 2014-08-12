@@ -27,7 +27,6 @@
  * Public License for more details.
  */
 function TimeseriesStyle(chartType, width, color, intervalString, lineType) {
-
     createInterval = function(interval) {
         switch (interval) {
             case "byHour":
@@ -99,7 +98,7 @@ function TimeseriesStyle(chartType, width, color, intervalString, lineType) {
 /* create a default timeseries style constructor */
 TimeseriesStyle.createDefault = function(id) {
     var chartType = "line";
-    var width = 2;
+    var width = Settings.commonLineWidth;
     var color = Color.stringToColor(id);
     var interval = "byHour";
     var lineType = "solid";

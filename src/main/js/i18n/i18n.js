@@ -28,11 +28,9 @@
  */
 var i18n = {};
 
-var langParam = Permalink.getUrlParameter('lang');
-
 function _(key) {
-    var lang = langParam || navigator.language || navigator.userLanguage;
-    var text = readI18n(lang, key) || readI18n(Settings.defaultLanguage, key);
+    var lang = Permalink.getUrlParameter('lang') || navigator.language || navigator.userLanguage;
+    var text = readI18n(lang, key) || readI18n("en", key);
     if ($.isEmptyObject(text)) {
         return key;
     } else {

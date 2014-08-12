@@ -167,6 +167,10 @@
                                 <jsSourceFile>libs/moment.min.js</jsSourceFile>
                                 <jsSourceFile>libs/sorttable.js</jsSourceFile>
                                 <jsSourceFile>libs/qr.min.js</jsSourceFile>
+                                <jsSourceFile>helper/permalink.js</jsSourceFile>
+                                <jsSourceFile>i18n/i18n.js</jsSourceFile>
+                                <jsSourceFile>i18n/en.js</jsSourceFile>
+                                <jsSourceFile>i18n/de.js</jsSourceFile>
                                 <jsSourceFile>models/timeseries.js</jsSourceFile>
                                 <jsSourceFile>models/referenceValue.js</jsSourceFile>
                                 <jsSourceFile>models/tsStyle.js</jsSourceFile>
@@ -180,12 +184,8 @@
                                 <jsSourceFile>helper/event.js</jsSourceFile>
                                 <jsSourceFile>helper/status.js</jsSourceFile>
                                 <jsSourceFile>helper/button.js</jsSourceFile>
-                                <jsSourceFile>helper/permalink.js</jsSourceFile>
                                 <jsSourceFile>helper/bootstrap-fix.js</jsSourceFile>
                                 <jsSourceFile>helper/tsHelper.js</jsSourceFile>
-                                <jsSourceFile>i18n/i18n.js</jsSourceFile>
-                                <jsSourceFile>i18n/en.js</jsSourceFile>
-                                <jsSourceFile>i18n/de.js</jsSourceFile>
                                 <jsSourceFile>controller/startController.js</jsSourceFile>
                                 <jsSourceFile>controller/permalinkController.js</jsSourceFile>
                                 <jsSourceFile>controller/settingsController.js</jsSourceFile>

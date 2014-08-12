@@ -60,6 +60,7 @@ var Settings = {
     zoom: 13,
     // date/time format which is used on several places
     dateformat: 'DD.MM.YY HH:mmZ',
+    shortDateformat: "DD.MM.YY",
     // duration after which latest values shall be ignored when rendering marker in the map
     ignoreAfterDuration: moment.duration(1, 'y'),
     // duration buffer for time series request
@@ -77,5 +78,26 @@ var Settings = {
     // should saving the status be possible, 
     saveStatusPossible: true,
     // entries on a page for the values table
-    pagesize: 20
+    pagesize: 20,
+    // line width for selected timeseries
+    selectedLineWidth: 5,
+    // common line width for unselected timeseries
+    commonLineWidth: 2,
+    // chart styling options see for more details: https://github.com/flot/flot/blob/master/API.md
+    chartOptions: {},
+    // colorlist to select for a different timeseries color 
+    colorList: ['#1abc9c', '#27ae60', '#2980b9', '#8e44ad', '#2c3e50', '#f1c40f',
+        '#d35400', '#c0392b', '#7f8c8d'],
+    // interval to display the timeseries in a bar diagram with label and value in hours 
+    intervalList: [
+        {label: _('styleChange.barChartInterval.hour'), value: 1},
+        {label: _('styleChange.barChartInterval.day'), value: 24},
+        {label: _('styleChange.barChartInterval.week'), value: 7 * 24},
+        {label: _('styleChange.barChartInterval.month'), value: 30 * 24}
+    ],
+    // configuration for the tile layer in the leaflet map (see for more information: http://leafletjs.com/reference.html#tilelayer )
+    tileLayerUrl: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+    tileLayerOptions: {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    }
 };

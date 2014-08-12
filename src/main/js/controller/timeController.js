@@ -27,7 +27,6 @@
  * Public License for more details.
  */
 var TimeController = {
-    dateformat: "DD.MM.YY",
     currentTimespan: {},
     timeRangeData: {
         presets: [
@@ -42,7 +41,7 @@ var TimeController = {
             {label: _('timeSelection.presets.lastYear'), value: 'lastYear'}
         ]
     },
-    init: function(timespan) {
+    init: function() {
         // get last save timespan
         this.currentTimespan = Status.get('timespan');
         $(document).ready(function() {
@@ -132,7 +131,7 @@ var TimeController = {
         $('[data-action="timeextent"]').removeClass('disabled');
     },
     setLabel: function() {
-        var label = moment(this.currentTimespan.from).format(this.dateformat) + " - " + moment(this.currentTimespan.till).format(this.dateformat);
+        var label = moment(this.currentTimespan.from).format(Settings.shortDateformat) + " - " + moment(this.currentTimespan.till).format(Settings.shortDateformat);
         $('[data-action=timeextent]').text(label);
     },
     prevPeriode: function() {

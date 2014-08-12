@@ -27,9 +27,7 @@
  * Public License for more details.
  */
 var ChartController = {
-    selectedLineWidth: 5,
-    defaultLineWidth: 2,
-    options: {
+    defaultOptions: {
         series: {
             lines: {
                 show: true,
@@ -72,6 +70,9 @@ var ChartController = {
     visible: true,
     data: [],
     init: function() {
+        this.selectedLineWidth = Settings.selectedLineWidth;
+        this.commonLineWidth = Settings.commonLineWidth;
+        this.options = $.extend(this.defaultOptions, Settings.chartOptions);
         EventManager.subscribe("timeseries:data:load", $.proxy(this.loadDataForChart, this));
         EventManager.subscribe("timeseries:data:loadfinished", $.proxy(this.loadDataFinished, this));
         EventManager.subscribe("timeseries:synced", $.proxy(this.plotChart, this));
@@ -153,8 +154,8 @@ var ChartController = {
     unselectAll: function(event) {
         if (this.plot) {
             $.each(this.plot.getData(), function(index, elem) {
-                elem.lines.lineWidth = ChartController.defaultLineWidth;
-                elem.bars.lineWidth = ChartController.defaultLineWidth;
+                elem.lines.lineWidth = ChartController.commonLineWidth;
+                elem.bars.lineWidth = ChartController.commonLineWidth;
                 elem.selected = false;
             });
             $.each(this.data, function(index, elem) {

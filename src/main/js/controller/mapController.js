@@ -27,9 +27,15 @@
  * Public License for more details.
  */
 var Map = {
+    defaultTileLayerUrl: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+    defaultTileLayerOptions: {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    },
     timeseriesCache: [],
     init: function() {
-        $(document).ready(function() {
+        this.tileLayerUrl = Settings.tileLayerUrl || this.defaultTileLayerUrl;
+        this.tileLayerOptions = Settings.tileLayerOptions || this.defaultTileLayerOptions;
+                $(document).ready(function() {
             $('[data-action="provider"]').click(function() {
                 Map.openProviderList();
             });
@@ -45,9 +51,7 @@ var Map = {
     createMap: function() {
         if ($("#map").length > 0) {
             this.map = L.map('map');
-            L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(this.map);
+            L.tileLayer(this.tileLayerUrl, this.tileLayerOptions).addTo(this.map);
             L.Icon.Default.imagePath = 'images';
             this.map.whenReady(function(map) {
                 // locate user methods
