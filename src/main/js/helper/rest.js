@@ -64,7 +64,7 @@ var Rest = {
             timespan: timespan,
             generalize: Status.get('generalizeData'),
             expanded: true,
-            format: 'highcharts'
+            format: 'flot'
         };
         if (extendedData) {
             data = $.extend(data, extendedData);

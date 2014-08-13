@@ -56,6 +56,12 @@ var tsHelper = {
                 refs[id] = that._createValues(elem.values);
             });
         }
+        // flot format of the timeseries-api
+        if (result[id] && result[id].referenceValues) {
+            $.each(result[id].referenceValues, function(id, values) {
+                refs[id] = that._createValues(values);
+            });
+        }
         // highchart format of the timeseries-api
         if (result instanceof Array){
             $.each(result, function(idx, elem) {

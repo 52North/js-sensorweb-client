@@ -293,7 +293,10 @@ var ChartController = {
             data: refVal.getValues(),
             id: refVal.getId(),
             color: refVal.getColor(),
-            uom: ts.getUom()
+            uom: ts.getUom(),
+            lines: {
+                lineWidth: Settings.commonLineWidth
+            }
         });
         this.plotChart();
     },
