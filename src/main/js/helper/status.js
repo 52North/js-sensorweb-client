@@ -27,16 +27,24 @@
  * Public License for more details.
  */
 var Status = (function() {
+    var generateKey = function() {
+        var loc = window.location;
+        if (!loc.origin) {
+            loc.origin = loc.protocol + "//" + loc.hostname
+                    + (loc.port ? ':' + loc.port : '');
+        }
+        return loc.origin + loc.pathname + "settings";
+    };
     var status = {
-        key: 'settings',
+        key: generateKey(),
         defaultValues: {
             'provider': Settings.defaultProvider,
-            'clusterStations': true,
-            'generalizeData': false,
+            'clusterStations': Settings.clusterStations,
+            'generalizeData': Settings.generalizeData,
             'timeseries': {},
             'timespan': Time.isoTimespan('today'),
-            'saveStatus': true,
-            'concentrationMarker': false
+            'saveStatus': Settings.saveStatus,
+            'concentrationMarker': Settings.concentrationMarker
         },
         init: function() {
             this.load();

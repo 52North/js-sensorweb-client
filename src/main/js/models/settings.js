@@ -56,6 +56,14 @@ var Settings = {
         serviceID: 'srv_738111ed219f738cfc85be0c8d87843c',
         apiUrl: 'http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/'
     },
+    // default setting for clustering stations
+    clusterStations: true,
+    // default setting for generalization of the data
+    generalizeData: false,
+    // default setting for save status
+    saveStatus: true,
+    // default setting for concentration marker
+    concentrationMarker: false,
     // zoom level in the map, used for user location and station position
     zoom: 13,
     // date/time format which is used on several places
