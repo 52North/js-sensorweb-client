@@ -27,6 +27,7 @@
  * Public License for more details.
  */
 var Settings = {
+    // For more informations about the settings options, please check: http://52north.github.io/js-sensorweb-client
     // The entries in this list will be removed from the provider list offered to the user
     providerBlackList: [
         {
@@ -90,7 +91,7 @@ var Settings = {
     // line width for selected timeseries
     selectedLineWidth: 5,
     // common line width for unselected timeseries
-    commonLineWidth: 2,
+    commonLineWidth: 2, 
     // chart styling options see for more details: https://github.com/flot/flot/blob/master/API.md
     chartOptions: {},
     // colorlist to select for a different timeseries color 

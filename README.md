@@ -16,4 +16,5 @@ To change the configuration, update the ```settings.js``` located in ```WebConte
 
 ### Contacts
 
+Take a look at the documentation: http://52north.github.io/js-sensorweb-client/
 For questions and comments please contact [Jan Schulte](mailto:j.schulte@52north.org)
