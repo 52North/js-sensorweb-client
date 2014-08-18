@@ -5,8 +5,446 @@
         <title>Documentation JavaScript-Client</title>
         <!-- Bootstrap -->
         <link type="text/css" rel="stylesheet" href="css/bootstrap-3.0.0-rc1/bootstrap.min.css">
+        <link type="text/css" rel="stylesheet" href="css/n52/apidoc-style.css">
     </head>
     <body>
-        test
+
+        <!-- 52n nav
+            ================================================== -->
+        <div class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">JavaScript Client</a>
+                </div>
+                <div class="navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="http://52north.org/communities/sensorweb/">Sensor Web</a></li>
+                        <li><a href="https://github.com/52north/js-sensorweb-client/">Sources</a></li>
+                        <li><a href="http://blog.52north.org">Blog</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid n52-container">
+            <div class="row">
+                <!-- Content nav
+                ================================================== -->
+                <div class="col-lg-2 n52-sidebar">
+                    <div id="contents" class="bs-sidebar hidden-print">
+                        <a href="http://52north.org" style="position:fixed"><img alt="52&deg;North logo" src="http://52north.org/templates/52n-2012/images/52n-logo.gif"/></a>
+                        <ul class="nav bs-sidenav" data-spy="affix">
+
+                            <li> <!-- General -->
+                                <a data-toggle="collapse" data-parent="#contents" data-target="#configuration-subitems" href="#configuration">Configuration</a>
+                                <ul id="configuration-subitems" class="nav collapse">
+                                    <li><a href="#configuration-basics">injection</a></li>
+                                    <li><a href="#configuration-options">options</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-10 n52-content">
+
+                    <!-- About
+                    ================================================== -->
+                    <section id="about">
+                        <h2>About</h2>
+                        <div>
+                            <p>The <a href="http://52north.org">52&deg;North</a> JavaScript SOS Client provides the selection of timeseries and displays the timeseries data in diagramms or tables. The client consumes instances of the <a href="https://github.com/52North/timeseries-api">timeseries-api</a>. By requesting the REST interface it gets stations and regarding timeseries.</p>
+                            <p>This documentation gives an overview of the configuration of the client. </p>
+                        </div>
+
+                        <!--<h3>Document status</h3>
+                        <div class="n52-callout n52-callout-info">
+                            <table class="table">
+                                <tr>
+                                    <th>What</th>
+                                    <th>When</th>
+                                </tr>
+                                <tr>
+                                    <td>Added station <a href="#general-common-query-parameters">to general query parameters</a>.</td>
+                                    <td>2014-02-06</td>
+                                </tr>
+                                <tr>
+                                    <td>Create <a href="#nonpublic">legacy section</a> and add low-level SOS concepts.</td>
+                                    <td>2013-12-16</td>
+                                </tr>
+                            </table>
+                        </div>-->
+                    </section>
+
+                    <section id="configuration">
+                        <div class="page-header">
+                            <h2>Configuration</h2>
+                            <p class="pull-right up-link">
+                                <a href="#"><i class="icon-chevron-up"></i> top</a>
+                            </p>
+                        </div>
+                        <div>
+                            <div id="configuration-basics">
+                                <h3>Settings injection</h3>
+                                <p>How to import own settings? Here are two examples to overwrite the default settings of the client:</p>
+                                <h4>Settings through a settings file</h4>
+                                Create a <code>settings.json</code> looking like this example:
+                                <pre>
+{
+    &quot;tileLayerUrl&quot;: &quot;http://otile1.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg&quot;,
+    &quot;tileLayerOptions&quot;: {
+        &quot;attribution&quot;: &quot;&amp;copy; &lt;a href=\&quot;http://www.mapquest.com/\&quot; target=\&quot;_blank\&quot;&gt;MapQuest&lt;/a&gt; &lt;img src=\&quot;http://developer.mapquest.com/content/osm/mq_logo.png\&quot;/&gt;&quot;
+    },
+    &quot;selectedLineWidth&quot; : 4,
+    &quot;commonLineWidth&quot; : 1   
+}</pre>
+                                and than import it where the JS-Client <code>StartController</code> is initialized:
+                                <pre>
+$.getJSON("settings.json", function(json) {
+    StartController.init(settings);
+});</pre>
+                                <h4>Settings with javascript funcitonality or conditional settings defined by javascript</h4>
+                                Define a settings object and insert it in the <code>StartController</code> initialization:
+                                <pre>var settings = {};
+settings.chartOptions = {
+    series: {
+        points: {
+            radius: 4,
+            symbol: function cross(ctx, x, y, radius, shadow) {
+                var size = radius * Math.sqrt(Math.PI) / 2;
+                ctx.moveTo(x - size, y - size);
+                ctx.lineTo(x + size, y + size);
+                ctx.moveTo(x - size, y + size);
+                ctx.lineTo(x + size, y - size);
+            },
+            show: true
+        }
+    }
+};
+StartController.init(settings);
+</pre>
+                                <h4>Combination of both settings options:</h4>
+                                <p>A combination of both methods is also possible. So first define a settings file, import it and extend the settings with additional configurations.</p>
+                                <pre>
+var settings = {};
+settings.chartOptions = {
+    series: {
+        points: {
+            radius: 4,
+            symbol: function cross(ctx, x, y, radius, shadow) {
+                var size = radius * Math.sqrt(Math.PI) / 2;
+                ctx.moveTo(x - size, y - size);
+                ctx.lineTo(x + size, y + size);
+                ctx.moveTo(x - size, y + size);
+                ctx.lineTo(x + size, y - size);
+            },
+            show: true
+        }
+    }
+};
+$.getJSON("settings.json", function(json) {
+    $.extend(settings, json);
+    StartController.init(settings);
+});</pre>
+                            </div>
+
+                            <div id="configuration-options">
+                                <h3>Settings options</h3>
+                                <p></p>
+                                <table class="table">
+                                    <tr>
+                                        <th>Parameter</th>
+                                        <th style="width:40%">Example</th>
+                                        <th>Description</th>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>providerBlackList</code><br/>
+                                        </td>
+                                        <td>
+                                            <pre>providerBlackList: [
+        {
+            serviceID: 'srv_123',
+            apiUrl: 'http://providerA/timeseries/api/v1/'
+        },
+        {
+            serviceID: 'srv_456',
+            apiUrl: 'http://providerB/timeseries/api/v1/'
+        }
+    ]</pre>
+                                        </td>
+                                        <td>
+                                            The entries in this list will be removed from the provider list offered to the user.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>restApiUrls</code><br/>
+                                        </td>
+                                        <td>
+                                            <pre>restApiUrls: {
+        'http://providerA/timeseries/api/v1/': 'providerA',
+        'http://providerB/timeseries/api/v1/': 'providerB'
+    }</pre>
+                                        </td>
+                                        <td>A list of timeseries-API urls and an appropriate identifier to create internal timeseries ids.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>defaultProvider</code><br/>
+                                        </td>
+                                        <td>
+                                            <pre>defaultProvider: {
+            serviceID: 'srv_123',
+            apiUrl: 'http://providerA/timeseries/api/v1/'
+    }</pre>
+                                        </td>
+                                        <td>The default selected provider to show stations in the map.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>clusterStations</code><br/>
+                                        </td>
+                                        <td>
+                                            <pre>clusterStations: true</pre>
+                                        </td>
+                                        <td>The default setting for clustering stations on the map.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>generalizeData</code>
+                                        </td>
+                                        <td>
+                                            <pre>generalizeData: false</pre>
+                                        </td>
+                                        <td>The default setting for generalization of timeseries data.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>saveStatus</code>
+                                        </td>
+                                        <td>
+                                            <pre>saveStatus: false</pre>
+                                        </td>
+                                        <td>The default setting for saving the status, while the user works with the client.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>saveStatusPossible</code>
+                                        </td>
+                                        <td>
+                                            <pre>saveStatusPossible: true</pre>
+                                        </td>
+                                        <td>Should the client be able to save the status.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>concentrationMarker</code>
+                                        </td>
+                                        <td>
+                                            <pre>concentrationMarker: false</pre>
+                                        </td>
+                                        <td>The default setting for concentration marker.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>zoom</code>
+                                        </td>
+                                        <td>
+                                            <pre>zoom: 13</pre>
+                                        </td>
+                                        <td>The zoom level in the map, used for user location and station position.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>dateformat</code>
+                                        </td>
+                                        <td>
+                                            <pre>dateformat: 'DD.MM.YY HH:mmZ'</pre>
+                                        </td>
+                                        <td>The long date/time format which is used on several places.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>shortDateformat</code>
+                                        </td>
+                                        <td>
+                                            <pre>shortDateformat: "DD.MM.YY"</pre>
+                                        </td>
+                                        <td>The short date/time format which is used on several places.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>timeseriesDataBuffer</code>
+                                        </td>
+                                        <td>
+                                            <pre>timeseriesDataBuffer: moment.duration(2, 'h')</pre>
+                                        </td>
+                                        <td>Initial duration buffer for time series request. After the first achieved timeseries data this buffer will be abjusted to the gained data.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>ignoreAfterDuration</code>
+                                        </td>
+                                        <td>
+                                            <pre>ignoreAfterDuration: moment.duration(1, 'y')</pre>
+                                        </td>
+                                        <td>The duration after which latest values shall be ignored when rendering marker in the map.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>defaultMarkerColor</code>
+                                        </td>
+                                        <td>
+                                            <pre>defaultMarkerColor: '#123456'</pre>
+                                        </td>
+                                        <td>The default color for circled marker, when last value is older than <code>ignoreAfterDuration</code> or the timeseries has no last value.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>defaultZeroScale</code>
+                                        </td>
+                                        <td>
+                                            <pre>defaultZeroScale: false</pre>
+                                        </td>
+                                        <td>The default scaling of a new loaded timeseries.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>additionalParameters</code>
+                                        </td>
+                                        <td>
+                                            <pre>additionalParameters: {
+        locale: 'de'
+    }</pre>
+                                        </td>
+                                        <td>Additional parameters which are append to the requests.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>defaultLanguage</code>
+                                        </td>
+                                        <td>
+                                            <pre>defaultLanguage: 'en'</pre>
+                                        </td>
+                                        <td>Default language for internationalization. Will be used if no language parameter ist set in the url and no language is set in th browser.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>pagesize</code>
+                                        </td>
+                                        <td>
+                                            <pre>pagesize: 20</pre>
+                                        </td>
+                                        <td>Entries on a page of values in the table view.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>selectedLineWidth</code>
+                                        </td>
+                                        <td>
+                                            <pre>selectedLineWidth: 5</pre>
+                                        </td>
+                                        <td>The line width for selected timeseries in the diagram.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>commonLineWidth</code>
+                                        </td>
+                                        <td>
+                                            <pre>commonLineWidth: 2</pre>
+                                        </td>
+                                        <td>The common line width for an unselected timeseries in the diagram.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>chartOptions</code>
+                                        </td>
+                                        <td>
+                                            <pre>chartOptions: {}</pre>
+                                        </td>
+                                        <td>Chart styling options for more details check the <a href="https://github.com/flot/flot/blob/master/API.md#plot-options">documentation</a> of flot. (some options will be modified while rendering the diagrams)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>colorList</code>
+                                        </td>
+                                        <td>
+                                            <pre>colorList: ['#1abc9c', '#27ae60', '#2980b9', '#8e44ad', '#2c3e50', '#f1c40f',
+        '#d35400', '#c0392b', '#7f8c8d']</pre>
+                                        </td>
+                                        <td>A list of colors for the selection of a different timeseries color.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>intervalList</code>
+                                        </td>
+                                        <td>
+                                            <pre>intervalList: [
+        {label: _('styleChange.barChartInterval.hour'), value: 1},
+        {label: _('styleChange.barChartInterval.day'), value: 24},
+        {label: _('styleChange.barChartInterval.week'), value: 7 * 24},
+        {label: _('styleChange.barChartInterval.month'), value: 30 * 24}
+    ]</pre>
+                                        </td>
+                                        <td>The interval to display the timeseries in a bar diagram with label and value in hours.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>tileLayerUrl</code>
+                                        </td>
+                                        <td>
+                                            <pre>tileLayerUrl: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png'</pre>
+                                        </td>
+                                        <td>Configuration for the tile layer in the leaflet map (see for more information the leaflet <a href="http://leafletjs.com/reference.html#tilelayer">documentation</a>)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>tileLayerOptions</code>
+                                        </td>
+                                        <td>
+                                            <pre>tileLayerOptions: {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    }</pre>
+                                        </td>
+                                        <td>see <code>tileLayerOptions</code></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Footer
+                ================================================== -->
+                <footer class="col-lg-12">
+                    <div class="footer">
+                        <div>
+                            <div class="pull-right">
+                                <a href="#">top</a>
+                            </div>
+
+                            <p>Design and Content <a href="http://52north.org/" target="_blank">52&deg;North</a>.</p>
+
+                            <p>Content licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
+
+                            <p><a href="http://glyphicons.com">Glyphicons Free</a> licensed under <a
+                                    href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
+
+                            <ul class="footer-links">
+                                <li><a href="http://52north.org/swe">Sensor Web Community</a></li>
+                                <li class="muted">&middot;</li>
+                                <li><a href="mailto:h.bredel@52north.org">Contact</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="js/bootstrap-3.0.0-rc1/bootstrap.min.js"></script>
     </body>
 </html>
