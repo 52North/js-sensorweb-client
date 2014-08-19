@@ -88,7 +88,8 @@ var ChartController = {
         EventManager.subscribe("navigation:close", $.proxy(this.showChart, this));
         EventManager.subscribe("timeseries:changeStyle", $.proxy(this.changeStyle, this));
         EventManager.subscribe("timeseries:zeroScaled", $.proxy(this.zeroScaled, this));
-
+        EventManager.subscribe("timeseries:groupedAxis", $.proxy(this.changeStyle, this));
+        
         $(window).resize($.proxy(function() {
             var newRatio = $(document).width() / $(document).height();
             if (newRatio != window.ratio) {
@@ -231,6 +232,8 @@ var ChartController = {
         var style = ts.getStyle();
         data.color = style.getColor();
         data.zeroScaled = ts.isZeroScaled();
+        data.groupedAxis = ts.isGroupedAxis();
+        data.stationLabel = ts.getStationLabel();
         if (style.isBarChart()) {
             data.bars = {
                 show: true,
@@ -373,18 +376,26 @@ var ChartController = {
     createYAxis: function() {
         var axesList = {};
         $.each(this.data, function(index, elem) {
-            if (!axesList.hasOwnProperty(elem.uom)) {
+            if (!elem.groupedAxis) {
+                axesList[elem.id] = {
+                    id: ++Object.keys(axesList).length,
+                    uom: elem.uom + " @ " + elem.stationLabel,
+                    tsColors: [elem.color],
+                    zeroScaled: elem.zeroScaled
+                };
+                elem.yaxis = axesList[elem.id].id;
+            } else if (!axesList.hasOwnProperty(elem.uom)) {
                 axesList[elem.uom] = {
                     id: ++Object.keys(axesList).length,
                     uom: elem.uom,
                     tsColors: [elem.color],
                     zeroScaled: elem.zeroScaled
                 };
+                elem.yaxis = axesList[elem.uom].id;
             } else {
                 axesList[elem.uom].tsColors.push(elem.color);
-            }
-            ;
-            elem.yaxis = axesList[elem.uom].id;
+                elem.yaxis = axesList[elem.uom].id;
+            };
         });
         var axes = [];
         $.each(axesList, function(idx, elem) {

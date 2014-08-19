@@ -121,7 +121,8 @@ i18n.en = {
             week: 'Week',
             month: 'Month'
         },
-        zeroScaled: 'zero scaled Y-axis'
+        zeroScaled: 'zero scaled Y-axis',
+        groupedAxis: 'grouped axis'
     },
     settings: {
         header: 'Settings',

@@ -32,7 +32,8 @@ function TimeSeries(tsId, meta, apiUrl) {
     var values = [];
     var refValues = {};
     var synced = false;
-    var zeroScaled = Settings.defaultZeroScale || false;
+    var zeroScaled = Settings.defaultZeroScale;
+    var groupedAxis = Settings.defaultGroupedAxis;
     var timeBuffer = Settings.timeseriesDataBuffer || moment.duration(2, 'h');
     $.each(meta.referenceValues, $.proxy(function(index, elem) {
         refValues[elem.referenceValueId] = new ReferenceValue(elem.referenceValueId, elem.label);
@@ -71,6 +72,14 @@ function TimeSeries(tsId, meta, apiUrl) {
 
     this.setZeroScaled = function(bool) {
         zeroScaled = bool;
+    };
+    
+    this.isGroupedAxis = function(){
+        return groupedAxis;
+    };
+    
+    this.setGroupedAxis = function(bool) {
+        groupedAxis = bool;
     };
 
     this.isSynced = function() {

@@ -78,6 +78,8 @@ var Settings = {
     defaultMarkerColor: '#123456',
     // default scaling of loaded diagram
     defaultZeroScale: false,
+    // default grouping timeseries with same uom
+    defaultGroupedAxis: true,
     // additional parameters which are append to the request urls
     additionalParameters: {
         locale: 'de'

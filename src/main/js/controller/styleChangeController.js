@@ -44,7 +44,8 @@ var StyleChangeController = {
         var data = {
             currentColor: style.getColor(),
             colorList: this.colorList,
-            zeroScaled: ts.isZeroScaled()
+            zeroScaled: ts.isZeroScaled(),
+            groupedAxis: ts.isGroupedAxis()
         };
         if (style.isBarChart()) {
             data.bar = true;
@@ -64,13 +65,17 @@ var StyleChangeController = {
             if (style.getIntervalByHours() != interval) {
                 style.setIntervalByHours(interval);
                 EventManager.publish("timeseries:changeStyle", ts);
-            }
-            ;
+            };
         });
         $('.zeroScaled').on('click', function(e) {
             var zeroScaled = Button.switchToggleButton(e.target);
             ts.setZeroScaled(zeroScaled);
             EventManager.publish("timeseries:zeroScaled", ts);
+        });
+        $('.groupedAxis').on('click', function(e) {
+            var groupedAxis = Button.switchToggleButton(e.target);
+            ts.setGroupedAxis(groupedAxis);
+            EventManager.publish("timeseries:groupedAxis", ts);
         });
     }
 };

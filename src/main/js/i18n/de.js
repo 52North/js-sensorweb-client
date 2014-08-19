@@ -121,7 +121,8 @@ i18n.de = {
             week: 'Woche',
             month: 'Monat'
         },
-        zeroScaled: 'Nullbasierte Y-Achse'
+        zeroScaled: 'Nullbasierte Y-Achse',
+        groupedAxis: 'gruppierte Achse'
     },
     settings: {
         header: 'Einstellungen',
