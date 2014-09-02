@@ -1,0 +1,59 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <div class="modal-title">{{_i}}timeSelection.header{{/i}}</div>
+        </div>
+        <div class="modal-body">
+
+            <div class="panel-group" id="accordionPreset">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a class="accordion-toggle" data-toggle="collapse"
+                               data-parent="#accordionPreset" href="#collapsePreset">{{_i}}timeSelection.presetsHeader{{/i}}</a>
+                        </h4>
+                    </div>
+                    <div id="collapsePreset" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            {{#presets}}
+                            <button class="btn btn-default multiline-button preset-btn"
+                                    data-preset-value="{{value}}">{{label}}</button>
+                            {{/presets}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-group" id="accordionCustom">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a class="accordion-toggle" data-toggle="collapse"
+                               data-parent="#accordionCustom" href="#collapseCustom">{{_i}}timeSelection.custom.header{{/i}}</a>
+                        </h4>
+                    </div>
+                    <div id="collapseCustom" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div class="time-entry">
+                                <span>{{_i}}timeSelection.custom.start{{/i}}</span>
+                                <button class="btn btn-default startDate" id="startPicker"
+                                        data-date-format="yyyy-mm-dd" data-date="2012-02-20"></button>
+                            </div>
+
+                            <div class="time-entry">
+                                <span>{{_i}}timeSelection.custom.end{{/i}}</span>
+                                <button class="btn btn-default endDate" id="endPicker"
+                                        data-date-format="yyyy-mm-dd" data-date="2012-02-25"></button>
+                            </div>
+
+                            <div class="alert alert-danger" id="alertTimeExtent"></div>
+                            <button type="button" class="btn btn-primary" id="confirmTimeExtent" data-dismiss="modal">{{_i}}ok{{/i}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

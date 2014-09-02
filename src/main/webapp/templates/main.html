@@ -1,0 +1,122 @@
+<div class="swc-main">
+    <div class="swc-page" id="chart-page">
+        <div class="navbar navbar-fixed-top" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header chart">
+                    <span class="navbar-brand">
+                        <span class="glyphicon glyphicon-stats"></span>
+                        <span>{{_i}}main.diagram{{/i}}</span>
+                    </span>
+                    <a type="button"
+                       class="btn btn-default navbar-btn button-right"
+                       data-target="#map" href="#map">
+                        <span class="glyphicon glyphicon-globe"></span>
+                        <span class="buttonCaption">{{_i}}main.mapView{{/i}}</span>
+                    </a>
+                    <a type="button"
+                       class="btn btn-default navbar-btn button-right"
+                       data-target="#settings">
+                        <span class="glyphicon glyphicon-cog"></span>
+                        <span class="buttonCaption">{{_i}}main.settings{{/i}}</span>
+                    </a>
+                    <a type="button"
+                       class="btn btn-default navbar-btn button-right"
+                       data-target="#tour">
+                        <span class="glyphicon glyphicon-question-sign"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid content">
+            <div class="row fullHeight">
+                <div class="col-xs-12 col-sm-8 col-lg-9 fullHeight">
+                    <div class="visible-xs leftPanelButton">
+                        <button type="button" class="btn btn-primary btn-xs"
+                                data-toggle="legend">{{_i}}main.legend{{/i}}</button>
+                    </div>
+                    <div class="fullHeight">
+                        <div id="loadingDiagram"></div>
+                        <div id="placeholder" class="diagram"></div>
+                        <div id="tableView" style="display: none;"></div>
+                        <div class="buttonFooter">
+                            <div class="btn-group timeSelection">
+                                <a type="button" class="btn btn-default" data-action="before">
+                                    <span class="glyphicon glyphicon-chevron-left"></span>
+                                </a> 
+                                <a type="button" class="btn btn-default" data-action="timeextent"></a> 
+                                <a type="button" class="btn btn-default" data-action="after"> 
+                                    <span class="glyphicon glyphicon-chevron-right"></span>
+                                </a>
+                            </div>
+                            <a type="button" class="btn btn-default" data-action="dataTable" style="display: none">
+                                <span class="glyphicon glyphicon-list"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-8 col-sm-4 col-lg-3 legend rightPanel">
+                    <h3 class="header">{{_i}}main.legend{{/i}}</h3>
+                    <div class="legend-entry"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="swc-page" id="map-page">
+        <div class="navbar navbar-fixed-top" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header map">
+                    <span class="navbar-brand">
+                        <span class="glyphicon glyphicon-globe"></span>
+                        <span>{{_i}}main.stationSelection{{/i}}</span>
+                    </span>
+                    <a type="button"
+                       class="btn btn-default navbar-btn button-right"
+                       data-target="#chart" href="#chart">
+                        <span class="glyphicon glyphicon-stats"></span>
+                        <span class="buttonCaption">{{_i}}main.chartView{{/i}}</span>
+                    </a>
+                    <a type="button"
+                       class="btn btn-default navbar-btn button-right"
+                       data-target="#settings">
+                        <span class="glyphicon glyphicon-cog"></span>
+                        <span class="buttonCaption">{{_i}}main.settings{{/i}}</span>
+                    </a>
+                    <a type="button"
+                       class="btn btn-default navbar-btn button-right"
+                       data-target="#tour">
+                        <span class="glyphicon glyphicon-question-sign"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid content">
+            <div class="row fullHeight">
+                <div class="col-xs-12 col-sm-8 col-lg-9 fullHeight">
+                    <div class="visible-xs leftPanelButton">
+                        <button type="button" class="btn btn-primary btn-xs"
+                                data-toggle="phenomena">{{_i}}main.phenomena{{/i}}</button>
+                    </div>
+                    <div id="map"></div>
+                    <div class="map-buttons">
+                        <a class="btn btn-primary" data-action="provider">
+                            <span class="glyphicon glyphicon-folder-open"></span>
+                        </a> 
+                        <a class="btn btn-primary" data-action="locate">
+                            <span class="glyphicon glyphicon-map-marker"></span>
+                        </a>
+                        <a class="btn btn-primary" data-action="listSelection" style="display: none">
+                            <span class="glyphicon glyphicon-list-alt"></span>
+                        </a>	
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-4 col-lg-3 phenomena rightPanel">
+                    <div>
+                        <h3>{{_i}}main.phenomenon{{/i}}</h3>
+                        <div class="phenomena-entry"></div>						
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalWindow" tabindex="-1"></div>
+</div>

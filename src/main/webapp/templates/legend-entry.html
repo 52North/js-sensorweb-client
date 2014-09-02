@@ -1,0 +1,57 @@
+<div class="legendItem" data-id="{{id}}" style="border-color: {{color}}">
+    <div class="legendItemheader">
+        <div style='color: {{color}}'>
+            <!-- <span class="glyphicon glyphicon-refresh loading icon-spin"></span> -->
+            <span>{{station}}</span>
+        </div>
+        <div class="noDataWarning" style="display: none;">
+            <div>
+                <span class="glyphicon glyphicon-warning-sign red"></span>
+                <span class="small">{{_i}}legend.entry.noData{{/i}}</span>
+            </div>
+            {{#lastValueTime}}
+            <div class="firstLastEntry additionalLegendEntry" data-lastTime="{{lastValueTime}}">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+                <span class="small">{{_i}}legend.entry.jumpToLastValue{{/i}}</span>
+            </div>
+            {{/lastValueTime}}
+        </div>
+        <div class="small">{{phenomenon}} ({{uom}})</div>
+        <div class="small">{{procedure}}</div>
+        {{#category}}
+        <div class="small">{{category}}</div>
+        {{/category}}
+    </div>
+    <div class="legendicons">
+        <span class="glyphicon glyphicon-eye-close hidden-small hideDiagram"></span> 
+        <span class="glyphicon glyphicon-map-marker inMap"></span>
+        <span class="glyphicon glyphicon-pencil changeStyle" style='color: {{color}}'></span>
+        <span class="glyphicon glyphicon-info-sign showInfo"></span>
+        <span class="glyphicon glyphicon-remove delete"></span> 
+
+    </div>
+    <div class="collapseLegendEntry small" style="display: none;">
+        {{#firstValueTime}}
+        <div class="firstLastEntry additionalLegendEntry" data-firstTime="{{firstValueTime}}">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+            <span>{{_i}}legend.entry.firstValueAt{{/i}}</span>
+            <span>{{firstValueTimeFormatted}}</span>
+            <span class="hidden-medium">({{firstValue}} {{uom}})</span>
+        </div>
+        {{/firstValueTime}}
+        {{#lastValueTime}}
+        <div class="firstLastEntry additionalLegendEntry" data-lastTime="{{lastValueTime}}">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+            <span>{{_i}}legend.entry.lastValueAt{{/i}}</span>
+            <span>{{lastValueTimeFormatted}}</span>
+            <span class="hidden-medium">({{lastValue}} {{uom}})</span> 
+        </div>
+        {{/lastValueTime}}
+        {{#referenceValues}}
+        <div class="refEntry additionalLegendEntry" data-refid="{{id}}" style='border-color: {{color}}'>
+            <span class="glyphicon glyphicon-chevron-right"></span>
+            <span>{{label}}</span>
+        </div>
+        {{/referenceValues}}
+    </div>
+</div>
