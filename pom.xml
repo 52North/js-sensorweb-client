@@ -134,7 +134,7 @@
                                 <cssSourceFile>table.css</cssSourceFile>
                                 <cssSourceFile>guidedtour.css</cssSourceFile>
                             </cssSourceFiles>
-                            <cssFinalFile>jsc.${project.version}.css</cssFinalFile>
+                            <cssFinalFile>jsc-${project.version}.css</cssFinalFile>
                             <jsSourceFiles>
                                 <jsSourceFile>libs/jquery-1.10.2.js</jsSourceFile>
                                 <jsSourceFile>libs/bootstrap.js</jsSourceFile>
@@ -185,16 +185,14 @@
                                 <jsSourceFile>controller/exportController.js</jsSourceFile>
                                 <jsSourceFile>controller/guidedTourController.js</jsSourceFile>
                             </jsSourceFiles>
-                            <jsFinalFile>jsc.${project.version}.js</jsFinalFile>
+                            <jsFinalFile>jsc-${project.version}.js</jsFinalFile>
                             <jsEngine>CLOSURE</jsEngine>
                             <closureCompilationLevel>SIMPLE_OPTIMIZATIONS</closureCompilationLevel>
                             <!--closureExterns>
                                 <closureExtern>extern/external-lib.js</closureExtern>
                             </closureExterns-->
                             <skipMinify>${skipMinify}</skipMinify>
-                            <webappSourceDir>
-                                src/main/
-                            </webappSourceDir>
+                            <webappSourceDir>src/main/</webappSourceDir>
                         </configuration>
                         <goals>
                             <goal>minify</goal>
