@@ -71,7 +71,7 @@ i18n.en = {
             lastValueAt: 'Last value at'
         }
     },
-    export: {
+    "export": {
         label: 'get data as CSV-File'
     },
     timeSelection: {

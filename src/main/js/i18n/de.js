@@ -71,7 +71,7 @@ i18n.de = {
             lastValueAt: 'Letzter Wert bei'
         }
     },
-    export: {
+    "export": {
         label: 'Daten als CSV-File'
     },
     timeSelection: {
