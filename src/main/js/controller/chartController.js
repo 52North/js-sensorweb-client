@@ -89,7 +89,7 @@ var ChartController = {
         EventManager.subscribe("timeseries:changeStyle", $.proxy(this.changeStyle, this));
         EventManager.subscribe("timeseries:zeroScaled", $.proxy(this.zeroScaled, this));
         EventManager.subscribe("timeseries:groupedAxis", $.proxy(this.changeStyle, this));
-        
+
         $(window).resize($.proxy(function() {
             var newRatio = $(document).width() / $(document).height();
             if (newRatio != window.ratio) {
@@ -200,18 +200,17 @@ var ChartController = {
         $('#loadingDiagram').find('[data-id=' + ts.getInternalId() + ']').remove();
         $.each(ts.getRefValues(), $.proxy(function(id, elem) {
             var refVal = this.dataAlreadyIn(elem.getId());
-            if (refVal != null) {
+            if (refVal) {
                 refVal.data = elem.getValues();
             }
         }, this));
         if (ts.hasData()) {
             var temp = this.dataAlreadyIn(ts.getInternalId());
-            if (temp != null) {
+            if (temp) {
                 this.updateData(temp, ts);
             } else {
                 this.data.push(this.createData(ts));
             }
-            ;
         } else {
             this.removeData(ts.getInternalId());
         }
@@ -246,11 +245,11 @@ var ChartController = {
             var idx = 0;
             var values = ts.getValues();
             var entry = values[idx];
-            while (entry != null) {
+            while (entry) {
                 var startInterval = entry[0];
                 var endInterval = moment(entry[0]).add('hours', style.getIntervalByHours());
                 var sum = 0;
-                while (entry != null && moment(entry[0]).isBefore(endInterval)) {
+                while (entry && moment(entry[0]).isBefore(endInterval)) {
                     idx++;
                     sum = sum + entry[1];
                     entry = values[idx];
@@ -362,7 +361,6 @@ var ChartController = {
                 if (drawNew) {
                     this.plot.draw();
                 }
-                ;
             } else {
                 $("#placeholder").empty();
                 $("#placeholder").append(Template.createHtml('chart-empty'));
@@ -395,7 +393,7 @@ var ChartController = {
             } else {
                 axesList[elem.uom].tsColors.push(elem.color);
                 elem.yaxis = axesList[elem.uom].id;
-            };
+            }
         });
         var axes = [];
         $.each(axesList, function(idx, elem) {
@@ -417,14 +415,14 @@ var ChartController = {
         return elem[0];
     },
     removeData: function(id) {
-        var idx = null;
+        var idx = -1;
         $.each(this.data, function(i, elem) {
             if (id == elem.id) {
                 idx = i;
                 return;
             }
         });
-        if (idx != null) {
+        if (idx>0) {
             this.data.splice(idx, 1);
         }
     }

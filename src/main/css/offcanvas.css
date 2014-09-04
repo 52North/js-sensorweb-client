@@ -53,7 +53,7 @@ footer {
 
     .row-offcanvas-right
     .sidebar-offcanvas {
-        right: -80%; 
+        right: -80%;
     }
 
     .row-offcanvas-left
@@ -71,7 +71,7 @@ footer {
 
     .row-offcanvas-right.legendActive {
         right: 50%;
-    } */
+    }
 
     .row-offcanvas.legendActive {
         left: 100%;

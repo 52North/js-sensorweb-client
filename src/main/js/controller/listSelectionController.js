@@ -82,17 +82,12 @@ var ListSelectionController = {
     startRequest: function(tab, index, data) {
         var entry = this.entries[tab][index];
         var apiUrl = Status.get('provider').apiUrl;
-        if (entry != null) {
+        if (entry) {
             var promise = entry.call(null, apiUrl, data);
             promise.done($.proxy(function(result) {
                 $('#' + tab + ' #' + entry.collapse + ' .panel-body').empty();
                 $.each(result, function(idx, e) {
-                    var elem = null;
-                    if (e.id != null) {
-                        elem = e;
-                    } else {
-                        elem = e.properties;
-                    }
+                    var elem = e.id ? e : e.properties;
                     var html = Template.createHtml("list-selection-entry", {
                         id: elem.id,
                         label: elem.label

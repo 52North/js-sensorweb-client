@@ -33,7 +33,6 @@ var GuidedTourController = (function() {
             EventManager.publish("time:end:change", ts.getLastValue().timestamp);
             return;
         }
-        ;
         EventManager.unsubscribe("timeseries:data:loadfinished", timeseriesAdd);
         this.showNext();
     };
@@ -47,9 +46,9 @@ var GuidedTourController = (function() {
 
     /*
      * every step has the following options:
-     * 
-     * mandatory: 
-     * 		"anchor" : existing anchor in the document to connect the popup window  
+     *
+     * mandatory:
+     * 		"anchor" : existing anchor in the document to connect the popup window
      */
     var steps = [
         {

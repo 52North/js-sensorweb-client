@@ -47,7 +47,7 @@ var Rest = {
             },
             error: function(error) {
                 Rest.requestFailed(error);
-                if (fail != null) {
+                if (fail) {
                     fail(promise, error);
                 }
             }

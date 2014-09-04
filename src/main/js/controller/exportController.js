@@ -29,7 +29,7 @@
 var ExportController = {
     init: function() {
         var version = this.msieversion();
-        if (version == null || version > 9) {
+        if (!version || version > 9) {
             EventManager.subscribe('timeseries:add', $.proxy(this.loadTimeseries, this));
         }
     },

@@ -42,7 +42,7 @@ function readI18n(lang, key) {
     try {
         var keyArray = key.split('.');
         var value = i18n[lang];
-        while (keyArray.length != 0) {
+        while (keyArray.length) {
             var property = keyArray.splice(0, 1);
             value = read_prop(value, property[0]);
         }

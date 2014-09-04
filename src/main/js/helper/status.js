@@ -89,7 +89,7 @@ var Status = (function() {
             this.save();
         },
         get: function(key) {
-            if (this.current[key] == undefined) {
+            if (!this.current[key]) {
                 return this.defaultValues[key];
             }
             return this.current[key];
@@ -124,7 +124,7 @@ var Status = (function() {
             this.save();
         },
         hasTimeseriesWithId: function(id) {
-            return this.current.timeseries[id] != null;
+            return !!this.current.timeseries[id];
         },
         getTimeseriesWithId: function(id) {
             return this.current.timeseries[id];

@@ -92,7 +92,7 @@ var Map = {
         if (!this.map) {
             this.createMap();
         }
-        if (this.stationMarkers != null) {
+        if (this.stationMarkers) {
             this.map.removeLayer(this.stationMarkers);
         }
         if (results.length > 0) {
@@ -101,12 +101,7 @@ var Map = {
             var bottommost = firstElemCoord[1];
             var leftmost = firstElemCoord[0];
             var rightmost = firstElemCoord[0];
-            if (clustering) {
-                this.stationMarkers = new L.MarkerClusterGroup();
-            } else {
-                this.stationMarkers = new L.LayerGroup();
-            }
-            ;
+            this.stationMarkers = clustering ? new L.MarkerClusterGroup() : new L.LayerGroup();
             that = this;
             $.each(results, $.proxy(function(n, elem) {
                 var geom = elem.geometry.coordinates;
@@ -137,7 +132,7 @@ var Map = {
         }
     },
     createColoredMarkers: function(results) {
-        if (this.stationMarkers != null) {
+        if (this.stationMarkers) {
             this.map.removeLayer(this.stationMarkers);
         }
         if (results.length > 0) {
@@ -261,7 +256,6 @@ var Map = {
             } else {
                 $('.tsItem').find(':checkbox').prop('checked', true);
             }
-            ;
             $.each(phenomena, function(id, elem) {
                 $.each(elem.timeseries, function(id, elem) {
                     if (Map.timeseriesCache[elem.internalId] == null) {
@@ -389,9 +383,8 @@ var Map = {
                     "type": elem.type
                 });
             }
-            ;
         }, this));
-        if (this.apiConnectCounter == 0) {
+        if (this.apiConnectCounter === 0) {
             var data = {
                 "providers": this.providerList
             };
@@ -452,7 +445,6 @@ var Map = {
             popup.setLatLng(pos);
             popup.openOn(Map.map);
         }
-        ;
         popup.on('close', function() {
             if (station) {
                 station.unbindPopup();

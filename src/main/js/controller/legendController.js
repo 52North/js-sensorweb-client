@@ -47,11 +47,11 @@ var LegendController = {
         $('[data-id=' + ts.getInternalId() + '] .firstLastEntry').on('click', function(event) {
             event.stopPropagation();
             var time = $(event.currentTarget).data('firsttime');
-            if (time != null) {
+            if (time) {
                 EventManager.publish("time:start:change", time);
             }
             time = $(event.currentTarget).data('lasttime');
-            if (time != null) {
+            if (time) {
                 EventManager.publish("time:end:change", time);
             }
         });
@@ -161,17 +161,17 @@ var LegendController = {
             procedure: this.createText(ts.getProcedureLabel()),
             station: this.createText(ts.getStationLabel()),
             category: this.createText(ts.getCategoryLabel()),
-            firstValueTime: (firstValue != null) ? firstValue.timestamp : "",
-            firstValueTimeFormatted: (firstValue != null) ? moment(firstValue.timestamp).format(Settings.dateformat) : "",
-            firstValue: (firstValue != null) ? firstValue.value : "",
-            lastValueTime: (lastValue != null) ? lastValue.timestamp : "",
-            lastValueTimeFormatted: (lastValue != null) ? moment(lastValue.timestamp).format(Settings.dateformat) : "",
-            lastValue: (lastValue != null) ? lastValue.value : "",
+            firstValueTime: firstValue ? firstValue.timestamp : "",
+            firstValueTimeFormatted: firstValue ? moment(firstValue.timestamp).format(Settings.dateformat) : "",
+            firstValue: firstValue ? firstValue.value : "",
+            lastValueTime: lastValue ? lastValue.timestamp : "",
+            lastValueTimeFormatted: lastValue ? moment(lastValue.timestamp).format(Settings.dateformat) : "",
+            lastValue: lastValue ? lastValue.value : "",
             referenceValues: refValues
         });
         return html;
     },
     createText: function(text) {
-        return text != null ? text : "";
+        return text ? text : "";
     }
 };
