@@ -116,11 +116,9 @@
                         <id>default-minify</id>
                         <configuration>
                             <cssSourceFiles>
-                                <!-- <cssSourceFile>libs/bootstrap-full.css</cssSourceFile> -->
                                 <cssSourceFile>libs/bootstrap.css</cssSourceFile>
                                 <cssSourceFile>libs/datepicker.css</cssSourceFile>
                                 <cssSourceFile>offcanvas.css</cssSourceFile>
-                                <!-- <cssSourceFile>libs/leaflet-full.css</cssSourceFile> -->
                                 <cssSourceFile>libs/leaflet-full.css</cssSourceFile>
                                 <cssSourceFile>libs/leafletMarkerCluster.css</cssSourceFile>
                                 <cssSourceFile>libs/l.geosearch.css</cssSourceFile>
