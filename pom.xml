@@ -147,14 +147,10 @@
                             </cssSourceFiles>
                             <cssFinalFile>jsc.${project.version}.css</cssFinalFile>
                             <jsSourceFiles>
-                                <!-- <jsSourceFile>libs/jquery-2.0.3.js</jsSourceFile> -->
                                 <jsSourceFile>libs/jquery-1.10.2.js</jsSourceFile>
-                                <!-- <jsSourceFile>libs/jquery-1.11.0.js</jsSourceFile> -->
-                                <!-- <jsSourceFile>libs/bootstrap-full.js</jsSourceFile> -->
                                 <jsSourceFile>libs/bootstrap.js</jsSourceFile>
                                 <jsSourceFile>libs/bootstrap-datepicker.js</jsSourceFile>
                                 <jsSourceFile>libs/leaflet-full.js</jsSourceFile>
-                                <!-- <jsSourceFile>libs/leaflet-src.js</jsSourceFile> -->
                                 <jsSourceFile>libs/leaflet.markercluster-src.js</jsSourceFile>
                                 <jsSourceFile>libs/l.control.geosearch.js</jsSourceFile>
                                 <jsSourceFile>libs/l.geosearch.provider.openstreetmap.js</jsSourceFile>
