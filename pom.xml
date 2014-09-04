@@ -218,7 +218,7 @@
                 <artifactId>license-maven-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
-                    <header>src/main/resources/misc/license_header.txt</header>
+                    <header>src/main/misc/license_header.txt</header>
                     <properties>
                         <inceptionYear>${project.inceptionYear}</inceptionYear>
                         <latestYearOfContribution>${currentYear}</latestYearOfContribution>
