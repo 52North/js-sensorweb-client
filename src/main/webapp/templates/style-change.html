@@ -1,0 +1,38 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <div class="modal-title">{{_i}}styleChange.header{{/i}}</div>
+        </div>
+        <div class="modal-body">
+            <div>
+                <div>
+                    <span>{{_i}}styleChange.currentColor{{/i}}: </span>
+                    <button type="button" class="btn btn-primary colorButton" data-color="{{currentColor}}" 
+                            data-dismiss="modal" style="background-color: {{currentColor}}"></button>
+                </div>
+                <p>
+                <div>{{_i}}styleChange.selectColor{{/i}}:</div>
+                {{#colorList}}
+                <button type="button" class="btn btn-default multiline-buttion colorButton"
+                        data-color="{{.}}" data-dismiss="modal" style="background-color: {{.}}"></button>
+                {{/colorList}}
+            </div>
+            {{#bar}}
+            <hr>
+            <div>
+                <div>{{_i}}styleChange.selectBarInterval{{/i}}:</div>
+                {{#interval}}
+                <button class="btn btn-default multiline-button intervalButton"
+                        data-interval="{{value}}" data-dismiss="modal">{{label}}</button>
+                {{/interval}}
+            </div>
+            {{/bar}}
+            <hr>
+            <button type="button" class="btn btn-block btn-default zeroScaled 
+                    {{#zeroScaled}}btn-primary{{/zeroScaled}}" data-dismiss="modal">{{_i}}styleChange.zeroScaled{{/i}}</button>
+            <button type="button" class="btn btn-block btn-default groupedAxis 
+                    {{#groupedAxis}}btn-primary{{/groupedAxis}}" data-dismiss="modal">{{_i}}styleChange.groupedAxis{{/i}}</button>
+        </div>
+    </div>
+</div>

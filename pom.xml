@@ -5,7 +5,7 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.n52.mobileclient</groupId>
+    <groupId>org.n52.jsc</groupId>
     <artifactId>jsClient</artifactId>
     <version>0.2.0</version>
     <packaging>war</packaging>
@@ -57,10 +57,10 @@
                         </manifest>
                         <addMavenDescriptor>false</addMavenDescriptor>
                     </archive> -->
-                    <webXml>WebContent/WEB-INF/web.xml</webXml>
+                    <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
                     <webResources>
                         <resource>
-                            <directory>WebContent/</directory>
+                            <directory>src/main/webapp/</directory>
                             <filtering>false</filtering>
                             <excludes>
                                 <exclude>**/*.css</exclude>
@@ -74,19 +74,47 @@
                                 <exclude>config.xml</exclude>
                                 <exclude>res/**</exclude> -->
                                 <exclude>index.html</exclude>
-                                <exclude>test.html</exclude>
+                                <exclude>**/*.xml</exclude>
+                                <exclude>version-info.txt</exclude>
                             </excludes>
                         </resource>
                         <resource>
-                            <directory>WebContent/</directory>
+                            <directory>src/main/webapp/</directory>
                             <filtering>true</filtering>
                             <includes>
                                 <include>index.html</include>
-                                <include>test.html</include>
+                                <include>**/web.xml</include>
+                                <include>version-info.txt</include>
                             </includes>
                         </resource>
                     </webResources>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <version>2.1.9</version>
+                <executions>
+                    <execution>
+                        <id>git-commit-id</id>
+                        <goals>
+                            <goal>revision</goal>
+                        </goals>
+                        <phase>validate</phase>
+                        <configuration>
+                            <dateFormat>yyyy-MM-dd HH:mm:ssZ</dateFormat>
+                            <!-- Only changing prefix since properties conflicts with jgit above
+                            <prefix>git-commit-id</prefix>-->
+                            <!-- We're using a pom in this example
+                            <skipPoms>false</skipPoms>-->
+                            <gitDescribe>
+                                <!-- Faster to get just branch if skip = true -->
+                                <skip>false</skip>
+                            </gitDescribe>
+                            <timestampFormat>{0,date,yyyy-MM-dd HH:mm:ss}</timestampFormat>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>com.samaxes.maven</groupId>
@@ -96,6 +124,7 @@
                     <execution>
                         <id>default-minify</id>
                         <configuration>
+                            <cssSourceDir>webapp/css</cssSourceDir>
                             <cssSourceFiles>
                                 <!-- <cssSourceFile>libs/bootstrap-full.css</cssSourceFile> -->
                                 <cssSourceFile>libs/bootstrap.css</cssSourceFile>
@@ -140,6 +169,10 @@
                                 <jsSourceFile>libs/moment.min.js</jsSourceFile>
                                 <jsSourceFile>libs/sorttable.js</jsSourceFile>
                                 <jsSourceFile>libs/qr.min.js</jsSourceFile>
+                                <jsSourceFile>helper/permalink.js</jsSourceFile>
+                                <jsSourceFile>i18n/i18n.js</jsSourceFile>
+                                <jsSourceFile>i18n/en.js</jsSourceFile>
+                                <jsSourceFile>i18n/de.js</jsSourceFile>
                                 <jsSourceFile>models/timeseries.js</jsSourceFile>
                                 <jsSourceFile>models/referenceValue.js</jsSourceFile>
                                 <jsSourceFile>models/tsStyle.js</jsSourceFile>
@@ -153,12 +186,8 @@
                                 <jsSourceFile>helper/event.js</jsSourceFile>
                                 <jsSourceFile>helper/status.js</jsSourceFile>
                                 <jsSourceFile>helper/button.js</jsSourceFile>
-                                <jsSourceFile>helper/permalink.js</jsSourceFile>
                                 <jsSourceFile>helper/bootstrap-fix.js</jsSourceFile>
                                 <jsSourceFile>helper/tsHelper.js</jsSourceFile>
-                                <jsSourceFile>i18n/i18n.js</jsSourceFile>
-                                <jsSourceFile>i18n/en.js</jsSourceFile>
-                                <jsSourceFile>i18n/de.js</jsSourceFile>
                                 <jsSourceFile>controller/startController.js</jsSourceFile>
                                 <jsSourceFile>controller/permalinkController.js</jsSourceFile>
                                 <jsSourceFile>controller/settingsController.js</jsSourceFile>
@@ -182,7 +211,7 @@
                             </closureExterns-->
                             <skipMinify>${skipMinify}</skipMinify>
                             <webappSourceDir>
-                                ${basedir}/WebContent/
+                                src/main/
                             </webappSourceDir>
                         </configuration>
                         <goals>
@@ -196,7 +225,7 @@
                 <artifactId>license-maven-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
-                    <header>misc/license_header.txt</header>
+                    <header>src/main/resources/misc/license_header.txt</header>
                     <properties>
                         <inceptionYear>${project.inceptionYear}</inceptionYear>
                         <latestYearOfContribution>${currentYear}</latestYearOfContribution>
@@ -221,6 +250,7 @@
                 </executions>
             </plugin>
         </plugins>
+        <sourceDirectory>src/main/js</sourceDirectory>
     </build>
     
     <profiles>
