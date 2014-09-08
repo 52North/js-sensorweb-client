@@ -124,6 +124,7 @@
                     <execution>
                         <id>default-minify</id>
                         <configuration>
+                            <cssSourceDir>webapp/css</cssSourceDir>
                             <cssSourceFiles>
                                 <!-- <cssSourceFile>libs/bootstrap-full.css</cssSourceFile> -->
                                 <cssSourceFile>libs/bootstrap.css</cssSourceFile>
