@@ -35,7 +35,7 @@ var Map = {
     init: function() {
         this.tileLayerUrl = Settings.tileLayerUrl || this.defaultTileLayerUrl;
         this.tileLayerOptions = Settings.tileLayerOptions || this.defaultTileLayerOptions;
-                $(document).ready(function() {
+        $(document).ready(function() {
             $('[data-action="provider"]').click(function() {
                 Map.openProviderList();
             });
@@ -59,19 +59,21 @@ var Map = {
                 this.map.on('locationerror', this.onLocationError);
             }, this);
             L.control.scale().addTo(this.map);
-            new L.Control.GeoSearch({
-                url: 'http://nominatim.openstreetmap.org/search?format=json&q={s}',
-                jsonpParam: 'json_callback',
-                propertyName: 'display_name',
-                searchLabel: _('map.search.label'),
-                notFoundMessage: _('map.search.noResult'),
-                propertyLoc: ['lat', 'lon'],
-                position: 'topcenter',
-                minLength: 2,
-                showMarker: false,
-                provider: new L.GeoSearch.Provider.OpenStreetMap(),
-                zoomLevel: 13
-            }).addTo(this.map);
+            if (Settings.enableGeoSearch) {
+                new L.Control.GeoSearch({
+                    url: 'http://nominatim.openstreetmap.org/search?format=json&q={s}',
+                    jsonpParam: 'json_callback',
+                    propertyName: 'display_name',
+                    searchLabel: _('map.search.label'),
+                    notFoundMessage: _('map.search.noResult'),
+                    propertyLoc: ['lat', 'lon'],
+                    position: 'topcenter',
+                    minLength: 2,
+                    showMarker: false,
+                    provider: new L.GeoSearch.Provider.OpenStreetMap(),
+                    zoomLevel: 13
+                }).addTo(this.map);
+            }
         }
     },
     /*----- stations -----*/
