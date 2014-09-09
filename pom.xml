@@ -243,6 +243,20 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.2.2.v20140723</version>
+                <configuration>
+                    <webAppConfig>
+                    <contextPath>/</contextPath>
+                    <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
+                        <resourcesAsCSV>src/main/js,target/${project.build.finalName}</resourcesAsCSV>
+                    </baseResource>
+                    </webAppConfig>
+                    <reload>manual</reload>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
