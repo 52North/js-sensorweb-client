@@ -32,6 +32,7 @@ var TimeController = {
     init: function() {
         // get last save timespan
         this.currentTimespan = Status.get('timespan');
+        this.updateTimeExtent();
         $(document).ready(function() {
             $('[data-action=before]').click($.proxy(function() {
                 TimeController.prevPeriode();
