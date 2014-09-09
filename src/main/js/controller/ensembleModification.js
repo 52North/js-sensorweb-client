@@ -132,7 +132,11 @@ TimeSeries = function() {
     this.setResultTime = function(rt) {
         resultTime = rt;
     };
-    
+
+    this.getResultTime = function() {
+        return resultTime;
+    };
+
     this.fetchData = function(timespan, complete) {
         var from = moment(timespan.from).subtract(this.getTimeBuffer());
         var till = moment(timespan.till).add(this.getTimeBuffer());
@@ -143,4 +147,41 @@ TimeSeries = function() {
     };
 
     return result;
+};
+
+var oldCreatePermalink = $.proxy(PermalinkController.createPermalink, PermalinkController);
+PermalinkController.createPermalink = $.proxy(function() {
+    var permalink = oldCreatePermalink();
+    var resultTime = "";
+    $.each(TimeSeriesController.getTimeseriesCollection(), function(idx, item) {
+        resultTime = item.getResultTime();
+    });
+    if (resultTime) {
+        permalink = permalink + "&resultTime=" + resultTime;
+    }
+    return permalink;
+}, PermalinkController);
+
+var oldInit = $.proxy(PermalinkController.init, PermalinkController);
+var ensembleResultTime = "";
+PermalinkController.init = $.proxy(function() {
+    ensembleResultTime = this.evaluateParameter("resultTime");
+    oldInit();
+}, PermalinkController);
+
+TimeSeriesController.loadSavedTimeseries = function() {
+    $.each(Status.getTimeseries(), $.proxy(function(internalId, elem) {
+        var promise = Rest.timeseries(elem.tsId, elem.apiUrl);
+        var that = this;
+        promise.done(function(ts) {
+            ts.setResultTime(ensembleResultTime);
+            if (elem.style) {
+                var style = ts.getStyle();
+                style.setColor(elem.style.color);
+                style.setChartType(elem.style.chartType);
+                style.setIntervalByHours(elem.style.interval);
+            }
+            that.addTS(ts);
+        });
+    }, this));
 };

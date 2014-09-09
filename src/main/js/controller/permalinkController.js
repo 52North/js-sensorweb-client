@@ -39,11 +39,11 @@ var PermalinkController = {
         this.checkTimeseries();
         this.checkConstellation();
     },
-    evaluateParameter: function(parameterName, evaluateParameter) {
+    evaluateParameter: function(parameterName, evaluate) {
         var value = this.getParameter(parameterName);
-        if (!$.isEmptyObject(value)) {
-            evaluateParameter(value);
-        }
+        if (!$.isEmptyObject(value) && evaluate) {
+            evaluate(value);
+        } else return value;
     },
     getParameter: function(parameterName) {
         var value = Permalink.getUrlParameter(parameterName);
@@ -141,7 +141,10 @@ var PermalinkController = {
         }
         var url = loc.origin + loc.pathname + "?";
         url = url + this.createTimespanParam();
-        url = url + "&" + this.createTimeseriesParam();
+        var timeseries = this.createTimeseriesParam();
+        if (timeseries) {
+            url = url + "&" + timeseries;
+        }
         return url;
     }
 };
