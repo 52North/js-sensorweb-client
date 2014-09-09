@@ -80,6 +80,10 @@ var Pages = {
         if (hash.indexOf('?') != -1) {
             hash = hash.substring(hash.indexOf('#'), hash.indexOf('?'));
         }
+
+        Pages._routeToPage(hash);
+    },
+    _routeToPage: function(hash) {
         switch (hash) {
             case "#map":
                 Pages.navigateToPage("#map-page");
