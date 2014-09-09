@@ -28,11 +28,11 @@
  */
 var TableController = {
     isVisible: false,
-    tableButton: $('[data-action="dataTable"]'),
-    tableView: $('#tableView'),
     pageStart: 0,
     pageSize: Settings.pagesize || 10,
     init: function() {
+        this.tableButton = $('[data-action="dataTable"]');
+        this.tableView = $('#tableView');
         this.tableButton.show();
         this.tableButton.on('click', $.proxy(function(event) {
             var button = $(event.currentTarget);
