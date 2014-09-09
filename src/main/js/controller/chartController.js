@@ -2,29 +2,17 @@
  * Copyright (C) 2014-2014 52°North Initiative for Geospatial Open Source
  * Software GmbH
  *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License version 2 as published
- * by the Free Software Foundation.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * If the program is linked with libraries which are licensed under one of
- * the following licenses, the combination of the program with the linked
- * library is not considered a "derivative work" of the program:
+ *    http://www.apache.org/licenses/LICENSE-2.0
  *
- *     - Apache License, version 2.0
- *     - Apache Software License, version 1.0
- *     - GNU Lesser General Public License, version 3
- *     - Mozilla Public License, versions 1.0, 1.1 and 2.0
- *     - Common Development and Distribution License (CDDL), version 1.0
- *
- * Therefore the distribution of the program linked with libraries licensed
- * under the aforementioned licenses, is permitted by the copyright holders
- * if the distribution is compliant with both the GNU General Public
- * License version 2 and the aforementioned licenses.
- *
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
- * Public License for more details.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 var ChartController = {
     defaultOptions: {
@@ -89,7 +77,7 @@ var ChartController = {
         EventManager.subscribe("timeseries:changeStyle", $.proxy(this.changeStyle, this));
         EventManager.subscribe("timeseries:zeroScaled", $.proxy(this.zeroScaled, this));
         EventManager.subscribe("timeseries:groupedAxis", $.proxy(this.changeStyle, this));
-        
+
         $(window).resize($.proxy(function() {
             var newRatio = $(document).width() / $(document).height();
             if (newRatio != window.ratio) {
@@ -200,18 +188,17 @@ var ChartController = {
         $('#loadingDiagram').find('[data-id=' + ts.getInternalId() + ']').remove();
         $.each(ts.getRefValues(), $.proxy(function(id, elem) {
             var refVal = this.dataAlreadyIn(elem.getId());
-            if (refVal != null) {
+            if (refVal) {
                 refVal.data = elem.getValues();
             }
         }, this));
         if (ts.hasData()) {
             var temp = this.dataAlreadyIn(ts.getInternalId());
-            if (temp != null) {
+            if (temp) {
                 this.updateData(temp, ts);
             } else {
                 this.data.push(this.createData(ts));
             }
-            ;
         } else {
             this.removeData(ts.getInternalId());
         }
@@ -246,11 +233,11 @@ var ChartController = {
             var idx = 0;
             var values = ts.getValues();
             var entry = values[idx];
-            while (entry != null) {
+            while (entry) {
                 var startInterval = entry[0];
                 var endInterval = moment(entry[0]).add('hours', style.getIntervalByHours());
                 var sum = 0;
-                while (entry != null && moment(entry[0]).isBefore(endInterval)) {
+                while (entry && moment(entry[0]).isBefore(endInterval)) {
                     idx++;
                     sum = sum + entry[1];
                     entry = values[idx];
@@ -362,7 +349,6 @@ var ChartController = {
                 if (drawNew) {
                     this.plot.draw();
                 }
-                ;
             } else {
                 $("#placeholder").empty();
                 $("#placeholder").append(Template.createHtml('chart-empty'));
@@ -395,7 +381,7 @@ var ChartController = {
             } else {
                 axesList[elem.uom].tsColors.push(elem.color);
                 elem.yaxis = axesList[elem.uom].id;
-            };
+            }
         });
         var axes = [];
         $.each(axesList, function(idx, elem) {
@@ -417,14 +403,14 @@ var ChartController = {
         return elem[0];
     },
     removeData: function(id) {
-        var idx = null;
+        var idx = -1;
         $.each(this.data, function(i, elem) {
             if (id == elem.id) {
                 idx = i;
                 return;
             }
         });
-        if (idx != null) {
+        if (idx>0) {
             this.data.splice(idx, 1);
         }
     }
