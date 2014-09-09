@@ -119,6 +119,8 @@
                     </closureExterns-->
                     <skipMinify>${skipMinify}</skipMinify>
                     <webappSourceDir>src/main/</webappSourceDir>
+                    <cssSourceDir>webapp/css</cssSourceDir>
+                    <cssTargetDir>css</cssTargetDir>
                 </configuration>
                 <executions>
                     <execution>
