@@ -134,17 +134,17 @@
                                 <cssSourceFile>libs/l.geosearch.css</cssSourceFile>
                             </cssSourceFiles>
                             <jsSourceFiles>
+                                <jsSourceFile>libs/jquery-1.10.2.js</jsSourceFile>
+                                <jsSourceFile>libs/jquery.flot.js</jsSourceFile>
+                                <jsSourceFile>libs/jquery.flot.time.js</jsSourceFile>
+                                <jsSourceFile>libs/jquery.flot.navigate.js</jsSourceFile>
+                                <jsSourceFile>libs/jquery.total-storage.js</jsSourceFile>
                                 <jsSourceFile>libs/leaflet-full.js</jsSourceFile>
                                 <jsSourceFile>libs/leaflet.markercluster-src.js</jsSourceFile>
                                 <jsSourceFile>libs/l.control.geosearch.js</jsSourceFile>
                                 <jsSourceFile>libs/l.geosearch.provider.openstreetmap.js</jsSourceFile>
                                 <jsSourceFile>libs/bootstrap.js</jsSourceFile>
                                 <jsSourceFile>libs/bootstrap-datepicker.js</jsSourceFile>
-                                <jsSourceFile>libs/jquery-1.10.2.js</jsSourceFile>
-                                <jsSourceFile>libs/jquery.flot.js</jsSourceFile>
-                                <jsSourceFile>libs/jquery.flot.time.js</jsSourceFile>
-                                <jsSourceFile>libs/jquery.flot.navigate.js</jsSourceFile>
-                                <jsSourceFile>libs/jquery.total-storage.js</jsSourceFile>
                                 <jsSourceFile>libs/mustache.js</jsSourceFile>
                                 <jsSourceFile>libs/moment.min.js</jsSourceFile>
                                 <jsSourceFile>libs/qr.min.js</jsSourceFile>
