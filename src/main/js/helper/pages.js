@@ -68,22 +68,25 @@ var Pages = {
             $('[data-toggle="phenomena"]').text(name);
         }
     },
-    init: function() {
-        $(document).ready(function() {
-            $('[data-toggle=legend]').click(function() {
-                Pages.toggleLegend(true);
-            });
-            $('[data-toggle=phenomena]').click(function() {
-                var label = $('.phenomena-entry').find('.selected').text();
-                Pages.togglePhenomenon(true, label);
-            });
-            $('[data-target="#map"]').click(function() {
-                Pages.navigateToMap();
-            });
-            $('[data-target="#chart"]').click(function() {
-                Pages.navigateToChart();
-            });
+    activatedClickHandler: function() {
+        $('[data-toggle=legend]').click(function() {
+            Pages.toggleLegend(true);
         });
+        $('[data-toggle=phenomena]').click(function() {
+            var label = $('.phenomena-entry').find('.selected').text();
+            Pages.togglePhenomenon(true, label);
+        });
+        $('[data-target="#map"]').click(function() {
+            Pages.navigateToMap();
+        });
+        $('[data-target="#chart"]').click(function() {
+            Pages.navigateToChart();
+        });
+    },
+    init: function() {
+        $(document).ready($.proxy(function() {
+            this.activatedClickHandler();
+        }, this));
         // navigation
         Pages.routeToPage();
     },

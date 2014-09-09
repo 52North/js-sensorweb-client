@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (C) 2014-2014 52°North Initiative for Geospatial Open Source
  * Software GmbH
  *
@@ -26,30 +26,15 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  */
-var StartController = {
-    init: function(settings) {
-        jQuery.support.cors = true;
-        this.loadMainPage();
-        // merge settings
-        $.extend(Settings, settings);
-        // Call all controller
-        PermalinkController.init();
-        Pages.init();
-        Map.init();
-        ListSelectionController.init();
-        SettingsController.init();
-        LegendController.init();
-        TableController.init();
-        TimeController.init();
-        ChartController.init();
-        TimeSeriesController.init();
-        GuidedTourController.init();
-        ExportController.init();
-        StyleChangeController.init();
-        FavoriteController.init();
-    },
-    loadMainPage: function(){
-        var main = Template.createHtml("main");
-        $('.jsc-main').append(main);
-    }
-};
+.star {
+    margin-left: 5px;
+}
+
+.favorite-header,
+.favorite-icons {
+    font-size: 120%;
+}
+
+.favorite-icons span {
+    margin-left: 3px;
+}

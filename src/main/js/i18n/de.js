@@ -36,7 +36,8 @@ i18n.de = {
         stationSelection: 'Wähle eine Station aus',
         chartView: 'Diagrammansicht',
         phenomena: 'Phänomene',
-        phenomenon: 'Phänomen'
+        phenomenon: 'Phänomen',
+        favoritesList: 'Favoriten'
     },
     chart: {
         noTimeseriesSelected: 'Sie haben keine Zeitreihe ausgewählt oder die gewählten Zeitreihen haben keine Werte in dem derzeitigen Zeitraum.'

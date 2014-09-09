@@ -36,7 +36,8 @@ i18n.en = {
         stationSelection: 'Select a station',
         chartView: 'Chart view',
         phenomena: 'Phenomena',
-        phenomenon: 'Phenomenon'
+        phenomenon: 'Phenomenon',
+        favoritesList: 'Favourites'
     },
     chart: {
         noTimeseriesSelected: 'You have selected no timeseries or the selected timeseries have no values in the given time range.'
