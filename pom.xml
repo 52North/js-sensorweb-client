@@ -16,17 +16,8 @@
     <inceptionYear>2014</inceptionYear>
 
     <build>
+        <sourceDirectory>src/main/js</sourceDirectory>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
-                <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -120,21 +111,59 @@
                 <groupId>com.samaxes.maven</groupId>
                 <artifactId>minify-maven-plugin</artifactId>
                 <version>1.7.2</version>
+                <configuration>
+                    <jsEngine>CLOSURE</jsEngine>
+                    <closureCompilationLevel>SIMPLE_OPTIMIZATIONS</closureCompilationLevel>
+                    <!--closureExterns>
+                        <closureExtern>extern/external-lib.js</closureExtern>
+                    </closureExterns-->
+                    <skipMinify>${skipMinify}</skipMinify>
+                    <webappSourceDir>src/main/</webappSourceDir>
+                    <cssSourceDir>webapp/css</cssSourceDir>
+                    <cssTargetDir>css</cssTargetDir>
+                </configuration>
                 <executions>
                     <execution>
-                        <id>default-minify</id>
+                        <id>deps</id>
                         <configuration>
-                            <cssSourceDir>webapp/css</cssSourceDir>
+                            <cssFinalFile>jsc-${project.version}.deps.css</cssFinalFile>
+                            <jsFinalFile>jsc-${project.version}.deps.js</jsFinalFile>
                             <cssTargetDir>css</cssTargetDir>
                             <cssSourceFiles>
-                                <!-- <cssSourceFile>libs/bootstrap-full.css</cssSourceFile> -->
                                 <cssSourceFile>libs/bootstrap.css</cssSourceFile>
                                 <cssSourceFile>libs/datepicker.css</cssSourceFile>
-                                <cssSourceFile>offcanvas.css</cssSourceFile>
-                                <!-- <cssSourceFile>libs/leaflet-full.css</cssSourceFile> -->
                                 <cssSourceFile>libs/leaflet-full.css</cssSourceFile>
                                 <cssSourceFile>libs/leafletMarkerCluster.css</cssSourceFile>
                                 <cssSourceFile>libs/l.geosearch.css</cssSourceFile>
+                            </cssSourceFiles>
+                            <jsSourceFiles>
+                                <jsSourceFile>libs/jquery-1.10.2.js</jsSourceFile>
+                                <jsSourceFile>libs/jquery.flot.js</jsSourceFile>
+                                <jsSourceFile>libs/jquery.flot.time.js</jsSourceFile>
+                                <jsSourceFile>libs/jquery.flot.navigate.js</jsSourceFile>
+                                <jsSourceFile>libs/jquery.total-storage.js</jsSourceFile>
+                                <jsSourceFile>libs/leaflet-full.js</jsSourceFile>
+                                <jsSourceFile>libs/leaflet.markercluster-src.js</jsSourceFile>
+                                <jsSourceFile>libs/l.control.geosearch.js</jsSourceFile>
+                                <jsSourceFile>libs/l.geosearch.provider.openstreetmap.js</jsSourceFile>
+                                <jsSourceFile>libs/bootstrap.js</jsSourceFile>
+                                <jsSourceFile>libs/bootstrap-datepicker.js</jsSourceFile>
+                                <jsSourceFile>libs/mustache.js</jsSourceFile>
+                                <jsSourceFile>libs/moment.min.js</jsSourceFile>
+                                <jsSourceFile>libs/qr.min.js</jsSourceFile>
+                            </jsSourceFiles>
+                        </configuration>
+                        <goals>
+                            <goal>minify</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>jsc</id>
+                        <configuration>
+                            <jsFinalFile>jsc-${project.version}.js</jsFinalFile>
+                            <cssFinalFile>jsc-${project.version}.css</cssFinalFile>
+                            <cssSourceFiles>
+                                <cssSourceFile>offcanvas.css</cssSourceFile>
                                 <cssSourceFile>mainstyles.css</cssSourceFile>
                                 <cssSourceFile>list.css</cssSourceFile>
                                 <cssSourceFile>map.css</cssSourceFile>
@@ -147,29 +176,9 @@
                                 <cssSourceFile>table.css</cssSourceFile>
                                 <cssSourceFile>guidedtour.css</cssSourceFile>
                                 <cssSourceFile>ensembleMods.css</cssSourceFile>
+                                <cssSourceFile>favorite.css</cssSourceFile>
                             </cssSourceFiles>
-                            <cssFinalFile>jsc.${project.version}.css</cssFinalFile>
                             <jsSourceFiles>
-                                <!-- <jsSourceFile>libs/jquery-2.0.3.js</jsSourceFile> -->
-                                <jsSourceFile>libs/jquery-1.10.2.js</jsSourceFile>
-                                <!-- <jsSourceFile>libs/jquery-1.11.0.js</jsSourceFile> -->
-                                <!-- <jsSourceFile>libs/bootstrap-full.js</jsSourceFile> -->
-                                <jsSourceFile>libs/bootstrap.js</jsSourceFile>
-                                <jsSourceFile>libs/bootstrap-datepicker.js</jsSourceFile>
-                                <jsSourceFile>libs/leaflet-full.js</jsSourceFile>
-                                <!-- <jsSourceFile>libs/leaflet-src.js</jsSourceFile> -->
-                                <jsSourceFile>libs/leaflet.markercluster-src.js</jsSourceFile>
-                                <jsSourceFile>libs/l.control.geosearch.js</jsSourceFile>
-                                <jsSourceFile>libs/l.geosearch.provider.openstreetmap.js</jsSourceFile>
-                                <jsSourceFile>libs/jquery.flot.js</jsSourceFile>
-                                <jsSourceFile>libs/jquery.flot.time.js</jsSourceFile>
-                                <jsSourceFile>libs/jquery.flot.navigate.js</jsSourceFile>
-                                <jsSourceFile>libs/jquery.total-storage.js</jsSourceFile>
-                                <jsSourceFile>libs/touchit-1.0.0.js</jsSourceFile>
-                                <jsSourceFile>libs/mustache.js</jsSourceFile>
-                                <jsSourceFile>libs/moment.min.js</jsSourceFile>
-                                <jsSourceFile>libs/sorttable.js</jsSourceFile>
-                                <jsSourceFile>libs/qr.min.js</jsSourceFile>
                                 <jsSourceFile>helper/permalink.js</jsSourceFile>
                                 <jsSourceFile>i18n/i18n.js</jsSourceFile>
                                 <jsSourceFile>i18n/en.js</jsSourceFile>
@@ -203,17 +212,8 @@
                                 <jsSourceFile>controller/exportController.js</jsSourceFile>
                                 <jsSourceFile>controller/guidedTourController.js</jsSourceFile>
                                 <jsSourceFile>controller/ensembleModification.js</jsSourceFile>
+                                <jsSourceFile>controller/favoriteController.js</jsSourceFile>
                             </jsSourceFiles>
-                            <jsFinalFile>jsc.${project.version}.js</jsFinalFile>
-                            <jsEngine>CLOSURE</jsEngine>
-                            <closureCompilationLevel>SIMPLE_OPTIMIZATIONS</closureCompilationLevel>
-                            <!--closureExterns>
-                                <closureExtern>extern/external-lib.js</closureExtern>
-                            </closureExterns-->
-                            <skipMinify>${skipMinify}</skipMinify>
-                            <webappSourceDir>
-                                src/main/
-                            </webappSourceDir>
                         </configuration>
                         <goals>
                             <goal>minify</goal>
@@ -226,7 +226,7 @@
                 <artifactId>license-maven-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
-                    <header>src/main/resources/misc/license_header.txt</header>
+                    <header>src/main/misc/license_header.txt</header>
                     <properties>
                         <inceptionYear>${project.inceptionYear}</inceptionYear>
                         <latestYearOfContribution>${currentYear}</latestYearOfContribution>
@@ -250,10 +250,23 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.2.2.v20140723</version>
+                <configuration>
+                    <webAppConfig>
+                    <contextPath>/</contextPath>
+                    <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
+                        <resourcesAsCSV>src/main/js,target/${project.build.finalName}</resourcesAsCSV>
+                    </baseResource>
+                    </webAppConfig>
+                    <reload>manual</reload>
+                </configuration>
+            </plugin>
         </plugins>
-        <sourceDirectory>src/main/js</sourceDirectory>
     </build>
-    
+
     <profiles>
         <profile>
             <id>minify</id>
@@ -261,14 +274,77 @@
                 <skipMinify>false</skipMinify>
                 <minifiedPostfix>min.</minifiedPostfix>
             </properties>
-        </profile>        
+        </profile>
+        <profile>
+            <id>shiny</id>
+            <properties>
+                <skipMinify>false</skipMinify>
+                <minifiedPostfix>min.</minifiedPostfix>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.samaxes.maven</groupId>
+                        <artifactId>minify-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>deps</id>
+                                <configuration>
+                                    <cssFinalFile>jsc-${project.version}.deps.css</cssFinalFile>
+                                    <jsFinalFile>jsc-${project.version}.deps.js</jsFinalFile>
+                                    <cssSourceFiles>
+                                        <cssSourceFile>libs/bootstrap.css</cssSourceFile>
+                                        <cssSourceFile>libs/datepicker.css</cssSourceFile>
+                                        <cssSourceFile>libs/leaflet-full.css</cssSourceFile>
+                                        <cssSourceFile>libs/leafletMarkerCluster.css</cssSourceFile>
+                                        <cssSourceFile>libs/l.geosearch.css</cssSourceFile>
+                                    </cssSourceFiles>
+                                    <jsSourceFiles>
+                                        <jsSourceFile>libs/jquery.flot.js</jsSourceFile>
+                                        <jsSourceFile>libs/jquery.flot.time.js</jsSourceFile>
+                                        <jsSourceFile>libs/jquery.flot.navigate.js</jsSourceFile>
+                                        <jsSourceFile>libs/jquery.total-storage.js</jsSourceFile>
+                                        <jsSourceFile>libs/leaflet-full.js</jsSourceFile>
+                                        <jsSourceFile>libs/leaflet.markercluster-src.js</jsSourceFile>
+                                        <jsSourceFile>libs/l.control.geosearch.js</jsSourceFile>
+                                        <jsSourceFile>libs/l.geosearch.provider.openstreetmap.js</jsSourceFile>
+                                        <jsSourceFile>libs/bootstrap.js</jsSourceFile>
+                                        <jsSourceFile>libs/bootstrap-datepicker.js</jsSourceFile>
+                                        <jsSourceFile>libs/mustache.js</jsSourceFile>
+                                        <jsSourceFile>libs/moment.min.js</jsSourceFile>
+                                        <jsSourceFile>libs/qr.min.js</jsSourceFile>
+                                    </jsSourceFiles>
+                                </configuration>
+                                <goals>
+                                    <goal>minify</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>shiny</id>
+                                <phase>package</phase>
+                                <configuration>
+                                    <descriptor>src/assembly/shiny.xml</descriptor>
+                                </configuration>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
-        <maven.compiler.source>1.5</maven.compiler.source>
-        <maven.compiler.target>1.5</maven.compiler.target>
         <maven.build.timestamp.format>yyyy</maven.build.timestamp.format>
         <currentYear>${maven.build.timestamp}</currentYear>
         <skipMinify>true</skipMinify>

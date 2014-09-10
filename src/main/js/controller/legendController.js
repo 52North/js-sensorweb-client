@@ -2,29 +2,17 @@
  * Copyright (C) 2014-2014 52°North Initiative for Geospatial Open Source
  * Software GmbH
  *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License version 2 as published
- * by the Free Software Foundation.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * If the program is linked with libraries which are licensed under one of
- * the following licenses, the combination of the program with the linked
- * library is not considered a "derivative work" of the program:
+ *    http://www.apache.org/licenses/LICENSE-2.0
  *
- *     - Apache License, version 2.0
- *     - Apache Software License, version 1.0
- *     - GNU Lesser General Public License, version 3
- *     - Mozilla Public License, versions 1.0, 1.1 and 2.0
- *     - Common Development and Distribution License (CDDL), version 1.0
- *
- * Therefore the distribution of the program linked with libraries licensed
- * under the aforementioned licenses, is permitted by the copyright holders
- * if the distribution is compliant with both the GNU General Public
- * License version 2 and the aforementioned licenses.
- *
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
- * Public License for more details.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 var LegendController = {
     init: function() {
@@ -47,11 +35,11 @@ var LegendController = {
         $('[data-id=' + ts.getInternalId() + '] .firstLastEntry').on('click', function(event) {
             event.stopPropagation();
             var time = $(event.currentTarget).data('firsttime');
-            if (time != null) {
+            if (time) {
                 EventManager.publish("time:start:change", time);
             }
             time = $(event.currentTarget).data('lasttime');
-            if (time != null) {
+            if (time) {
                 EventManager.publish("time:end:change", time);
             }
         });
@@ -161,17 +149,17 @@ var LegendController = {
             procedure: this.createText(ts.getProcedureLabel()),
             station: this.createText(ts.getStationLabel()),
             category: this.createText(ts.getCategoryLabel()),
-            firstValueTime: (firstValue != null) ? firstValue.timestamp : "",
-            firstValueTimeFormatted: (firstValue != null) ? moment(firstValue.timestamp).format(Settings.dateformat) : "",
-            firstValue: (firstValue != null) ? firstValue.value : "",
-            lastValueTime: (lastValue != null) ? lastValue.timestamp : "",
-            lastValueTimeFormatted: (lastValue != null) ? moment(lastValue.timestamp).format(Settings.dateformat) : "",
-            lastValue: (lastValue != null) ? lastValue.value : "",
+            firstValueTime: firstValue ? firstValue.timestamp : "",
+            firstValueTimeFormatted: firstValue ? moment(firstValue.timestamp).format(Settings.dateformat) : "",
+            firstValue: firstValue ? firstValue.value : "",
+            lastValueTime: lastValue ? lastValue.timestamp : "",
+            lastValueTimeFormatted: lastValue ? moment(lastValue.timestamp).format(Settings.dateformat) : "",
+            lastValue: lastValue ? lastValue.value : "",
             referenceValues: refValues
         });
         return html;
     },
     createText: function(text) {
-        return text != null ? text : "";
+        return text ? text : "";
     }
 };

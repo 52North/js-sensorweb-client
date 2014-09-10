@@ -14,22 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#collapseSettings {
-    text-align: center;
+.star {
+    margin-left: 5px;
 }
 
-.resetStatus {
-    margin-bottom: 5px;
+.favorite-header,
+.favorite-icons {
+    font-size: 120%;
 }
 
-.permalink .panel-heading {
-    padding: 3px;
+.favorite-icons span {
+    margin-left: 3px;
 }
-
-.permalink .panel-body {
-    padding: 5px;
-}
-
-.panel .permalink {
-    margin-bottom: 5px;
-} 
