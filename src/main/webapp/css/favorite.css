@@ -25,4 +25,15 @@
 
 .favorite-icons span {
     margin-left: 3px;
+    cursor: pointer;
+}
+
+.favorite-entry {
+    border: black solid 1px;
+    margin: 3px;
+    padding: 3px;
+}
+
+.favorite-group-entry {
+    margin: 0px 10px;
 }
