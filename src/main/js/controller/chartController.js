@@ -410,7 +410,7 @@ var ChartController = {
                 return;
             }
         });
-        if (idx>0) {
+        if (idx >= 0) {
             this.data.splice(idx, 1);
         }
     }
