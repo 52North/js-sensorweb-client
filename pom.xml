@@ -186,6 +186,7 @@
                                 <jsSourceFile>models/tsStyle.js</jsSourceFile>
                                 <jsSourceFile>models/settings.js</jsSourceFile>
                                 <jsSourceFile>templates/template.js</jsSourceFile>
+                                <jsSourceFile>helper/storage.js</jsSourceFile>
                                 <jsSourceFile>helper/time.js</jsSourceFile>
                                 <jsSourceFile>helper/color.js</jsSourceFile>
                                 <jsSourceFile>helper/rest.js</jsSourceFile>

@@ -15,16 +15,7 @@
  * limitations under the License.
  */
 var Status = (function() {
-    var generateKey = function() {
-        var loc = window.location;
-        if (!loc.origin) {
-            loc.origin = loc.protocol + "//" + loc.hostname
-                    + (loc.port ? ':' + loc.port : '');
-        }
-        return loc.origin + loc.pathname + "settings";
-    };
     var status = {
-        key: generateKey(),
         defaultValues: {
             'provider': Settings.defaultProvider,
             'clusterStations': Settings.clusterStations,
@@ -35,37 +26,23 @@ var Status = (function() {
             'concentrationMarker': Settings.concentrationMarker
         },
         init: function() {
+            this.key = Storage.generateKey('settings');
             this.load();
             if (!this.get('saveStatus')) {
                 this.reset();
             }
         },
-        isSet: function() {
-            if ($.totalStorage(this.key)) {
-                return true;
-            } else {
-                return false;
-            }
-        },
         load: function() {
-            if (this.isSet()) {
-                this.current = $.totalStorage(this.key);
+            var load = Storage.load(this.key);
+            if (load) {
+                this.current = load;
             } else {
                 this.current = this.defaultValues;
                 this.save();
             }
         },
         save: function() {
-            if (Settings.saveStatusPossible) {
-                try {
-                    $.totalStorage(this.key, this.current);
-                } catch (e) {
-                    Settings.saveStatusPossible = false;
-                    // safari mobile in private mode???
-                    // http://davidwalsh.name/quota_exceeded_err
-//					alert("No Status saving possible.");
-                }
-            }
+            Storage.saveObject(this.key, this.current);
         },
         reset: function() {
             this.current = this.defaultValues;
@@ -124,7 +101,6 @@ var Status = (function() {
             return $.isEmptyObject(this.current.timeseries) ? false : true;
         }
     };
-
     status.init();
     return status;
 })();
