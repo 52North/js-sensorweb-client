@@ -19,6 +19,13 @@ var FavoriteController = {
     groupIdx: 0,
     favoriteGroups: {},
     init: function() {
+        // settings for gitter (notifier)
+        $.extend($.gritter.options, {
+            position: 'bottom-left',
+            fade_in_speed: 'medium',
+            fade_out_speed: 2000,
+            time: 4000
+        });
         this.key = Storage.generateKey('favorites');
         this.favoriteButton = $('.favoriteButton');
         this.favoriteButton.show();
@@ -34,14 +41,21 @@ var FavoriteController = {
             permFavButton.on('click', $.proxy(function() {
                 // TODO check if combiniation still exists
                 if (!this.isInFavoriteGroup(TimeSeriesController.timeseries)) {
-                    this.addFavoriteGroup(TimeSeriesController.timeseries);
+                    var label = this.addFavoriteGroup(TimeSeriesController.timeseries);
                     this.saveFavorites();
                     this.updateFavoritesView();
+                    this.notify(_('favorite.group.add').replace('{0}', label));
+                } else {
+                    this.notify(_('favorite.group.exists'));
                 }
-                ;
             }, this));
         }, this));
         this.loadFavorties();
+    },
+    notify: function(text) {
+        $.gritter.add({
+            text: text
+        });
     },
     navigateToFavoritesView: function() {
         Pages.navigateToPage('#favorite-page');
@@ -114,7 +128,7 @@ var FavoriteController = {
         this.addClickEvents(id, 'group-id', 'edit', $.proxy(function(evt) {
             debugger;
         }, this));
-        // edit
+        // add to diagram
         this.addClickEvents(id, 'group-id', 'addToDiagram', $.proxy(function(evt) {
             var group = this.favoriteGroups[id];
             Pages.navigateToChart();
@@ -146,13 +160,15 @@ var FavoriteController = {
             star = this.createFilledStar();
             onClick = $.proxy(function(event) {
                 event.stopPropagation();
-                this.removeFavorite(ts);
+                var label = this.removeFavorite(ts);
+                this.notify(_('favorite.single.remove').replace('{0}', label));
             }, this);
         } else {
             star = this.createEmptyStar();
             onClick = $.proxy(function(event) {
                 event.stopPropagation();
-                this.addFavorite(ts);
+                var label = this.addFavorite(ts);
+                this.notify(_('favorite.single.add').replace('{0}', label));
             }, this);
         }
         $('.legendItem[data-id="' + tsId + '"]').find('.legendItemLabel').append(star);
@@ -168,15 +184,20 @@ var FavoriteController = {
                 star = this.createFilledStar();
                 onClick = $.proxy(function(evt) {
                     event.stopPropagation();
-                    this.removeFavorite(internalID);
+                    var label = this.removeFavorite(internalID);
+                    this.notify(_('favorite.single.remove').replace('{0}', label));
                     this.addStationStar();
                 }, this);
             } else {
                 star = this.createEmptyStar();
                 onClick = $.proxy(function(evt) {
                     event.stopPropagation();
-                    this.addFavorite(internalID);
-                    this.addStationStar();
+                    var promise = Rest.timeseries(item.dataset.id, Status.get('provider').apiUrl);
+                    promise.done($.proxy(function(ts) {
+                        var label = this.addFavorite(ts);
+                        this.notify(_('favorite.single.add').replace('{0}', label));
+                        this.addStationStar();
+                    }, this));
                 }, this);
             }
             $(item).find('.checkbox label').after(star);
@@ -184,37 +205,43 @@ var FavoriteController = {
         }, this));
     },
     addFavorite: function(ts, label) {
-        if (ts instanceof TimeSeries) {
-            this.addFavoriteToList(ts, label);
+//        if (ts instanceof TimeSeries) {
+            label = this.addFavoriteToList(ts, label);
             this.addLegendStar(null, ts);
-        } else {
-            this.favorites[ts] = ts;
-            // TODO get metadata...
-        }
+//        } else {
+//            this.favorites[ts] = ts;
+//            // TODO get metadata...
+//        }
+        return label;
     },
     removeFavorite: function(ts) {
-        if (ts instanceof TimeSeries) {
-            delete this.favorites[ts.getInternalId()];
-            this.addLegendStar(null, ts);
-        } else {
-            delete this.favorites[ts];
+        if (!(ts instanceof TimeSeries)) {
+            ts = this.favorites[ts].timeseries;
         }
+        var label = this.favorites[ts.getInternalId()].label;
+        delete this.favorites[ts.getInternalId()];
+        this.addLegendStar(null, ts);
+        return label;
     },
     addFavoriteToList: function(ts, label) {
+        label = label || ts.getLabel();
         this.favorites[ts.getInternalId()] = {
-            label: label || ts.getLabel(),
+            label: label,
             timeseries: ts
         };
         this.saveFavorites();
+        return label;
     },
     addFavoriteGroup: function(tsColl, label) {
+        label = label || 'Status ' + this.groupIdx;
         this.favoriteGroups[this.groupIdx++] = {
-            label: label || 'Status ' + this.groupIdx,
+            label: label,
             collection: $.map(tsColl, function(elem, idx) {
                 return elem;
             })
         };
         this.saveFavorites();
+        return label;
     },
     isInFavoriteGroup: function(tsColl) {
         var isInside = false;

@@ -194,5 +194,16 @@ i18n.de = {
             header: 'Fertig',
             text: 'Super!<br> Dieser Client ist ein Produkt von <a href="http://52north.org" target="_blank">52&deg;North GmbH</a>. Auf <a href="https://github.com/52North/js-sensorweb-client" target="_blank">GitHub</a> findest du den aktuellen Entwicklungsstand.'
         }
+    },
+    favorite:{
+        group:{
+            add: "Der Status wird mit dem Name '{0}' in den Favoriten abgelegt.",
+            exists: "Dieser Status existiert bereits."
+        },
+        single: {
+            add: "Einer neuer Favorit mit dem Name '{0}' ist abgelegt worden.",
+            remove: "Der Favorit '{0}' ist entfernt worden.",
+            exists: "Dieser Favorit existiert bereits."
+        }
     }
 };
