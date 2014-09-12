@@ -122,7 +122,8 @@ i18n.de = {
             inMail: 'öffnen in leerer Mail',
             inClipboard: 'Link in die Zwischenablage',
             clipboardInfo: 'Kopiere in die Zwischenablage: Ctrl+C, Enter',
-            inQrCode: 'als QR-Code'
+            inQrCode: 'als QR-Code',
+            favorite: 'Status in die Favoritenliste übernehmen'
         },
         clusterMarker: 'Marker gruppieren',
         markerWithLastInfo: {
@@ -192,6 +193,21 @@ i18n.de = {
         step13: {
             header: 'Fertig',
             text: 'Super!<br> Dieser Client ist ein Produkt von <a href="http://52north.org" target="_blank">52&deg;North GmbH</a>. Auf <a href="https://github.com/52North/js-sensorweb-client" target="_blank">GitHub</a> findest du den aktuellen Entwicklungsstand.'
+        }
+    },
+    favorite:{
+        edit: {
+            header: "Favorit editieren"
+        },
+        group:{
+            add: "Der Status wird mit dem Name '{0}' in den Favoriten abgelegt.",
+            exists: "Dieser Status existiert bereits.",
+            noTimeseries: "Derzeit sind keine Zeitreihen ausgewählt."
+        },
+        single: {
+            add: "Einer neuer Favorit mit dem Name '{0}' ist abgelegt worden.",
+            remove: "Der Favorit '{0}' ist entfernt worden.",
+            exists: "Dieser Favorit existiert bereits."
         }
     }
 };

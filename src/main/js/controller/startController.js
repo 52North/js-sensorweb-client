@@ -25,7 +25,6 @@ var StartController = {
         Pages.init();
         Map.init();
         ListSelectionController.init();
-        SettingsController.init();
         LegendController.init();
         TableController.init();
         TimeController.init();
@@ -35,6 +34,7 @@ var StartController = {
         ExportController.init();
         StyleChangeController.init();
         FavoriteController.init();
+        SettingsController.init();
     },
     loadMainPage: function(){
         var main = Template.createHtml("main");

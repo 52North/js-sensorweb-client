@@ -18,7 +18,7 @@ var SettingsController = {
     init: function() {
         $(document).ready(function() {
             $('[data-target="#settings"]').click(function() {
-                Modal.show("settings");
+                Modal.show('settings');
                 if (Settings.saveStatusPossible) {
                     // reset status
                     $('.resetStatus').on('click', function() {
@@ -39,14 +39,14 @@ var SettingsController = {
                 $('.clusteringStations').on('click', function(e) {
                     var clustering = Button.switchToggleButton(e.currentTarget);
                     Status.set('clusterStations', clustering);
-                    EventManager.publish("clusterStations", clustering);
+                    EventManager.publish('clusterStations', clustering);
                 });
                 // generalize data
                 Button.setToggleButton('.generalizeData', Status.get('generalizeData'));
                 $('.generalizeData').on('click', function(e) {
                     var generalize = Button.switchToggleButton(e.currentTarget);
                     Status.set('generalizeData', generalize);
-                    EventManager.publish("timeseries:update:complete");
+                    EventManager.publish('timeseries:update:complete');
                 });
                 // show concentration marker
                 Button.setToggleButton('.concentrationMarker', Status.get('concentrationMarker'));
@@ -59,7 +59,7 @@ var SettingsController = {
                     window.open(PermalinkController.createPermalink(), '_blank');
                 }).show();
                 $('.permalink .mail').on('click', function() {
-                    window.location.href = "mailto:?body=" + encodeURIComponent(PermalinkController.createPermalink());
+                    window.location.href = 'mailto:?body=' + encodeURIComponent(PermalinkController.createPermalink());
                 }).show();
                 $('.permalink .clipboard').on('click', function() {
                     window.prompt(_('settings.permalink.clipboardInfo'), PermalinkController.createPermalink());
@@ -72,6 +72,7 @@ var SettingsController = {
                     $('.qr-code').append($(img));
                 }).show();
                 // imprint
+                EventManager.publish('settings:opened');
             });
         });
     }

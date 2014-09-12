@@ -122,7 +122,8 @@ i18n.en = {
             inMail: 'link in an email',
             inClipboard: 'Link to clipboard',
             clipboardInfo: 'Copy to clipboard: Ctrl+C, Enter',
-            inQrCode: 'as QR-Code'
+            inQrCode: 'as QR-Code',
+            favorite: 'Status as favourite entry'
         },
         clusterMarker: 'cluster marker',
         markerWithLastInfo: {
@@ -192,6 +193,21 @@ i18n.en = {
         step13: {
             header: 'Finished',
             text: 'Well done!<br> This client is a product of <a href="http://52north.org" target="_blank">52&deg;North GmbH</a>. You can find the source code on <a href="https://github.com/52North/js-sensorweb-client" target="_blank">GitHub</a>.'
+        }
+    },
+    favorite: {
+        edit: {
+            header: "Edit favourite"
+        },
+        group: {
+            add: "The status '{0}' is added to the favourite list.",
+            exists: "This status still exists.",
+            noTimeseries: "Currently no timeseries are selected."
+        },
+        single: {
+            add: "A new favourite '{0}' is added to the list.",
+            remove: "The favourite '{0}' is removed.",
+            exists: "This favourite still exists."
         }
     }
 };
