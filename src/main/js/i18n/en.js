@@ -195,10 +195,14 @@ i18n.en = {
             text: 'Well done!<br> This client is a product of <a href="http://52north.org" target="_blank">52&deg;North GmbH</a>. You can find the source code on <a href="https://github.com/52North/js-sensorweb-client" target="_blank">GitHub</a>.'
         }
     },
-    favorite:{
-        group:{
+    favorite: {
+        edit: {
+            header: "Edit favourite"
+        },
+        group: {
             add: "The status '{0}' is added to the favourite list.",
-            exists: "This status still exists."
+            exists: "This status still exists.",
+            noTimeseries: "Currently no timeseries are selected."
         },
         single: {
             add: "A new favourite '{0}' is added to the list.",

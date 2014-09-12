@@ -39,14 +39,17 @@ var FavoriteController = {
             var permFavButton = $(Template.createHtml('favorite-settings-button'));
             $('#accordionSettings .permalink .panel-body').append(permFavButton);
             permFavButton.on('click', $.proxy(function() {
-                // TODO check if combiniation still exists
-                if (!this.isInFavoriteGroup(TimeSeriesController.timeseries)) {
-                    var label = this.addFavoriteGroup(TimeSeriesController.timeseries);
-                    this.saveFavorites();
-                    this.updateFavoritesView();
-                    this.notify(_('favorite.group.add').replace('{0}', label));
+                if (Object.keys(TimeSeriesController.timeseries).length > 0) {
+                    if (!this.isInFavoriteGroup(TimeSeriesController.timeseries)) {
+                        var label = this.addFavoriteGroup(TimeSeriesController.timeseries);
+                        this.saveFavorites();
+                        this.updateFavoritesView();
+                        this.notify(_('favorite.group.add').replace('{0}', label));
+                    } else {
+                        this.notify(_('favorite.group.exists'));
+                    }
                 } else {
-                    this.notify(_('favorite.group.exists'));
+                    this.notify(_('favorite.group.noTimeseries'));
                 }
             }, this));
         }, this));
@@ -69,7 +72,7 @@ var FavoriteController = {
             var lastValue = ts.getLastValue();
             var elem = Template.createHtml('favorite-entry', {
                 id: ts.getInternalId(),
-                label: ts.getLabel(),
+                label: item.label,
                 lastValueTimeFormatted: lastValue ? moment(lastValue.timestamp).format(Settings.dateformat) : '',
                 lastValue: lastValue.value || '',
                 uom: ts.getUom() || ''
@@ -108,7 +111,7 @@ var FavoriteController = {
         }, this));
         // edit
         this.addClickEvents(id, 'single-id', 'edit', $.proxy(function(evt) {
-            debugger;
+            this.openEditWindow(this.favorites[id]);
         }, this));
         // add to diagram
         this.addClickEvents(id, 'single-id', 'addToDiagram', $.proxy(function(evt) {
@@ -126,7 +129,7 @@ var FavoriteController = {
         }, this));
         // edit
         this.addClickEvents(id, 'group-id', 'edit', $.proxy(function(evt) {
-            debugger;
+            this.openEditWindow(this.favoriteGroups[id]);
         }, this));
         // add to diagram
         this.addClickEvents(id, 'group-id', 'addToDiagram', $.proxy(function(evt) {
@@ -139,6 +142,17 @@ var FavoriteController = {
     },
     addClickEvents: function(id, typeId, action, todo) {
         $('[data-' + typeId + '=' + id + '] .' + action).on('click', todo);
+    },
+    openEditWindow: function(entry) {
+        Modal.show("favorite-edit", {
+            label: entry.label
+        });
+        // add click event for button...
+        $('#confirmFavoritEdit').on('click', $.proxy(function(e) {
+            entry.label = $('#favoriteLabel')[0].value;
+            this.saveFavorites();
+            this.updateFavoritesView();
+        }, this));
     },
     createFavoritesListView: function() {
         var list = Template.createHtml('favorites-main');
@@ -205,13 +219,8 @@ var FavoriteController = {
         }, this));
     },
     addFavorite: function(ts, label) {
-//        if (ts instanceof TimeSeries) {
-            label = this.addFavoriteToList(ts, label);
-            this.addLegendStar(null, ts);
-//        } else {
-//            this.favorites[ts] = ts;
-//            // TODO get metadata...
-//        }
+        label = this.addFavoriteToList(ts, label);
+        this.addLegendStar(null, ts);
         return label;
     },
     removeFavorite: function(ts) {
