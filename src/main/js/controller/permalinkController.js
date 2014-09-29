@@ -17,11 +17,11 @@
 var PermalinkController = {
     timespanParam: 'timespan',
     timeseriesParam: 'timeseries',
-    serviceParam: 'service',
-    featureParam: 'feature',
-    offeringParam: 'offering',
-    procedureParam: 'procedure',
-    phenomenonParam: 'phenomenon',
+    servicesParam: 'services',
+    featuresParam: 'features',
+    offeringsParam: 'offerings',
+    proceduresParam: 'procedures',
+    phenomenaParam: 'phenomena',
     init: function() {
         this.checkTimespan();
         this.checkTimeseries();
@@ -51,60 +51,64 @@ var PermalinkController = {
         });
     },
     checkConstellation: function() {
-        var params = this.createConstellationParameterArray();
-        if (params.length > 0) {
+        var constellations = this.createConstellationParameterArray();
+        if (constellations.length > 0) {
             Pages.navigateToChart();
             Status.clearTimeseries();
             var requestLength = 0;
             var foundTimeseriesId;
             var foundService;
             $.each(Settings.restApiUrls, function(url, serviceId) {
-                requestLength++;
-                Rest.search(url, params.join(',')).done($.proxy(function(result) {
-                    if (result.length > 0) {
-                        var timeseries = $.grep(result, function(n, i) {
-                            return n.type === "timeseries" ? true : false;
-                        });
-                        if (!$.isEmptyObject(timeseries[0])) {
-                            foundTimeseriesId = timeseries[0].id;
-                            foundService = url;
+                $.each(constellations, function(idx, constellation) {
+                    requestLength++;
+                    Rest.search(url, constellation.join(',')).done($.proxy(function(result) {
+                        if (result.length > 0) {
+                            var timeseries = $.grep(result, function(n, i) {
+                                return n.type === "timeseries" ? true : false;
+                            });
+                            if (!$.isEmptyObject(timeseries[0])) {
+                                foundTimeseriesId = timeseries[0].id;
+                                foundService = url;
+                                TimeSeriesController.addTSbyId(foundTimeseriesId, foundService);
+                            }
                         }
-                    }
-                    requestLength--;
-                    if (requestLength === 0) {
-                        if (!$.isEmptyObject(foundTimeseriesId)) {
-                            TimeSeriesController.addTSbyId(foundTimeseriesId, foundService);
-                        } else {
-                            window.alert(_('permalink.noMatchingTimeseriesFound'));
+                        requestLength--;
+                        if (requestLength === 0) {
+                            if (!$.isEmptyObject(foundTimeseriesId)) {
+//                                TimeSeriesController.addTSbyId(foundTimeseriesId, foundService);
+                            } else {
+                                window.alert(_('permalink.noMatchingTimeseriesFound'));
+                            }
                         }
-                    }
-                }, this));
+                    }, this));
+                })
             });
         }
     },
     createConstellationParameterArray: function() {
-        var params = [];
-        var service = this.getParameter(this.serviceParam);
-        if (!$.isEmptyObject(service)) {
-            params.push(service);
+        var constellations = [];
+        var services = this.getParameter(this.servicesParam).split(',');
+        var features = this.getParameter(this.featuresParam).split(',');
+        var offerings = this.getParameter(this.offeringsParam).split(',');
+        var procedures = this.getParameter(this.proceduresParam).split(',');
+        var phenomena = this.getParameter(this.phenomenaParam).split(',');
+        if ((services.length == features.length) &&
+                (services.length == offerings.length) &&
+                (services.length == procedures.length) &&
+                (services.length == phenomena.length)) {
+            for (i = 0; i < services.length; i++) {
+                var constellation = [];
+                constellation.push(services[i]);
+                constellation.push(features[i]);
+                constellation.push(offerings[i]);
+                constellation.push(procedures[i]);
+                constellation.push(phenomena[i]);
+                constellations.push(constellation);
+            }
+        } else {
+            window.alert(_('permalink.wrongCombinationSize'));
         }
-        var feature = this.getParameter(this.featureParam);
-        if (!$.isEmptyObject(feature)) {
-            params.push(feature);
-        }
-        var offering = this.getParameter(this.offeringParam);
-        if (!$.isEmptyObject(offering)) {
-            params.push(offering);
-        }
-        var procedure = this.getParameter(this.procedureParam);
-        if (!$.isEmptyObject(procedure)) {
-            params.push(procedure);
-        }
-        var phenomenon = this.getParameter(this.phenomenonParam);
-        if (!$.isEmptyObject(phenomenon)) {
-            params.push(phenomenon);
-        }
-        return params;
+        return constellations;
     },
     createTimespanParam: function() {
         var timespan = TimeController.currentTimespan;
