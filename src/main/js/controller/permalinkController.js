@@ -74,41 +74,47 @@ var PermalinkController = {
                         }
                         requestLength--;
                         if (requestLength === 0) {
-                            if (!$.isEmptyObject(foundTimeseriesId)) {
-//                                TimeSeriesController.addTSbyId(foundTimeseriesId, foundService);
-                            } else {
+                            if ($.isEmptyObject(foundTimeseriesId)) {
                                 window.alert(_('permalink.noMatchingTimeseriesFound'));
                             }
                         }
                     }, this));
-                })
+                });
             });
         }
     },
     createConstellationParameterArray: function() {
         var constellations = [];
-        var services = this.getParameter(this.servicesParam).split(',');
-        var features = this.getParameter(this.featuresParam).split(',');
-        var offerings = this.getParameter(this.offeringsParam).split(',');
-        var procedures = this.getParameter(this.proceduresParam).split(',');
-        var phenomena = this.getParameter(this.phenomenaParam).split(',');
-        if ((services.length == features.length) &&
-                (services.length == offerings.length) &&
-                (services.length == procedures.length) &&
-                (services.length == phenomena.length)) {
-            for (i = 0; i < services.length; i++) {
-                var constellation = [];
-                constellation.push(services[i]);
-                constellation.push(features[i]);
-                constellation.push(offerings[i]);
-                constellation.push(procedures[i]);
-                constellation.push(phenomena[i]);
-                constellations.push(constellation);
+        var services = this.getParameterArray(this.servicesParam);
+        var features = this.getParameterArray(this.featuresParam);
+        var offerings = this.getParameterArray(this.offeringsParam);
+        var procedures = this.getParameterArray(this.proceduresParam);
+        var phenomena = this.getParameterArray(this.phenomenaParam);
+        if (services && features && offerings && procedures && phenomena) {
+            if ((services.length == features.length) &&
+                    (services.length == offerings.length) &&
+                    (services.length == procedures.length) &&
+                    (services.length == phenomena.length)) {
+                for (i = 0; i < services.length; i++) {
+                    var constellation = [];
+                    constellation.push(services[i]);
+                    constellation.push(features[i]);
+                    constellation.push(offerings[i]);
+                    constellation.push(procedures[i]);
+                    constellation.push(phenomena[i]);
+                    constellations.push(constellation);
+                }
+            } else {
+                window.alert(_('permalink.wrongCombinationSize'));
             }
-        } else {
-            window.alert(_('permalink.wrongCombinationSize'));
         }
         return constellations;
+    },
+    getParameterArray: function(param) {
+        var array = this.getParameter(param)
+        if (!$.isEmptyObject(array)) {
+            return array.split(',');
+        }
     },
     createTimespanParam: function() {
         var timespan = TimeController.currentTimespan;
