@@ -22,7 +22,7 @@ var Permalink = {
         for (var i = 0; i < parameters.length; i++) {
             var sParameterName = parameters[i].split('=');
             if (sParameterName[0] == sParam) {
-                return sParameterName[1];
+                return decodeURIComponent(sParameterName[1]);
             }
         }
     }
