@@ -69,6 +69,7 @@ var SettingsController = {
                         value: PermalinkController.createPermalink(),
                         size: 5
                     });
+                    $('.qr-code').find('img').remove();
                     $('.qr-code').append($(img));
                 }).show();
                 // imprint
