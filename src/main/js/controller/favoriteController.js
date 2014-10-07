@@ -53,7 +53,7 @@ var FavoriteController = {
                 }
             }, this));
         }, this));
-        this.loadFavorties();
+        this.loadFavorites();
     },
     notify: function(text) {
         $.gritter.add({
@@ -294,25 +294,27 @@ var FavoriteController = {
         };
         Storage.saveObject(this.key, favorites);
     },
-    loadFavorties: function() {
+    loadFavorites: function() {
         var values = Storage.load(this.key);
-        $.each(values.single, $.proxy(function(idx, elem) {
-            var ts = elem.timeseries;
-            var promise = Rest.timeseries(ts.tsId, ts.apiUrl);
-            var that = this;
-            promise.done(function(ts) {
-                that.addFavorite(ts, elem.label);
-            });
-        }, this));
-        $.each(values.groups, $.proxy(function(idx, group) {
-            var label = group.label;
-            var deferreds = $.map(group.collection, function(ts) {
+        if (values) {
+            $.each(values.single, $.proxy(function(idx, elem) {
+                var ts = elem.timeseries;
                 var promise = Rest.timeseries(ts.tsId, ts.apiUrl);
-                return promise;
-            });
-            $.when.apply(null, deferreds).done($.proxy(function() {
-                this.addFavoriteGroup(arguments, label);
+                var that = this;
+                promise.done(function(ts) {
+                    that.addFavorite(ts, elem.label);
+                });
             }, this));
-        }, this));
+            $.each(values.groups, $.proxy(function(idx, group) {
+                var label = group.label;
+                var deferreds = $.map(group.collection, function(ts) {
+                    var promise = Rest.timeseries(ts.tsId, ts.apiUrl);
+                    return promise;
+                });
+                $.when.apply(null, deferreds).done($.proxy(function() {
+                    this.addFavoriteGroup(arguments, label);
+                }, this));
+            }, this));
+        }
     }
 };
