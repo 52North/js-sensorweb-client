@@ -20,6 +20,7 @@ var StartController = {
         this.loadMainPage();
         // merge settings
         $.extend(Settings, settings);
+        Status.init();
         // Call all controller
         PermalinkController.init();
         Pages.init();

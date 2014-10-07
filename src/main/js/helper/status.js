@@ -16,16 +16,19 @@
  */
 var Status = (function() {
     var status = {
-        defaultValues: {
-            'provider': Settings.defaultProvider,
-            'clusterStations': Settings.clusterStations,
-            'generalizeData': Settings.generalizeData,
-            'timeseries': {},
-            'timespan': Time.isoTimespan('today'),
-            'saveStatus': Settings.saveStatus,
-            'concentrationMarker': Settings.concentrationMarker
+        createDefaultValues: function() {
+            this.defaultValues = {
+                'provider': Settings.defaultProvider,
+                'clusterStations': Settings.clusterStations,
+                'generalizeData': Settings.generalizeData,
+                'timeseries': {},
+                'timespan': Time.isoTimespan('today'),
+                'saveStatus': Settings.saveStatus,
+                'concentrationMarker': Settings.concentrationMarker
+            };
         },
         init: function() {
+            this.createDefaultValues();
             this.key = Storage.generateKey('settings');
             this.load();
             if (!this.get('saveStatus')) {
@@ -101,6 +104,5 @@ var Status = (function() {
             return $.isEmptyObject(this.current.timeseries) ? false : true;
         }
     };
-    status.init();
     return status;
 })();
