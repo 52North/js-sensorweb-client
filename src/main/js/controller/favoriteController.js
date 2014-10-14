@@ -196,7 +196,7 @@ var FavoriteController = {
             $(item).find('.checkbox .star').remove();
             if (this.favorites.hasOwnProperty(internalID)) {
                 star = this.createFilledStar();
-                onClick = $.proxy(function(evt) {
+                onClick = $.proxy(function(event) {
                     event.stopPropagation();
                     var label = this.removeFavorite(internalID);
                     this.notify(_('favorite.single.remove').replace('{0}', label));
@@ -204,7 +204,7 @@ var FavoriteController = {
                 }, this);
             } else {
                 star = this.createEmptyStar();
-                onClick = $.proxy(function(evt) {
+                onClick = $.proxy(function(event) {
                     event.stopPropagation();
                     var promise = Rest.timeseries(item.dataset.id, Status.get('provider').apiUrl);
                     promise.done($.proxy(function(ts) {
@@ -276,22 +276,7 @@ var FavoriteController = {
         return isInside;
     },
     saveFavorites: function() {
-        var favorites = {
-            single: $.map(this.favorites, function(elem, idx) {
-                return {
-                    label: elem.label,
-                    timeseries: elem.timeseries.persist()
-                };
-            }),
-            groups: $.map(this.favoriteGroups, function(group, idx) {
-                return {
-                    label: group.label,
-                    collection: $.map(group.collection, function(ts, idx) {
-                        return ts.persist();
-                    })
-                };
-            })
-        };
+        var favorites = this.serializeFavorites();
         Storage.saveObject(this.key, favorites);
     },
     loadFavorites: function() {
@@ -316,5 +301,46 @@ var FavoriteController = {
                 }, this));
             }, this));
         }
+    },
+    serializeFavorites: function() {
+        var favorites = {
+            single: $.map(this.favorites, function(elem, idx) {
+                return {
+                    label: elem.label,
+                    timeseries: elem.timeseries.persist()
+                };
+            }),
+            groups: $.map(this.favoriteGroups, function(group, idx) {
+                return {
+                    label: group.label,
+                    collection: $.map(group.collection, function(ts, idx) {
+                        return ts.persist();
+                    })
+                };
+            })
+        };
+        return favorites;
+    },
+    exportFavorites: function() {
+        if (this.isFileAPISupported()) {
+
+            // TODO save to file
+
+        } else {
+            alert('The File APIs are not fully supported in this browser.');
+        }
+    },
+    importFavorites: function() {
+        if (this.isFileAPISupported()) {
+
+            // TODO load from file
+
+        } else {
+            alert('The File APIs are not fully supported in this browser.');
+        }
+    },
+    isFileAPISupported: function() {
+        return window.File && window.FileReader && window.FileList && window.Blob;
     }
+
 };
