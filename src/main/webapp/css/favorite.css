@@ -16,6 +16,7 @@
  */
 .star {
     margin-left: 5px;
+    cursor: pointer;
 }
 
 .favorite-header,
