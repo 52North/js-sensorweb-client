@@ -56,14 +56,7 @@ var Pages = {
             $('[data-toggle="phenomena"]').text(name);
         }
     },
-    activatedClickHandler: function() {
-        $('[data-toggle=legend]').click(function() {
-            Pages.toggleLegend(true);
-        });
-        $('[data-toggle=phenomena]').click(function() {
-            var label = $('.phenomena-entry').find('.selected').text();
-            Pages.togglePhenomenon(true, label);
-        });
+    activateNavButtonsHandler: function() {
         $('[data-target="#map"]').click(function() {
             Pages.navigateToMap();
         });
@@ -71,9 +64,19 @@ var Pages = {
             Pages.navigateToChart();
         });
     },
+    activateToggleButtonsHandler: function() {
+        $('[data-toggle=legend]').click(function() {
+            Pages.toggleLegend(true);
+        });
+        $('[data-toggle=phenomena]').click(function() {
+            var label = $('.phenomena-entry').find('.selected').text();
+            Pages.togglePhenomenon(true, label);
+        });
+    },
     init: function() {
         $(document).ready($.proxy(function() {
-            this.activatedClickHandler();
+            this.activateNavButtonsHandler();
+            this.activateToggleButtonsHandler();
         }, this));
         // navigation
         Pages.routeToPage();
