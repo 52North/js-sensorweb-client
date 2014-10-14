@@ -35,7 +35,7 @@ function readI18n(lang, key) {
             value = read_prop(value, property[0]);
         }
         if ($.isEmptyObject(value)) {
-            console.error("Don't find the i18n key '" + key + "' for language " + lang);
+            console.error("Missing i18n key '" + key + "' for language " + lang);
         }
         return value;
     } catch (ex) {
