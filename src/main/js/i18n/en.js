@@ -25,7 +25,11 @@ i18n.en = {
         chartView: 'Chart view',
         phenomena: 'Phenomena',
         phenomenon: 'Phenomenon',
-        favoritesList: 'Favourites'
+        favoritesList: 'Favorites',
+        openFile: 'Open',
+        importFavorites: 'Import',
+        exportFavorites: 'Export',
+        importExportHelp: 'Choose a file to save or load favorites'
     },
     chart: {
         noTimeseriesSelected: 'You have selected no timeseries or the selected timeseries have no values in the given time range.'
@@ -123,7 +127,7 @@ i18n.en = {
             inClipboard: 'Link to clipboard',
             clipboardInfo: 'Copy to clipboard: Ctrl+C, Enter',
             inQrCode: 'as QR-Code',
-            favorite: 'Status as favourite entry'
+            favorite: 'Status as favorite entry'
         },
         clusterMarker: 'cluster marker',
         markerWithLastInfo: {
@@ -197,17 +201,17 @@ i18n.en = {
     },
     favorite: {
         edit: {
-            header: "Edit favourite"
+            header: "Edit favorite"
         },
         group: {
-            add: "The status '{0}' is added to the favourite list.",
+            add: "The status '{0}' is added to the favorite list.",
             exists: "This status still exists.",
             noTimeseries: "Currently no timeseries are selected."
         },
         single: {
-            add: "A new favourite '{0}' is added to the list.",
-            remove: "The favourite '{0}' is removed.",
-            exists: "This favourite still exists."
+            add: "A new favorite '{0}' is added to the list.",
+            remove: "The favorite '{0}' is removed.",
+            exists: "This favorite still exists."
         }
     }
 };

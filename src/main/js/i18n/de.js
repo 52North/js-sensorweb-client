@@ -25,7 +25,11 @@ i18n.de = {
         chartView: 'Diagrammansicht',
         phenomena: 'Phänomene',
         phenomenon: 'Phänomen',
-        favoritesList: 'Favoriten'
+        favoritesList: 'Favoriten',
+        openFile: 'Öffnen',
+        importFavorites: 'Importieren',
+        exportFavorites: 'Exportieren',
+        importExportHelp: 'Datei zum Im- oder Exportieren von Favoriten wählen'
     },
     chart: {
         noTimeseriesSelected: 'Sie haben keine Zeitreihe ausgewählt oder die gewählten Zeitreihen haben keine Werte in dem derzeitigen Zeitraum.'

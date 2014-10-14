@@ -21,12 +21,35 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid content">
-        <div class="import-favorites">
-            <input type="file" id="favorites-input" name="favorites" />
-        </div>
-        <div class="row favoriteslist" id="favorites-list">
+    <div class="content">
 
+        <div class="container-fluid">
+            <div class="row col-lg-6 col-sm-6 col-12">
+                <div class="input-group">
+                    <span class="input-group-btn input-group-addon">
+                        <span class="btn btn-primary btn-file">
+                            {{_i}}main.openFile{{/i}} <input type="file" id="favorites-select">
+                        </span>
+                    </span>
+                    <input type="text" class="form-control" readonly>
+                </div>
+
+                <span class="help-block">
+                    {{_i}}main.importExportHelp{{/i}}
+                </span>
+
+                <button class="btn btn-primary" id="favorites-import">{{_i}}main.importFavorites{{/i}}</button>
+                <button class="btn" id="favorites-export">{{_i}}main.exportFavorites{{/i}}</button>
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="container-fluid">
+
+            <div class="row favoriteslist" id="favorites-list">
+
+            </div>
         </div>
     </div>
 </div>
