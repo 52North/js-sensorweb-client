@@ -303,7 +303,10 @@ var ChartController = {
             $('#placeholder').show();
             this.options.yaxes = this.createYAxis();
             this.updateXAxis();
-            if (this.data.length > 0) {
+            if (this.data.length === 0) {
+                $("#placeholder").empty();
+                $("#placeholder").append(Template.createHtml('chart-empty'));
+            } else {
                 this.plot = $.plot('#placeholder', this.data, this.options);
                 $.each(this.plot.getAxes(), $.proxy(function(i, axis) {
                     if (!axis.show)
@@ -349,9 +352,6 @@ var ChartController = {
                 if (drawNew) {
                     this.plot.draw();
                 }
-            } else {
-                $("#placeholder").empty();
-                $("#placeholder").append(Template.createHtml('chart-empty'));
             }
         }
     },
