@@ -26,10 +26,10 @@ i18n.en = {
         phenomena: 'Phenomena',
         phenomenon: 'Phenomenon',
         favoritesList: 'Favorites',
-        openFile: 'Open',
         importFavorites: 'Import',
         exportFavorites: 'Export',
-        importExportHelp: 'Choose a file to save or load favorites'
+        importExportHelp: 'Choose a file to import or export favorites',
+        noFileSelected: 'No file selected'
     },
     chart: {
         noTimeseriesSelected: 'You have selected no timeseries or the selected timeseries have no values in the given time range.'

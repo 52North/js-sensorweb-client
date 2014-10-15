@@ -26,10 +26,10 @@ i18n.de = {
         phenomena: 'Phänomene',
         phenomenon: 'Phänomen',
         favoritesList: 'Favoriten',
-        openFile: 'Öffnen',
         importFavorites: 'Importieren',
         exportFavorites: 'Exportieren',
-        importExportHelp: 'Datei zum Im- oder Exportieren von Favoriten wählen'
+        importExportHelp: 'Datei für den Im- oder Exportieren wählen',
+        noFileSelected: 'Keine Datei ausgewählt'
     },
     chart: {
         noTimeseriesSelected: 'Sie haben keine Zeitreihe ausgewählt oder die gewählten Zeitreihen haben keine Werte in dem derzeitigen Zeitraum.'
