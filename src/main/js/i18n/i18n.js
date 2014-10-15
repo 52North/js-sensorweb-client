@@ -31,9 +31,11 @@ function readI18n(lang, key) {
         var keyArray = key.split('.');
         var value = i18n[lang];
         if ( !value) {
-            // no subregion, try e.g. en-US => en
             var langParts = lang.split('-');
-            if (langParts.length > 1) {
+            // convert lang to 'en_US' as 'en-US' not allowed
+            var value = i18n[langParts[0] + "_" + langParts[1]];
+            if ( !value && langParts.length > 1) {
+                // no subregion, try e.g. en-US => en
                 value = i18n[langParts[0]];
             }
         }
