@@ -30,6 +30,13 @@ function readI18n(lang, key) {
     try {
         var keyArray = key.split('.');
         var value = i18n[lang];
+        if ( !value) {
+            // no subregion, try e.g. en-US => en
+            var langParts = lang.split('-');
+            if (langParts.length > 1) {
+                value = i18n[langParts[0]];
+            }
+        }
         while (keyArray.length) {
             var property = keyArray.splice(0, 1);
             value = read_prop(value, property[0]);
