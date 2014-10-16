@@ -384,29 +384,6 @@ var ChartController = {
                 };
                 elem.yaxis = axesList[elem.id].id;
             }
-
-
-
-//            if (elem.groupedAxis !== true) {
-//                axesList[elem.id] = {
-//                    id: ++Object.keys(axesList).length,
-//                    uom: elem.uom + " @ " + elem.stationLabel,
-//                    tsColors: [elem.color],
-//                    zeroScaled: elem.zeroScaled
-//                };
-//                elem.yaxis = axesList[elem.id].id;
-//            } else if (!axesList.hasOwnProperty(elem.uom)) {
-//                axesList[elem.uom] = {
-//                    id: ++Object.keys(axesList).length,
-//                    uom: elem.uom,
-//                    tsColors: [elem.color],
-//                    zeroScaled: elem.zeroScaled
-//                };
-//                elem.yaxis = axesList[elem.uom].id;
-//            } else {
-//                axesList[elem.uom].tsColors.push(elem.color);
-//                elem.yaxis = axesList[elem.uom].id;
-//            }
         });
         var axes = [];
         $.each(axesList, function(idx, elem) {
