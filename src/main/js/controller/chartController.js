@@ -303,13 +303,16 @@ var ChartController = {
             $('#placeholder').show();
             this.options.yaxes = this.createYAxis();
             this.updateXAxis();
-            if (this.data.length > 0) {
+            if (this.data.length === 0) {
+                $("#placeholder").empty();
+                $("#placeholder").append(Template.createHtml('chart-empty'));
+            } else {
                 this.plot = $.plot('#placeholder', this.data, this.options);
                 $.each(this.plot.getAxes(), $.proxy(function(i, axis) {
                     if (!axis.show)
                         return;
                     var box = axis.box;
-                    if (axis.direction == "y") {
+                    if (axis.direction === "y") {
                         $("<div class='axisTarget' style='position:absolute; left:" + box.left + "px; top:" + box.top + "px; width:" + box.width + "px; height:" + box.height + "px'></div>")
                                 .data("axis.n", axis.n)
                                 .appendTo(this.plot.getPlaceholder())
@@ -318,13 +321,13 @@ var ChartController = {
                                     var selected = false;
                                     $.each($('.axisTarget'), function(index, elem) {
                                         elem = $(elem);
-                                        if (target.data('axis.n') == elem.data('axis.n')) {
+                                        if (target.data('axis.n') === elem.data('axis.n')) {
                                             selected = elem.hasClass("selected");
                                         }
                                     });
                                     EventManager.publish("timeseries:unselectAll");
                                     $.each(this.plot.getData(), function(index, elem) {
-                                        if (elem.yaxis.n == axis.n && !selected) {
+                                        if (elem.yaxis.n === axis.n && !selected) {
                                             EventManager.publish("timeseries:selected", elem.id);
                                         }
                                     });
@@ -349,9 +352,6 @@ var ChartController = {
                 if (drawNew) {
                     this.plot.draw();
                 }
-            } else {
-                $("#placeholder").empty();
-                $("#placeholder").append(Template.createHtml('chart-empty'));
             }
         }
     },
@@ -362,7 +362,20 @@ var ChartController = {
     createYAxis: function() {
         var axesList = {};
         $.each(this.data, function(index, elem) {
-            if (!elem.groupedAxis) {
+            if (elem.groupedAxis === undefined || elem.groupedAxis) {
+                if (!axesList.hasOwnProperty(elem.uom)) {
+                    axesList[elem.uom] = {
+                        id: ++Object.keys(axesList).length,
+                        uom: elem.uom,
+                        tsColors: [elem.color],
+                        zeroScaled: elem.zeroScaled
+                    };
+                    elem.yaxis = axesList[elem.uom].id;
+                } else {
+                    axesList[elem.uom].tsColors.push(elem.color);
+                    elem.yaxis = axesList[elem.uom].id;
+                }
+            } else {
                 axesList[elem.id] = {
                     id: ++Object.keys(axesList).length,
                     uom: elem.uom + " @ " + elem.stationLabel,
@@ -370,18 +383,30 @@ var ChartController = {
                     zeroScaled: elem.zeroScaled
                 };
                 elem.yaxis = axesList[elem.id].id;
-            } else if (!axesList.hasOwnProperty(elem.uom)) {
-                axesList[elem.uom] = {
-                    id: ++Object.keys(axesList).length,
-                    uom: elem.uom,
-                    tsColors: [elem.color],
-                    zeroScaled: elem.zeroScaled
-                };
-                elem.yaxis = axesList[elem.uom].id;
-            } else {
-                axesList[elem.uom].tsColors.push(elem.color);
-                elem.yaxis = axesList[elem.uom].id;
             }
+
+
+
+//            if (elem.groupedAxis !== true) {
+//                axesList[elem.id] = {
+//                    id: ++Object.keys(axesList).length,
+//                    uom: elem.uom + " @ " + elem.stationLabel,
+//                    tsColors: [elem.color],
+//                    zeroScaled: elem.zeroScaled
+//                };
+//                elem.yaxis = axesList[elem.id].id;
+//            } else if (!axesList.hasOwnProperty(elem.uom)) {
+//                axesList[elem.uom] = {
+//                    id: ++Object.keys(axesList).length,
+//                    uom: elem.uom,
+//                    tsColors: [elem.color],
+//                    zeroScaled: elem.zeroScaled
+//                };
+//                elem.yaxis = axesList[elem.uom].id;
+//            } else {
+//                axesList[elem.uom].tsColors.push(elem.color);
+//                elem.yaxis = axesList[elem.uom].id;
+//            }
         });
         var axes = [];
         $.each(axesList, function(idx, elem) {
