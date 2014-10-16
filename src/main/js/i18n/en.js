@@ -79,6 +79,7 @@ i18n.en = {
         header: 'Time Range',
         presetsHeader: 'presets',
         presets: {
+            lastHour: 'last hour',
             today: 'today',
             yesterday: 'yesterday',
             todayYesterday: 'today & yesterday',
