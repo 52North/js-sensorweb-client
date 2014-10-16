@@ -108,6 +108,10 @@ var FavoriteController = {
         this.addClickEvents(id, 'single-id', 'delete', $.proxy(function(evt) {
             delete this.favorites[id];
             $('[data-single-id=' + id + ']').remove();
+            var star = $('.star', '[data-id=' + id + ']');
+            if (star) {
+                star.addClass('glyphicon-star-empty').removeClass('glyphicon-star');
+            }
             this.saveFavorites();
         }, this));
         // edit
