@@ -74,6 +74,7 @@ var FavoriteController = {
             var elem = Template.createHtml('favorite-entry', {
                 id: ts.getInternalId(),
                 label: item.label,
+                provider: ts.getServiceLabel(),
                 lastValueTimeFormatted: lastValue ? moment(lastValue.timestamp).format(Settings.dateformat) : '',
                 lastValue: lastValue.value || '',
                 uom: ts.getUom() || ''
