@@ -182,6 +182,7 @@
                                 <jsSourceFile>helper/permalink.js</jsSourceFile>
                                 <jsSourceFile>i18n/i18n.js</jsSourceFile>
                                 <jsSourceFile>i18n/en.js</jsSourceFile>
+                                <jsSourceFile>i18n/en_GB.js</jsSourceFile>
                                 <jsSourceFile>i18n/de.js</jsSourceFile>
                                 <jsSourceFile>models/timeseries.js</jsSourceFile>
                                 <jsSourceFile>models/referenceValue.js</jsSourceFile>
