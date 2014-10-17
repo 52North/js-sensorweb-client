@@ -22,7 +22,7 @@ var Status = (function() {
                 'clusterStations': Settings.clusterStations,
                 'generalizeData': Settings.generalizeData,
                 'timeseries': {},
-                'timespan': Time.isoTimespan('today'),
+                'timespan': Time.isoTimespan(),
                 'saveStatus': Settings.saveStatus,
                 'concentrationMarker': Settings.concentrationMarker
             };

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-i18n.en = {
+i18n.en_GB = {
     ok: 'OK',
     main: {
         legend: 'Legend',
@@ -25,11 +25,7 @@ i18n.en = {
         chartView: 'Chart view',
         phenomena: 'Phenomena',
         phenomenon: 'Phenomenon',
-        favoritesList: 'Favorites',
-        importFavorites: 'Import',
-        exportFavorites: 'Export',
-        importExportHelp: 'Choose a file to import or export favorites',
-        noFileSelected: 'No file selected'
+        favoritesList: 'Favourites'
     },
     chart: {
         noTimeseriesSelected: 'You have selected no timeseries or the selected timeseries have no values in the given time range.'
@@ -83,7 +79,6 @@ i18n.en = {
         header: 'Time Range',
         presetsHeader: 'presets',
         presets: {
-            lastHour: 'last hour',
             today: 'today',
             yesterday: 'yesterday',
             todayYesterday: 'today & yesterday',
@@ -128,7 +123,7 @@ i18n.en = {
             inClipboard: 'Link to clipboard',
             clipboardInfo: 'Copy to clipboard: Ctrl+C, Enter',
             inQrCode: 'as QR-Code',
-            favorite: 'Status as favorite entry'
+            favorite: 'Status as favourite entry'
         },
         clusterMarker: 'cluster marker',
         markerWithLastInfo: {
@@ -202,17 +197,17 @@ i18n.en = {
     },
     favorite: {
         edit: {
-            header: "Edit favorite"
+            header: "Edit favourite"
         },
         group: {
-            add: "The status '{0}' is added to the favorite list.",
+            add: "The status '{0}' is added to the favourite list.",
             exists: "This status still exists.",
             noTimeseries: "Currently no timeseries are selected."
         },
         single: {
-            add: "A new favorite '{0}' is added to the list.",
-            remove: "The favorite '{0}' is removed.",
-            exists: "This favorite still exists."
+            add: "A new favourite '{0}' is added to the list.",
+            remove: "The favourite '{0}' is removed.",
+            exists: "This favourite still exists."
         }
     }
 };

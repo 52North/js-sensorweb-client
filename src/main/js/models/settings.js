@@ -31,7 +31,7 @@ var Settings = {
             apiUrl: 'http://sensorweb.demo.52north.org/sensorwebclient-webapp-stable/api/v1/'
         }
     ],
-    // A list of timeseries-API urls and an appropriate identifier to create internal timeseries ids 
+    // A list of timeseries-API urls and an appropriate identifier to create internal timeseries ids
     restApiUrls: {
 //		'http://192.168.1.135:8080/sensorwebclient-webapp/api/v1/' : 'localhost'
 //		'http://localhost:8090/sensorwebclient-webapp-3.3.0-SNAPSHOT/api/v1/' : 'localhost'
@@ -57,7 +57,7 @@ var Settings = {
     zoom: 13,
     // date/time format which is used on several places
     dateformat: 'DD.MM.YY HH:mmZ',
-    shortDateformat: "DD.MM.YY",
+    shortDateformat: 'DD.MM.YY',
     // duration after which latest values shall be ignored when rendering marker in the map
     ignoreAfterDuration: moment.duration(1, 'y'),
     // duration buffer for time series request
@@ -74,26 +74,120 @@ var Settings = {
     },
     // default language for i18n
     defaultLanguage: 'en',
-    // should saving the status be possible, 
+    // should saving the status be possible,
     saveStatusPossible: true,
     // entries on a page for the values table
     pagesize: 20,
     // line width for selected timeseries
     selectedLineWidth: 5,
     // common line width for unselected timeseries
-    commonLineWidth: 2, 
+    commonLineWidth: 2,
     // chart styling options see for more details: https://github.com/flot/flot/blob/master/API.md
     chartOptions: {},
-    // colorlist to select for a different timeseries color 
+    // colorlist to select for a different timeseries color
     colorList: ['#1abc9c', '#27ae60', '#2980b9', '#8e44ad', '#2c3e50', '#f1c40f',
         '#d35400', '#c0392b', '#7f8c8d'],
-    // interval to display the timeseries in a bar diagram with label and value in hours 
+    // interval to display the timeseries in a bar diagram with label and value in hours
     intervalList: [
         {label: _('styleChange.barChartInterval.hour'), value: 1},
         {label: _('styleChange.barChartInterval.day'), value: 24},
         {label: _('styleChange.barChartInterval.week'), value: 7 * 24},
         {label: _('styleChange.barChartInterval.month'), value: 30 * 24}
     ],
+    timeRangeData: {
+        presets: [
+            {
+                name: 'lastHour',
+                label: _('timeSelection.presets.lastHour'),
+                interval: {
+                    from: moment().subtract('hours', 1),
+                    till: moment(),
+                    mode: 'minutes'
+                }
+            },
+            {
+                name: 'today',
+                label: _('timeSelection.presets.today'),
+                interval: {
+                    from: moment().startOf('day'),
+                    till: moment().endOf('day'),
+                    mode: 'day'
+                }
+            },
+            {
+                name: 'yesterday',
+                label: _('timeSelection.presets.yesterday'),
+                interval: {
+                    from: moment().subtract('days', 1).startOf('day'),
+                    till: moment().subtract('days', 1).endOf('day'),
+                    mode: 'day'
+                }
+            },
+            {
+                name: 'todayYesterday',
+                label: _('timeSelection.presets.todayYesterday'),
+                interval: {
+                    from: moment().subtract('days', 1).startOf('day'),
+                    //till: moment(),
+                    mode: 'day'
+                }
+            },
+            {
+                name: 'thisWeek',
+                label: _('timeSelection.presets.thisWeek'),
+                interval: {
+                    from: moment().subtract('weeks', 1).startOf('week'),
+                    till: moment().subtract('weeks', 1).endOf('week'),
+                    mode: 'week'
+                }
+            },
+            {
+                name: 'lastWeek',
+                label: _('timeSelection.presets.lastWeek'),
+                interval: {
+                    from: moment().startOf('week'),
+                    //till: moment(),
+                    mode: 'week'
+                }
+            },
+            {
+                name: 'thisMonth',
+                label: _('timeSelection.presets.thisMonth'),
+                interval: {
+                    from: moment().subtract('months', 1).startOf('month'),
+                    till: moment().subtract('months', 1).endOf('month'),
+                    mode: 'month'
+                }
+            },
+            {
+                name: 'lastMonth',
+                label: _('timeSelection.presets.lastMonth'),
+                interval: {
+                    from: moment().startOf('month'),
+                    //till: moment(),
+                    mode: 'month'
+                }
+            },
+            {
+                name: 'thisYear',
+                label: _('timeSelection.presets.thisYear'),
+                interval: {
+                    from: moment().startOf('year'),
+                    //till: moment(),
+                    mode: 'year'
+                }
+            },
+            {
+                name: 'lastYear',
+                label: _('timeSelection.presets.lastYear'),
+                interval: {
+                    from: moment().subtract('years', 1).startOf('year'),
+                    till: moment().subtract('years', 1).endOf('year'),
+                    mode: 'year'
+                }
+            }
+        ]
+    },
     // configuration for the tile layer in the leaflet map (see for more information: http://leafletjs.com/reference.html#tilelayer )
     tileLayerUrl: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
     tileLayerOptions: {

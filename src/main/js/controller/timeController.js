@@ -16,19 +16,7 @@
  */
 var TimeController = {
     currentTimespan: {},
-    timeRangeData: {
-        presets: [
-            {label: _('timeSelection.presets.today'), value: 'today'},
-            {label: _('timeSelection.presets.yesterday'), value: 'yesterday'},
-            {label: _('timeSelection.presets.todayYesterday'), value: 'today_yesterday'},
-            {label: _('timeSelection.presets.thisWeek'), value: 'thisWeek'},
-            {label: _('timeSelection.presets.lastWeek'), value: 'lastWeek'},
-            {label: _('timeSelection.presets.thisMonth'), value: 'thisMonth'},
-            {label: _('timeSelection.presets.lastMonth'), value: 'lastMonth'},
-            {label: _('timeSelection.presets.thisYear'), value: 'thisYear'},
-            {label: _('timeSelection.presets.lastYear'), value: 'lastYear'}
-        ]
-    },
+    timeRangeData: Settings.timeRangeData,
     init: function() {
         // get last save timespan
         this.currentTimespan = Status.get('timespan');
@@ -131,8 +119,15 @@ var TimeController = {
         this.getNearbyPeriode('add');
         this.updateTimeExtent();
     },
-    setPreset: function(type) {
-        this.currentTimespan = Time.isoTimespan(type);
+    setPreset: function(name) {
+        var interval;
+        $.each(this.timeRangeData.presets, function(idx,elem) {
+            if (elem.name === name) {
+                interval = this.interval;
+                return false;
+            }
+        });
+        this.currentTimespan = Time.isoTimespan(interval);
         this.updateTimeExtent();
         Modal.hide();
     },
