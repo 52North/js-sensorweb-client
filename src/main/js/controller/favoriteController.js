@@ -157,7 +157,7 @@ var FavoriteController = {
     createFavoritesListView: function() {
         var list = Template.createHtml('favorites-main');
         $('.swc-main').append(list);
-        Pages.activatedClickHandler();
+        Pages.activateNavButtonsHandler();
     },
     createEmptyStar: function() {
         return $('<span class="glyphicon glyphicon-star-empty star"></span>');
