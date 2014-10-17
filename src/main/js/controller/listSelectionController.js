@@ -103,7 +103,7 @@ var ListSelectionController = {
                     Modal.hide();
                     Pages.navigateToChart();
                 } else {
-                    alert(_('listSelection.warning.moreThanOneTimeseries'));
+                    Inform.warn(_('listSelection.warning.moreThanOneTimeseries'));
                 }
             });
         }

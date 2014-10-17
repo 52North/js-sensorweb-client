@@ -214,5 +214,9 @@ i18n.de = {
             remove: "Der Favorit '{0}' ist entfernt worden.",
             exists: "Dieser Favorit existiert bereits."
         }
+    },
+    inform: {
+        error: "Ein Fehler ist aufgetreten: ",
+        warn: "Bitte beachten Sie: "
     }
 };

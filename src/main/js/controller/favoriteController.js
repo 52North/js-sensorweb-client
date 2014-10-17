@@ -369,7 +369,7 @@ var FavoriteController = {
                 a.click();
             }
         } else {
-            alert('The File APIs are not fully supported in this browser.');
+            Inform.warn('The File APIs are not fully supported in this browser.');
         }
     },
     importFavorites: function(event) {
@@ -386,7 +386,7 @@ var FavoriteController = {
                     var reader = new FileReader();
                     reader.readAsText(files[0]);
                     reader.onerror = function() {
-                        alert('Could not read file!');
+                        Inform.error('Could not read file!');
                     };
                     var that = this;
                     reader.onload = function(e) {
@@ -397,7 +397,7 @@ var FavoriteController = {
                 }
             }
         } else {
-            alert('The File APIs are not fully supported in this browser.');
+            Inform.warn('The File APIs are not fully supported in this browser.');
         }
     },
     isFileAPISupported: function() {

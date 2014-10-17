@@ -75,7 +75,7 @@ var PermalinkController = {
                         requestLength--;
                         if (requestLength === 0) {
                             if ($.isEmptyObject(foundTimeseriesId)) {
-                                window.alert(_('permalink.noMatchingTimeseriesFound'));
+                                Inform.warn(_('permalink.noMatchingTimeseriesFound'));
                             }
                         }
                     }, this));
@@ -105,7 +105,7 @@ var PermalinkController = {
                     constellations.push(constellation);
                 }
             } else {
-                window.alert(_('permalink.wrongCombinationSize'));
+                Inform.warn(_('permalink.wrongCombinationSize'));
             }
         }
         return constellations;

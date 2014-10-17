@@ -209,5 +209,9 @@ i18n.en_GB = {
             remove: "The favourite '{0}' is removed.",
             exists: "This favourite still exists."
         }
+    },
+    inform: {
+        error: "An error occured: ",
+        warn: "Please remember that: "
     }
 };

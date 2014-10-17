@@ -44,7 +44,7 @@ var Rest = {
     },
     requestFailed: function(error) {
         if (error.responseJSON && error.responseJSON.userMessage) {
-            alert(error.responseJSON.userMessage);
+            Inform.error(error.responseJSON.userMessage);
         }
     },
     tsData: function(id, apiUrl, timespan, internalId, extendedData) {

@@ -422,7 +422,7 @@ var Map = {
     },
     onLocationError: function(e) {
         Button.setLoadingButton($('[data-action="locate"]'), false);
-        alert(e.message);
+        Inform.error(e.message);
     },
     showTsInMap: function(event, ts) {
         Pages.navigateToMap();

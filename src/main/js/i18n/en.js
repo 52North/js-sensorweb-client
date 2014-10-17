@@ -214,5 +214,9 @@ i18n.en = {
             remove: "The favorite '{0}' is removed.",
             exists: "This favorite still exists."
         }
+    },
+    inform: {
+        error: "An error occured: ",
+        warn: "Please remember that: "
     }
 };
