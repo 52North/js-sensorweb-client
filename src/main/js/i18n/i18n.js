@@ -30,12 +30,21 @@ function readI18n(lang, key) {
     try {
         var keyArray = key.split('.');
         var value = i18n[lang];
+        if ( !value) {
+            var langParts = lang.split('-');
+            // convert lang to 'en_US' as 'en-US' not allowed
+            var value = i18n[langParts[0] + "_" + langParts[1]];
+            if ( !value && langParts.length > 1) {
+                // no subregion, try e.g. en-US => en
+                value = i18n[langParts[0]];
+            }
+        }
         while (keyArray.length) {
             var property = keyArray.splice(0, 1);
             value = read_prop(value, property[0]);
         }
         if ($.isEmptyObject(value)) {
-            console.error("Don't find the i18n key '" + key + "' for language " + lang);
+            console.error("Missing i18n key '" + key + "' for language " + lang);
         }
         return value;
     } catch (ex) {
