@@ -40,12 +40,27 @@ var Map = {
         if ($("#map").length > 0) {
             this.map = L.map('map');
             L.tileLayer(this.tileLayerUrl, this.tileLayerOptions).addTo(this.map);
+            var overlayMaps = {};
+            $.each(Settings.wmsLayer, $.proxy(function(idx, layer) {
+                try {
+                    var wms = L.tileLayer.wms(layer.url, layer.options).addTo(this.map);
+                    overlayMaps[layer.name] = wms;
+                } catch (e) {
+                    console.error('Could not add wms.');
+                };
+            }, this));
+            if (!$.isEmptyObject(overlayMaps)) {
+                L.control.layers(null, overlayMaps, {
+                    position: 'topleft'
+                }).addTo(this.map);
+            }
             L.Icon.Default.imagePath = 'images';
             this.map.whenReady(function(map) {
                 // locate user methods
                 this.map.on('locationfound', this.onLocationFound);
                 this.map.on('locationerror', this.onLocationError);
             }, this);
+
             L.control.scale().addTo(this.map);
             if (Settings.enableGeoSearch) {
                 new L.Control.GeoSearch({
