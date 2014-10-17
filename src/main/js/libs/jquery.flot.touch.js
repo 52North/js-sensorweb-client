@@ -8,7 +8,7 @@
   var isReady = false;
 	var options = {
 	  touch: {
-	    pan: 'xy',
+	    pan: 'x',
 	    scale: 'xy',
 	    autoWidth: true,
 	    autoHeight: false
