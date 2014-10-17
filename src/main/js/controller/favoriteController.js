@@ -33,6 +33,7 @@ var FavoriteController = {
             this.showFavoritesView();
         }, this));
         this.createFavoritesListView();
+        this.activateImportExportHandlers();
         EventManager.subscribe('timeseries:add', $.proxy(this.addLegendStar, this));
         EventManager.subscribe('map:stationLoaded', $.proxy(this.addStationStar, this));
         EventManager.subscribe('settings:opened', $.proxy(function() {
@@ -73,6 +74,7 @@ var FavoriteController = {
             var elem = Template.createHtml('favorite-entry', {
                 id: ts.getInternalId(),
                 label: item.label,
+                provider: ts.getServiceLabel(),
                 lastValueTimeFormatted: lastValue ? moment(lastValue.timestamp).format(Settings.dateformat) : '',
                 lastValue: lastValue.value || '',
                 uom: ts.getUom() || ''
@@ -107,6 +109,10 @@ var FavoriteController = {
         this.addClickEvents(id, 'single-id', 'delete', $.proxy(function(evt) {
             delete this.favorites[id];
             $('[data-single-id=' + id + ']').remove();
+            var star = $('.star', '[data-id=' + id + ']');
+            if (star) {
+                star.addClass('glyphicon-star-empty').removeClass('glyphicon-star');
+            }
             this.saveFavorites();
         }, this));
         // edit
@@ -158,6 +164,12 @@ var FavoriteController = {
         var list = Template.createHtml('favorites-main');
         $('.swc-main').append(list);
         Pages.activateNavButtonsHandler();
+    },
+    activateImportExportHandlers: function() {
+        var fileImport = $('#favorites-file-import');
+        var fileExport = $('#favorites-file-export');
+        fileImport.change($.proxy(this.importFavorites, this));
+        fileExport.click($.proxy(this.exportFavorites, this));
     },
     createEmptyStar: function() {
         return $('<span class="glyphicon glyphicon-star-empty star"></span>');
@@ -241,6 +253,9 @@ var FavoriteController = {
         this.saveFavorites();
         return label;
     },
+    hasFavorites: function() {
+        return Object.getOwnPropertyNames(this.favorites).length !== 0;
+    },
     addFavoriteGroup: function(tsColl, label) {
         label = label || 'Status ' + this.groupIdx;
         this.favoriteGroups[this.groupIdx++] = {
@@ -256,11 +271,11 @@ var FavoriteController = {
         var isInside = false;
         $.each(this.favoriteGroups, function(idx, elem) {
             var equivalent = true;
-            if (elem.collection.length == Object.keys(tsColl).length) {
+            if (elem.collection.length === Object.keys(tsColl).length) {
                 $.each(elem.collection, function(idx, elem) {
                     var bool = false;
                     $.each(tsColl, function(idx) {
-                        if (idx == elem.getInternalId()) {
+                        if (idx === elem.getInternalId()) {
                             bool = true;
                         }
                     });
@@ -281,6 +296,9 @@ var FavoriteController = {
     },
     loadFavorites: function() {
         var values = Storage.load(this.key);
+        this.unserializeFavorites(values);
+    },
+    unserializeFavorites: function(values) {
         if (values) {
             $.each(values.single, $.proxy(function(idx, elem) {
                 var ts = elem.timeseries;
@@ -323,24 +341,59 @@ var FavoriteController = {
     },
     exportFavorites: function() {
         if (this.isFileAPISupported()) {
-
-            // TODO save to file
-
+            var filename = 'favorites.json';
+            var content = JSON.stringify(this.serializeFavorites());
+            if (window.navigator.msSaveBlob) {
+                // IE version >= 10
+                var blob = new Blob([content], {
+                    type: 'application/json;charset=utf-8;'
+                });
+                window.navigator.msSaveBlob(blob, filename);
+            } else {
+                // FF, Chrome ...
+                var a = document.createElement('a');
+                a.href = 'data:application/json,' + encodeURI(content);
+                a.target = '_blank';
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+            }
         } else {
             alert('The File APIs are not fully supported in this browser.');
         }
     },
-    importFavorites: function() {
+    importFavorites: function(event) {
         if (this.isFileAPISupported()) {
-
-            // TODO load from file
-
+            var override = true;
+            if (this.hasFavorites()) {
+                override = confirm('Override favorites?');
+            }
+            if (override) {
+                this.favorites = {};
+                var files = event.target.files;
+                if (files && files.length > 0) {
+                    var reader = new FileReader();
+                    reader.readAsText(files[0]);
+                    reader.onerror = function () {
+                        alert('Could not read file!');
+                    };
+                    var that = this;
+                    reader.onload = function(e) {
+                        var content = JSON.parse(e.target.result);
+                        that.unserializeFavorites(content);
+                        that.saveFavorites();
+                    };
+                    reader.onloadend = function() {
+                        that.updateFavoritesView();
+                    };
+                }
+            }
         } else {
             alert('The File APIs are not fully supported in this browser.');
         }
     },
     isFileAPISupported: function() {
-        return window.File && window.FileReader && window.FileList && window.Blob;
+        return window.File && window.FileReader && window.Blob;
     }
 
 };
