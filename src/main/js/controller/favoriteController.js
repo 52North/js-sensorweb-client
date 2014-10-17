@@ -74,6 +74,7 @@ var FavoriteController = {
             var elem = Template.createHtml('favorite-entry', {
                 id: ts.getInternalId(),
                 label: item.label,
+                provider: ts.getServiceLabel(),
                 lastValueTimeFormatted: lastValue ? moment(lastValue.timestamp).format(Settings.dateformat) : '',
                 lastValue: lastValue.value || '',
                 uom: ts.getUom() || ''
@@ -108,6 +109,10 @@ var FavoriteController = {
         this.addClickEvents(id, 'single-id', 'delete', $.proxy(function(evt) {
             delete this.favorites[id];
             $('[data-single-id=' + id + ']').remove();
+            var star = $('.star', '[data-id=' + id + ']');
+            if (star) {
+                star.addClass('glyphicon-star-empty').removeClass('glyphicon-star');
+            }
             this.saveFavorites();
         }, this));
         // edit
