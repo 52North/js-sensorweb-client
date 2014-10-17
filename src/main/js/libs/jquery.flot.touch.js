@@ -1,4 +1,10 @@
 (function($) {
+
+
+  if ( ! (window.isMobile() || window.isTouchDevice())) {
+      return;
+  }
+
   var isReady = false;
 	var options = {
 	  touch: {
