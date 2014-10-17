@@ -79,6 +79,7 @@ i18n.de = {
         header: 'Zeitraum',
         presetsHeader: 'Vordefiniert',
         presets: {
+            lastHour: 'letzte Stunde',
             today: 'heute',
             yesterday: 'gestern',
             todayYesterday: 'heute & gestern',
