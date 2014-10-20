@@ -80,7 +80,7 @@ var ChartController = {
 
         $(window).resize($.proxy(function() {
             var newRatio = $(document).width() / $(document).height();
-            if (newRatio != window.ratio) {
+            if (newRatio !== window.ratio) {
                 window.ratio = newRatio;
                 this.plotChart();
             }
@@ -121,7 +121,7 @@ var ChartController = {
     selectTs: function(event, id) {
         if (this.plot) {
             $.each(this.plot.getData(), function(idx, ts) {
-                if (ts.id == id) {
+                if (ts.id === id) {
                     ts.lines.lineWidth = ChartController.selectedLineWidth;
                     ts.bars.lineWidth = ChartController.selectedLineWidth;
                     ts.selected = true;
@@ -134,7 +134,7 @@ var ChartController = {
             });
             this.plot.draw();
             $.each(this.data, function(index, elem) {
-                if (elem.id == id) {
+                if (elem.id === id) {
                     elem.selected = true;
                 }
             });
@@ -168,13 +168,13 @@ var ChartController = {
     zeroScaled: function(event, ts) {
         // update all timeseries
         $.each(TimeSeriesController.getTimeseriesCollection(), function(idx, elem) {
-            if (ts.getUom() == elem.getUom()) {
+            if (ts.getUom() === elem.getUom()) {
                 elem.setZeroScaled(ts.isZeroScaled());
             }
         });
         // update data of timeseries
         $.each(this.data, function(idx, elem) {
-            if (elem.uom == ts.getUom()) {
+            if (elem.uom === ts.getUom()) {
                 elem.zeroScaled = ts.isZeroScaled();
             }
         });
@@ -301,12 +301,13 @@ var ChartController = {
     plotChart: function() {
         if (this.visible) {
             $('#placeholder').show();
-            this.options.yaxes = this.createYAxis();
-            this.updateXAxis();
             if (this.data.length === 0) {
                 $("#placeholder").empty();
                 $("#placeholder").append(Template.createHtml('chart-empty'));
             } else {
+                this.updateXAxis();
+                this.options.yaxes = this.createYAxis();
+
                 this.plot = $.plot('#placeholder', this.data, this.options);
                 $.each(this.plot.getAxes(), $.proxy(function(i, axis) {
                     if (!axis.show)
@@ -323,18 +324,23 @@ var ChartController = {
                                         elem = $(elem);
                                         if (target.data('axis.n') === elem.data('axis.n')) {
                                             selected = elem.hasClass("selected");
+                                            return false; // break loop
                                         }
                                     });
                                     EventManager.publish("timeseries:unselectAll");
                                     $.each(this.plot.getData(), function(index, elem) {
                                         if (elem.yaxis.n === axis.n && !selected) {
                                             EventManager.publish("timeseries:selected", elem.id);
+                                            target.addClass("selected");
+                                            if ( !elem.groupedAxis) {
+                                                return false; // break loop
+                                            }
                                         }
                                     });
                                     this.plot.draw();
                                 }, this));
-                        var yaxisLabel = $("<div class='axisLabel yaxisLabel' style=left:" + box.left + "px;></div>")
-                                .text(axis.options.uom).appendTo('#placeholder');
+
+                        var yaxisLabel = $("<div class='axisLabel yaxisLabel' style=left:" + box.left + "px;></div>").text(axis.options.uom).appendTo('#placeholder');
                         $.each(axis.options.tsColors, function(idx, color) {
                             $('<span>').html('&nbsp;&#x25CF;').css('color', color).addClass('labelColorMarker').appendTo(yaxisLabel);
                         });
@@ -407,7 +413,7 @@ var ChartController = {
     removeData: function(id) {
         var idx = -1;
         $.each(this.data, function(i, elem) {
-            if (id == elem.id) {
+            if (id === elem.id) {
                 idx = i;
                 return;
             }
