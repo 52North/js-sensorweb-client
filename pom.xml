@@ -16,7 +16,7 @@
     <inceptionYear>2014</inceptionYear>
 
     <build>
-        <sourceDirectory>src/main/js</sourceDirectory>
+        <sourceDirectory>${basedir}/src/main/js</sourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -48,10 +48,10 @@
                         </manifest>
                         <addMavenDescriptor>false</addMavenDescriptor>
                     </archive> -->
-                    <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
+                    <webXml>${basedir}/src/main/webapp/WEB-INF/web.xml</webXml>
                     <webResources>
                         <resource>
-                            <directory>src/main/webapp/</directory>
+                            <directory>${basedir}/src/main/webapp/</directory>
                             <filtering>false</filtering>
                             <excludes>
                                 <exclude>**/*.css</exclude>
@@ -70,7 +70,7 @@
                             </excludes>
                         </resource>
                         <resource>
-                            <directory>src/main/webapp/</directory>
+                            <directory>${basedir}/src/main/webapp/</directory>
                             <filtering>true</filtering>
                             <includes>
                                 <include>index.html</include>
@@ -118,7 +118,7 @@
                         <closureExtern>extern/external-lib.js</closureExtern>
                     </closureExterns-->
                     <skipMinify>${skipMinify}</skipMinify>
-                    <webappSourceDir>src/main/</webappSourceDir>
+                    <webappSourceDir>${basedir}/src/main/</webappSourceDir>
                     <cssSourceDir>webapp/css</cssSourceDir>
                     <cssTargetDir>css</cssTargetDir>
                 </configuration>
@@ -228,7 +228,7 @@
                 <artifactId>license-maven-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
-                    <header>src/main/misc/license_header.txt</header>
+                    <header>${basedir}/src/main/misc/license_header.txt</header>
                     <properties>
                         <inceptionYear>${project.inceptionYear}</inceptionYear>
                         <latestYearOfContribution>${currentYear}</latestYearOfContribution>
@@ -260,7 +260,7 @@
                     <webAppConfig>
                     <contextPath>/</contextPath>
                     <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
-                        <resourcesAsCSV>src/main/js,target/${project.build.finalName}</resourcesAsCSV>
+                        <resourcesAsCSV>${basedir}/src/main/js,${basedir}/target/${project.build.finalName}</resourcesAsCSV>
                     </baseResource>
                     </webAppConfig>
                     <reload>manual</reload>
@@ -331,7 +331,7 @@
                                 <id>shiny</id>
                                 <phase>package</phase>
                                 <configuration>
-                                    <descriptor>src/assembly/shiny.xml</descriptor>
+                                    <descriptor>${basedir}/src/assembly/shiny.xml</descriptor>
                                 </configuration>
                                 <goals>
                                     <goal>single</goal>
