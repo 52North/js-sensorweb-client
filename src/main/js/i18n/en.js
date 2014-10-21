@@ -122,7 +122,7 @@ i18n.en = {
         header: 'Settings',
         resetStatus: 'Reset status',
         permalink: {
-            create: 'Create a permalink as:',
+            create: 'Create a permalink as',
             inWindow: 'link in a new window',
             inMail: 'link in an email',
             inClipboard: 'Link to clipboard',
