@@ -31,10 +31,6 @@ body,html,.container,.row-offcanvas,.mainPanel {
     width: 100%;
 }
 
-/* .btn {
-        font-size: 18px;
-} */
-
 .timeButtons {
     position: absolute;
     left: 0;
@@ -102,7 +98,6 @@ body,html,.container,.row-offcanvas,.mainPanel {
 
 .modal-title {
     height: 32px;
-    font-size: 18px;
     text-align: center;
     background-repeat: no-repeat;
     background-image: url("../images/favicon.ico");
