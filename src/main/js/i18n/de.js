@@ -32,7 +32,8 @@ i18n.de = {
         noFileSelected: 'Keine Datei ausgewählt'
     },
     chart: {
-        noTimeseriesSelected: 'Sie haben keine Zeitreihe ausgewählt oder die gewählten Zeitreihen haben keine Werte in dem derzeitigen Zeitraum.'
+        noTimeseriesSelected: 'Sie haben keine Zeitreihe ausgewählt oder die gewählten Zeitreihen haben keine Werte in dem derzeitigen Zeitraum.',
+        outsideOfDataRange: 'Außerhalb des Datenbereichs!'
     },
     map: {
         userLocation: 'Hier ist ihr Standort',

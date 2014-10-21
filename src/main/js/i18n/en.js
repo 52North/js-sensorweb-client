@@ -32,7 +32,8 @@ i18n.en = {
         noFileSelected: 'No file selected'
     },
     chart: {
-        noTimeseriesSelected: 'You have selected no timeseries or the selected timeseries have no values in the given time range.'
+        noTimeseriesSelected: 'You have selected no timeseries or the selected timeseries have no values in the given time range.',
+        outsideOfDataRange: 'Outside of data range!'
     },
     map: {
         userLocation: 'Here is your current location',

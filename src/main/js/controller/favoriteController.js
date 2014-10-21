@@ -20,12 +20,13 @@ var FavoriteController = {
     favoriteGroups: {},
     init: function() {
         // settings for gitter (notifier)
-        $.extend($.gritter.options, {
-            position: 'bottom-left',
-            fade_in_speed: 'medium',
-            fade_out_speed: 2000,
-            time: 4000
-        });
+        // moved to notifyController
+//        $.extend($.gritter.options, {
+//            position: 'bottom-left',
+//            fade_in_speed: 'medium',
+//            fade_out_speed: 2000,
+//            time: 4000
+//        });
         this.key = Storage.generateKey('favorites');
         this.favoriteButton = $('.favoriteButton');
         this.favoriteButton.show();
@@ -44,22 +45,22 @@ var FavoriteController = {
                     if (!this.isInFavoriteGroup(TimeSeriesController.timeseries)) {
                         var label = this.addFavoriteGroup(TimeSeriesController.timeseries);
                         this.saveFavorites();
-                        this.notify(_('favorite.group.add').replace('{0}', label));
+                        NotifyController.notify(_('favorite.group.add').replace('{0}', label));
                     } else {
-                        this.notify(_('favorite.group.exists'));
+                        NotifyController.notify(_('favorite.group.exists'));
                     }
                 } else {
-                    this.notify(_('favorite.group.noTimeseries'));
+                    NotifyController.notify(_('favorite.group.noTimeseries'));
                 }
             }, this));
         }, this));
         this.loadFavorites();
     },
-    notify: function(text) {
-        $.gritter.add({
-            text: text
-        });
-    },
+//    notify: function(text) {
+//        $.gritter.add({
+//            text: text
+//        });
+//    },
     navigateToFavoritesView: function() {
         Pages.navigateToPage('#favorite-page');
         Pages.toggleLegend(false);
@@ -194,14 +195,14 @@ var FavoriteController = {
             onClick = $.proxy(function(event) {
                 event.stopPropagation();
                 var label = this.removeFavorite(ts);
-                this.notify(_('favorite.single.remove').replace('{0}', label));
+                NotifyController.notify(_('favorite.single.remove').replace('{0}', label));
             }, this);
         } else {
             star = this.createEmptyStar();
             onClick = $.proxy(function(event) {
                 event.stopPropagation();
                 var label = this.addFavorite(ts);
-                this.notify(_('favorite.single.add').replace('{0}', label));
+                NotifyController.notify(_('favorite.single.add').replace('{0}', label));
             }, this);
         }
         $('.legendItem[data-id="' + tsId + '"]').find('.legendItemLabel').append(star);
@@ -218,7 +219,7 @@ var FavoriteController = {
                 onClick = $.proxy(function(event) {
                     event.stopPropagation();
                     var label = this.removeFavorite(internalID);
-                    this.notify(_('favorite.single.remove').replace('{0}', label));
+                    NotifyController.notify(_('favorite.single.remove').replace('{0}', label));
                     this.addStationStar();
                 }, this);
             } else {
@@ -228,7 +229,7 @@ var FavoriteController = {
                     var promise = Rest.timeseries(item.dataset.id, Status.get('provider').apiUrl);
                     promise.done($.proxy(function(ts) {
                         var label = this.addFavorite(ts);
-                        this.notify(_('favorite.single.add').replace('{0}', label));
+                        NotifyController.notify(_('favorite.single.add').replace('{0}', label));
                         this.addStationStar();
                     }, this));
                 }, this);

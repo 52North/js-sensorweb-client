@@ -105,5 +105,23 @@ var TimeSeriesController = {
     },
     getTimeseriesCollection: function() {
         return this.timeseries;
+    },
+    getMaxTimeExtent: function() {
+        var earliestStart;
+        var latestEnd;
+        $.each(this.timeseries, $.proxy(function(index,elem) {
+            var start = moment(elem.getFirstValue().timestamp);
+            var end = moment(elem.getLastValue().timestamp);
+            if ( !earliestStart || start.isAfter(earliestStart)) {
+                earliestStart = start;
+            }
+            if ( !latestEnd || end.isBefore(latestEnd)) {
+                latestEnd = end;
+            }
+        }));
+        return {
+            from : earliestStart,
+            till: latestEnd
+        };
     }
 };

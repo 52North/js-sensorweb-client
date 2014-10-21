@@ -216,6 +216,7 @@
                                 <jsSourceFile>controller/exportController.js</jsSourceFile>
                                 <jsSourceFile>controller/guidedTourController.js</jsSourceFile>
                                 <jsSourceFile>controller/favoriteController.js</jsSourceFile>
+                                <jsSourceFile>controller/notifyController.js</jsSourceFile>
                             </jsSourceFiles>
                         </configuration>
                         <goals>

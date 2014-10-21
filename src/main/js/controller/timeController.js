@@ -90,6 +90,22 @@ var TimeController = {
         return moment(this.currentTimespan.till).unix() * 1000;
     },
     updateTimeExtent: function() {
+        var maxExtent = TimeSeriesController.getMaxTimeExtent();
+
+        var insideDataInterval = true;
+        if (maxExtent.from && maxExtent.till) {
+            var earliestStart = moment(maxExtent.from);
+            var latestEnd = moment(maxExtent.till);
+            var beforeEaliestStart = this.currentTimespan.till.isBefore(earliestStart);
+            var afterLatestEnd = this.currentTimespan.from.isAfter(latestEnd);
+            insideDataInterval = !(beforeEaliestStart || afterLatestEnd);
+        }
+
+        if ( !insideDataInterval) {
+            // reset current timespan
+            NotifyController.notify(_('chart.outsideOfDataRange'));
+            this.currentTimespan = Status.get('timespan');
+        }
         EventManager.publish("timeextent:change", {
             from: this.currentTimespan.from,
             till: this.currentTimespan.till
