@@ -80,7 +80,7 @@ var ChartController = {
 
         $(window).resize($.proxy(function() {
             var newRatio = $(document).width() / $(document).height();
-            if (newRatio != window.ratio) {
+            if (newRatio !== window.ratio) {
                 window.ratio = newRatio;
                 this.plotChart();
             }
@@ -121,7 +121,7 @@ var ChartController = {
     selectTs: function(event, id) {
         if (this.plot) {
             $.each(this.plot.getData(), function(idx, ts) {
-                if (ts.id == id) {
+                if (ts.id === id) {
                     ts.lines.lineWidth = ChartController.selectedLineWidth;
                     ts.bars.lineWidth = ChartController.selectedLineWidth;
                     ts.selected = true;
@@ -134,7 +134,7 @@ var ChartController = {
             });
             this.plot.draw();
             $.each(this.data, function(index, elem) {
-                if (elem.id == id) {
+                if (elem.id === id) {
                     elem.selected = true;
                 }
             });
@@ -168,13 +168,13 @@ var ChartController = {
     zeroScaled: function(event, ts) {
         // update all timeseries
         $.each(TimeSeriesController.getTimeseriesCollection(), function(idx, elem) {
-            if (ts.getUom() == elem.getUom()) {
+            if (ts.getUom() === elem.getUom()) {
                 elem.setZeroScaled(ts.isZeroScaled());
             }
         });
         // update data of timeseries
         $.each(this.data, function(idx, elem) {
-            if (elem.uom == ts.getUom()) {
+            if (elem.uom === ts.getUom()) {
                 elem.zeroScaled = ts.isZeroScaled();
             }
         });
@@ -301,12 +301,13 @@ var ChartController = {
     plotChart: function() {
         if (this.visible) {
             $('#placeholder').show();
-            this.options.yaxes = this.createYAxis();
-            this.updateXAxis();
             if (this.data.length === 0) {
                 $("#placeholder").empty();
                 $("#placeholder").append(Template.createHtml('chart-empty'));
             } else {
+                this.updateXAxis();
+                this.options.yaxes = this.createYAxis();
+
                 this.plot = $.plot('#placeholder', this.data, this.options);
                 $.each(this.plot.getAxes(), $.proxy(function(i, axis) {
                     if (!axis.show)
@@ -314,27 +315,33 @@ var ChartController = {
                     var box = axis.box;
                     if (axis.direction === "y") {
                         $("<div class='axisTarget' style='position:absolute; left:" + box.left + "px; top:" + box.top + "px; width:" + box.width + "px; height:" + box.height + "px'></div>")
-                                .data("axis.n", axis.n)
-                                .appendTo(this.plot.getPlaceholder())
-                                .click($.proxy(function(event) {
-                                    var target = $(event.currentTarget);
-                                    var selected = false;
-                                    $.each($('.axisTarget'), function(index, elem) {
-                                        elem = $(elem);
-                                        if (target.data('axis.n') === elem.data('axis.n')) {
-                                            selected = elem.hasClass("selected");
+                            .data("axis.n", axis.n)
+                            .appendTo(this.plot.getPlaceholder())
+                            .click($.proxy(function(event) {
+                                var target = $(event.currentTarget);
+                                var selected = false;
+                                $.each($('.axisTarget'), function(index, elem) {
+                                    elem = $(elem);
+                                    if (target.data('axis.n') === elem.data('axis.n')) {
+                                        selected = elem.hasClass("selected");
+                                        return false; // break loop
+                                    }
+                                });
+                                EventManager.publish("timeseries:unselectAll");
+                                $.each(this.plot.getData(), function(index, elem) {
+                                    if (elem.yaxis.n === axis.n && !selected) {
+                                        EventManager.publish("timeseries:selected", elem.id);
+                                        target.addClass("selected");
+                                        if ( !elem.groupedAxis) {
+                                            return false; // break loop
                                         }
-                                    });
-                                    EventManager.publish("timeseries:unselectAll");
-                                    $.each(this.plot.getData(), function(index, elem) {
-                                        if (elem.yaxis.n === axis.n && !selected) {
-                                            EventManager.publish("timeseries:selected", elem.id);
-                                        }
-                                    });
-                                    this.plot.draw();
-                                }, this));
-                        var yaxisLabel = $("<div class='axisLabel yaxisLabel' style=left:" + box.left + "px;></div>")
-                                .text(axis.options.uom).appendTo('#placeholder');
+                                    }
+                                });
+                                this.plot.draw();
+                            }, this));
+
+
+                        var yaxisLabel = $("<div class='axisLabel yaxisLabel' style=left:" + box.left + "px;></div>").text(axis.options.uom).appendTo('#placeholder');
                         $.each(axis.options.tsColors, function(idx, color) {
                             $('<span>').html('&nbsp;&#x25CF;').css('color', color).addClass('labelColorMarker').appendTo(yaxisLabel);
                         });
@@ -347,6 +354,15 @@ var ChartController = {
                         elem.lines.lineWidth = ChartController.selectedLineWidth;
                         elem.bars.lineWidth = ChartController.selectedLineWidth;
                         drawNew = true;
+
+                        $.each($('.axisTarget'), function() {
+                            if ($(this).data('axis.n') === elem.yaxis.n) {
+                                if (!$(this).hasClass('selected')) {
+                                    $(this).addClass('selected');
+                                    return false;
+                                }
+                            }
+                        });
                     }
                 });
                 if (drawNew) {
@@ -384,29 +400,6 @@ var ChartController = {
                 };
                 elem.yaxis = axesList[elem.id].id;
             }
-
-
-
-//            if (elem.groupedAxis !== true) {
-//                axesList[elem.id] = {
-//                    id: ++Object.keys(axesList).length,
-//                    uom: elem.uom + " @ " + elem.stationLabel,
-//                    tsColors: [elem.color],
-//                    zeroScaled: elem.zeroScaled
-//                };
-//                elem.yaxis = axesList[elem.id].id;
-//            } else if (!axesList.hasOwnProperty(elem.uom)) {
-//                axesList[elem.uom] = {
-//                    id: ++Object.keys(axesList).length,
-//                    uom: elem.uom,
-//                    tsColors: [elem.color],
-//                    zeroScaled: elem.zeroScaled
-//                };
-//                elem.yaxis = axesList[elem.uom].id;
-//            } else {
-//                axesList[elem.uom].tsColors.push(elem.color);
-//                elem.yaxis = axesList[elem.uom].id;
-//            }
         });
         var axes = [];
         $.each(axesList, function(idx, elem) {
@@ -421,7 +414,7 @@ var ChartController = {
     dataAlreadyIn: function(id) {
         var elem = null;
         elem = $.map(this.data, function(elem) {
-            if (id == elem.id) {
+            if (id === elem.id) {
                 return elem;
             }
         });
@@ -430,7 +423,7 @@ var ChartController = {
     removeData: function(id) {
         var idx = -1;
         $.each(this.data, function(i, elem) {
-            if (id == elem.id) {
+            if (id === elem.id) {
                 idx = i;
                 return;
             }
