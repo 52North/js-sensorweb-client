@@ -102,6 +102,7 @@
                                 <!-- Faster to get just branch if skip = true -->
                                 <skip>false</skip>
                             </gitDescribe>
+                            <failOnNoGitDirectory>false</failOnNoGitDirectory>
                             <timestampFormat>{0,date,yyyy-MM-dd HH:mm:ss}</timestampFormat>
                         </configuration>
                     </execution>
