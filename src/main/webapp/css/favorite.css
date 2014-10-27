@@ -55,9 +55,10 @@
 }
 
 .favorite-entry {
-    border: black solid 1px;
-    margin: 3px;
-    padding: 3px;
+    border: 1px solid #AAA;
+    border-bottom: 3px solid #BBB;
+    padding: 7px;
+    margin: 15px;
 }
 
 .favorite-group-entry {
