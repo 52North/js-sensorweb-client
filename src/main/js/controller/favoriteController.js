@@ -19,14 +19,6 @@ var FavoriteController = {
     groupIdx: 0,
     favoriteGroups: {},
     init: function() {
-        // settings for gitter (notifier)
-        // moved to notifyController
-//        $.extend($.gritter.options, {
-//            position: 'bottom-left',
-//            fade_in_speed: 'medium',
-//            fade_out_speed: 2000,
-//            time: 4000
-//        });
         this.key = Storage.generateKey('favorites');
         this.favoriteButton = $('.favoriteButton');
         this.favoriteButton.show();
@@ -36,6 +28,7 @@ var FavoriteController = {
         this.createFavoritesListView();
         this.activateImportExportHandlers();
         EventManager.subscribe('timeseries:add', $.proxy(this.addLegendStar, this));
+        EventManager.subscribe('timeseries:changeStyle', $.proxy(this.addLegendStar, this))
         EventManager.subscribe('map:stationLoaded', $.proxy(this.addStationStar, this));
         EventManager.subscribe('settings:opened', $.proxy(function() {
             var permFavButton = $(Template.createHtml('favorite-settings-button'));
@@ -56,11 +49,6 @@ var FavoriteController = {
         }, this));
         this.loadFavorites();
     },
-//    notify: function(text) {
-//        $.gritter.add({
-//            text: text
-//        });
-//    },
     navigateToFavoritesView: function() {
         Pages.navigateToPage('#favorite-page');
         Pages.toggleLegend(false);
@@ -115,12 +103,13 @@ var FavoriteController = {
     addFavoriteClickEvent: function(id) {
         // delete
         this.addClickEvents(id, 'single-id', 'delete', $.proxy(function(evt) {
-            delete this.favorites[id];
-            $('[data-single-id=' + id + ']').remove();
-            var star = $('.star', '[data-id=' + id + ']');
-            if (star) {
-                star.addClass('glyphicon-star-empty').removeClass('glyphicon-star');
-            }
+            this.removeFavorite(id);
+//            delete this.favorites[id];
+//            $('[data-single-id=' + id + ']').remove();
+//            var star = $('.star', '[data-id=' + id + ']');
+//            if (star) {
+//                star.addClass('glyphicon-star-empty').removeClass('glyphicon-star');
+//            }
             this.saveFavorites();
         }, this));
         // edit
@@ -247,8 +236,10 @@ var FavoriteController = {
         if (!(ts instanceof TimeSeries)) {
             ts = this.favorites[ts].timeseries;
         }
-        var label = this.favorites[ts.getInternalId()].label;
-        delete this.favorites[ts.getInternalId()];
+        var id = ts.getInternalId();
+        var label = this.favorites[id].label;
+        delete this.favorites[id];
+        $('[data-single-id=' + id + ']').remove();
         this.addLegendStar(null, ts);
         return label;
     },
