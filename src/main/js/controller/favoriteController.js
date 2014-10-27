@@ -19,14 +19,6 @@ var FavoriteController = {
     groupIdx: 0,
     favoriteGroups: {},
     init: function() {
-        // settings for gitter (notifier)
-        // moved to notifyController
-//        $.extend($.gritter.options, {
-//            position: 'bottom-left',
-//            fade_in_speed: 'medium',
-//            fade_out_speed: 2000,
-//            time: 4000
-//        });
         this.key = Storage.generateKey('favorites');
         this.favoriteButton = $('.favoriteButton');
         this.favoriteButton.show();
@@ -36,6 +28,7 @@ var FavoriteController = {
         this.createFavoritesListView();
         this.activateImportExportHandlers();
         EventManager.subscribe('timeseries:add', $.proxy(this.addLegendStar, this));
+        EventManager.subscribe('timeseries:changeStyle', $.proxy(this.addLegendStar, this))
         EventManager.subscribe('map:stationLoaded', $.proxy(this.addStationStar, this));
         EventManager.subscribe('settings:opened', $.proxy(function() {
             var permFavButton = $(Template.createHtml('favorite-settings-button'));
@@ -56,11 +49,6 @@ var FavoriteController = {
         }, this));
         this.loadFavorites();
     },
-//    notify: function(text) {
-//        $.gritter.add({
-//            text: text
-//        });
-//    },
     navigateToFavoritesView: function() {
         Pages.navigateToPage('#favorite-page');
         Pages.toggleLegend(false);
