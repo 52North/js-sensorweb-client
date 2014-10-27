@@ -202,13 +202,15 @@ i18n.de = {
         }
     },
     favorite:{
+        firstValueAt: 'Erster Wert bei',
+        lastValueAt: 'Letzter Wert bei',
         edit: {
             header: "Favorit editieren"
         },
         group:{
             add: "Der Status wird mit dem Name '{0}' in den Favoriten abgelegt.",
-            exists: "Dieser Status existiert bereits.",
-            noTimeseries: "Derzeit sind keine Zeitreihen ausgewählt."
+            noTimeseries: "Derzeit sind keine Zeitreihen ausgewählt.",
+            exists: "Dieser Status existiert bereits."
         },
         single: {
             add: "Einer neuer Favorit mit dem Name '{0}' ist abgelegt worden.",

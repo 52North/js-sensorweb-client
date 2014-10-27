@@ -197,6 +197,8 @@ i18n.en_GB = {
         }
     },
     favorite: {
+        firstValueAt: 'First value at',
+        lastValueAt: 'Last value at',
         edit: {
             header: "Edit favourite"
         },
