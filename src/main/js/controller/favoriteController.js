@@ -103,12 +103,13 @@ var FavoriteController = {
     addFavoriteClickEvent: function(id) {
         // delete
         this.addClickEvents(id, 'single-id', 'delete', $.proxy(function(evt) {
-            delete this.favorites[id];
-            $('[data-single-id=' + id + ']').remove();
-            var star = $('.star', '[data-id=' + id + ']');
-            if (star) {
-                star.addClass('glyphicon-star-empty').removeClass('glyphicon-star');
-            }
+            this.removeFavorite(id);
+//            delete this.favorites[id];
+//            $('[data-single-id=' + id + ']').remove();
+//            var star = $('.star', '[data-id=' + id + ']');
+//            if (star) {
+//                star.addClass('glyphicon-star-empty').removeClass('glyphicon-star');
+//            }
             this.saveFavorites();
         }, this));
         // edit
@@ -235,8 +236,10 @@ var FavoriteController = {
         if (!(ts instanceof TimeSeries)) {
             ts = this.favorites[ts].timeseries;
         }
-        var label = this.favorites[ts.getInternalId()].label;
-        delete this.favorites[ts.getInternalId()];
+        var id = ts.getInternalId();
+        var label = this.favorites[id].label;
+        delete this.favorites[id];
+        $('[data-single-id=' + id + ']').remove();
         this.addLegendStar(null, ts);
         return label;
     },
