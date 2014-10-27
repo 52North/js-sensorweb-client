@@ -3,13 +3,13 @@
     <span class="favorite-icons">
         <span class="glyphicon glyphicon-edit edit"></span>
         <span class="glyphicon glyphicon-stats addToDiagram"></span>
-        <span class="glyphicon glyphicon-trash delete"></span> 
+        <span class="glyphicon glyphicon-trash delete"></span>
     </span>
     {{#collection}}
     <div class="favorite-group-entry">
         <div>{{label}}</div>
-        <span>last value: </span>
-        <span>{{lastValueTimeFormatted}} ({{lastValue}} {{uom}})</span>
+        <span>{{_i}}lastValueAt{{/i}}:</span>
+        <span>{{lastValue}} {{uom}} ({{lastValueTimeFormatted}})</span>
     </div>
     {{/collection}}
 </div>
