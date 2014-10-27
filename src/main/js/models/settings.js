@@ -50,7 +50,7 @@ var Settings = {
     // default setting for generalization of the data
     generalizeData: false,
     // default setting for save status
-    saveStatus: true,
+    saveStatus: false,
     // default setting for concentration marker
     concentrationMarker: false,
     // zoom level in the map, used for user location and station position
