@@ -31,6 +31,7 @@ var Map = {
                 Map.locateUser();
             });
         });
+        this.createMap();
         this.loadStations();
         EventManager.subscribe("resetStatus", $.proxy(this.loadStations, this));
         EventManager.subscribe("clusterStations", $.proxy(this.loadStations, this));
@@ -77,6 +78,9 @@ var Map = {
                     zoomLevel: 13
                 }).addTo(this.map);
             }
+            this.map.fitBounds([
+            [-80, -170],
+            [80, 170]]);
         }
     },
     /*----- stations -----*/
