@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 var PermalinkController = {
-    timespanParam: 'timespan',
-    timeseriesParam: 'timeseries',
+    timespanParam: 'span',
+    timeseriesParam: 'ts',
     servicesParam: 'services',
     featuresParam: 'features',
     offeringsParam: 'offerings',
@@ -38,17 +38,21 @@ var PermalinkController = {
         return value;
     },
     checkTimespan: function() {
-        this.evaluateParameter(this.timespanParam, function(timespan) {
+        var setTimespan =  function(timespan) {
             Status.set('timespan', Time.createTimespan(timespan));
-        });
+        };
+        this.evaluateParameter('timespan', setTimespan); // for backward compatibility
+        this.evaluateParameter(this.timespanParam, setTimespan);
     },
     checkTimeseries: function() {
-        this.evaluateParameter(this.timeseriesParam, function(timeseries) {
+        var addTimeseries = function(timeseries) {
             Status.clearTimeseries();
             $.each(timeseries.split(','), function(idx, id) {
                 Status.addTimeseriesById(id);
             });
-        });
+        }
+        this.evaluateParameter('timeseries', addTimeseries); // for backward compatibility
+        this.evaluateParameter(this.timeseriesParam, addTimeseries);
     },
     checkConstellation: function() {
         var constellations = this.createConstellationParameterArray();
@@ -137,8 +141,8 @@ var PermalinkController = {
                     + (loc.port ? ':' + loc.port : '');
         }
         var url = loc.origin + loc.pathname + "?";
-        url = url + this.createTimespanParam();
-        url = url + "&" + this.createTimeseriesParam();
+        url = url + this.createTimeseriesParam();
+        url = url + "&" + this.createTimespanParam();
         return url;
     }
 };

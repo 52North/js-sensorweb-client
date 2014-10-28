@@ -59,7 +59,7 @@ var SettingsController = {
                     window.open(PermalinkController.createPermalink(), '_blank');
                 }).show();
                 $('.permalink .mail').on('click', function() {
-                    window.location.href = 'mailto:?body=' + encodeURIComponent(PermalinkController.createPermalink());
+                    window.location.href = "mailto:?body=" + encodeURIComponent(PermalinkController.createPermalink());
                 }).show();
                 $('.permalink .clipboard').on('click', function() {
                     window.prompt(_('settings.permalink.clipboardInfo'), PermalinkController.createPermalink());
