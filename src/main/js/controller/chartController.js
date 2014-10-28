@@ -423,7 +423,7 @@ var ChartController = {
     removeData: function(id) {
         var idx = -1;
         $.each(this.data, function(i, elem) {
-            if (id === elem.id) {
+            if (id == elem.id) {
                 idx = i;
                 return;
             }
