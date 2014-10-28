@@ -216,8 +216,7 @@ i18n.en = {
             add: "A new favorite '{0}' is added to the list.",
             remove: "The favorite '{0}' is removed.",
             exists: "This favorite still exists."
-        },
-        lastValueAt: 'Last value at'
+        }
     },
     inform: {
         error: "An error occured: ",

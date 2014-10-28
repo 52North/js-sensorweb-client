@@ -216,8 +216,7 @@ i18n.de = {
             add: "Einer neuer Favorit mit dem Name '{0}' ist abgelegt worden.",
             remove: "Der Favorit '{0}' ist entfernt worden.",
             exists: "Dieser Favorit existiert bereits."
-        },
-        lastValueAt: 'Letzter Wert bei'
+        }
     },
     inform: {
         error: "Ein Fehler ist aufgetreten: ",

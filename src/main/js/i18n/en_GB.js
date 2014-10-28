@@ -211,8 +211,7 @@ i18n.en_GB = {
             add: "A new favourite '{0}' is added to the list.",
             remove: "The favourite '{0}' is removed.",
             exists: "This favourite still exists."
-        },
-        lastValueAt: 'Last value at'
+        }
     },
     inform: {
         error: "An error occured: ",
