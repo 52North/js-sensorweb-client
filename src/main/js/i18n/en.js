@@ -210,12 +210,14 @@ i18n.en = {
         group: {
             add: "The status '{0}' is added to the favorite list.",
             exists: "This status still exists.",
-            noTimeseries: "Currently no timeseries are selected."
+            noTimeseries: "Currently no timeseries are selected.",
+            notSupported: "The provider of an entry of the status '{0}' isn't supported and can't be loaded."
         },
         single: {
             add: "A new favorite '{0}' is added to the list.",
             remove: "The favorite '{0}' is removed.",
-            exists: "This favorite still exists."
+            exists: "This favorite still exists.",
+            notSupported: "The provider of the favorite '{0}' isn't supported and can't be loaded."
         }
     },
     inform: {

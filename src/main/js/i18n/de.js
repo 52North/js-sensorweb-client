@@ -210,12 +210,14 @@ i18n.de = {
         group:{
             add: "Der Status wird mit dem Name '{0}' in den Favoriten abgelegt.",
             noTimeseries: "Derzeit sind keine Zeitreihen ausgewählt.",
-            exists: "Dieser Status existiert bereits."
+            exists: "Dieser Status existiert bereits.",
+            notSupported: "Der Datenanbieter eines Eintrag aus '{0}' wird nicht unterstützt und kann deswegen nicht eingeladen werden."
         },
         single: {
             add: "Einer neuer Favorit mit dem Name '{0}' ist abgelegt worden.",
             remove: "Der Favorit '{0}' ist entfernt worden.",
-            exists: "Dieser Favorit existiert bereits."
+            exists: "Dieser Favorit existiert bereits.",
+            notSupported: "Der Datenanbieter des Favoriten '{0}' wird nicht unterstützt und kann deswegen nicht eingeladen werden."
         }
     },
     inform: {
