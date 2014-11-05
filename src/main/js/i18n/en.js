@@ -197,6 +197,10 @@ i18n.en = {
             text: 'Here you get a table of the raw data values to your selected time series.'
         },
         step13: {
+            header: 'Favorite management',
+            text: 'The legend entries/timeseries could be saved as favorites. In this view all favorites are listed and could be maintained.'
+        },
+        step14: {
             header: 'Finished',
             text: 'Well done!<br> This client is a product of <a href="http://52north.org" target="_blank">52&deg;North GmbH</a>. You can find the source code on <a href="https://github.com/52North/js-sensorweb-client" target="_blank">GitHub</a>.'
         }
