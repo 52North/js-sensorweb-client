@@ -18,7 +18,8 @@
     text-align: center;
 }
 
-.resetStatus {
+.resetStatus,
+.saveStatus {
     margin-bottom: 5px;
 }
 
