@@ -50,7 +50,7 @@
         display: none;
     }
     .legend.active {
-        background: rgba(66, 139, 202, 0.5);
+        background: rgba(66, 139, 202, 0.65);
     }
 }
 
