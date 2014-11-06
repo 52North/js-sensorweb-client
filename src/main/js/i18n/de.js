@@ -31,6 +31,9 @@ i18n.de = {
         importExportHelp: 'Datei für den Im- oder Exportieren wählen',
         noFileSelected: 'Keine Datei ausgewählt'
     },
+    table: {
+        time: "Zeit"
+    },
     chart: {
         noTimeseriesSelected: 'Sie haben keine Zeitreihe ausgewählt oder die gewählten Zeitreihen haben keine Werte in dem derzeitigen Zeitraum.',
         outsideOfDataRange: 'Außerhalb des Datenbereichs!',

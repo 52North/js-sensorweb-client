@@ -194,7 +194,7 @@ var TableController = {
         this.htmltable = $('<table></table>').addClass('table').addClass('table-condensed');
         var header = $('<thead></thead>');
         var headerrow = $('<tr></tr>');
-        headerrow.append($('<th></th>').data('index', 0).text('Time'));
+        headerrow.append($('<th></th>').data('index', 0).text(_('table.time')));
         var index = 1;
         $.each(TimeSeriesController.getTimeseriesCollection(), function(id, elem) {
             var title = $('<div></div>').text(elem.getStationLabel());

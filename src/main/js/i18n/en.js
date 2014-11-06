@@ -36,6 +36,9 @@ i18n.en = {
         outsideOfDataRange: 'Outside of data range!',
         annotation: 'Data without warrenty!'
     },
+    table: {
+        time: "Time"
+    },
     map: {
         userLocation: 'Here is your current location',
         stationSelection: {
