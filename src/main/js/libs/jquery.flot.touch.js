@@ -9,7 +9,7 @@
 	var options = {
 	  touch: {
 	    pan: 'x',
-	    scale: 'xy',
+	    //scale: 'xy',
 	    autoWidth: true,
 	    autoHeight: false
 	  }
@@ -45,7 +45,6 @@
 		}
 
 		function scale(delta) {
-            /*
 			var placeholder = plot.getPlaceholder();
 			var options = plot.getOptions();
 			var container = placeholder.children('div.flot-touch-container');
@@ -59,11 +58,13 @@
 			  case 'y':
 			    container.css('-webkit-transform', 'scaleY(' + relativeScale + ')');
 			    break;
-			  default:
+              case 'xy':
 			    container.css('-webkit-transform', 'scale(' + relativeScale + ')');
 			    break;
+              default:
+                // disabled
+                break;
 			}
-            */
 		}
 
 		function processOptions(plot, options) {
