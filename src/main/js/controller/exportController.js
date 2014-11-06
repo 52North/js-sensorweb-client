@@ -56,14 +56,15 @@ var ExportController = {
         }
         if (navigator.msSaveBlob) {
             // IE 10 or greater...
-            var blob = new Blob([content], {
-                type: 'text/csv;charset=utf-8;'
+            var blob = new Blob(["\uFEFF" + content], {
+                type: 'text/csv;charset=utf-8;',
+                encoding: "utf-8"
             });
             navigator.msSaveBlob(blob, filename);
         } else {
             // FF, Chrome ...
             var a = document.createElement('a');
-            a.href = 'data:attachment/csv,' + encodeURI(content);
+            a.href = 'data:text/csv;base64,' + btoa(content);
             a.target = '_blank';
             a.download = filename;
             document.body.appendChild(a);
