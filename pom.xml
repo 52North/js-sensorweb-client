@@ -304,11 +304,15 @@
                                         <cssSourceFile>libs/leaflet-full.css</cssSourceFile>
                                         <cssSourceFile>libs/leafletMarkerCluster.css</cssSourceFile>
                                         <cssSourceFile>libs/l.geosearch.css</cssSourceFile>
+                                        <cssSourceFile>libs/jquery.gritter.css</cssSourceFile>
                                     </cssSourceFiles>
                                     <jsSourceFiles>
+                                        <jsSourceFile>libs/jquery.XDomainRequest.js</jsSourceFile>
                                         <jsSourceFile>libs/jquery.flot.js</jsSourceFile>
                                         <jsSourceFile>libs/jquery.flot.time.js</jsSourceFile>
                                         <jsSourceFile>libs/jquery.flot.navigate.js</jsSourceFile>
+                                        <jsSourceFile>libs/jquery.flot.touch.js</jsSourceFile>
+                                        <jsSourceFile>libs/jquery.gritter.js</jsSourceFile>
                                         <jsSourceFile>libs/jquery.total-storage.js</jsSourceFile>
                                         <jsSourceFile>libs/leaflet-full.js</jsSourceFile>
                                         <jsSourceFile>libs/leaflet.markercluster-src.js</jsSourceFile>
