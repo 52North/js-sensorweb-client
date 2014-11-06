@@ -45,6 +45,7 @@
 		}
 
 		function scale(delta) {
+            /*
 			var placeholder = plot.getPlaceholder();
 			var options = plot.getOptions();
 			var container = placeholder.children('div.flot-touch-container');
@@ -62,6 +63,7 @@
 			    container.css('-webkit-transform', 'scale(' + relativeScale + ')');
 			    break;
 			}
+            */
 		}
 
 		function processOptions(plot, options) {
