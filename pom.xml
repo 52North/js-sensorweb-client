@@ -237,12 +237,12 @@
                         <latestYearOfContribution>${currentYear}</latestYearOfContribution>
                     </properties>
                     <includes>
-                        <include>**/*.js</include>
-                        <include>**/*.css</include>
+                        <include>${basedir}/src/**/*.js</include>
+                        <include>${basedir}/src/**/*.css</include>
                     </includes>
                     <excludes>
-                        <exclude>**/js/libs/**</exclude>
-                        <exclude>**/css/libs/**</exclude>
+                        <exclude>${basedir}/src/**/js/libs/**</exclude>
+                        <exclude>${basedir}/src/**/css/libs/**</exclude>
                     </excludes>
                 </configuration>
                 <executions>
