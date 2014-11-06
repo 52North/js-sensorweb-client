@@ -348,7 +348,7 @@ var Map = {
     createDefaultPhenomenaEntry: function() {
         $('.phenomena-entry').append(this.createPhenomenaEntry({
             id: "all",
-            label: _('main.phenomena')
+            label: _('main.allPhenomena')
         }));
         $('[data-id=all]').click($.proxy(function(event, bla) {
             $('.phenomena-entry').find('.selected').removeClass('selected');

@@ -23,7 +23,7 @@ i18n.de = {
         settings: 'Einstellungen',
         stationSelection: 'Wähle eine Station aus',
         chartView: 'Diagrammansicht',
-        phenomena: 'Phänomene',
+        allPhenomena: 'Alle Phänomene',
         phenomenon: 'Phänomen',
         favoritesList: 'Favoriten',
         importFavorites: 'Importieren',

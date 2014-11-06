@@ -43,7 +43,7 @@ var Pages = {
         }
     },
     togglePhenomenon: function(active, label) {
-        var name = !label ? _('main.phenomena') : label;
+        var name = !label ? _('main.allPhenomena') : label;
         if (active) {
             $('.phenomena').toggleClass('active');
             if ($('.phenomena').hasClass('active')) {

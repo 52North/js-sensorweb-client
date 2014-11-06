@@ -23,7 +23,7 @@ i18n.en = {
         settings: 'Settings',
         stationSelection: 'Select a station',
         chartView: 'Chart view',
-        phenomena: 'Phenomena',
+        allPhenomena: 'All Phenomena',
         phenomenon: 'Phenomenon',
         favoritesList: 'Favorites',
         importFavorites: 'Import',
