@@ -45,6 +45,10 @@
     padding: 6px 6px;
 }
 
+.tsItem {
+    word-break: break-all;
+}
+
 .tsItem .additionalInfo {
     font-size: 80%;
     color: grey;

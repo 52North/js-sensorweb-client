@@ -197,6 +197,10 @@ i18n.de = {
             text: 'Hier bekommt man die Rohdaten in einer Tabelle präsentiert.'
         },
         step13: {
+            header: 'Favoritenverwaltung',
+            text: 'Die Legendeneinträge/Zeitreihen können als Favoriten abgespeichert werden. Hier werden alle Favoriten gelistet und können verwaltet werden.'
+        },
+        step14: {
             header: 'Fertig',
             text: 'Super!<br> Dieser Client ist ein Produkt von <a href="http://52north.org" target="_blank">52&deg;North GmbH</a>. Auf <a href="https://github.com/52North/js-sensorweb-client" target="_blank">GitHub</a> findest du den aktuellen Entwicklungsstand.'
         }

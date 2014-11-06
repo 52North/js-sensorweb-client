@@ -139,6 +139,7 @@
                             </cssSourceFiles>
                             <jsSourceFiles>
                                 <jsSourceFile>libs/jquery-1.10.2.js</jsSourceFile>
+                                <jsSourceFile>libs/jquery.XDomainRequest.js</jsSourceFile>
                                 <jsSourceFile>libs/jquery.flot.js</jsSourceFile>
                                 <jsSourceFile>libs/jquery.flot.time.js</jsSourceFile>
                                 <jsSourceFile>libs/jquery.flot.navigate.js</jsSourceFile>

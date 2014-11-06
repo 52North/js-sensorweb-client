@@ -131,9 +131,16 @@ var GuidedTourController = (function() {
             initStep: function() {
             }
         }, {
-            anchor: '.navbar-header.chart',
+            anchor: '[data-target="#favorites"]',
             title: _('guide.step13.header'),
             text: _('guide.step13.text'),
+            arrow: true,
+            initStep: function() {
+            }
+        }, {
+            anchor: '.navbar-header.chart',
+            title: _('guide.step14.header'),
+            text: _('guide.step14.text'),
             initStep: function() {
             }
         }];
