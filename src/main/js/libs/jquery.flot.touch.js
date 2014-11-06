@@ -195,61 +195,65 @@
 			});
 
 			placeholder.bind('touchend', function(evt) {
-  			var placeholder = plot.getPlaceholder();
-  			var options = plot.getOptions();
-			  var container = placeholder.children('div.flot-touch-container');
+                var placeholder = plot.getPlaceholder();
+                var options = plot.getOptions();
+                var container = placeholder.children('div.flot-touch-container');
 
-  			// Apply the pan.
-  			if (relativeOffset.x !== 0 || relativeOffset.y !== 0) {
-  			  $.each(plot.getAxes(), function(index, axis) {
-  			    if (axis.direction === options.touch.pan.toLowerCase() || options.touch.pan.toLowerCase() == 'xy') {
-              var min = axis.c2p(axis.p2c(axis.min) - relativeOffset[axis.direction]);
-              var max = axis.c2p(axis.p2c(axis.max) - relativeOffset[axis.direction]);
+                var applyPanning = relativeOffset.x !== 0 || relativeOffset.y !== 0;
+                var applyZooming = relativeScale !== 1.0;
 
-              axis.options.min = min;
-              axis.options.max = max;
-  			    }
-  			  });
-  			}
+                // Apply the pan.
+                if (applyPanning) {
+                  $.each(plot.getAxes(), function(index, axis) {
+                    if (axis.direction === options.touch.pan.toLowerCase() || options.touch.pan.toLowerCase() == 'xy') {
+                        var min = axis.c2p(axis.p2c(axis.min) - relativeOffset[axis.direction]);
+                        var max = axis.c2p(axis.p2c(axis.max) - relativeOffset[axis.direction]);
 
-  			// Apply the scale.
-  			if (relativeScale !== 1.0) {
-  			  var width = plot.width();
-  			  var height = plot.height();
-  			  var scaleOriginPixel = {
-  			    x: Math.round((scaleOrigin.x / 100) * width),
-  			    y: Math.round((scaleOrigin.y / 100) * height)
-  			  };
-  			  var range = {
-        	  x: {
-        	    min: scaleOriginPixel.x - (scaleOrigin.x / 100) * width / relativeScale,
-        	    max: scaleOriginPixel.x + (1 - (scaleOrigin.x / 100)) * width / relativeScale
-        	  },
-        	  y: {
-        	    min: scaleOriginPixel.y - (scaleOrigin.y / 100) * height / relativeScale,
-        	    max: scaleOriginPixel.y + (1 - (scaleOrigin.y / 100)) * height / relativeScale
-        	  }
-        	};
+                        axis.options.min = min;
+                        axis.options.max = max;
+                    }
+                  });
+                }
 
-  			  $.each(plot.getAxes(), function(index, axis) {
-  			    if (axis.direction === options.touch.scale.toLowerCase() || options.touch.scale.toLowerCase() == 'xy') {
-          	  var min = axis.c2p(range[axis.direction].min);
-          	  var max = axis.c2p(range[axis.direction].max);
+                // Apply the scale.
+                if (applyZooming) {
+                    var width = plot.width();
+                    var height = plot.height();
+                    var scaleOriginPixel = {
+                      x: Math.round((scaleOrigin.x / 100) * width),
+                      y: Math.round((scaleOrigin.y / 100) * height)
+                    };
+                    var range = {
+                        x: {
+                          min: scaleOriginPixel.x - (scaleOrigin.x / 100) * width / relativeScale,
+                          max: scaleOriginPixel.x + (1 - (scaleOrigin.x / 100)) * width / relativeScale
+                        },
+                        y: {
+                          min: scaleOriginPixel.y - (scaleOrigin.y / 100) * height / relativeScale,
+                          max: scaleOriginPixel.y + (1 - (scaleOrigin.y / 100)) * height / relativeScale
+                        }
+                    };
 
-          	  if (min > max) {
-          	    var temp = min;
-          	    min = max;
-          	    max = temp;
-          	  }
+                    $.each(plot.getAxes(), function(index, axis) {
+                      if (axis.direction === options.touch.scale.toLowerCase() || options.touch.scale.toLowerCase() == 'xy') {
+                        var min = axis.c2p(range[axis.direction].min);
+                        var max = axis.c2p(range[axis.direction].max);
 
-          	  axis.options.min = min;
-          	  axis.options.max = max;
-  			    }
-  			  });
-			  }
+                        if (min > max) {
+                          var temp = min;
+                          min = max;
+                          max = temp;
+                        }
 
-  			plot.setupGrid();
-      	plot.draw();
+                        axis.options.min = min;
+                        axis.options.max = max;
+                      }
+                  });
+
+                }
+
+                plot.setupGrid();
+                plot.draw();
 
 				isPanning = false;
 				isZooming = false;
@@ -263,6 +267,13 @@
 				  '-webkit-transform': 'translate(' + relativeOffset.x + 'px,' + relativeOffset.y + 'px) scale(' + relativeScale + ')',
 				  '-webkit-transform-origin': scaleOrigin.x + '% ' + scaleOrigin.y + '%'
 				});
+
+                if (applyPanning) {
+                    plot.getPlaceholder().trigger("plotpanEnd", [ plot ]);
+                }
+                if (applyZooming) {
+                    plot.getPlaceholder().trigger("plotzoom", [ plot ]);
+                }
 			});
 		}
 
