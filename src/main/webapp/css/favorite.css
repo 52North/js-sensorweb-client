@@ -19,10 +19,6 @@
     cursor: pointer;
 }
 
-.favorites-import-export {
-    margin: 3px;
-}
-
 .btn-file {
     position: relative;
     overflow: hidden;
@@ -54,11 +50,20 @@
     cursor: pointer;
 }
 
+.container > .favorites {
+    height: inherit;
+    overflow: auto;
+}
+
+#favorites-list > .favorite-entry,
+.favorites > .import-export-btns {
+    padding: 7px;
+    margin: 15px 15px 0px 15px;
+}
+
 .favorite-entry {
     border: 1px solid #AAA;
     border-bottom: 3px solid #BBB;
-    padding: 7px;
-    margin: 15px;
     word-break: break-all;
 }
 

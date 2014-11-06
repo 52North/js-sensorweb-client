@@ -55,7 +55,7 @@ var FavoriteController = {
         Pages.togglePhenomenon(false);
     },
     clearFavoritesView: function() {
-        $('.favoriteslist').empty();
+        $('#favorites-list').empty();
     },
     updateFavoritesView: function() {
         this.clearFavoritesView();
@@ -77,7 +77,7 @@ var FavoriteController = {
             lastValue: lastValue.value || '',
             uom: ts.getUom() || ''
         });
-        $('.favoriteslist').append(elem);
+        $('#favorites-list').append(elem);
         this.addFavoriteClickEvent(ts.getInternalId());
     },
     drawFavoriteGroup: function(favGroup, idx) {
@@ -94,7 +94,7 @@ var FavoriteController = {
                 };
             })
         });
-        $('.favoriteslist').append(elem);
+        $('#favorites-list').append(elem);
         this.addGroupClickEvents(idx);
     },
     showFavoritesView: function() {
