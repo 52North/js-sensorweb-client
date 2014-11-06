@@ -356,4 +356,10 @@
         <skipMinify>true</skipMinify>
         <minifiedPostfix></minifiedPostfix>
     </properties>
+
+    <scm>
+		<connection>scm:git:git://github.com/52North/js-sensorweb-client.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/52North/js-sensorweb-client.git</developerConnection>
+        <url>https://github.com/52North/js-sensorweb-client</url>
+	</scm>
 </project>
