@@ -33,7 +33,8 @@ i18n.de = {
     },
     chart: {
         noTimeseriesSelected: 'Sie haben keine Zeitreihe ausgewählt oder die gewählten Zeitreihen haben keine Werte in dem derzeitigen Zeitraum.',
-        outsideOfDataRange: 'Außerhalb des Datenbereichs!'
+        outsideOfDataRange: 'Außerhalb des Datenbereichs!',
+        annotation: 'Daten ohne Gewähr!'
     },
     map: {
         userLocation: 'Hier ist ihr Standort',

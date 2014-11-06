@@ -26,6 +26,13 @@
     z-index: 1;
 }
 
+.chart-annotation {
+    position: absolute;
+    bottom: 25px;
+    right: 15px;
+    color: #d43f3a;
+}
+
 .axisTarget {
     background-color: red;
     cursor: pointer;

@@ -48,7 +48,7 @@ var Settings = {
     // default setting for clustering stations
     clusterStations: true,
     // default setting for generalization of the data
-    generalizeData: false,
+    generalizeData: true,
     // default setting for save status
     saveStatus: false,
     // default setting for concentration marker
@@ -194,5 +194,6 @@ var Settings = {
     tileLayerOptions: {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     },
-    enableGeoSearch: true
+    enableGeoSearch: true,
+    annotation: _('chart.annotation')
 };

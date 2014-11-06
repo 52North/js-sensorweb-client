@@ -33,7 +33,8 @@ i18n.en = {
     },
     chart: {
         noTimeseriesSelected: 'You have selected no timeseries or the selected timeseries have no values in the given time range.',
-        outsideOfDataRange: 'Outside of data range!'
+        outsideOfDataRange: 'Outside of data range!',
+        annotation: 'Data without warrenty!'
     },
     map: {
         userLocation: 'Here is your current location',
