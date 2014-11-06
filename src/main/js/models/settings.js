@@ -136,8 +136,8 @@ var Settings = {
                 name: 'thisWeek',
                 label: _('timeSelection.presets.thisWeek'),
                 interval: {
-                    from: moment().subtract('weeks', 1).startOf('week'),
-                    till: moment().subtract('weeks', 1).endOf('week'),
+                    from: moment().startOf('week'),
+                    //till: moment(),
                     mode: 'week'
                 }
             },
@@ -145,8 +145,8 @@ var Settings = {
                 name: 'lastWeek',
                 label: _('timeSelection.presets.lastWeek'),
                 interval: {
-                    from: moment().startOf('week'),
-                    //till: moment(),
+                    from: moment().subtract('weeks', 1).startOf('week'),
+                    till: moment().subtract('weeks', 1).endOf('week'),
                     mode: 'week'
                 }
             },
@@ -154,8 +154,8 @@ var Settings = {
                 name: 'thisMonth',
                 label: _('timeSelection.presets.thisMonth'),
                 interval: {
-                    from: moment().subtract('months', 1).startOf('month'),
-                    till: moment().subtract('months', 1).endOf('month'),
+                    from: moment().startOf('month'),
+                    //till: moment(),
                     mode: 'month'
                 }
             },
@@ -163,8 +163,8 @@ var Settings = {
                 name: 'lastMonth',
                 label: _('timeSelection.presets.lastMonth'),
                 interval: {
-                    from: moment().startOf('month'),
-                    //till: moment(),
+                    from: moment().subtract('months', 1).startOf('month'),
+                    till: moment().subtract('months', 1).endOf('month'),
                     mode: 'month'
                 }
             },
