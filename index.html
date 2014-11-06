@@ -95,7 +95,7 @@
         &quot;attribution&quot;: &quot;&amp;copy; &lt;a href=\&quot;http://www.mapquest.com/\&quot; target=\&quot;_blank\&quot;&gt;MapQuest&lt;/a&gt; &lt;img src=\&quot;http://developer.mapquest.com/content/osm/mq_logo.png\&quot;/&gt;&quot;
     },
     &quot;selectedLineWidth&quot; : 4,
-    &quot;commonLineWidth&quot; : 1   
+    &quot;commonLineWidth&quot; : 1
 }</pre>
                                 and than import it where the JS-Client <code>StartController</code> is initialized:
                                 <pre>
@@ -162,15 +162,15 @@ $.getJSON("settings.json", function(json) {
                                         </td>
                                         <td>
                                             <pre>providerBlackList: [
-        {
-            serviceID: 'srv_123',
-            apiUrl: 'http://providerA/timeseries/api/v1/'
-        },
-        {
-            serviceID: 'srv_456',
-            apiUrl: 'http://providerB/timeseries/api/v1/'
-        }
-    ]</pre>
+    {
+        serviceID: 'srv_123',
+        apiUrl: 'http://providerA/timeseries/api/v1/'
+    },
+    {
+        serviceID: 'srv_456',
+        apiUrl: 'http://providerB/timeseries/api/v1/'
+    }
+]</pre>
                                         </td>
                                         <td>
                                             The entries in this list will be removed from the provider list offered to the user.
@@ -182,9 +182,9 @@ $.getJSON("settings.json", function(json) {
                                         </td>
                                         <td>
                                             <pre>restApiUrls: {
-        'http://providerA/timeseries/api/v1/': 'providerA',
-        'http://providerB/timeseries/api/v1/': 'providerB'
-    }</pre>
+    'http://providerA/timeseries/api/v1/': 'providerA',
+    'http://providerB/timeseries/api/v1/': 'providerB'
+}</pre>
                                         </td>
                                         <td>A list of timeseries-API urls and an appropriate identifier to create internal timeseries ids.</td>
                                     </tr>
@@ -194,9 +194,9 @@ $.getJSON("settings.json", function(json) {
                                         </td>
                                         <td>
                                             <pre>defaultProvider: {
-            serviceID: 'srv_123',
-            apiUrl: 'http://providerA/timeseries/api/v1/'
-    }</pre>
+        serviceID: 'srv_123',
+        apiUrl: 'http://providerA/timeseries/api/v1/'
+}</pre>
                                         </td>
                                         <td>The default selected provider to show stations in the map.</td>
                                     </tr>
@@ -323,8 +323,8 @@ $.getJSON("settings.json", function(json) {
                                         </td>
                                         <td>
                                             <pre>additionalParameters: {
-        locale: 'de'
-    }</pre>
+    locale: 'de'
+}</pre>
                                         </td>
                                         <td>Additional parameters which are append to the requests.</td>
                                     </tr>
@@ -336,6 +336,15 @@ $.getJSON("settings.json", function(json) {
                                             <pre>defaultLanguage: 'en'</pre>
                                         </td>
                                         <td>Default language for internationalization. Will be used if no language parameter ist set in the url and no language is set in th browser.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>saveStatusPossible</code>
+                                        </td>
+                                        <td>
+                                            <pre>saveStatusPossible: true</pre>
+                                        </td>
+                                        <td>En-/disable status saving.</td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -378,8 +387,9 @@ $.getJSON("settings.json", function(json) {
                                             <code>colorList</code>
                                         </td>
                                         <td>
-                                            <pre>colorList: ['#1abc9c', '#27ae60', '#2980b9', '#8e44ad', '#2c3e50', '#f1c40f',
-        '#d35400', '#c0392b', '#7f8c8d']</pre>
+                                            <pre>colorList: ['#1abc9c', '#27ae60', '#2980b9',
+    '#8e44ad', '#2c3e50', '#f1c40f',
+    '#d35400', '#c0392b', '#7f8c8d']</pre>
                                         </td>
                                         <td>A list of colors for the selection of a different timeseries color.</td>
                                     </tr>
@@ -389,13 +399,43 @@ $.getJSON("settings.json", function(json) {
                                         </td>
                                         <td>
                                             <pre>intervalList: [
-        {label: _('styleChange.barChartInterval.hour'), value: 1},
-        {label: _('styleChange.barChartInterval.day'), value: 24},
-        {label: _('styleChange.barChartInterval.week'), value: 7 * 24},
-        {label: _('styleChange.barChartInterval.month'), value: 30 * 24}
-    ]</pre>
+    {label: _('styleChange.barChartInterval.hour'), value: 1},
+    {label: _('styleChange.barChartInterval.day'), value: 24},
+    {label: _('styleChange.barChartInterval.week'), value: 7 * 24},
+    {label: _('styleChange.barChartInterval.month'), value: 30 * 24}
+]</pre>
                                         </td>
                                         <td>The interval to display the timeseries in a bar diagram with label and value in hours.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <code>timeRangeData</code>
+                                        </td>
+                                        <td>
+                                            <pre>timeRangeData: {
+    presets: [
+        {
+            name: 'lastHour',
+            label: _('timeSelection.presets.lastHour'),
+            interval: {
+                from: moment().subtract('hours', 1),
+                till: moment(),
+                mode: 'minutes'
+            }
+        },
+        {
+            name: 'today',
+            label: _('timeSelection.presets.today'),
+            interval: {
+                from: moment().startOf('day'),
+                till: moment().endOf('day'),
+                mode: 'day'
+            }
+        }
+    ]
+}</pre>
+                                        </td>
+                                        <td>Preconfigure fixed time intervals which will be rendered as selectable buttons.</td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -412,17 +452,17 @@ $.getJSON("settings.json", function(json) {
                                         </td>
                                         <td>
                                             <pre>wmsLayer: [
-        {
-            url: "http://www.wms.nrw.de/umwelt/forst/waldNRW",
-            options: {
-                layers: 'WaldNRW',
-                format: 'image/png',
-                transparent: true,
-                attribution: "Wald in NRW"
-            },
-            name: "Wald in NRW"
-        }
-    ]</pre>
+    {
+        url: "http://www.wms.nrw.de/umwelt/forst/waldNRW",
+        options: {
+            layers: 'WaldNRW',
+            format: 'image/png',
+            transparent: true,
+            attribution: "Wald in NRW"
+        },
+        name: "Wald in NRW"
+    }
+]</pre>
                                         </td>
                                         <td>An array of Web Map Services with the parameters:
                                             <ul>
@@ -434,14 +474,23 @@ $.getJSON("settings.json", function(json) {
                                     </tr>
                                     <tr>
                                         <td>
+                                            <code>tileLayerUrl</code>
+                                        </td>
+                                        <td>
+                                            <pre>tileLayerUrl: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png'</pre>
+                                        </td>
+                                        <td>Configuration for the tile layer in the leaflet map (see <a href="http://leafletjs.com/reference.html#tilelayer"> Leaflet documentation</a>).</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
                                             <code>tileLayerOptions</code>
                                         </td>
                                         <td>
                                             <pre>tileLayerOptions: {
-        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-    }</pre>
+    attribution: '&amp;copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+}</pre>
                                         </td>
-                                        <td>see <code>tileLayerOptions</code></td>
+                                        <td><a href="http://leafletjs.com/reference.html#tilelayer-options">Leaflet options</a> for the chosen tile layer (do not forget to encode special characters).</td>
                                     </tr>
                                     <tr>
                                         <td>
