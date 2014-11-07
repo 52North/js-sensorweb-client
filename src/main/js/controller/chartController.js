@@ -312,7 +312,7 @@ var ChartController = {
             this.options.yaxes = this.createYAxis();
 
             this.plot = $.plot('#placeholder', this.data, this.options);
-            placeholder.append("<div class='chart-annotation'>" + Settings.annotation + "</div>");
+            placeholder.append("<div class='chart-annotation'>" + _('chart.annotation') +  "</div>");
             $.each(this.plot.getAxes(), $.proxy(function(i, axis) {
                 if (!axis.show)
                     return;

@@ -194,6 +194,5 @@ var Settings = {
     tileLayerOptions: {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     },
-    enableGeoSearch: true,
-    annotation: _('chart.annotation')
+    enableGeoSearch: true
 };
