@@ -35,6 +35,15 @@ a:hover {
     color: white;
 }
 
+.phenomena-entry hr {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.phenomena-entry > a:nth-child(1) div {
+    margin-top: 20px;
+}
+
 .phenomenonItem .loadPhen .loading {
     display: inline;
 }

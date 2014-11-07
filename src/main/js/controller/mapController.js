@@ -356,6 +356,7 @@ var Map = {
             Pages.togglePhenomenon(false);
             Map.loadStations();
         }));
+        $('[data-id=all]').append("<hr />");
         $('[data-id=all]').find('.item').addClass('selected');
     },
     /*----- provider list -----*/
