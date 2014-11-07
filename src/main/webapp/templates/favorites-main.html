@@ -8,22 +8,23 @@
                         <span>{{_i}}main.favoritesList{{/i}}</span>
                     </div>
                 </div>
-                <a type="button"
-                   class="btn btn-default navbar-btn button-right"
+                <a class="btn btn-default navbar-btn button-right disabled"
                    data-target="#chart" href="#chart">
                     <span class="glyphicon glyphicon-stats"></span>
                     <span class="buttonCaption">{{_i}}main.chartView{{/i}}</span>
                 </a>
-                <a type="button"
-                   class="btn btn-default navbar-btn button-right"
+                <a class="btn btn-default navbar-btn button-right"
                    data-target="#settings">
                     <span class="glyphicon glyphicon-cog"></span>
                     <span class="buttonCaption">{{_i}}main.settings{{/i}}</span>
                 </a>
-                <a type="button"
-                   class="btn btn-default navbar-btn button-right"
+                <a class="btn btn-default navbar-btn button-right"
                    data-target="#tour">
                     <span class="glyphicon glyphicon-question-sign"></span>
+                </a>
+                <a class="btn btn-default navbar-btn button-right active favoriteButton"
+                   data-target="#favorites" id="favoriteButton">
+                    <span class="glyphicon glyphicon-star"></span>
                 </a>
             </div>
         </div>

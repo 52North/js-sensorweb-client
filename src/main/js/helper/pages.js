@@ -15,6 +15,9 @@
  * limitations under the License.
  */
 var Pages = {
+    current: function() {
+        return $(".swc-page-current").attr("id");
+    },
     navigateToPage: function(toPage) {
         $(".swc-page-current").removeClass('swc-page-current');
         $(toPage).addClass('swc-page-current');
