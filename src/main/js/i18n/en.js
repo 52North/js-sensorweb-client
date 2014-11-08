@@ -128,6 +128,7 @@ i18n.en = {
         header: 'Settings',
         resetStatus: 'Reset status',
         chooseLanguage: 'Switch language',
+        requiresRestart: 'Needs Restart!',
         permalink: {
             create: 'Create a permalink as',
             inWindow: 'link in a new window',

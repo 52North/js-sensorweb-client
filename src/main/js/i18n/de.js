@@ -128,6 +128,7 @@ i18n.de = {
         header: 'Einstellungen',
         resetStatus: 'Lösche den Status',
         chooseLanguage: 'Sprache wechseln',
+        requiresRestart: 'Erfordert Neustart!',
         permalink: {
             create: 'Erstelle Permalink',
             inWindow: 'öffnen im neuen Fenster',

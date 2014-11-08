@@ -15,9 +15,7 @@
  * limitations under the License.
  */
 var i18n = {};
-
 var languageChooser;
-
 function _(key) {
     var lang = currentLanguage();
     var text = readI18n(lang, key) || readI18n("en", key);
@@ -46,18 +44,21 @@ function createLanguageChooser() {
                 .addClass("flag flag-" + code)
                 .addClass("pull-right");
     };
-
     //$(".language-chooser-box button").append(createFlagImage(currentLanguage()));
     $.each(languagesAvailable(), function(idx, code) {
         if (code.indexOf('_') === -1) {
-            var link = $("<a></a>", {
-                href: PermalinkController.createPermalink() + "&locale=" + code,
+            var item = $("<li />", {
                 role: "menuitem"
             })
                     .append(readI18n(code, 'fullName'))
-                    .append(createFlagImage(code));
+                    .append(createFlagImage(code))
+                    .on("click", function() {
+                        var ok = window.confirm(_("settings.requiresRestart"));
+                        if (ok) {
+                            window.location = PermalinkController.createPermalink() + "&locale=" + code;
+                        }
+                    });
 
-            var item = $("<li />").append(link);
             options.append(item);
         }
     });
@@ -72,7 +73,7 @@ function readI18n(lang, key) {
             // convert lang to 'en_US' as 'en-US' not allowed
             var value = i18n[langParts[0] + "_" + langParts[1]];
             if (!value && langParts.length > 1) {
-                // no subregion, try e.g. en-US => en
+// no subregion, try e.g. en-US => en
                 value = i18n[langParts[0]];
             }
         }

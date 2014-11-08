@@ -38,3 +38,20 @@
 .language-chooser {
     margin: 5px;
 }
+
+.dropdown-menu {
+    width: 100%;
+}
+
+.dropdown-menu li {
+    cursor: pointer;
+    margin-right: 4px;
+}
+
+.dropdown-menu li:hover {
+    background-color: #3276b1;
+}
+
+.dropdown-menu img {
+    margin-top: 4px;
+}
