@@ -19,6 +19,19 @@
                         <div class="panel-body">
                             <button type="button" class="btn btn-block btn-default resetStatus" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>{{_i}}settings.resetStatus{{/i}}</button>
                             <button type="button" class="btn btn-block btn-default saveStatus" data-dismiss="modal">{{_i}}settings.saveStatus{{/i}}</button>
+                            <div class="language-chooser">
+
+                                <div class="language-chooser-box dropdown btn-group">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                            id="choose-language-box">
+                                        <span>{{_i}}settings.chooseLanguage{{/i}}:</span>
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+
+                                    </ul>
+                                </div>
+                            </div>
                             <div class="panel panel-default permalink">
                                 <div class="panel-heading">{{_i}}settings.permalink.create{{/i}}:</div>
                                 <div class="panel-body">
@@ -42,10 +55,10 @@
                                 </div>
                             </div>
                             <button type="button" class="btn btn-block btn-default clusteringStations" data-dismiss="modal">{{_i}}settings.clusterMarker{{/i}}</button>
-                            <button type="button" class="btn btn-block btn-default concentrationMarker" data-dismiss="modal">
+                            <a class="btn btn-block btn-default concentrationMarker" data-dismiss="modal">
                                 <div>{{_i}}settings.markerWithLastInfo.header{{/i}}</div>
                                 <div class="btn-subtitle">{{_i}}settings.markerWithLastInfo.label{{/i}}</div>
-                            </button>
+                            </a>
                             <button type="button" class="btn btn-block btn-default generalizeData" data-dismiss="modal">{{_i}}settings.generalizeData{{/i}}</button>
                         </div>
                     </div>

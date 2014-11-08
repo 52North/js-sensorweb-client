@@ -19,6 +19,7 @@ var SettingsController = {
         $(document).ready(function() {
             $('[data-target="#settings"]').click(function() {
                 Modal.show('settings');
+                createLanguageChooser();
                 if (Settings.saveStatusPossible) {
                     // reset status
                     $('.resetStatus').on('click', function() {

@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 i18n.de = {
+    fullName: 'Deutsch',
     ok: 'OK',
     main: {
         legend: 'Legende',
@@ -126,6 +127,7 @@ i18n.de = {
     settings: {
         header: 'Einstellungen',
         resetStatus: 'Lösche den Status',
+        chooseLanguage: 'Sprache wechseln',
         permalink: {
             create: 'Erstelle Permalink',
             inWindow: 'öffnen im neuen Fenster',

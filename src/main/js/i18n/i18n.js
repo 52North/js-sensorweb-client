@@ -16,8 +16,10 @@
  */
 var i18n = {};
 
+var languageChooser;
+
 function _(key) {
-    var lang = Permalink.getUrlParameter('lang') || navigator.language || navigator.userLanguage;
+    var lang = currentLanguage();
     var text = readI18n(lang, key) || readI18n("en", key);
     if ($.isEmptyObject(text)) {
         return key;
@@ -26,15 +28,50 @@ function _(key) {
     }
 }
 
+function currentLanguage() {
+    return Permalink.getUrlParameter('lang') || Permalink.getUrlParameter('locale') || navigator.language || navigator.userLanguage;
+}
+
+function languagesAvailable() {
+    return Object.keys(i18n);
+}
+
+function createLanguageChooser() {
+    var options = $(".language-chooser-box ul");
+    createFlagImage = function(code) {
+        return $("<img />", {
+            src: "../images/blank.gif",
+            name: readI18n(code, 'fullName')
+        })
+                .addClass("flag flag-" + code)
+                .addClass("pull-right");
+    };
+
+    //$(".language-chooser-box button").append(createFlagImage(currentLanguage()));
+    $.each(languagesAvailable(), function(idx, code) {
+        if (code.indexOf('_') === -1) {
+            var link = $("<a></a>", {
+                href: PermalinkController.createPermalink() + "&locale=" + code,
+                role: "menuitem"
+            })
+                    .append(readI18n(code, 'fullName'))
+                    .append(createFlagImage(code));
+
+            var item = $("<li />").append(link);
+            options.append(item);
+        }
+    });
+}
+
 function readI18n(lang, key) {
     try {
         var keyArray = key.split('.');
         var value = i18n[lang];
-        if ( !value) {
+        if (!value) {
             var langParts = lang.split('-');
             // convert lang to 'en_US' as 'en-US' not allowed
             var value = i18n[langParts[0] + "_" + langParts[1]];
-            if ( !value && langParts.length > 1) {
+            if (!value && langParts.length > 1) {
                 // no subregion, try e.g. en-US => en
                 value = i18n[langParts[0]];
             }

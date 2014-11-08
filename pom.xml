@@ -180,6 +180,7 @@
                                 <cssSourceFile>table.css</cssSourceFile>
                                 <cssSourceFile>guidedtour.css</cssSourceFile>
                                 <cssSourceFile>favorite.css</cssSourceFile>
+                                <cssSourceFile>flags.css</cssSourceFile>
                             </cssSourceFiles>
                             <jsSourceFiles>
                                 <jsSourceFile>helper/permalink.js</jsSourceFile>

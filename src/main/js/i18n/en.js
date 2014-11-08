@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 i18n.en = {
+    fullName: 'English',
     ok: 'OK',
     main: {
         legend: 'Legend',
@@ -126,6 +127,7 @@ i18n.en = {
     settings: {
         header: 'Settings',
         resetStatus: 'Reset status',
+        chooseLanguage: 'Switch language',
         permalink: {
             create: 'Create a permalink as',
             inWindow: 'link in a new window',
