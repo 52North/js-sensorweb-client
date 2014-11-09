@@ -110,13 +110,15 @@ var TimeSeriesController = {
         var earliestStart;
         var latestEnd;
         $.each(this.timeseries, $.proxy(function(index,elem) {
-            var start = moment(elem.getFirstValue().timestamp);
-            var end = moment(elem.getLastValue().timestamp);
-            if ( !earliestStart || start.isAfter(earliestStart)) {
-                earliestStart = start;
-            }
-            if ( !latestEnd || end.isBefore(latestEnd)) {
-                latestEnd = end;
+            if (elem.getFirstValue() || elem.getLastValue()) {
+                var start = moment(elem.getFirstValue().timestamp);
+                var end = moment(elem.getLastValue().timestamp);
+                if ( !earliestStart || start.isAfter(earliestStart)) {
+                    earliestStart = start;
+                }
+                if ( !latestEnd || end.isBefore(latestEnd)) {
+                    latestEnd = end;
+                }
             }
         }));
         return {
