@@ -55,8 +55,10 @@ var LegendController = {
             target = $(event.currentTarget);
             if (target.hasClass('glyphicon-eye-close')) {
                 EventManager.publish("timeseries:hide", ts.getInternalId());
+                ts.setHidden(true);
             } else {
                 EventManager.publish("timeseries:show", ts.getInternalId());
+                ts.setHidden(false);
             }
             target.toggleClass('glyphicon-eye-close');
             target.toggleClass('glyphicon-eye-open');
@@ -75,17 +77,22 @@ var LegendController = {
         }, this));
         $('[data-id=' + ts.getInternalId() + '] .refEntry').on('click', function(event) {
             var target = $(event.currentTarget);
+            var refId = target.data('refid');
             target.toggleClass('selected');
             var ev;
             if (target.hasClass('selected')) {
                 ev = "timeseries:add:referenceValue";
+                ts.getRefValuesForId(refId).setSelected(true);
             } else {
                 ev = "timeseries:remove:referenceValue";
+                ts.getRefValuesForId(refId).setSelected(false);
             }
-            EventManager.publish(ev, {
-                "tsId": ts.getInternalId(),
-                "refId": target.data('refid')
-            });
+            if (!ts.isHidden()) {
+                EventManager.publish(ev, {
+                    "tsId": ts.getInternalId(),
+                    "refId": target.data('refid')
+                });
+            }
         });
     },
     checkNoData: function(event, ts) {

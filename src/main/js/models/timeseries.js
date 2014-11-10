@@ -20,6 +20,7 @@ function TimeSeries(tsId, meta, apiUrl) {
     var values = [];
     var refValues = {};
     var synced = false;
+    var hidden = false;
     var zeroScaled = Settings.defaultZeroScale;
     var groupedAxis = Settings.defaultGroupedAxis;
     var timeBuffer = Settings.timeseriesDataBuffer || moment.duration(2, 'h');
@@ -61,6 +62,14 @@ function TimeSeries(tsId, meta, apiUrl) {
     this.setZeroScaled = function(bool) {
         zeroScaled = bool;
     };
+    
+    this.isHidden = function() {
+        return hidden;
+    };
+    
+    this.setHidden = function(bool) {
+        hidden = bool;
+    };  
     
     this.isGroupedAxis = function(){
         return groupedAxis;
@@ -168,7 +177,7 @@ function TimeSeries(tsId, meta, apiUrl) {
         return [];
     };
 
-    this.getRefValues = function(id) {
+    this.getRefValues = function() {
         return refValues;
     };
 
