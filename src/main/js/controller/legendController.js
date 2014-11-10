@@ -55,8 +55,21 @@ var LegendController = {
             target = $(event.currentTarget);
             if (target.hasClass('glyphicon-eye-close')) {
                 EventManager.publish("timeseries:hide", ts.getInternalId());
+                $.each(ts.getRefValues(), function(id,item) {
+                    EventManager.publish("timeseries:hide", item.getId());
+                    $('.refEntry[data-refid=' + item.getId() + '].selected').addClass("hide-selection");
+                });
             } else {
-                EventManager.publish("timeseries:show", ts.getInternalId());
+                $.each(ts.getRefValues(), function(id,item) {
+                    var refEntry = $('.refEntry[data-refid=' + item.getId() + ']');
+                    if (refEntry.hasClass("hide-selection")) {
+                        EventManager.publish("timeseries:add:referenceValue", {
+                            "tsId": ts.getInternalId(),
+                            "refId": item.getId()
+                        });
+                        refEntry.removeClass("hide-selection");
+                    }
+                });
             }
             target.toggleClass('glyphicon-eye-close');
             target.toggleClass('glyphicon-eye-open');
