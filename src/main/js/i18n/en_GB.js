@@ -21,7 +21,7 @@ i18n.en_GB = {
     settings: {
         permalink: {
             favorite: 'Status as favourite entry'
-        },
+        }
     },
     guide: {
         step13: {
