@@ -141,7 +141,7 @@ i18n.de = {
         clusterMarker: 'Marker gruppieren',
         markerWithLastInfo: {
             header: 'Marker mit Wert der letzten Messung',
-            label: 'Achtung - dies kann bei einigen Providern zu langen Afragen führen'
+            label: 'Achtung - dies kann bei einigen Providern zu langen Abfragen führen'
         },
         saveStatus: 'Status mitzeichnen',
         generalizeData: 'Daten generalisiert abfragen',
