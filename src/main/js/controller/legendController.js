@@ -55,21 +55,10 @@ var LegendController = {
             target = $(event.currentTarget);
             if (target.hasClass('glyphicon-eye-close')) {
                 EventManager.publish("timeseries:hide", ts.getInternalId());
-                $.each(ts.getRefValues(), function(id,item) {
-                    EventManager.publish("timeseries:hide", item.getId());
-                    $('.refEntry[data-refid=' + item.getId() + '].selected').addClass("hide-selection");
-                });
+                ts.setHidden(true);
             } else {
-                $.each(ts.getRefValues(), function(id,item) {
-                    var refEntry = $('.refEntry[data-refid=' + item.getId() + ']');
-                    if (refEntry.hasClass("hide-selection")) {
-                        EventManager.publish("timeseries:add:referenceValue", {
-                            "tsId": ts.getInternalId(),
-                            "refId": item.getId()
-                        });
-                        refEntry.removeClass("hide-selection");
-                    }
-                });
+                EventManager.publish("timeseries:show", ts.getInternalId());
+                ts.setHidden(false);
             }
             target.toggleClass('glyphicon-eye-close');
             target.toggleClass('glyphicon-eye-open');
@@ -88,17 +77,22 @@ var LegendController = {
         }, this));
         $('[data-id=' + ts.getInternalId() + '] .refEntry').on('click', function(event) {
             var target = $(event.currentTarget);
+            var refId = target.data('refid');
             target.toggleClass('selected');
             var ev;
             if (target.hasClass('selected')) {
                 ev = "timeseries:add:referenceValue";
+                ts.getRefValuesForId(refId).setSelected(true);
             } else {
                 ev = "timeseries:remove:referenceValue";
+                ts.getRefValuesForId(refId).setSelected(false);
             }
-            EventManager.publish(ev, {
-                "tsId": ts.getInternalId(),
-                "refId": target.data('refid')
-            });
+            if (!ts.isHidden()) {
+                EventManager.publish(ev, {
+                    "tsId": ts.getInternalId(),
+                    "refId": target.data('refid')
+                });
+            }
         });
     },
     checkNoData: function(event, ts) {

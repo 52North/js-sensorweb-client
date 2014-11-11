@@ -110,11 +110,25 @@ var ChartController = {
         this.plotChart();
     },
     hideData: function(event, id) {
+        var ts = TimeSeriesController.getTimeseriesCollection()[id];
+        $.each(ts.getRefValues(), $.proxy(function(idx, refValue) {
+            if(refValue.isSelected()) {
+                this.removeData(idx);
+            }
+        }, this));
         this.removeData(id);
         this.plotChart();
     },
     showData: function(event, id) {
         var ts = TimeSeriesController.getTimeseriesCollection()[id];
+        $.each(ts.getRefValues(), $.proxy(function(idx, refValue) {
+            if(refValue.isSelected()) {
+                this.showReferenceValue(null, {
+                    "tsId": ts.getInternalId(),
+                    "refId": idx
+                });
+            }
+        }, this));
         this.loadDataFinished(null, ts);
         this.plotChart();
     },
