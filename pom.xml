@@ -372,4 +372,12 @@
         <developerConnection>scm:git:ssh://git@github.com/52North/js-sensorweb-client.git</developerConnection>
         <url>https://github.com/52North/js-sensorweb-client</url>
 	</scm>
+	
+	<repositories>
+		<repository>
+			<id>n52-releases</id>
+			<name>52n Releases</name>
+			<url>http://52north.org/maven/repo/releases/</url>
+		</repository>
+	</repositories>
 </project>
