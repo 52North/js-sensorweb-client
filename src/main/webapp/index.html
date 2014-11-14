@@ -36,7 +36,8 @@
                 // TODO switch to Modenizr for reliable test?
                 // TODO good article for touch AND mouse: http://www.html5rocks.com/en/mobile/touchandmouse/
 
-                return window.navigator.msMaxTouchPoints // IE 10
+                return window.navigator.MaxTouchPoints > 0 // IE
+                    || window.navigator.msMaxTouchPoints > 0 // < IE11
                     || 'ontouchstart' in document.documentElement;
             };
         </script>
