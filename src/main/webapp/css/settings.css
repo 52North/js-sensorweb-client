@@ -18,6 +18,11 @@
     text-align: center;
 }
 
+#collapseSettings .btn{
+    word-break: break-word;
+    white-space: normal;
+}
+
 .resetStatus,
 .saveStatus {
     margin-bottom: 5px;
