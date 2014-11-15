@@ -44,19 +44,19 @@
     margin: 5px;
 }
 
-.dropdown-menu {
+.language-chooser-box .dropdown-menu {
     width: 100%;
 }
 
-.dropdown-menu li {
+.language-chooser-box .dropdown-menu li {
     cursor: pointer;
     margin-right: 4px;
 }
 
-.dropdown-menu li:hover {
+.language-chooser-box .dropdown-menu li:hover {
     background-color: #3276b1;
 }
 
-.dropdown-menu img {
+.language-chooser-box .dropdown-menu img {
     margin-top: 4px;
 }
