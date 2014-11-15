@@ -39,7 +39,7 @@ var Map = {
     },
     createMap: function() {
         if ($("#map").length > 0) {
-            this.map = L.map('map');
+            this.map = L.map('map',Settings.mapOptions);
             L.tileLayer(this.tileLayerUrl, this.tileLayerOptions).addTo(this.map);
             var overlayMaps = {};
             $.each(Settings.wmsLayer, $.proxy(function(idx, layer) {
