@@ -53,6 +53,8 @@ var Settings = {
     saveStatus: false,
     // default setting for concentration marker
     concentrationMarker: false,
+    // map options of leaflet
+    mapOptions: {},
     // zoom level in the map, used for user location and station position
     zoom: 13,
     // date/time format which is used on several places
