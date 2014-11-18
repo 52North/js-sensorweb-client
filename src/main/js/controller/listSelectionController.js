@@ -82,15 +82,14 @@ var ListSelectionController = {
                     });
                     $('#' + tab + ' #' + entry.collapse + ' .panel-body').append(html);
                 });
-                // close other collapse
-                $('#' + tab + ' .collapse.in').collapse('hide');
                 // open collapse
-                $('#' + tab + ' #' + entry.collapse + '.collapse').collapse('show');
+                $('#' + tab + ' #' + entry.collapse).collapse('show');
                 // onclick
                 $('#' + tab + ' #' + entry.collapse + ' .panel-body div').on('click', $.proxy(function(e) {
                     var label = $.trim(e.target.innerHTML);
                     $('#' + tab + ' [href=#' + entry.collapse + ']').text(entry.heading + ' - ' + label);
                     $('#' + tab + ' #' + entry.collapse).collapse('hide');
+                    data = this.tidyData(data, tab, index);
                     data[entry.type] = e.target.dataset.id;
                     this.startRequest(tab, index + 1, data);
                 }, this));
@@ -98,7 +97,7 @@ var ListSelectionController = {
         } else {
             // load ts
             Rest.timeseries(null, apiUrl, data).done(function(result) {
-                if (result.length == 1) {
+                if (result.length === 1) {
                     TimeSeriesController.addTS(result[0]);
                     Modal.hide();
                     Pages.navigateToChart();
@@ -107,5 +106,15 @@ var ListSelectionController = {
                 }
             });
         }
+    },
+    tidyData: function(data, tab, index){
+        var tabEntries = this.entries[tab];
+        for (i = 3; i > index; i--) {
+            $('#' + tab + ' [href=#' + tabEntries[i].collapse + ']').text(tabEntries[i].heading);
+            $('#' + tab + ' #' + tabEntries[i].collapse + ' .in').collapse('hide');
+            $('#' + tab + ' #' + tabEntries[i].collapse + ' .panel-body').empty();
+            delete data[tabEntries[i].type];
+        }
+        return data;
     }
 };
