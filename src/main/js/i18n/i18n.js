@@ -55,6 +55,7 @@ function createLanguageChooser() {
                     .on("click", function() {
                         var ok = window.confirm(_("settings.requiresRestart"));
                         if (ok) {
+                            Settings.additionalParameters.locale = code;
                             window.location = PermalinkController.createPermalink() + "&locale=" + code;
                         }
                     });
