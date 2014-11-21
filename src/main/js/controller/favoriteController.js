@@ -23,18 +23,18 @@ var FavoriteController = {
         this.favoriteButton = $('.favoriteButton');
         this.favoriteButton.show();
         this.favoriteButton.on('click', $.proxy(function(event) {
-            /*
-             * This is a bit hacky, as the page navigation
-             * should be refactored to have a cleaner way
-             * in extending it
-             */
-            var backLink = Pages.current();
+//            /*
+//             * This is a bit hacky, as the page navigation
+//             * should be refactored to have a cleaner way
+//             * in extending it
+//             */
+//            var backLink = Pages.current();
             this.showFavoritesView();
-            var favoritePageButton = $('#favoriteButton');
-            favoritePageButton.on('click', $.proxy(function(event) {
-                Pages.navigateToPage("#" + backLink);
-
-            }));
+//            var favoritePageButton = $('#favoriteButton');
+//            favoritePageButton.on('click', $.proxy(function(event) {
+//                Pages.navigateToPage("#" + backLink);
+//
+//            }));
         }, this));
         this.createFavoritesListView();
         this.activateImportExportHandlers();
