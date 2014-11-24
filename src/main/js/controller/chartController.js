@@ -169,6 +169,7 @@ var ChartController = {
         }
     },
     loadDataForChart: function(event, ts) {
+        if (this.plot) this.plot.unbindPanZoomEvents();
         if (this.visible) {
             var label = ts.getLabel();
             var html = Template.createHtml("data-loading-entry", {
