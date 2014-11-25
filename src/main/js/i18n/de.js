@@ -83,7 +83,7 @@ i18n.de = {
         }
     },
     "export": {
-        label: 'Daten als CSV-File'
+        label: 'Daten als CSV (Zip-Archiv)'
     },
     timeSelection: {
         header: 'Zeitraum',

@@ -34,6 +34,7 @@ var ExportController = {
         var kvp = "?generalize=" + Settings.generalizeData;
         kvp = kvp + "&timespan=" + encodeURIComponent(timespan);
         kvp = kvp + "&locale=" + currentLanguage();
+        kvp = kvp + "&zip=true";
         kvp = kvp + "&bom=true";
 
         var tsId = ts.getTsId();

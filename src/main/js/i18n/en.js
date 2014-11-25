@@ -83,7 +83,7 @@ i18n.en = {
         }
     },
     "export": {
-        label: 'get data as CSV-File'
+        label: 'Data as CSV (Zip Archive)'
     },
     timeSelection: {
         header: 'Time Range',
