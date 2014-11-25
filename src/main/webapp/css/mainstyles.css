@@ -62,7 +62,7 @@ body,html,.container,.row-offcanvas,.mainPanel {
 
 .leftPanelButton {
     position: absolute;
-    z-index: 50;
+    z-index: 1001;
     right: 20px;
     top: 5px;
 }
