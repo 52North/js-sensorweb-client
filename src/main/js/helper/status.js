@@ -57,7 +57,7 @@ var Status = (function() {
             this.save();
         },
         get: function(key) {
-            if (!this.current[key]) {
+            if (this.current[key] === undefined) {
                 return this.defaultValues[key];
             }
             return this.current[key];
