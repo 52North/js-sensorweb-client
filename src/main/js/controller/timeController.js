@@ -96,8 +96,8 @@ var TimeController = {
         if (maxExtent.from && maxExtent.till) {
             var earliestStart = moment(maxExtent.from);
             var latestEnd = moment(maxExtent.till);
-            var beforeEaliestStart = this.currentTimespan.till.isBefore(earliestStart);
-            var afterLatestEnd = this.currentTimespan.from.isAfter(latestEnd);
+            var beforeEaliestStart = moment(this.currentTimespan.till).isBefore(earliestStart);
+            var afterLatestEnd = moment(this.currentTimespan.from).isAfter(latestEnd);
             insideDataInterval = !(beforeEaliestStart || afterLatestEnd);
         }
 
