@@ -32,6 +32,12 @@ var Pages = {
         location.href = "#chart";
         Pages.togglePhenomenon(false);
     },
+    navigateToFavoritesView: function() {
+        Pages.navigateToPage('#favorites-page');
+        location.href = "#favorites";
+        Pages.toggleLegend(false);
+        Pages.togglePhenomenon(false);
+    },
     toggleLegend: function(active) {
         if (active) {
             $('.legend').toggleClass('active');
@@ -99,6 +105,9 @@ var Pages = {
                 break;
             case "#chart":
                 Pages.navigateToPage("#chart-page");
+                break;
+            case "#favorites":
+                Pages.navigateToPage("#favorites-page");
                 break;
             default:
                 if (Status.hasTimeseries()) {

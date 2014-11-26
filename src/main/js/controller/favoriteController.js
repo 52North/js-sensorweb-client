@@ -60,11 +60,6 @@ var FavoriteController = {
         }, this));
         this.loadFavorites();
     },
-    navigateToFavoritesView: function() {
-        Pages.navigateToPage('#favorite-page');
-        Pages.toggleLegend(false);
-        Pages.togglePhenomenon(false);
-    },
     clearFavoritesView: function() {
         $('#favorites-list').empty();
     },
@@ -109,7 +104,7 @@ var FavoriteController = {
         this.addGroupClickEvents(idx);
     },
     showFavoritesView: function() {
-        this.navigateToFavoritesView();
+        Pages.navigateToFavoritesView();
     },
     addFavoriteClickEvent: function(id) {
         // delete
