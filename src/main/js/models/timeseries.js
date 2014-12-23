@@ -21,8 +21,6 @@ function TimeSeries(tsId, meta, apiUrl) {
     var refValues = {};
     var synced = false;
     var hidden = false;
-    var zeroScaled = Settings.defaultZeroScale;
-    var groupedAxis = Settings.defaultGroupedAxis;
     var timeBuffer = Settings.timeseriesDataBuffer || moment.duration(2, 'h');
     $.each(meta.referenceValues, $.proxy(function(index, elem) {
         refValues[elem.referenceValueId] = new ReferenceValue(elem.referenceValueId, elem.label);
@@ -54,15 +52,11 @@ function TimeSeries(tsId, meta, apiUrl) {
     this.getStyle = function() {
         return style;
     };
-
-    this.isZeroScaled = function() {
-        return zeroScaled;
-    };
-
-    this.setZeroScaled = function(bool) {
-        zeroScaled = bool;
-    };
     
+    this.setStyle = function(newStyle) {
+        style = newStyle;
+    };
+
     this.isHidden = function() {
         return hidden;
     };
@@ -71,14 +65,6 @@ function TimeSeries(tsId, meta, apiUrl) {
         hidden = bool;
     };  
     
-    this.isGroupedAxis = function(){
-        return groupedAxis;
-    };
-    
-    this.setGroupedAxis = function(bool) {
-        groupedAxis = bool;
-    };
-
     this.isSynced = function() {
         return synced;
     };
@@ -214,6 +200,12 @@ function TimeSeries(tsId, meta, apiUrl) {
         if (data.length >= 2) {
             timeBuffer = moment.duration(data[1][0] - data[0][0]);
         }
+    };
+    
+    this.clone = function() {
+        var clone = new TimeSeries(tsId, meta, apiUrl);
+        clone.setStyle(this.getStyle().clone());
+        return clone;
     };
 
     this.destroy = function() {

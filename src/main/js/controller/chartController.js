@@ -76,7 +76,6 @@ var ChartController = {
         EventManager.subscribe("navigation:close", $.proxy(this.showChart, this));
         EventManager.subscribe("timeseries:changeStyle", $.proxy(this.changeStyle, this));
         EventManager.subscribe("timeseries:zeroScaled", $.proxy(this.zeroScaled, this));
-        EventManager.subscribe("timeseries:groupedAxis", $.proxy(this.changeStyle, this));
 
         $(window).resize($.proxy(function() {
             var newRatio = $(document).width() / $(document).height();
@@ -184,13 +183,13 @@ var ChartController = {
         // update all timeseries
         $.each(TimeSeriesController.getTimeseriesCollection(), function(idx, elem) {
             if (ts.getUom() === elem.getUom()) {
-                elem.setZeroScaled(ts.isZeroScaled());
+                elem.getStyle().setZeroScaled(ts.getStyle().isZeroScaled());
             }
         });
         // update data of timeseries
         $.each(this.data, function(idx, elem) {
             if (elem.uom === ts.getUom()) {
-                elem.zeroScaled = ts.isZeroScaled();
+                elem.zeroScaled = ts.getStyle().isZeroScaled();
             }
         });
         this.changeStyle(null, ts);
@@ -233,8 +232,8 @@ var ChartController = {
     addStyleAndValues: function(data, ts) {
         var style = ts.getStyle();
         data.color = style.getColor();
-        data.zeroScaled = ts.isZeroScaled();
-        data.groupedAxis = ts.isGroupedAxis();
+        data.zeroScaled = style.isZeroScaled();
+        data.groupedAxis = style.isGroupedAxis();
         data.stationLabel = ts.getStationLabel();
         if (style.isBarChart()) {
             data.bars = {
@@ -441,7 +440,7 @@ var ChartController = {
     removeData: function(id) {
         var idx = -1;
         $.each(this.data, function(i, elem) {
-            if (id == elem.id) {
+            if (id === elem.id) {
                 idx = i;
                 return;
             }

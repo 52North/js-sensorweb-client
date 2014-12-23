@@ -19,6 +19,8 @@ var TimeSeriesController = {
     init: function() {
         EventManager.subscribe("resetStatus", $.proxy(this.removeAllTS, this));
         EventManager.subscribe("timeextent:change", $.proxy(this.changeTimeExtent, this));
+        EventManager.subscribe("timeseries:changeStyle", $.proxy(this.updateTS, this));
+        EventManager.subscribe("timeseries:zeroScaled", $.proxy(this.updateTS, this));
         this.loadSavedTimeseries();
     },
     loadSavedTimeseries: function() {
@@ -26,12 +28,7 @@ var TimeSeriesController = {
             var promise = Rest.timeseries(elem.tsId, elem.apiUrl);
             var that = this;
             promise.done(function(ts) {
-                if (elem.style) {
-                    var style = ts.getStyle();
-                    style.setColor(elem.style.color);
-                    style.setChartType(elem.style.chartType);
-                    style.setIntervalByHours(elem.style.interval);
-                }
+                ts.setStyle(TimeseriesStyle.createStyleOfPersisted(elem.style));
                 that.addTS(ts);
             });
         }, this));
@@ -55,6 +52,9 @@ var TimeSeriesController = {
             from: from,
             till: till
         });
+    },
+    updateTS: function(evt, ts) {
+        Status.addTimeseries(ts);
     },
     loadTsData: function(ts, timespan) {
         EventManager.publish("timeseries:data:load", [ts]);

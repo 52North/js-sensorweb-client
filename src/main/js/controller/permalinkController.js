@@ -50,7 +50,7 @@ var PermalinkController = {
             $.each(timeseries.split(','), function(idx, id) {
                 Status.addTimeseriesById(id);
             });
-        }
+        };
         this.evaluateParameter('timeseries', addTimeseries); // for backward compatibility
         this.evaluateParameter(this.timeseriesParam, addTimeseries);
     },
@@ -95,10 +95,10 @@ var PermalinkController = {
         var procedures = this.getParameterArray(this.proceduresParam);
         var phenomena = this.getParameterArray(this.phenomenaParam);
         if (services && features && offerings && procedures && phenomena) {
-            if ((services.length == features.length) &&
-                    (services.length == offerings.length) &&
-                    (services.length == procedures.length) &&
-                    (services.length == phenomena.length)) {
+            if ((services.length === features.length) &&
+                    (services.length === offerings.length) &&
+                    (services.length === procedures.length) &&
+                    (services.length === phenomena.length)) {
                 for (i = 0; i < services.length; i++) {
                     var constellation = [];
                     constellation.push(services[i]);
@@ -115,7 +115,7 @@ var PermalinkController = {
         return constellations;
     },
     getParameterArray: function(param) {
-        var array = this.getParameter(param)
+        var array = this.getParameter(param);
         if (!$.isEmptyObject(array)) {
             return array.split(',');
         }

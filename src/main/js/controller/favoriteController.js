@@ -36,7 +36,7 @@ var FavoriteController = {
 //
 //            }));
         }, this));
-        this.createFavoritesListView();
+//        this.createFavoritesListView();
         this.activateImportExportHandlers();
         EventManager.subscribe('timeseries:add', $.proxy(this.addLegendStar, this));
         EventManager.subscribe('timeseries:changeStyle', $.proxy(this.addLegendStar, this));
@@ -126,7 +126,7 @@ var FavoriteController = {
         this.addClickEvents(id, 'single-id', 'addToDiagram', $.proxy(function(evt) {
             var ts = this.favorites[id];
             Pages.navigateToChart();
-            TimeSeriesController.addTS(ts.timeseries);
+            TimeSeriesController.addTS(ts.timeseries.clone());
         }, this));
     },
     addGroupClickEvents: function(id) {
@@ -149,8 +149,8 @@ var FavoriteController = {
             });
         }, this));
     },
-    addClickEvents: function(id, typeId, action, todo) {
-        $('[data-' + typeId + '=' + id + '] .' + action).on('click', todo);
+    addClickEvents: function(id, typeId, action, cb) {
+        $('[data-' + typeId + '=' + id + '] .' + action).on('click', cb);
     },
     openEditWindow: function(entry) {
         Modal.show("favorite-edit", {
@@ -234,7 +234,7 @@ var FavoriteController = {
         }, this));
     },
     addFavorite: function(ts, label) {
-        label = this.addFavoriteToList(ts, label);
+        label = this.addFavoriteToList(ts.clone(), label);
         this.addLegendStar(null, ts);
         return label;
     },
@@ -313,8 +313,9 @@ var FavoriteController = {
                 if (this.isSupported(ts)) {
                     var promise = Rest.timeseries(ts.tsId, ts.apiUrl);
                     var that = this;
-                    promise.done(function (ts) {
-                        that.addFavorite(ts, elem.label);
+                    promise.done(function (loadedTs) {
+                        loadedTs.setStyle(TimeseriesStyle.createStyleOfPersisted(ts.style));
+                        that.addFavorite(loadedTs, elem.label);
                     });
                 } else {
                     NotifyController.notify(_('favorite.single.notSupported').replace('{0}', elem.label));
@@ -325,13 +326,15 @@ var FavoriteController = {
                 var deferreds = $.map(group.collection, $.proxy(function(ts) {
                     if (this.isSupported(ts)) {
                         var promise = Rest.timeseries(ts.tsId, ts.apiUrl);
+                        promise.done(function (loadedTs) {
+                            loadedTs.setStyle(TimeseriesStyle.createStyleOfPersisted(ts.style));
+                        });
                         return promise;
                     } else {
                         NotifyController.notify(_('favorite.group.notSupported').replace('{0}', label));
                     }
                 }, this));
                 $.when.apply(null, deferreds).done($.proxy(function() {
-                    debugger
                     this.addFavoriteGroup(arguments, label);
                 }, this));
             }, this));

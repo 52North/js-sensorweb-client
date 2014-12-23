@@ -226,7 +226,7 @@ var Map = {
             var phenomena = {};
             $.each(results.properties.timeseries, function(id, elem) {
                 var phenomID = elem.phenomenon.id;
-                if (Map.selectedPhenomenon == null || Map.selectedPhenomenon == phenomID) {
+                if (Map.selectedPhenomenon === null || Map.selectedPhenomenon === phenomID) {
                     if (!phenomena.hasOwnProperty(phenomID)) {
                         phenomena[phenomID] = {};
                         phenomena[phenomID].timeseries = [];
@@ -267,7 +267,7 @@ var Map = {
             }
             $.each(phenomena, function(id, elem) {
                 $.each(elem.timeseries, function(id, elem) {
-                    if (Map.timeseriesCache[elem.internalId] == null) {
+                    if (Map.timeseriesCache[elem.internalId] === undefined) {
                         Rest.timeseries(elem.id, url).done(function(timeseries) {
                             Map.updateTsEntry(timeseries);
                         });
@@ -374,7 +374,7 @@ var Map = {
         $.each(results, $.proxy(function(idx, elem) {
             var blacklisted = false;
             $.each(Settings.providerBlackList, $.proxy(function(idx, black) {
-                if (black.serviceID == elem.id && black.apiUrl == apiUrl) {
+                if (black.serviceID === elem.id && black.apiUrl === apiUrl) {
                     blacklisted = true;
                     return;
                 }
@@ -389,7 +389,7 @@ var Map = {
                     "url": elem.serviceUrl,
                     "apiUrl": apiUrl,
                     "id": elem.id,
-                    "selected": currProv.serviceID == elem.id && currProv.apiUrl == apiUrl,
+                    "selected": currProv.serviceID === elem.id && currProv.apiUrl === apiUrl,
                     "type": elem.type
                 });
             }
@@ -435,7 +435,7 @@ var Map = {
         Map.map.setView(pos, Settings.zoom);
         var station = null;
         $.each(this.stationMarkers.getLayers(), function(idx, marker) {
-            if (marker.options.id == ts.getStationId()) {
+            if (marker.options.id === ts.getStationId()) {
                 station = marker;
             }
         });

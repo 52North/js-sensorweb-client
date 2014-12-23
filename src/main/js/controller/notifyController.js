@@ -29,4 +29,4 @@ var NotifyController = {
             text: text
         });
     }
-}
+};
