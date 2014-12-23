@@ -36,6 +36,7 @@ var Map = {
         EventManager.subscribe("resetStatus", $.proxy(this.loadStations, this));
         EventManager.subscribe("clusterStations", $.proxy(this.loadStations, this));
         EventManager.subscribe("timeseries:showInMap", $.proxy(this.showTsInMap, this));
+        EventManager.subscribe("triggerConcentrationMarker", $.proxy(this.triggerPhenomenaEntry, this));
     },
     createMap: function() {
         if ($("#map").length > 0) {
@@ -358,6 +359,9 @@ var Map = {
         }));
         $('[data-id=all]').append("<hr />");
         $('[data-id=all]').find('.item').addClass('selected');
+    },
+    triggerPhenomenaEntry: function () {
+        $('.phenomena-entry [data-id=' + this.selectedPhenomenon + ']').click();
     },
     /*----- provider list -----*/
     openProviderList: function() {
