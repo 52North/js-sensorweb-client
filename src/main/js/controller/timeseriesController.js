@@ -58,10 +58,7 @@ var TimeSeriesController = {
     },
     loadTsData: function(ts, timespan) {
         EventManager.publish("timeseries:data:load", [ts]);
-        ts.fetchData(timespan, $.proxy(this.finishedGetData, this)).fail($.proxy(function(id) {
-            this.removeTS(this.timeseries[id]);
-            this.checkSyncedStatus();
-        }, this));
+        ts.fetchData(timespan, $.proxy(this.finishedGetData, this));
     },
     finishedGetData: function(ts) {
         EventManager.publish("timeseries:data:loadfinished", [ts]);

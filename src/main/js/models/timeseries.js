@@ -181,6 +181,7 @@ function TimeSeries(tsId, meta, apiUrl) {
         timespan = Time.getRequestTimespan(from, till);
         this.promise = Rest.tsData(tsId, apiUrl, timespan, internalId);
         this.promise.done($.proxy(this.fetchedDataFinished, {context: this, complete: complete}));
+        this.promise.fail($.proxy(this.fetchedDataError, {context: this, complete: complete}));
         return this.promise;
     };
 
@@ -192,6 +193,11 @@ function TimeSeries(tsId, meta, apiUrl) {
                 refValues[id].setValues(elem);
             }
         });
+        synced = true;
+        this.complete(this.context);
+    };
+    
+    this.fetchedDataError = function(data, bla) {
         synced = true;
         this.complete(this.context);
     };
