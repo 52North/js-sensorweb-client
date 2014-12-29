@@ -28,7 +28,11 @@ var TimeSeriesController = {
             var promise = Rest.timeseries(elem.tsId, elem.apiUrl);
             var that = this;
             promise.done(function(ts) {
-                ts.setStyle(TimeseriesStyle.createStyleOfPersisted(elem.style));
+                if (elem.style == undefined) {
+                    ts.setStyle(TimeseriesStyle.createDefault(elem.tsId));
+                } else {
+                    ts.setStyle(TimeseriesStyle.createStyleOfPersisted(elem.style));
+                }
                 that.addTS(ts);
             });
         }, this));
