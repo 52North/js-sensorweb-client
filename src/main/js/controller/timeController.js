@@ -17,6 +17,8 @@
 var TimeController = {
     currentTimespan: {},
     timeRangeData: Settings.timeRangeData,
+    momentFormat: 'YYYY-MM-DD HH:mm',
+    internalFormat: 'yyyy-mm-dd hh:ii',
     init: function() {
         // get last save timespan
         this.currentTimespan = Status.get('timespan');
@@ -34,16 +36,21 @@ var TimeController = {
                 var till = moment(TimeController.currentTimespan.till);
                 $('#startPicker').text(from.format(Settings.dateformat));
                 $('#endPicker').text(till.format(Settings.dateformat));
-                $('#startPicker').data('date', from.format("YYYY-MM-DD"));
-                $('#endPicker').data('date', till.format("YYYY-MM-DD"));
+                $('#startPicker').data('date', from.format(TimeController.momentFormat));
+                $('#endPicker').data('date', till.format(TimeController.momentFormat));
                 $('#alertTimeExtent').hide();
 
-                $('#startPicker').datepicker({position: 'above'}).on('changeDate', TimeController.evaluateDate);
-                $('#endPicker').datepicker({position: 'above'}).on('changeDate', TimeController.evaluateDate);
-
+                var options = {
+                    pickerPosition: 'top-right',
+                    autoclose: true,
+                    format: TimeController.internalFormat
+                };
+                $('#startPicker').datetimepicker(options).on('changeDate', TimeController.evaluateDate);
+                $('#endPicker').datetimepicker(options).on('changeDate', TimeController.evaluateDate);
+                
                 $('#confirmTimeExtent').click(function(event) {
-                    var from = moment($('#startPicker').data('date')).startOf('day');
-                    var till = moment($('#endPicker').data('date')).endOf('day');
+                    var from = moment($('#startPicker').data('date'));
+                    var till = moment($('#endPicker').data('date'));
                     TimeController.currentTimespan = {
                         from: from,
                         till: till,
@@ -155,25 +162,23 @@ var TimeController = {
         };
         this.updateTimeExtent();
     },
-    evaluateDate: function(ev) {
-        if (ev.viewMode == "days") {
-            var id = "#" + ev.currentTarget.id;
-            if (moment($('#startPicker').data('date')).isAfter($('#endPicker').data('date'))) {
-                $('#alertTimeExtent').show();
-                $('#confirmTimeExtent').addClass('disabled');
-                $('#alertTimeExtent').text(_('timeSelection.warning.startBeforeEnd'));
-            } else if (Math.abs(moment($('#startPicker').data('date')).diff($('#endPicker').data('date'), 'years', true)) > 1) {
-                $('#alertTimeExtent').show();
-                $('#confirmTimeExtent').addClass('disabled');
-                $('#alertTimeExtent').text(_('timeSelection.warning.maxTimeRange'));
-            } else {
-                $('#alertTimeExtent').hide();
-                $('#confirmTimeExtent').removeClass('disabled');
-                startDate = new Date(ev.date);
-            }
-            $(id).text(moment($(id).data('date')).format(Settings.dateformat));
-            $(id).datepicker('hide');
+    evaluateDate: function (ev) {
+        var id = "#" + ev.currentTarget.id;
+        if (moment($('#startPicker').data('date')).isAfter($('#endPicker').data('date'))) {
+            $('#alertTimeExtent').show();
+            $('#confirmTimeExtent').addClass('disabled');
+            $('#alertTimeExtent').text(_('timeSelection.warning.startBeforeEnd'));
+        } else if (Math.abs(moment($('#startPicker').data('date')).diff($('#endPicker').data('date'), 'years', true)) > 1) {
+            $('#alertTimeExtent').show();
+            $('#confirmTimeExtent').addClass('disabled');
+            $('#alertTimeExtent').text(_('timeSelection.warning.maxTimeRange'));
+        } else {
+            $('#alertTimeExtent').hide();
+            $('#confirmTimeExtent').removeClass('disabled');
+            startDate = new Date(ev.date);
         }
+        $(id).text(moment($(id).data('date')).format(Settings.dateformat));
+        $(id).datetimepicker('hide');
     },
     getNearbyPeriode: function(method) {
         var mode = this.currentTimespan.mode;
