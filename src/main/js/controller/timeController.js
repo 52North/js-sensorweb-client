@@ -19,53 +19,15 @@ var TimeController = {
     timeRangeData: Settings.timeRangeData,
     momentFormat: 'YYYY-MM-DD HH:mm',
     internalFormat: 'yyyy-mm-dd hh:ii',
-    init: function() {
+    init: function () {
         // get last save timespan
         this.currentTimespan = Status.get('timespan');
         this.updateTimeExtent();
-        $(document).ready(function() {
-            $('[data-action=before]').click($.proxy(function() {
-                TimeController.prevPeriode();
-            }, this));
-            $('[data-action=after]').click($.proxy(function() {
-                TimeController.nextPeriode();
-            }, this));
-            $('[data-action=timeextent]').click($.proxy(function() {
-                Modal.show("time-range-settings", TimeController.timeRangeData);
-                var from = moment(TimeController.currentTimespan.from);
-                var till = moment(TimeController.currentTimespan.till);
-                $('#startPicker').text(from.format(Settings.dateformat));
-                $('#endPicker').text(till.format(Settings.dateformat));
-                $('#startPicker').data('date', from.format(TimeController.momentFormat));
-                $('#endPicker').data('date', till.format(TimeController.momentFormat));
-                $('#alertTimeExtent').hide();
-
-                var options = {
-                    pickerPosition: 'top-right',
-                    autoclose: true,
-                    format: TimeController.internalFormat
-                };
-                $('#startPicker').datetimepicker(options).on('changeDate', TimeController.evaluateDate);
-                $('#endPicker').datetimepicker(options).on('changeDate', TimeController.evaluateDate);
-                
-                $('#confirmTimeExtent').click(function(event) {
-                    var from = moment($('#startPicker').data('date'));
-                    var till = moment($('#endPicker').data('date'));
-                    TimeController.currentTimespan = {
-                        from: from,
-                        till: till,
-                        mode: "range"
-                    };
-                    TimeController.updateTimeExtent();
-                });
-
-                $('.preset-btn').click(function(event) {
-                    var btn = $(event.currentTarget);
-                    TimeController.setPreset(btn.data('preset-value'));
-                });
-
-            }, this));
-        });
+        $(document).ready($.proxy(function () {
+            $('[data-action=before]').click($.proxy(this.prevPeriode, this));
+            $('[data-action=after]').click($.proxy(this.nextPeriode, this));
+            $('[data-action=timeextent]').click($.proxy(this.openTimeSettings, this));
+        }, this));
         this.setLabel();
         EventManager.subscribe("timeseries:data:load", $.proxy(this.disableButtons, this));
         EventManager.subscribe("timeseries:synced", $.proxy(this.enableButtons, this));
@@ -73,30 +35,67 @@ var TimeController = {
         EventManager.subscribe("time:end:change", $.proxy(this.endChanged, this));
         EventManager.subscribe("timeseries:update:complete", $.proxy(this.updateTimeExtent, this));
     },
-    startChanged: function(event, start) {
+    openTimeSettings: function () {
+        Modal.show("time-range-settings", this.timeRangeData);
+        var from = moment(this.currentTimespan.from);
+        var till = moment(this.currentTimespan.till);
+        $('#startPicker').text(from.format(Settings.dateformat));
+        $('#endPicker').text(till.format(Settings.dateformat));
+        $('#startPicker').data('date', from.format(this.momentFormat));
+        $('#endPicker').data('date', till.format(this.momentFormat));
+        $('#alertTimeExtent').hide();
+        var options = {
+            pickerPosition: 'top-right',
+            autoclose: true,
+            format: this.internalFormat
+        };
+        $('#startPicker').datetimepicker(options).on('changeDate', this.evaluateDate);
+        $('#endPicker').datetimepicker(options).on('changeDate', this.evaluateDate);
+        $('#confirmTimeExtent').click($.proxy(function (event) {
+            var from = moment($('#startPicker').data('date'));
+            var till = moment($('#endPicker').data('date'));
+            this.currentTimespan = {
+                from: from,
+                till: till,
+                mode: "range"
+            };
+            this.updateTimeExtent();
+            this.closeTimeSettings();
+        }, this));
+        $('.preset-btn').click($.proxy(function (event) {
+            var btn = $(event.currentTarget);
+            this.setPreset(btn.data('preset-value'));
+            this.closeTimeSettings();
+        }, this));
+    },
+    closeTimeSettings: function () {
+        $('#startPicker').datetimepicker('remove');
+        $('#endPicker').datetimepicker('remove');
+    },
+    startChanged: function (event, start) {
         var diff = this.getCurrentDiff();
         this.currentTimespan.from = moment(start).startOf('day');
         this.currentTimespan.till = moment(start).add(diff).add('s', 1).startOf('day').subtract('ms', 1);
         this.updateTimeExtent();
     },
-    endChanged: function(event, end) {
+    endChanged: function (event, end) {
         var diff = this.getCurrentDiff();
         this.currentTimespan.from = moment(end).subtract(diff).endOf('day').add('ms', 1);
         this.currentTimespan.till = moment(end).endOf('day');
         this.updateTimeExtent();
     },
-    getCurrentDiff: function() {
+    getCurrentDiff: function () {
         var from = moment(this.currentTimespan.from);
         var till = moment(this.currentTimespan.till);
         return till.diff(from);
     },
-    getCurrentStartAsMillis: function() {
+    getCurrentStartAsMillis: function () {
         return moment(this.currentTimespan.from).unix() * 1000;
     },
-    getCurrentEndAsMillis: function() {
+    getCurrentEndAsMillis: function () {
         return moment(this.currentTimespan.till).unix() * 1000;
     },
-    updateTimeExtent: function() {
+    updateTimeExtent: function () {
         var maxExtent = TimeSeriesController.getMaxTimeExtent();
 
         var insideDataInterval = true;
@@ -108,7 +107,7 @@ var TimeController = {
             insideDataInterval = !(beforeEaliestStart || afterLatestEnd);
         }
 
-        if ( !insideDataInterval) {
+        if (!insideDataInterval) {
             // reset current timespan
             NotifyController.notify(_('chart.outsideOfDataRange'));
             this.currentTimespan = Status.get('timespan');
@@ -120,31 +119,31 @@ var TimeController = {
         Status.set('timespan', this.currentTimespan);
         this.setLabel();
     },
-    disableButtons: function() {
+    disableButtons: function () {
         $('[data-action="before"]').addClass('disabled');
         $('[data-action="after"]').addClass('disabled');
         $('[data-action="timeextent"]').addClass('disabled');
     },
-    enableButtons: function() {
+    enableButtons: function () {
         $('[data-action="before"]').removeClass('disabled');
         $('[data-action="after"]').removeClass('disabled');
         $('[data-action="timeextent"]').removeClass('disabled');
     },
-    setLabel: function() {
+    setLabel: function () {
         var label = moment(this.currentTimespan.from).format(Settings.shortDateformat) + " - " + moment(this.currentTimespan.till).format(Settings.shortDateformat);
         $('[data-action=timeextent]').text(label);
     },
-    prevPeriode: function() {
+    prevPeriode: function () {
         this.getNearbyPeriode('subtract');
         this.updateTimeExtent();
     },
-    nextPeriode: function() {
+    nextPeriode: function () {
         this.getNearbyPeriode('add');
         this.updateTimeExtent();
     },
-    setPreset: function(name) {
+    setPreset: function (name) {
         var interval;
-        $.each(this.timeRangeData.presets, function(idx,elem) {
+        $.each(this.timeRangeData.presets, function (idx, elem) {
             if (elem.name === name) {
                 interval = this.interval;
                 return false;
@@ -154,7 +153,7 @@ var TimeController = {
         this.updateTimeExtent();
         Modal.hide();
     },
-    setFlexibleTimeExtent: function(from, till) {
+    setFlexibleTimeExtent: function (from, till) {
         this.currentTimespan = {
             'from': from,
             'till': till,
@@ -180,7 +179,7 @@ var TimeController = {
         $(id).text(moment($(id).data('date')).format(Settings.dateformat));
         $(id).datetimepicker('hide');
     },
-    getNearbyPeriode: function(method) {
+    getNearbyPeriode: function (method) {
         var mode = this.currentTimespan.mode;
         var from = moment(this.currentTimespan.from);
         var till = moment(this.currentTimespan.till);
