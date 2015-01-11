@@ -33,9 +33,9 @@ i18n.en = {
         noFileSelected: 'No file selected'
     },
     chart: {
-        noTimeseriesSelected: 'You have selected no timeseries or the selected timeseries have no values in the given time range.',
+        noTimeseriesSelected: 'You have selected no timeseries, the selected timeseries have no values in the given time range or the timeseries are hidden.',
         outsideOfDataRange: 'Outside of data range!',
-        annotation: 'Data without warrenty!'
+        annotation: 'Data without warranty!'
     },
     table: {
         time: "Time"
