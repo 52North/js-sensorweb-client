@@ -107,6 +107,9 @@ var TimeSeriesController = {
     getTimeseriesCollection: function() {
         return this.timeseries;
     },
+    getTimeseries: function(id) {
+        return this.timeseries[id];
+    },
     getMaxTimeExtent: function() {
         var earliestStart;
         var latestEnd;

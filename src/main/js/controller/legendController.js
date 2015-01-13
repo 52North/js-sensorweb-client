@@ -19,8 +19,7 @@ var LegendController = {
         EventManager.subscribe("timeseries:add", $.proxy(this.addTS, this));
         EventManager.subscribe("timeseries:remove", $.proxy(this.removeTS, this));
         EventManager.subscribe("timeseries:removeAll", $.proxy(this.removeAll, this));
-        EventManager.subscribe("timeseries:selected", $.proxy(this.selectTS, this));
-        EventManager.subscribe("timeseries:unselectAll", $.proxy(this.deselectAllTS, this));
+        EventManager.subscribe("timeseries:selectionChanged", $.proxy(this.selectionChanged, this));
         EventManager.subscribe("timeseries:data:loadfinished", $.proxy(this.checkNoData, this));
         EventManager.subscribe("timeseries:changeStyle", $.proxy(this.changeStyle, this));
         EventManager.subscribe("timeseries:synced", $.proxy(this.syncedTS, this));
@@ -45,11 +44,11 @@ var LegendController = {
         });
         $('[data-id=' + ts.getInternalId() + '] .legendItemheader').click($.proxy(function(event) {
             if (!$('[data-id=' + ts.getInternalId() + ']').hasClass('selected')) {
-                EventManager.publish("timeseries:unselectAll");
-                EventManager.publish("timeseries:selected", ts.getInternalId());
+                ts.setSelected(true);
             } else {
-                EventManager.publish("timeseries:unselectAll");
+                ts.setSelected(false);
             }
+            EventManager.publish("timeseries:selectionChanged");
         }, this));
         $('[data-id=' + ts.getInternalId() + '] .hideDiagram').click($.proxy(function(event) {
             target = $(event.currentTarget);
@@ -103,8 +102,18 @@ var LegendController = {
             warn.hide();
         }
     },
-    selectTS: function(event, id) {
-        $('.legend-entry').find('[data-id=' + id + ']').addClass('selected');
+    selectionChanged: function() {
+        $.each(TimeSeriesController.getTimeseriesCollection(), $.proxy(function(idx, ts) {
+            this.selectTS(ts.getInternalId(), ts.isSelected());
+        }, this));
+    },
+    selectTS: function(id, selected) {
+        var target = $('.legend-entry').find('[data-id=' + id + ']');
+        if (selected) {
+            target.addClass('selected');
+        } else {
+            target.removeClass('selected');
+        }
     },
     changeStyle: function(event, ts) {
         this.updateEntry(ts);

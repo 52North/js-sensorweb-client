@@ -21,6 +21,7 @@ function TimeSeries(tsId, meta, apiUrl) {
     var refValues = {};
     var synced = false;
     var hidden = false;
+    var selected = false;
     var timeBuffer = Settings.timeseriesDataBuffer || moment.duration(2, 'h');
     $.each(meta.referenceValues, $.proxy(function(index, elem) {
         refValues[elem.referenceValueId] = new ReferenceValue(elem.referenceValueId, elem.label);
@@ -64,6 +65,14 @@ function TimeSeries(tsId, meta, apiUrl) {
     this.setHidden = function(bool) {
         hidden = bool;
     };  
+    
+    this.isSelected = function() {
+        return selected;
+    }
+    
+    this.setSelected = function(bool) {
+        selected = bool;
+    }
     
     this.isSynced = function() {
         return synced;
