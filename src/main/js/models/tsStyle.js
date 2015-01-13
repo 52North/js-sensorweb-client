@@ -20,8 +20,8 @@ function TimeseriesStyle(chartType, width, color, intervalString, lineType) {
     this.color = color;
     this.lineType = lineType;
     
-    var zeroScaled = Settings.defaultZeroScale;
-    var groupedAxis = Settings.defaultGroupedAxis;
+    this.zeroScaled = Settings.defaultZeroScale;
+    this.groupedAxis = Settings.defaultGroupedAxis;
     
     createInterval = function (interval) {
         switch (interval) {
