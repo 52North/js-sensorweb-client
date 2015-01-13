@@ -29,7 +29,7 @@ i18n.en = {
         favoritesList: 'Favorites',
         importFavorites: 'Import',
         exportFavorites: 'Export',
-        importExportHelp: 'Choose a file to import or export favorites',
+        importExportHelp: 'To import a file, please choose a file you exported before.',
         noFileSelected: 'No file selected'
     },
     chart: {
@@ -134,7 +134,7 @@ i18n.en = {
             inWindow: 'link in a new window',
             inMail: 'link in an email',
             inClipboard: 'Link to clipboard',
-            clipboardInfo: 'Copy to clipboard: Ctrl+C, Enter',
+            clipboardInfo: 'Copy to clipboard:',
             inQrCode: 'as QR-Code',
             favorite: 'Status as favorite entry'
         },

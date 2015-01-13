@@ -29,7 +29,7 @@ i18n.de = {
         favoritesList: 'Favoriten',
         importFavorites: 'Importieren',
         exportFavorites: 'Exportieren',
-        importExportHelp: 'Datei für den Im- oder Exportieren wählen',
+        importExportHelp: 'Zum Import wählen sie eine zuvor exportierten JSON-Datei.',
         noFileSelected: 'Keine Datei ausgewählt'
     },
     table: {
@@ -134,7 +134,7 @@ i18n.de = {
             inWindow: 'öffnen im neuen Fenster',
             inMail: 'öffnen in leerer Mail',
             inClipboard: 'Link in die Zwischenablage',
-            clipboardInfo: 'Kopiere in die Zwischenablage: Ctrl+C, Enter',
+            clipboardInfo: 'Kopiere in die Zwischenablage:',
             inQrCode: 'als QR-Code',
             favorite: 'Status in die Favoritenliste übernehmen'
         },
