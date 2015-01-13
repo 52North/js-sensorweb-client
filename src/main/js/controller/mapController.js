@@ -451,15 +451,9 @@ var Map = {
             timeseries: ts.getLabel(),
             service: ts.getServiceLabel()
         }));
-        if (station) {
-            setTimeout(function() {
-                station.bindPopup(popup).openPopup();
-            }, 1000);
-        } else {
-            popup.setLatLng(pos);
-            popup.openOn(Map.map);
-        }
-        popup.on('close', function() {
+        popup.setLatLng(pos);
+        popup.openOn(Map.map);
+        popup.on('close', function () {
             if (station) {
                 station.unbindPopup();
             }
