@@ -110,12 +110,6 @@ var FavoriteController = {
         // delete
         this.addClickEvents(id, 'single-id', 'delete', $.proxy(function(evt) {
             this.removeFavorite(id);
-//            delete this.favorites[id];
-//            $('[data-single-id=' + id + ']').remove();
-//            var star = $('.star', '[data-id=' + id + ']');
-//            if (star) {
-//                star.addClass('glyphicon-star-empty').removeClass('glyphicon-star');
-//            }
             this.saveFavorites();
         }, this));
         // edit
@@ -124,6 +118,7 @@ var FavoriteController = {
         }, this));
         // add to diagram
         this.addClickEvents(id, 'single-id', 'addToDiagram', $.proxy(function(evt) {
+            TimeSeriesController.removeAllTS();
             var ts = this.favorites[id];
             Pages.navigateToChart();
             TimeSeriesController.addTS(ts.timeseries.clone());
@@ -142,6 +137,7 @@ var FavoriteController = {
         }, this));
         // add to diagram
         this.addClickEvents(id, 'group-id', 'addToDiagram', $.proxy(function(evt) {
+            TimeSeriesController.removeAllTS();
             var group = this.favoriteGroups[id];
             Pages.navigateToChart();
             $.each(group.collection, function(idx, elem) {
@@ -220,6 +216,7 @@ var FavoriteController = {
             } else {
                 star = this.createEmptyStar();
                 onClick = $.proxy(function(event) {
+                    star.off('click', onClick);
                     event.stopPropagation();
                     var promise = Rest.timeseries(item.dataset.id, Status.get('provider').apiUrl);
                     promise.done($.proxy(function(ts) {
@@ -311,18 +308,20 @@ var FavoriteController = {
             $.each(values.single, $.proxy(function(idx, elem) {
                 var ts = elem.timeseries;
                 if (this.isSupported(ts)) {
+                    this.drawLoadingSpinner(ts.tsId, elem.label);
                     var promise = Rest.timeseries(ts.tsId, ts.apiUrl);
-                    var that = this;
-                    promise.done(function (loadedTs) {
+                    promise.done($.proxy(function (loadedTs) {
+                        this.removeLoadingSpinner(ts.tsId);
                         loadedTs.setStyle(TimeseriesStyle.createStyleOfPersisted(ts.style));
-                        that.addFavorite(loadedTs, elem.label);
-                    });
+                        this.addFavorite(loadedTs, elem.label);
+                    }, this));
                 } else {
                     NotifyController.notify(_('favorite.single.notSupported').replace('{0}', elem.label));
                 }
             }, this));
             $.each(values.groups, $.proxy(function(idx, group) {
                 var label = group.label;
+                this.drawLoadingSpinner("grp" + idx, label);
                 var deferreds = $.map(group.collection, $.proxy(function(ts) {
                     if (this.isSupported(ts)) {
                         var promise = Rest.timeseries(ts.tsId, ts.apiUrl);
@@ -335,10 +334,21 @@ var FavoriteController = {
                     }
                 }, this));
                 $.when.apply(null, deferreds).done($.proxy(function() {
+                    this.removeLoadingSpinner("grp" + idx);
                     this.addFavoriteGroup(arguments, label);
                 }, this));
             }, this));
         }
+    },
+    drawLoadingSpinner: function(id, label) {
+        var elem = Template.createHtml("data-loading-entry", {
+                id: id,
+                label: label
+            });
+        $('#favorites-list').append(elem);
+    },
+    removeLoadingSpinner: function(id) {
+        $('#favorites-list').find('[data-id=' + id + ']').remove();
     },
     // checks if the provider of the timeseries is configured in the client
     isSupported: function(ts) {
@@ -380,7 +390,7 @@ var FavoriteController = {
             } else {
                 // FF, Chrome ...
                 var a = document.createElement('a');
-                a.href = 'data:application/json,' + encodeURI(content);
+                a.href = 'data:application/json,' + encodeURIComponent(content);
                 a.target = '_blank';
                 a.download = filename;
                 document.body.appendChild(a);
