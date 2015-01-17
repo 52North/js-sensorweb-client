@@ -266,6 +266,11 @@ var Map = {
             } else {
                 $('.tsItem').find(':checkbox').prop('checked', true);
             }
+            $('.tsItem :checkbox').on('click', function(evt) {
+                if(!$(evt.target).is(':checked')) {
+                    $('.selectAllOption').find(':checkbox').prop('checked',false);
+                }
+            });
             $.each(phenomena, function(id, elem) {
                 $.each(elem.timeseries, function(id, elem) {
                     if (Map.timeseriesCache[elem.internalId] === undefined) {
