@@ -155,7 +155,7 @@
 			if ($.fn.mousewheel) {
 				this.picker.on({mousewheel: $.proxy(this.mousewheel, this)});
 			} else {
-				console.log("Mouse Wheel event is not supported. Please include the jQuery Mouse Wheel plugin before enabling this option");
+				DEBUG && console.log("Mouse Wheel event is not supported. Please include the jQuery Mouse Wheel plugin before enabling this option");
 			}
 		}
 

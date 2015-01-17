@@ -89,7 +89,7 @@
 					$.cookie(key, value);
 					return value;
 				} catch(e){
-					console.log('Local Storage not supported by this browser. Install the cookie plugin on your site to take advantage of the same functionality. You can get it at https://github.com/carhartl/jquery-cookie');
+					DEBUG && console.log('Local Storage not supported by this browser. Install the cookie plugin on your site to take advantage of the same functionality. You can get it at https://github.com/carhartl/jquery-cookie');
 				}
 			}
 			var saver = JSON.stringify(value);
