@@ -43,14 +43,14 @@ var StyleChangeController = {
         Modal.show("style-change", data);
         $('.colorButton').on('click', function(e) {
             var color = $(e.target).data('color');
-            if (style.getColor() != color) {
+            if (style.getColor() !== color) {
                 style.setColor(color);
                 EventManager.publish("timeseries:changeStyle", ts);
             }
         });
         $('.intervalButton').on('click', function(e) {
             var interval = $(e.target).data('interval');
-            if (style.getIntervalByHours() != interval) {
+            if (style.getIntervalByHours() !== interval) {
                 style.setIntervalByHours(interval);
                 EventManager.publish("timeseries:changeStyle", ts);
             };

@@ -28,9 +28,7 @@ var TimeSeriesController = {
             var promise = Rest.timeseries(elem.tsId, elem.apiUrl);
             var that = this;
             promise.done(function(ts) {
-                if (elem.style == undefined) {
-                    ts.setStyle(TimeseriesStyle.createDefault(elem.tsId));
-                } else {
+                if (elem.style !== undefined) {
                     ts.setStyle(TimeseriesStyle.createStyleOfPersisted(elem.style));
                 }
                 that.addTS(ts);
