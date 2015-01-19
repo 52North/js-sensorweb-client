@@ -157,7 +157,7 @@
                                 <jsSourceFile>libs/bootstrap.js</jsSourceFile>
                                 <jsSourceFile>libs/bootstrap-datetimepicker.js</jsSourceFile>
                                 <jsSourceFile>libs/mustache.js</jsSourceFile>
-                                <jsSourceFile>libs/moment.min.js</jsSourceFile>
+                                <jsSourceFile>libs/moment.js</jsSourceFile>
                                 <jsSourceFile>libs/qr.min.js</jsSourceFile>
                             </jsSourceFiles>
                         </configuration>
