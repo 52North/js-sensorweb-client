@@ -91,7 +91,7 @@ var ListSelectionController = {
                     $('#' + tab + ' [href=#' + entry.collapse + ']').text(entry.heading + ' - ' + label);
                     $('#' + tab + ' #' + entry.collapse).collapse('hide');
                     data = this.tidyData(data, tab, index);
-                    data[entry.type] = e.target.dataset.id;
+                    data[entry.type] = $(e.target).data('id');
                     this.startRequest(tab, index + 1, data);
                 }, this));
                 this.loading(tab, index, false);
@@ -111,11 +111,13 @@ var ListSelectionController = {
     },
     loading: function(tab, idx, loading) {
         var entry = this.entries[tab][idx];
-        var elem = $('#' + tab + ' .panel-heading').has(' [href=#' + entry.collapse + ']').find('.loading');
-        if(loading) {
-            elem.removeClass('loaded');
-        } else {
-            elem.addClass('loaded');
+        if (entry) {
+            var elem = $('#' + tab + ' .panel-heading').has(' [href=#' + entry.collapse + ']').find('.loading');
+            if (loading) {
+                elem.removeClass('loaded');
+            } else {
+                elem.addClass('loaded');
+            }
         }
     },
     tidyData: function(data, tab, index){
