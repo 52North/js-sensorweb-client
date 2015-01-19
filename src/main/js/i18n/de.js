@@ -126,7 +126,6 @@ i18n.de = {
     },
     settings: {
         header: 'Einstellungen',
-        resetStatus: 'Lösche den Status',
         chooseLanguage: 'Sprache wechseln',
         requiresRestart: 'Erfordert Neustart!',
         permalink: {
@@ -143,7 +142,11 @@ i18n.de = {
             header: 'Marker mit Wert der letzten Messung',
             label: 'Achtung - dies kann bei einigen Providern zu langen Abfragen führen'
         },
-        saveStatus: 'Status mitzeichnen',
+        saveStatus: {
+            header: 'Arbeitsumgebung abspeichern',
+            label: 'Alle Zeitreihen, der ausgewählte Zeitraum und die Einstellungen werden kontinuierlich abgespeichert.'
+        },
+        resetStatus: 'Arbeitsumgebung zurücksetzen',
         generalizeData: 'Daten generalisiert abfragen',
         imprint: {
             header: 'Impressum',

@@ -126,7 +126,6 @@ i18n.en = {
     },
     settings: {
         header: 'Settings',
-        resetStatus: 'Reset status',
         chooseLanguage: 'Switch language',
         requiresRestart: 'Needs Restart!',
         permalink: {
@@ -143,7 +142,11 @@ i18n.en = {
             header: 'marker with last value information',
             label: 'attention - some data provider are very slow'
         },
-        saveStatus: 'save status',
+        saveStatus: {
+            header: 'Save environment',
+            label: 'All timeseries, the selected timespan and the settings are saved continuous.'
+        },
+        resetStatus: 'Reset environment',
         generalizeData: 'generalize Data',
         imprint: {
             header: 'Imprint',
