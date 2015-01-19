@@ -203,7 +203,7 @@ var FavoriteController = {
         $.each($('.stationContent .tsItem'), $.proxy(function(idx, item) {
             var star;
             var onClick;
-            var internalID = item.dataset.internalid;
+            var internalID = $(item).data('internalid');
             $(item).find('.checkbox .star').remove();
             if (this.favorites.hasOwnProperty(internalID)) {
                 star = this.createFilledStar();
@@ -218,7 +218,7 @@ var FavoriteController = {
                 onClick = $.proxy(function(event) {
                     star.off('click', onClick);
                     event.stopPropagation();
-                    var promise = Rest.timeseries(item.dataset.id, Status.get('provider').apiUrl);
+                    var promise = Rest.timeseries($(item).data('id'), Status.get('provider').apiUrl);
                     promise.done($.proxy(function(ts) {
                         var label = this.addFavorite(ts);
                         NotifyController.notify(_('favorite.single.add').replace('{0}', label));
