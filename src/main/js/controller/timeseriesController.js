@@ -115,10 +115,10 @@ var TimeSeriesController = {
             if (elem.getFirstValue() || elem.getLastValue()) {
                 var start = moment(elem.getFirstValue().timestamp);
                 var end = moment(elem.getLastValue().timestamp);
-                if ( !earliestStart || start.isAfter(earliestStart)) {
+                if ( !earliestStart || start.isBefore(earliestStart)) {
                     earliestStart = start;
                 }
-                if ( !latestEnd || end.isBefore(latestEnd)) {
+                if ( !latestEnd || end.isAfter(latestEnd)) {
                     latestEnd = end;
                 }
             }
