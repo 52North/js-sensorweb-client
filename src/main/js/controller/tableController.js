@@ -25,7 +25,7 @@ var TableController = {
         this.tableButton.on('click', $.proxy(function(event) {
             var button = $(event.currentTarget);
             var legendButton = $('[data-toggle="legend"]');
-            if (this.isVisible == false) {
+            if (this.isVisible === false) {
                 this.isVisible = true;
                 this.tableView.show();
                 Button.setNewIcon(button, 'glyphicon-stats');
@@ -55,12 +55,13 @@ var TableController = {
             this.createHeaderClickHandler();
         }
     },
-    updateTable: function() {
+    updateTable: function () {
         if (this.isVisible) {
             var array = this.createValueArray();
-            if (this.sortingFunc) {
-                array.sort(this.sortingFunc);
+            if (!this.sortingFunc) {
+                this.sortingFunc = this.upsort(0);
             }
+            array.sort(this.sortingFunc);
             if (array.length > 0) {
                 var colorArray = this.createColorArray();
                 this.createHtmlTable(array, colorArray);
@@ -137,34 +138,29 @@ var TableController = {
     },
     createValueArray: function() {
         var array = [];
-        $.each(TimeSeriesController.getTimeseriesCollection(), function(index, ts) {
-            var values = ts.getValues();
-            var i = (array[0] != null && array[0].length > 0) ? array[0].length : 0;
-            var arrayindex = 0;
-            $.each(values, function(idx, tvpair) {
-                var time = tvpair[0];
-                var value = tvpair[1];
-                if (i == 0) {
-                    array.push([time, value]);
-                } else {
-                    while (array[arrayindex] != null && array[arrayindex][0] < time) {
-                        array[arrayindex][i] = "-";
-                        arrayindex++;
-                    }
-                    if (array[arrayindex] != null && array[arrayindex][0] == time) {
-                        array[arrayindex][i] = value;
-                    } else {
-                        var entry = [];
-                        entry.push(time);
-                        for (var j = 1; j < i; j++) {
-                            entry.push("-");
-                        }
-                        entry.push(value);
-                        array.splice(arrayindex, 0, entry);
-                    }
-                    arrayindex++;
+        var map = {};
+        var tscount = Object.keys(TimeSeriesController.getTimeseriesCollection()).length; // TODO count setzen
+        var count = 0;
+        $.each(TimeSeriesController.getTimeseriesCollection(), $.proxy(function(index, ts) {
+            var values = Time.removeOverlappingValues(ts.getValues());
+            $.each(values, $.proxy(function(valueIdx, pair){
+                var time = pair[0];
+                var value = pair[1];
+                if (!map[time]) {
+                    map[time] = new Array(tscount);
                 }
-            });
+                map[time][count] = value;
+            }, this));
+            count++;
+        }, this));
+        var i = 0;
+        Object.keys(map).map(function(value) {
+            var temp = [];
+            temp[0] = parseInt(value);
+            $.each(map[value], $.proxy(function(idx, value){
+                temp[idx+1] = value;
+            },this));
+            array[i++] = temp;
         });
         return array;
     },
@@ -213,7 +209,7 @@ var TableController = {
             }
             var row = $('<tr></tr>');
             $.each(elem, function(index, value) {
-                if (index == 0) {
+                if (index === 0) {
                     row.append($('<td></td>').text(
                             moment(value).format(Settings.dateformat)));
                 } else {
