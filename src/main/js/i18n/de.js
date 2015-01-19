@@ -158,6 +158,9 @@ i18n.de = {
         noMatchingTimeseriesFound: 'Keine passende Zeitreihe gefunden.'
     },
     guide: {
+        start: {
+            request: 'Wenn du den Guide startest wird der aktuellen Zustand zurückgesetzt.'
+        },
         step1: {
             header: 'JavaScript Client - Geführte Tour',
             text: 'Die Tour gibt in ein paar Schritten einen Überblick über den Client. Zuerst fügen wir eine Zeitreihe von der Karte hinzu.'

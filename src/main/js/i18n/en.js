@@ -158,6 +158,9 @@ i18n.en = {
         noMatchingTimeseriesFound: 'No matching timeseries is found.'
     },
     guide: {
+        start: {
+            request: 'When you start this guide, the the current state will be resetet.'
+        },
         step1: {
             header: 'JavaScript Client - Guided Tour',
             text: 'This tour gives in a few steps an overview how to use this client. First we add a timeseries from the map.'

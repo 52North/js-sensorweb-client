@@ -29,7 +29,7 @@ var GuidedTourController = (function() {
         EventManager.unsubscribe("map:stationLoaded", stationLoaded);
         setTimeout($.proxy(function() {
             this.showNext();
-        }, this), 200);
+        }, this), 500);
     };
 
     /*
@@ -67,6 +67,7 @@ var GuidedTourController = (function() {
             text: _('guide.step4.text'),
             arrow: true,
             initStep: function() {
+                Pages.navigateToMap();
             }
         }, {
             anchor: '[data-action="locate"]',
@@ -74,6 +75,7 @@ var GuidedTourController = (function() {
             text: _('guide.step5.text'),
             arrow: true,
             initStep: function() {
+                Pages.navigateToMap();
             }
         }, {
             anchor: '[data-action="listSelection"]',
@@ -81,6 +83,7 @@ var GuidedTourController = (function() {
             text: _('guide.step6.text'),
             arrow: true,
             initStep: function() {
+                Pages.navigateToMap();
             }
         }, {
             anchor: '.navbar-header.map',
@@ -91,7 +94,7 @@ var GuidedTourController = (function() {
                 EventManager.subscribe("map:stationLoaded", $.proxy(stationLoaded, context));
             }
         }, {
-            anchor: '.tsItem input',
+            anchor: '.tsItem',
             title: _('guide.step8.header'),
             text: _('guide.step8.text'),
             previous: false,
@@ -99,7 +102,7 @@ var GuidedTourController = (function() {
             arrow: true,
             initStep: function(context) {
                 EventManager.subscribe("timeseries:data:loadfinished", $.proxy(timeseriesAdd, context));
-            }
+                    }
         }, {
             anchor: '.legend-entry',
             title: _('guide.step9.header'),
@@ -164,9 +167,11 @@ var GuidedTourController = (function() {
             // guidedtour
         },
         start: function() {
-            this.closeLast();
-            this.show(1);
-            Status.reset();
+            if (confirm(_('guide.start.request'))) {
+                this.closeLast();
+                this.show(1);
+                Status.reset();
+            }
         },
         showNext: function() {
             this.closeLast();
@@ -188,16 +193,16 @@ var GuidedTourController = (function() {
                 content: Template.createHtml('guidedtour', {
                     title: step.title,
                     text: step.text,
-                    previous: idx - 1 >= 1 && step.previous != false ? idx - 1 : null,
+                    previous: idx - 1 >= 1 && step.previous !== false ? idx - 1 : null,
                     step: idx,
-                    next: idx + 1 <= steps.length && step.next != false ? idx + 1 : null,
+                    next: idx + 1 <= steps.length && step.next !== false ? idx + 1 : null,
                     steps: steps.length
                 }),
                 placement: 'auto'
             });
             $(step.anchor).popover('show');
             $('.paging.guidedtour li a').on('click', $.proxy(function(target) {
-                var idx = parseInt(target.currentTarget.dataset.step);
+                var idx = parseInt($(target.currentTarget).data('step'));
                 if (!isNaN(idx)) {
                     this.closeLast();
                     this.show(idx);
@@ -206,9 +211,9 @@ var GuidedTourController = (function() {
             $('.guidedtour .close').on('click', $.proxy(function() {
                 this.closeLast();
             }, this));
-            this.gtWindow.on('hidden.bs.popover', $.proxy(function() {
-                this.closeLast();
-            }, this));
+//            this.gtWindow.on('hidden.bs.popover', $.proxy(function() {
+//                this.closeLast();
+//            }, this));
         }
     };
 })();
