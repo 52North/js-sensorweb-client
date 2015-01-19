@@ -22,3 +22,7 @@
 .selectionListContent .panel-body div {
     cursor: pointer;
 }
+
+.selectionListContent .loading.loaded{
+    display: none;
+}

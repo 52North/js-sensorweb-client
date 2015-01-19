@@ -68,6 +68,7 @@ var ListSelectionController = {
         $('#selectionList a:first').tab('show');
     },
     startRequest: function(tab, index, data) {
+        this.loading(tab, index, true);
         var entry = this.entries[tab][index];
         var apiUrl = Status.get('provider').apiUrl;
         if (entry) {
@@ -93,6 +94,7 @@ var ListSelectionController = {
                     data[entry.type] = e.target.dataset.id;
                     this.startRequest(tab, index + 1, data);
                 }, this));
+                this.loading(tab, index, false);
             }, this));
         } else {
             // load ts
@@ -105,6 +107,15 @@ var ListSelectionController = {
                     Inform.warn(_('listSelection.warning.moreThanOneTimeseries'));
                 }
             });
+        }
+    },
+    loading: function(tab, idx, loading) {
+        var entry = this.entries[tab][idx];
+        var elem = $('#' + tab + ' .panel-heading').has(' [href=#' + entry.collapse + ']').find('.loading');
+        if(loading) {
+            elem.removeClass('loaded');
+        } else {
+            elem.addClass('loaded');
         }
     },
     tidyData: function(data, tab, index){
