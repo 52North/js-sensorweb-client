@@ -70,9 +70,3 @@
 .favorite-group-entry {
     margin: 0px 10px;
 }
-
-@media screen and (max-width: 767px) {
-    .favoritelabel {
-        display: none;
-    }
-}

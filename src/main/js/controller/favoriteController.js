@@ -171,10 +171,10 @@ var FavoriteController = {
         fileExport.click($.proxy(this.exportFavorites, this));
     },
     createEmptyStar: function() {
-        return $('<span class="star"><span class="glyphicon glyphicon-star-empty"/><span class="favoritelabel">Favorit hinzufügen</span></span>');
+        return $('<span class="glyphicon glyphicon-star-empty star"></span>');
     },
     createFilledStar: function() {
-        return $('<span class="star"><span class="glyphicon glyphicon-star"/><span class="favoritelabel">Favorit entfernen</span></span>');
+        return $('<span class="glyphicon glyphicon-star star"></span>');
     },
     addLegendStar: function(evt, ts) {
         var tsId = ts.getInternalId();
