@@ -16,7 +16,8 @@
  */
 i18n.en_GB = {
     main: {
-        favoritesList: 'Favourites'
+        favoritesList: 'Favourites',
+        favoriteView: 'Favourites'
     },
     settings: {
         permalink: {

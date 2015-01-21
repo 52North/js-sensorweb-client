@@ -21,6 +21,7 @@ i18n.de = {
         legend: 'Legende',
         diagram: 'Diagramm',
         mapView: 'Kartenansicht',
+        favoriteView: 'Favoriten',
         settings: 'Einstellungen',
         stationSelection: 'Wähle eine Station aus',
         chartView: 'Diagrammansicht',

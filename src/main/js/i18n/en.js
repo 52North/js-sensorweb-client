@@ -21,6 +21,7 @@ i18n.en = {
         legend: 'Legend',
         diagram: 'Diagram',
         mapView: 'Map view',
+        favoriteView: 'Favorites',
         settings: 'Settings',
         stationSelection: 'Select a station',
         chartView: 'Chart view',
