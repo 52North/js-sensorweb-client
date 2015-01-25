@@ -15,14 +15,8 @@
  * limitations under the License.
  */
 var NotifyController = {
-    options : {
-        position: 'bottom-left',
-        fade_in_speed: 'medium',
-        fade_out_speed: 2000,
-        time: 4000
-    },
     init: function() {
-        $.extend($.gritter.options, this.options);
+        $.extend($.gritter.options, Settings.notifyOptions);
     },
     notify: function(text) {
         $.gritter.add({

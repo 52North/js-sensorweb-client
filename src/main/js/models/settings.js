@@ -190,6 +190,12 @@ var Settings = {
             }
         ]
     },
+    notifyOptions: {
+        position: 'bottom-left',
+        fade_in_speed: 1000,
+        fade_out_speed: 1000,
+        time: 2000
+    },
     wmsLayer: [],
     // configuration for the tile layer in the leaflet map (see for more information: http://leafletjs.com/reference.html#tilelayer )
     tileLayerUrl: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
