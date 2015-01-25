@@ -58,7 +58,7 @@ var Settings = {
     // zoom level in the map, used for user location and station position
     zoom: 13,
     // date/time format which is used on several places
-    dateformat: 'DD.MM.YY HH:mmZ',
+    dateformat: 'DD.MM.YY HH:mm',
     shortDateformat: 'DD.MM.YY',
     // duration after which latest values shall be ignored when rendering marker in the map
     ignoreAfterDuration: moment.duration(1, 'y'),
