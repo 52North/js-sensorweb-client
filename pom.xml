@@ -156,6 +156,7 @@
                                 <jsSourceFile>libs/l.geosearch.provider.openstreetmap.js</jsSourceFile>
                                 <jsSourceFile>libs/bootstrap.js</jsSourceFile>
                                 <jsSourceFile>libs/bootstrap-datetimepicker.js</jsSourceFile>
+                                <jsSourceFile>libs/bootstrap-datetimepicker.de.js</jsSourceFile>
                                 <jsSourceFile>libs/mustache.js</jsSourceFile>
                                 <jsSourceFile>libs/moment.js</jsSourceFile>
                                 <jsSourceFile>libs/qr.min.js</jsSourceFile>

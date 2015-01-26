@@ -47,7 +47,9 @@ var TimeController = {
         var options = {
             pickerPosition: 'top-right',
             autoclose: true,
-            format: this.internalFormat
+            format: this.internalFormat,
+            weekStart: 1,
+            language: currentLanguage()
         };
         $('#startPicker').datetimepicker(options).on('changeDate', this.evaluateDate);
         $('#endPicker').datetimepicker(options).on('changeDate', this.evaluateDate);
