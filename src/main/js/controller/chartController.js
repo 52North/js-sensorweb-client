@@ -356,7 +356,11 @@ var ChartController = {
                                     }
                                 });
                                 $.each(this.plot.getData(), function (index, elem) {
-                                    TimeSeriesController.getTimeseries(elem.id).setSelected(!selected);
+                                    if (target.data('axis.n') === elem.yaxis.n) {
+                                        TimeSeriesController.getTimeseries(elem.id).setSelected(!selected);
+                                    } else {
+                                        TimeSeriesController.getTimeseries(elem.id).setSelected(false);
+                                    }
                                 });
                                 EventManager.publish("timeseries:selectionChanged");
                                 if (!selected) {
