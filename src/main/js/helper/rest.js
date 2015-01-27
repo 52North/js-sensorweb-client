@@ -83,6 +83,8 @@ var Rest = {
             data = {};
         }
         data.expanded = true;
+        data.force_latest_values = true;
+        data.status_intervals = true;
         data.rendering_hints = true;
         return Rest.request(apiUrl + "timeseries/"
                 + this._createIdString(id), data, function(promise, result) {
