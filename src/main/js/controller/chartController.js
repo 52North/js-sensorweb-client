@@ -259,7 +259,7 @@ var ChartController = {
             var entry = values[idx];
             while (entry) {
                 var startInterval = entry[0];
-                var endInterval = moment(entry[0]).add('hours', style.getIntervalByHours());
+                var endInterval = moment(entry[0]).add(style.getIntervalByHours(), 'hours');
                 var sum = 0;
                 while (entry && moment(entry[0]).isBefore(endInterval)) {
                     idx++;
