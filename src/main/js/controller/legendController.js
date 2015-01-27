@@ -44,6 +44,7 @@ var LegendController = {
         });
         $('[data-id=' + ts.getInternalId() + '] .legendItemheader').click($.proxy(function(event) {
             if (!$('[data-id=' + ts.getInternalId() + ']').hasClass('selected')) {
+                TimeSeriesController.deselectAllTs();
                 ts.setSelected(true);
             } else {
                 ts.setSelected(false);

@@ -108,6 +108,11 @@ var TimeSeriesController = {
     getTimeseries: function(id) {
         return this.timeseries[id];
     },
+    deselectAllTs: function() {
+        $.each(this.getTimeseriesCollection(), $.proxy(function(idx, elem){
+            elem.setSelected(false);
+        }, this));
+    },
     getMaxTimeExtent: function() {
         var earliestStart;
         var latestEnd;
