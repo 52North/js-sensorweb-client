@@ -136,7 +136,7 @@ i18n.de = {
             inClipboard: 'Link in die Zwischenablage',
             clipboardInfo: 'Kopiere in die Zwischenablage:',
             inQrCode: 'als QR-Code',
-            favorite: 'Status in die Favoritenliste übernehmen'
+            favorite: 'Arbeitsumgebung als Favorit speichern'
         },
         clusterMarker: 'Marker gruppieren',
         markerWithLastInfo: {
