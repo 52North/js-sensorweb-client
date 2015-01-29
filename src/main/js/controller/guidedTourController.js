@@ -43,6 +43,7 @@ var GuidedTourController = (function() {
             anchor: '.navbar-header.chart',
             title: _('guide.step1.header'),
             text: _('guide.step1.text'),
+            previous: false,
             initStep: function() {
                 Pages.navigateToChart();
             }
@@ -50,6 +51,7 @@ var GuidedTourController = (function() {
             anchor: '[data-target="#map"]',
             title: _('guide.step2.header'),
             text: _('guide.step2.text'),
+            previous: false,
             arrow: true,
             initStep: function() {
                 Pages.navigateToChart();
@@ -58,6 +60,7 @@ var GuidedTourController = (function() {
             anchor: '.navbar-header.map',
             title: _('guide.step3.header'),
             text: _('guide.step3.text'),
+            previous: false,
             initStep: function() {
                 Pages.navigateToMap();
             }
@@ -65,6 +68,7 @@ var GuidedTourController = (function() {
             anchor: '[data-action="provider"]',
             title: _('guide.step4.header'),
             text: _('guide.step4.text'),
+            previous: false,
             arrow: true,
             initStep: function() {
                 Pages.navigateToMap();
@@ -73,6 +77,7 @@ var GuidedTourController = (function() {
             anchor: '[data-action="locate"]',
             title: _('guide.step5.header'),
             text: _('guide.step5.text'),
+            previous: false,
             arrow: true,
             initStep: function() {
                 Pages.navigateToMap();
@@ -81,14 +86,16 @@ var GuidedTourController = (function() {
             anchor: '[data-action="listSelection"]',
             title: _('guide.step6.header'),
             text: _('guide.step6.text'),
+            previous: false,
             arrow: true,
             initStep: function() {
                 Pages.navigateToMap();
             }
         }, {
             anchor: '.navbar-header.map',
-           title: _('guide.step7.header'),
+            title: _('guide.step7.header'),
             text: _('guide.step7.text'),
+            previous: false,
             next: false,
             initStep: function(context) {
                 EventManager.subscribe("map:stationLoaded", $.proxy(stationLoaded, context));
@@ -116,6 +123,7 @@ var GuidedTourController = (function() {
             anchor: '.navbar-header.chart',
             title: _('guide.step10.header'),
             text: _('guide.step10.text'),
+            previous: false,
             initStep: function() {
                 Pages.toggleLegend(false);
             }
@@ -123,6 +131,7 @@ var GuidedTourController = (function() {
             anchor: '.btn-group.timeSelection',
             title: _('guide.step11.header'),
             text: _('guide.step11.text'),
+            previous: false,
             arrow: true,
             initStep: function() {
             }
@@ -130,6 +139,7 @@ var GuidedTourController = (function() {
             anchor: '[data-action="dataTable"]',
             title: _('guide.step12.header'),
             text: _('guide.step12.text'),
+            previous: false,
             arrow: true,
             initStep: function() {
             }
@@ -137,6 +147,7 @@ var GuidedTourController = (function() {
             anchor: '[data-target="#favorites"]',
             title: _('guide.step13.header'),
             text: _('guide.step13.text'),
+            previous: false,
             arrow: true,
             initStep: function() {
             }
@@ -144,6 +155,7 @@ var GuidedTourController = (function() {
             anchor: '.navbar-header.chart',
             title: _('guide.step14.header'),
             text: _('guide.step14.text'),
+            previous: false,
             initStep: function() {
             }
         }];
@@ -209,11 +221,10 @@ var GuidedTourController = (function() {
                 }
             }, this));
             $('.guidedtour .close').on('click', $.proxy(function() {
+                EventManager.unsubscribe("timeseries:data:loadfinished", timeseriesAdd);
+                EventManager.unsubscribe("map:stationLoaded", stationLoaded);
                 this.closeLast();
             }, this));
-//            this.gtWindow.on('hidden.bs.popover', $.proxy(function() {
-//                this.closeLast();
-//            }, this));
         }
     };
 })();
