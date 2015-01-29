@@ -160,7 +160,7 @@ i18n.en = {
     },
     guide: {
         start: {
-            request: 'When you start this guide, the the current state will be resetet.'
+            request: 'When you start this guide, the the current state will be reset.'
         },
         step1: {
             header: 'JavaScript Client - Guided Tour',
