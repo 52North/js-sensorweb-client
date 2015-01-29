@@ -39,6 +39,6 @@ var ExportController = {
 
         var tsId = ts.getTsId();
         var apiUrl = ts.getApiUrl();
-        return apiUrl + "/timeseries/" + tsId + "/getData.csv" + kvp;
+        return apiUrl + "/timeseries/" + tsId + "/getData.zip" + kvp;
     }
 };
