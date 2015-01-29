@@ -18,11 +18,11 @@ var TableController = {
     isVisible: false,
     pageStart: 0,
     pageSize: Settings.pagesize || 10,
-    init: function() {
+    init: function () {
         this.tableButton = $('[data-action="dataTable"]');
         this.tableView = $('#tableView');
         this.tableButton.show();
-        this.tableButton.on('click', $.proxy(function(event) {
+        this.tableButton.on('click', $.proxy(function (event) {
             var button = $(event.currentTarget);
             var legendButton = $('[data-toggle="legend"]');
             if (this.isVisible === false) {
@@ -44,7 +44,7 @@ var TableController = {
         EventManager.subscribe("timeseries:remove", $.proxy(this.createTable, this));
         EventManager.subscribe("timeseries:changeStyle", $.proxy(this.updateTable, this));
     },
-    createTable: function() {
+    createTable: function () {
         if (this.isVisible) {
             this.tableView.empty();
             this.sortingFunc = null;
@@ -70,8 +70,8 @@ var TableController = {
             this.createPagingClickHandler(array.length);
         }
     },
-    createHeaderClickHandler: function() {
-        $('.table th').on('click', $.proxy(function(event) {
+    createHeaderClickHandler: function () {
+        $('.table th').on('click', $.proxy(function (event) {
             var target = $(event.currentTarget);
             var index = target.data('index');
             if (target.hasClass('sortedUp')) {
@@ -91,7 +91,7 @@ var TableController = {
             this.updateTable();
         }, this));
     },
-    changeSortLabel: function(target, up) {
+    changeSortLabel: function (target, up) {
         $('#sorting').remove();
         var span = $('<span>').attr('id', 'sorting');
         if (up) {
@@ -101,8 +101,8 @@ var TableController = {
         }
         target.append(span);
     },
-    createPagingClickHandler: function(length) {
-        $('.pagination li a').on('click', $.proxy(function(event) {
+    createPagingClickHandler: function (length) {
+        $('.pagination li a').on('click', $.proxy(function (event) {
             var start = $(event.target).data('start');
             if (typeof (start) !== "undefined" && start >= 0 && start <= length) {
                 this.pageStart = start;
@@ -110,7 +110,7 @@ var TableController = {
             }
         }, this));
     },
-    createPaging: function(arraylength, pagesize, pagestart) {
+    createPaging: function (arraylength, pagesize, pagestart) {
         this.tableView.find('div.paging').remove();
         var div = $('<div class="paging"></div>'),
                 paging = $('<ul class="pagination"></ul>');
@@ -122,50 +122,52 @@ var TableController = {
         div.append(paging);
         this.tableView.append(div);
     },
-    pageButton: function(label, start) {
+    pageButton: function (label, start) {
         var elem = $('<li></li>'),
                 a = $('<a>' + label + '</a>');
         a.data('start', start);
         elem.append(a);
         return elem;
     },
-    createColorArray: function() {
+    createColorArray: function () {
         var array = [];
-        $.each(TimeSeriesController.getTimeseriesCollection(), function(index, ts) {
+        $.each(TimeSeriesController.getTimeseriesCollection(), function (index, ts) {
             array.push(ts.getStyle().getColor());
         });
         return array;
     },
-    createValueArray: function() {
+    createValueArray: function () {
         var array = [];
         var map = {};
         var tscount = Object.keys(TimeSeriesController.getTimeseriesCollection()).length; // TODO count setzen
         var count = 0;
-        $.each(TimeSeriesController.getTimeseriesCollection(), $.proxy(function(index, ts) {
-            var values = Time.removeOverlappingValues(ts.getValues());
-            $.each(values, $.proxy(function(valueIdx, pair){
-                var time = pair[0];
-                var value = pair[1];
-                if (!map[time]) {
-                    map[time] = new Array(tscount);
-                }
-                map[time][count] = value;
-            }, this));
+        $.each(TimeSeriesController.getTimeseriesCollection(), $.proxy(function (index, ts) {
+            if (ts.getValues().length > 0) {
+                var values = Time.removeOverlappingValues(ts.getValues());
+                $.each(values, $.proxy(function (valueIdx, pair) {
+                    var time = pair[0];
+                    var value = pair[1];
+                    if (!map[time]) {
+                        map[time] = new Array(tscount);
+                    }
+                    map[time][count] = value;
+                }, this));
+            }
             count++;
         }, this));
         var i = 0;
-        Object.keys(map).map(function(value) {
+        Object.keys(map).map(function (value) {
             var temp = [];
             temp[0] = parseInt(value);
-            $.each(map[value], $.proxy(function(idx, value){
-                temp[idx+1] = value;
-            },this));
+            $.each(map[value], $.proxy(function (idx, value) {
+                temp[idx + 1] = value;
+            }, this));
             array[i++] = temp;
         });
         return array;
     },
-    upsort: function(id) {
-        return function(a, b) {
+    upsort: function (id) {
+        return function (a, b) {
             if (isNaN(a[id]) && isNaN(b[id]))
                 return 0;
             if (isNaN(a[id]))
@@ -175,8 +177,8 @@ var TableController = {
             return a[id] - b[id];
         };
     },
-    downsort: function(id) {
-        return function(a, b) {
+    downsort: function (id) {
+        return function (a, b) {
             if (isNaN(a[id]) && isNaN(b[id]))
                 return 0;
             if (isNaN(a[id]))
@@ -186,13 +188,13 @@ var TableController = {
             return b[id] - a[id];
         };
     },
-    createHtmlTableHeader: function() {
+    createHtmlTableHeader: function () {
         this.htmltable = $('<table></table>').addClass('table').addClass('table-condensed');
         var header = $('<thead></thead>');
         var headerrow = $('<tr></tr>');
         headerrow.append($('<th></th>').data('index', 0).text(_('table.time')));
         var index = 1;
-        $.each(TimeSeriesController.getTimeseriesCollection(), function(id, elem) {
+        $.each(TimeSeriesController.getTimeseriesCollection(), function (id, elem) {
             var title = $('<div></div>').text(elem.getStationLabel());
             var phenomenonLabel = $('<span></span>').text(elem.getPhenomenonLabel() + " (" + elem.getUom() + ")");
             var categoryLabel = $('<div></div>').text(elem.getCategoryLabel());
@@ -200,15 +202,15 @@ var TableController = {
         });
         this.htmltable.append(header.append(headerrow));
     },
-    createHtmlTable: function(array, colorArray) {
+    createHtmlTable: function (array, colorArray) {
         this.htmltable.find('tbody tr').remove();
         var cArray = colorArray;
-        $.each(array, $.proxy(function(tsIndex, elem) {
+        $.each(array, $.proxy(function (tsIndex, elem) {
             if (tsIndex < this.pageStart || tsIndex >= (this.pageStart + this.pageSize)) {
                 return;
             }
             var row = $('<tr></tr>');
-            $.each(elem, function(index, value) {
+            $.each(elem, function (index, value) {
                 if (index === 0) {
                     row.append($('<td></td>').text(
                             moment(value).format(Settings.dateformat)));
