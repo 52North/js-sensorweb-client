@@ -171,11 +171,11 @@ i18n.de = {
             text: 'Hier kann man die zur Kartenansicht wechseln.'
         },
         step3: {
-            header: 'Karten Ansicht',
+            header: 'Kartenansicht',
             text: 'In der Karte siehst du die Stationen als Marker oder Markergruppen.'
         },
         step4: {
-            header: 'Änder den Datenanbieter',
+            header: 'Datenanbieter',
             text: 'Hier kannst du aus einer Liste von Datenanbieter auswählen.'
         },
         step5: {
