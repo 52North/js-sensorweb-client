@@ -190,16 +190,19 @@ var ChartController = {
         }
     },
     zeroScaled: function(event, ts) {
-        // update all timeseries
-        $.each(TimeSeriesController.getTimeseriesCollection(), function(idx, elem) {
-            if (ts.getUom() === elem.getUom()) {
-                elem.getStyle().setZeroScaled(ts.getStyle().isZeroScaled());
+        debugger;
+        // get regarding yaxis
+        var yaxis;
+        $.each(this.data, function(idx, elem) {
+            if(elem.id === ts.getInternalId()){
+                yaxis = elem.yaxis;
             }
         });
         // update data of timeseries
         $.each(this.data, function(idx, elem) {
-            if (elem.uom === ts.getUom()) {
+            if (elem.yaxis === yaxis) {
                 elem.zeroScaled = ts.getStyle().isZeroScaled();
+                TimeSeriesController.getTimeseries(elem.id).getStyle().setZeroScaled(ts.getStyle().isZeroScaled());
             }
         });
         this.changeStyle(null, ts);
