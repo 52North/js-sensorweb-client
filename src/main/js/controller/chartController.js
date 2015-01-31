@@ -71,8 +71,8 @@ var ChartController = {
         EventManager.subscribe("timeseries:selectionChanged", $.proxy(this.selectionChanged, this));
         EventManager.subscribe("timeseries:hide", $.proxy(this.hideData, this));
         EventManager.subscribe("timeseries:show", $.proxy(this.showData, this));
-        EventManager.subscribe("navigation:open", $.proxy(this.hideChart, this));
-        EventManager.subscribe("navigation:close", $.proxy(this.showChart, this));
+        EventManager.subscribe("table:open", $.proxy(this.hideChart, this));
+        EventManager.subscribe("table:close", $.proxy(this.showChart, this));
         EventManager.subscribe("timeseries:changeStyle", $.proxy(this.changeStyle, this));
         EventManager.subscribe("timeseries:zeroScaled", $.proxy(this.zeroScaled, this));
 

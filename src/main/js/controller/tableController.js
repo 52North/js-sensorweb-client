@@ -30,16 +30,16 @@ var TableController = {
                 this.tableView.show();
                 Button.setNewIcon(button, 'glyphicon-stats');
                 legendButton.hide();
-                EventManager.publish("navigation:open", "table");
+                EventManager.publish("table:open", "table");
             } else {
                 this.isVisible = false;
                 this.tableView.hide();
                 legendButton.show();
                 Button.removeNewIcon(button, 'glyphicon-stats');
-                EventManager.publish("navigation:close", "table");
+                EventManager.publish("table:close", "table");
             }
         }, this));
-        EventManager.subscribe("navigation:open", $.proxy(this.createTable, this));
+        EventManager.subscribe("table:open", $.proxy(this.createTable, this));
         EventManager.subscribe("timeseries:synced", $.proxy(this.createTable, this));
         EventManager.subscribe("timeseries:remove", $.proxy(this.createTable, this));
         EventManager.subscribe("timeseries:changeStyle", $.proxy(this.updateTable, this));

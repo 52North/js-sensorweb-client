@@ -43,6 +43,7 @@ var Pages = {
             $('.legend').toggleClass('active');
             if ($('.legend').hasClass('active')) {
                 $('[data-toggle="legend"]').text("X");
+                $('[data-toggle="legend"]').show();
             } else {
                 $('[data-toggle="legend"]').text(_('main.legend'));
             }
