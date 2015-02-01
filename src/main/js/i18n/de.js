@@ -236,6 +236,20 @@ i18n.de = {
             remove: "Der Favorit '{0}' ist entfernt worden.",
             exists: "Dieser Favorit existiert bereits.",
             notSupported: "Der Datenanbieter des Favoriten '{0}' wird nicht unterstützt und kann deswegen nicht eingeladen werden."
+            },
+        import: {
+            override: "Wollen Sie die aktuellen Favoriten überschreiben?",
+            wrongFile: "Die Datei kann nicht gelesen werden.",
+            noValidJson: "Die JSON Datei ist nicht valide.",
+            header: "Importiere Favoriten",
+            text: "Hier können Sie ihre Favoriten importieren. Einfach das JSON in das Textfeld einfügen:"
+        },
+        export: {
+            header: "Exportiere Favortien",
+            text: "Hier können Sie ihre Favoriten exportieren. Einfah das JSON aus dem Textfeld kopieren und speichern, um es später wieder zu importieren:"
+        },
+        error: {
+            fileApiNotSupported: "Die File-API wird in diesem Browser nicht unterstüzt."
         }
     },
     inform: {

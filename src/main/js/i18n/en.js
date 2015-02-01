@@ -236,6 +236,20 @@ i18n.en = {
             remove: "The favorite '{0}' is removed.",
             exists: "This favorite still exists.",
             notSupported: "The provider of the favorite '{0}' isn't supported and can't be loaded."
+        },
+        import: {
+            override: "Do you want to override your current favorites?",
+            wrongFile: "Could not read the file",
+            noValidJson: "The JSON file is not valid!",
+            header: "Import favorites",
+            text: "Here you can import your exported favorites. Just paste the JSON in this text field:"
+        },
+        export: {
+            header: "Export favorites",
+            text: "Here you can export your favorites. Just copy the JSON out of this textbox and save it in a file to import it later:"
+        },
+        error: {
+            fileApiNotSupported: "The File APIs are not fully supported in this browser."
         }
     },
     inform: {

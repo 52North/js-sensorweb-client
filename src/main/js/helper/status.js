@@ -63,14 +63,14 @@ var Status = (function() {
             return this.current[key];
         },
         addTimeseries: function(ts) {
-            this.current.timeseries[ts.getInternalId()] = ts.persist();
+            this.current.timeseries[ts.getInternalId()] = ts.toJSON();
             this.save();
         },
         addTimeseriesById: function(id) {
             var ids = id.split("__");
             var apiUrl = null;
             $.each(Settings.restApiUrls, function(url, id) {
-                if (id == ids[1]) {
+                if (id === ids[1]) {
                     apiUrl = url;
                     return;
                 }

@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 function TimeseriesStyle(chartType, width, color, intervalString, lineType) {
-    this.chartType = chartType;
-    this.width = width;
-    this.color = color;
-    this.lineType = lineType;
+    this.chartType = chartType || "line";
+    this.width = width || Settings.commonLineWidth;
+    this.color = color || "#000000";
+    this.lineType = lineType || "solid";
     
     this.zeroScaled = Settings.defaultZeroScale;
     this.groupedAxis = Settings.defaultGroupedAxis;
@@ -91,11 +91,19 @@ function TimeseriesStyle(chartType, width, color, intervalString, lineType) {
     this.setGroupedAxis = function(bool) {
         this.groupedAxis = bool;
     };
-
-    this.persist = function () {
-        return JSON.stringify(this);
+    
+    this.toJSON = function(){
+        return {
+            width: this.width,
+            chartType: this.chartType,
+            color: this.color,
+            lineType: this.lineType,
+            zeroScaled: this.zeroScaled,
+            groupedAxis: this.groupedAxis,
+            interval: this.interval
+        };
     };
-
+    
     this.setIntervalByHours = function (inter) {
         this.interval = inter;
     };
@@ -116,6 +124,6 @@ TimeseriesStyle.createDefault = function (id) {
 };
 
 TimeseriesStyle.createStyleOfPersisted = function (style) {
-    var tsStyle = $.extend(new TimeseriesStyle(),JSON.parse(style));
+    var tsStyle = $.extend(new TimeseriesStyle(),style);
     return tsStyle;
 };

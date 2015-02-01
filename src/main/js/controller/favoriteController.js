@@ -164,12 +164,6 @@ var FavoriteController = {
         $('.swc-main').append(list);
         Pages.activateNavButtonsHandler();
     },
-    activateImportExportHandlers: function() {
-        var fileImport = $('#favorites-file-import');
-        var fileExport = $('#favorites-file-export');
-        fileImport.change($.proxy(this.importFavorites, this));
-        fileExport.click($.proxy(this.exportFavorites, this));
-    },
     createEmptyStar: function() {
         return $('<span class="glyphicon glyphicon-star-empty star"></span>');
     },
@@ -311,9 +305,11 @@ var FavoriteController = {
                     this.drawLoadingSpinner(ts.tsId, elem.label);
                     var promise = Rest.timeseries(ts.tsId, ts.apiUrl);
                     promise.done($.proxy(function (loadedTs) {
-                        this.removeLoadingSpinner(ts.tsId);
                         loadedTs.setStyle(TimeseriesStyle.createStyleOfPersisted(ts.style));
                         this.addFavorite(loadedTs, elem.label);
+                    }, this));
+                    promise.always($.proxy(function () {
+                        this.removeLoadingSpinner(ts.tsId);
                     }, this));
                 } else {
                     NotifyController.notify(_('favorite.single.notSupported').replace('{0}', elem.label));
@@ -363,19 +359,30 @@ var FavoriteController = {
             single: $.map(this.favorites, function(elem, idx) {
                 return {
                     label: elem.label,
-                    timeseries: elem.timeseries.persist()
+                    timeseries: elem.timeseries.toJSON()
                 };
             }),
             groups: $.map(this.favoriteGroups, function(group, idx) {
                 return {
                     label: group.label,
                     collection: $.map(group.collection, function(ts, idx) {
-                        return ts.persist();
+                        return ts.toJSON();
                     })
                 };
             })
         };
         return favorites;
+    },
+    activateImportExportHandlers: function() {
+        var fileImport = $('#favorites-file-import');
+        var fileExport = $('#favorites-file-export');
+        if(this.isFileAPISupported()){
+            fileImport.change($.proxy(this.importFavorites, this));
+        } else {
+            fileImport.parent().on('click', ($.proxy(this.importByText, this)));
+            fileImport.remove();
+        }
+        fileExport.click($.proxy(this.exportFavorites, this));
     },
     exportFavorites: function() {
         if (this.isFileAPISupported()) {
@@ -396,40 +403,81 @@ var FavoriteController = {
                 document.body.appendChild(a);
                 a.click();
             }
+        } else if (navigator.appName === "Microsoft Internet Explorer") {
+            this.exportByText();
         } else {
-            Inform.warn('The File APIs are not fully supported in this browser.');
+            Inform.warn(_('favorite.error.fileApiNotSupported'));
         }
     },
     importFavorites: function(event) {
         if (this.isFileAPISupported()) {
             var override = true;
             if (this.hasFavorites()) {
-                override = confirm('Override favorites?');
+                override = confirm(_('favorite.import.override'));
             }
             if (override) {
                 this.favorites = {};
+                this.favoriteGroups = {};
                 this.clearFavoritesView();
                 var files = event.target.files;
                 if (files && files.length > 0) {
                     var reader = new FileReader();
                     reader.readAsText(files[0]);
                     reader.onerror = function() {
-                        Inform.error('Could not read file!');
+                        Inform.error(_('favorite.import.wrongFile'));
                     };
-                    var that = this;
-                    reader.onload = function(e) {
-                        var content = JSON.parse(e.target.result);
-                        that.unserializeFavorites(content);
-                        that.saveFavorites();
-                    };
+                    reader.onload = $.proxy(function(e) {
+                        this.importJson(e.target.result);
+                    }, this);
                 }
             }
+        } else if(navigator.appName === "Microsoft Internet Explorer") {
+            this.importByText();
         } else {
-            Inform.warn('The File APIs are not fully supported in this browser.');
+            Inform.warn(_('favorite.error.fileApiNotSupported'));
+        }
+    },
+    importJson: function(json) {
+        try {
+            var content = JSON.parse(json);
+            this.unserializeFavorites(content);
+            this.saveFavorites();
+        } catch (exception) {
+            Inform.error(_('favorite.import.noValidJson'));
         }
     },
     isFileAPISupported: function() {
         return window.File && window.FileReader && window.Blob;
-    }
-
+    },
+    exportByText: function(){
+        var data = {
+            header: _('favorite.export.header'),
+            text: _('favorite.export.text'),
+            content: JSON.stringify(this.serializeFavorites(), undefined, 1)
+        };
+        Modal.show("import-export", data);
+        $('#confirmImportExport').off('click');
+    },
+    importByText: function(){
+        var override = true;
+        if (this.hasFavorites()) {
+            override = confirm(_('favorite.import.override'));
+        }
+        if (override) {
+            this.favorites = {};
+            this.favoriteGroups = {};
+            this.clearFavoritesView();
+            var data = {
+                header: _('favorite.import.header'),
+                text: _('favorite.import.text'),
+                content: ""
+            };
+            Modal.show("import-export", data);
+            $('#confirmImportExport').on('click', $.proxy(function () {
+                $('#confirmImportExport').off('click');
+                var json = $('#importContent').val();
+                this.importJson(json);
+            }, this));
+        }
+    }   
 };

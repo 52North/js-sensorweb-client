@@ -143,7 +143,7 @@ var LegendController = {
                 noData = false;
             }
         });
-        if (noData) {
+        if (noData && ChartController.visible) {
             Pages.toggleLegend(true);
         }
     },

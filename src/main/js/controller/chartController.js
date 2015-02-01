@@ -190,7 +190,6 @@ var ChartController = {
         }
     },
     zeroScaled: function(event, ts) {
-        debugger;
         // get regarding yaxis
         var yaxis;
         $.each(this.data, function(idx, elem) {

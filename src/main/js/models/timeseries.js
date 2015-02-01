@@ -68,11 +68,11 @@ function TimeSeries(tsId, meta, apiUrl) {
     
     this.isSelected = function() {
         return selected;
-    }
+    };
     
     this.setSelected = function(bool) {
         selected = bool;
-    }
+    };
     
     this.isSynced = function() {
         return synced;
@@ -102,7 +102,7 @@ function TimeSeries(tsId, meta, apiUrl) {
     };
 
     this.isCurrent = function() {
-        return this.getLastValue() != null && moment().subtract(Settings.ignoreAfterDuration).isBefore(moment(this.getLastValue().timestamp));
+        return this.getLastValue() !== null && moment().subtract(Settings.ignoreAfterDuration).isBefore(moment(this.getLastValue().timestamp));
     };
 
     this.getLastValueFormatted = function() {
@@ -151,7 +151,7 @@ function TimeSeries(tsId, meta, apiUrl) {
     };
 
     this.getCategoryLabel = function() {
-        if (meta.parameters.category && (meta.parameters.phenomenon.label != meta.parameters.category.label)) {
+        if (meta.parameters.category && (meta.parameters.phenomenon.label !== meta.parameters.category.label)) {
             return meta.parameters.category.label;
         }
         return "";
@@ -162,7 +162,7 @@ function TimeSeries(tsId, meta, apiUrl) {
     };
 
     this.hasData = function() {
-        return values.length != 0;
+        return values.length !== 0;
     };
 
     this.getRefValuesForId = function(id) {
@@ -176,12 +176,12 @@ function TimeSeries(tsId, meta, apiUrl) {
         return refValues;
     };
 
-    this.persist = function() {
+    this.toJSON = function() {
         return {
-            style: style.persist(),
+            style: style,
             apiUrl: apiUrl,
             tsId: tsId
-        };
+        }
     };
 
     this.fetchData = function(timespan, complete) {
