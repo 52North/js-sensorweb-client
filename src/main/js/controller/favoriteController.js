@@ -403,10 +403,8 @@ var FavoriteController = {
                 document.body.appendChild(a);
                 a.click();
             }
-        } else if (navigator.appName === "Microsoft Internet Explorer") {
-            this.exportByText();
         } else {
-            Inform.warn(_('favorite.error.fileApiNotSupported'));
+            this.exportByText();
         }
     },
     importFavorites: function(event) {
@@ -431,10 +429,8 @@ var FavoriteController = {
                     }, this);
                 }
             }
-        } else if(navigator.appName === "Microsoft Internet Explorer") {
-            this.importByText();
         } else {
-            Inform.warn(_('favorite.error.fileApiNotSupported'));
+            this.importByText();
         }
     },
     importJson: function(json) {
@@ -447,7 +443,8 @@ var FavoriteController = {
         }
     },
     isFileAPISupported: function() {
-        return window.File && window.FileReader && window.Blob;
+        var isIOS = navigator.userAgent.match(/(iPad|iPhone|iPod)/g) !== null;
+        return (window.File && window.FileReader && window.Blob) && !isIOS;
     },
     exportByText: function(){
         var data = {
