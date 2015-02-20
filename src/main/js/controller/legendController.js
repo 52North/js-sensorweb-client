@@ -77,7 +77,7 @@ var LegendController = {
         }, this));
         $('[data-id=' + ts.getInternalId() + '] .refEntry').on('click', function(event) {
             var target = $(event.currentTarget);
-            var refId = target.data('refid');
+            var refId = target.attr('refid');
             target.toggleClass('selected');
             var ev;
             if (target.hasClass('selected')) {
@@ -90,7 +90,7 @@ var LegendController = {
             if (!ts.isHidden()) {
                 EventManager.publish(ev, {
                     "tsId": ts.getInternalId(),
-                    "refId": target.data('refid')
+                    "refId": refId
                 });
             }
         });
