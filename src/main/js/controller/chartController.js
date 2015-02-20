@@ -31,7 +31,8 @@ var ChartController = {
         },
         xaxis: {
             mode: "time",
-            timezone: "browser"
+            timezone: "browser",
+            monthNames: _("chart.monthNames")
 //            timeformat: "%Y/%m/%d",
                     //use these the following two lines to have small ticks at the bottom ob the diagram
 //            tickLength: 5,

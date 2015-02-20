@@ -39,7 +39,8 @@ i18n.de = {
     chart: {
         noTimeseriesSelected: 'Sie haben keine Zeitreihe ausgewählt, die gewählten Zeitreihen haben keine Werte in dem derzeitigen Zeitraum oder die Zeitreihen sind unsichtbar.',
         outsideOfDataRange: 'Außerhalb des Datenbereichs!',
-        annotation: 'Daten ohne Gewähr!'
+        annotation: 'Daten ohne Gewähr!',
+        monthNames: ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"]
     },
     map: {
         userLocation: 'Hier ist ihr Standort',

@@ -36,7 +36,8 @@ i18n.en = {
     chart: {
         noTimeseriesSelected: 'You have selected no timeseries, the selected timeseries have no values in the given time range or the timeseries are hidden.',
         outsideOfDataRange: 'Outside of data range!',
-        annotation: 'Data without warranty!'
+        annotation: 'Data without warranty!',
+        monthNames: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     },
     table: {
         time: "Time"
