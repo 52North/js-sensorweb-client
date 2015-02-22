@@ -20,29 +20,39 @@ var TableController = {
     pageSize: Settings.pagesize || 10,
     init: function () {
         this.tableButton = $('[data-action="dataTable"]');
+        this.legendButton = $('[data-toggle="legend"]');
         this.tableView = $('#tableView');
         this.tableButton.show();
         this.tableButton.on('click', $.proxy(function (event) {
-            var button = $(event.currentTarget);
-            var legendButton = $('[data-toggle="legend"]');
+//            var button = $(event.currentTarget);
             if (this.isVisible === false) {
-                this.isVisible = true;
-                this.tableView.show();
-                Button.setNewIcon(button, 'glyphicon-stats');
-                legendButton.hide();
-                EventManager.publish("table:open", "table");
+                this.openTable();
             } else {
-                this.isVisible = false;
-                this.tableView.hide();
-                legendButton.show();
-                Button.removeNewIcon(button, 'glyphicon-stats');
-                EventManager.publish("table:close", "table");
+                this.closeTable();
             }
         }, this));
         EventManager.subscribe("table:open", $.proxy(this.createTable, this));
         EventManager.subscribe("timeseries:synced", $.proxy(this.createTable, this));
         EventManager.subscribe("timeseries:remove", $.proxy(this.createTable, this));
         EventManager.subscribe("timeseries:changeStyle", $.proxy(this.updateTable, this));
+    },
+    openTable: function () {
+        if (!this.isVisible) {
+            this.isVisible = true;
+            this.tableView.show();
+            Button.setNewIcon(this.tableButton, 'glyphicon-stats');
+            this.legendButton.hide();
+            EventManager.publish("table:open", "table");
+        }
+    },
+    closeTable: function () {
+        if (this.isVisible) {
+            this.isVisible = false;
+            this.tableView.hide();
+            this.legendButton.show();
+            Button.removeNewIcon(this.tableButton, 'glyphicon-stats');
+            EventManager.publish("table:close", "table");
+        }
     },
     createTable: function () {
         if (this.isVisible) {

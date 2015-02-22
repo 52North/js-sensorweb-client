@@ -30,6 +30,7 @@ var Pages = {
     },
     navigateToChart: function() {
         ChartController.showChart();
+        TableController.closeTable();
         Pages.navigateToPage("#chart-page");
         location.href = "#chart";
         Pages.togglePhenomenon(false);
