@@ -70,6 +70,9 @@ var TableController = {
             var array = this.createValueArray();
             if (!this.sortingFunc) {
                 this.sortingFunc = this.upsort(0);
+                var firstTh = $('.table th:first');
+                firstTh.addClass('sortedUp');
+                this.changeSortLabel(firstTh, true);
             }
             array.sort(this.sortingFunc);
             if (array.length > 0) {
