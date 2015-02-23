@@ -219,7 +219,7 @@ var ChartController = {
                 refVal.data = elem.getValues();
             }
         }, this));
-        if (ts.hasData()) {
+        if (ts.hasData() && !ts.isHidden()) {
             var temp = this.dataAlreadyIn(ts.getInternalId());
             if (temp) {
                 this.updateData(temp, ts);
@@ -329,7 +329,6 @@ var ChartController = {
         if (this.visible) {
             var placeholder = $('#placeholder');
             //placeholder.show();
-            
             if (this.data.length === 0) {
                 placeholder.empty();
                 placeholder.append(Template.createHtml('chart-empty'));
@@ -337,7 +336,6 @@ var ChartController = {
             }
             this.updateXAxis();
             this.options.yaxes = this.createYAxis();
-
             this.plot = $.plot('#placeholder', this.data, this.options);
             placeholder.append("<div class='chart-annotation'>" + _('chart.annotation') +  "</div>");
             $.each(this.plot.getAxes(), $.proxy(function(i, axis) {

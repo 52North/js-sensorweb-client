@@ -54,11 +54,11 @@ var LegendController = {
         $('[data-id=' + ts.getInternalId() + '] .hideDiagram').click($.proxy(function(event) {
             target = $(event.currentTarget);
             if (target.hasClass('glyphicon-eye-close')) {
-                EventManager.publish("timeseries:hide", ts.getInternalId());
                 ts.setHidden(true);
+                EventManager.publish("timeseries:hide", ts.getInternalId());
             } else {
-                EventManager.publish("timeseries:show", ts.getInternalId());
                 ts.setHidden(false);
+                EventManager.publish("timeseries:show", ts.getInternalId());
             }
             target.toggleClass('glyphicon-eye-close');
             target.toggleClass('glyphicon-eye-open');
