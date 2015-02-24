@@ -57,15 +57,17 @@ var Settings = {
     mapOptions: {},
     // zoom level in the map, used for user location and station position
     zoom: 13,
+    // how long a station popup to visualize the location should be visible on the map (in msec)
+    stationPopupDuration: 10000,
     // date/time format which is used on several places
     dateformat: 'DD.MM.YY HH:mm',
     shortDateformat: 'DD.MM.YY',
     // duration after which latest values shall be ignored when rendering marker in the map
     ignoreAfterDuration: moment.duration(1, 'y'),
-    // duration buffer for time series request
-    timeseriesDataBuffer: moment.duration(2, 'h'),
     // default color for circled marker, when last value is older than 'ignoreAfterDuration' or the timeseries has no last value
     defaultMarkerColor: '#123456',
+    // duration buffer for time series request
+    timeseriesDataBuffer: moment.duration(2, 'h'),
     // default scaling of loaded diagram
     defaultZeroScale: false,
     // default grouping timeseries with same uom

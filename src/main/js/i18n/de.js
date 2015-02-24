@@ -51,7 +51,8 @@ i18n.de = {
         stationLocation: {
             station: 'Station',
             timeseries: 'Zeitreihe',
-            provider: 'Datenanbieter'
+            provider: 'Datenanbieter',
+            jumpBackToChart: 'zurück zum Diagramm'
         },
         providerList: {
             provider: 'Datenanbieter',

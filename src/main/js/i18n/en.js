@@ -51,7 +51,8 @@ i18n.en = {
         stationLocation: {
             station: 'Station',
             timeseries: 'Timeseries',
-            provider: 'Provider'
+            provider: 'Provider',
+            jumpBackToChart: 'back to chart'
         },
         providerList: {
             provider: 'Provider',

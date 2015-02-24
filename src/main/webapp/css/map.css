@@ -58,6 +58,12 @@
     color: grey;
 }
 
+.backToChart{
+    margin-top: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
 @media screen and (max-width: 767px) {
     .phenomena.active {
         background: rgba(217, 217, 217, 0.9);

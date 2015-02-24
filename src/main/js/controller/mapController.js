@@ -457,11 +457,17 @@ var Map = {
             service: ts.getServiceLabel()
         }));
         popup.setLatLng(pos);
-        popup.openOn(Map.map);
+        Map.map.openPopup(popup);
         popup.on('close', function () {
             if (station) {
                 station.unbindPopup();
             }
         });
+        $('.backToChart').on('click', function(){
+            Pages.navigateToChart();
+        });
+        setTimeout($.proxy(function(){
+            Map.map.closePopup(popup);
+        }, this), Settings.stationPopupDuration);
     }
 };
