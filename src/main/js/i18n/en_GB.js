@@ -31,6 +31,7 @@ i18n.en_GB = {
         }
     },
     favorite: {
+        label: 'favourite',
         edit: {
             header: "Edit favourite"
         },

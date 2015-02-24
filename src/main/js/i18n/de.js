@@ -223,6 +223,7 @@ i18n.de = {
     favorite:{
         firstValueAt: 'Erster Wert bei',
         lastValueAt: 'Letzter Wert bei',
+        label: 'Favorit',
         edit: {
             header: "Favorit editieren"
         },

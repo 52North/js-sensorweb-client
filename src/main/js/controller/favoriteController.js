@@ -12,7 +12,7 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License.
+ * limitations under the License.sta
  */
 var FavoriteController = {
     favorites: {},
@@ -254,7 +254,7 @@ var FavoriteController = {
         return Object.getOwnPropertyNames(this.favorites).length !== 0;
     },
     addFavoriteGroup: function(tsColl, label) {
-        label = label || 'Status ' + this.groupIdx;
+        label = label || _('favorite.label') + ' ' + this.groupIdx;
         this.favoriteGroups[this.groupIdx] = {
             label: label,
             collection: $.map(tsColl, function(elem, idx) {

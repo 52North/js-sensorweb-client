@@ -223,6 +223,7 @@ i18n.en = {
     favorite: {
         firstValueAt: 'First value at',
         lastValueAt: 'Last value at',
+        label: 'favorite',
         edit: {
             header: "Edit favorite"
         },
