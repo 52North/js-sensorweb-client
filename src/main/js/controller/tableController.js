@@ -24,7 +24,6 @@ var TableController = {
         this.tableView = $('#tableView');
         this.tableButton.show();
         this.tableButton.on('click', $.proxy(function (event) {
-//            var button = $(event.currentTarget);
             if (this.isVisible === false) {
                 this.openTable();
             } else {
@@ -57,12 +56,16 @@ var TableController = {
     createTable: function () {
         if (this.isVisible) {
             this.tableView.empty();
-            this.sortingFunc = null;
-            this.pageStart = 0;
-            this.createHtmlTableHeader();
-            this.tableView.append(this.htmltable);
-            this.updateTable();
-            this.createHeaderClickHandler();
+            if (TimeSeriesController.hasTimeseries()) {
+                this.sortingFunc = null;
+                this.pageStart = 0;
+                this.createHtmlTableHeader();
+                this.tableView.append(this.htmltable);
+                this.updateTable();
+                this.createHeaderClickHandler();
+            } else {
+                this.tableView.append(Template.createHtml('chart-empty'));
+            }
         }
     },
     updateTable: function () {
@@ -80,7 +83,6 @@ var TableController = {
                 this.createHtmlTable(array, colorArray);
             }
             this.createPaging(array.length, this.pageSize, this.pageStart);
-            this.createPagingClickHandler(array.length);
         }
     },
     createHeaderClickHandler: function () {
@@ -124,16 +126,19 @@ var TableController = {
         }, this));
     },
     createPaging: function (arraylength, pagesize, pagestart) {
-        this.tableView.find('div.paging').remove();
-        var div = $('<div class="paging"></div>'),
-                paging = $('<ul class="pagination"></ul>');
-        paging.append(this.pageButton('&laquo;', 0));
-        paging.append(this.pageButton('&lsaquo;', pagestart - pagesize));
-        paging.append(this.pageButton(Math.ceil((pagestart + 1) / pagesize) + '/' + Math.ceil(arraylength / pagesize)));
-        paging.append(this.pageButton('&rsaquo;', pagestart + pagesize));
-        paging.append(this.pageButton('&raquo;', Math.floor(arraylength / pagesize) * pagesize));
-        div.append(paging);
-        this.tableView.append(div);
+        if (arraylength > pagesize) {
+            this.tableView.find('div.paging').remove();
+            var div = $('<div class="paging"></div>'),
+                    paging = $('<ul class="pagination"></ul>');
+            paging.append(this.pageButton('&laquo;', 0));
+            paging.append(this.pageButton('&lsaquo;', pagestart - pagesize));
+            paging.append(this.pageButton(Math.ceil((pagestart + 1) / pagesize) + '/' + Math.ceil(arraylength / pagesize)));
+            paging.append(this.pageButton('&rsaquo;', pagestart + pagesize));
+            paging.append(this.pageButton('&raquo;', Math.floor(arraylength / pagesize) * pagesize));
+            div.append(paging);
+            this.tableView.append(div);
+            this.createPagingClickHandler(arraylength);
+        }
     },
     pageButton: function (label, start) {
         var elem = $('<li></li>'),
@@ -152,7 +157,7 @@ var TableController = {
     createValueArray: function () {
         var array = [];
         var map = {};
-        var tscount = Object.keys(TimeSeriesController.getTimeseriesCollection()).length; // TODO count setzen
+        var tscount = Object.keys(TimeSeriesController.getTimeseriesCollection()).length;
         var count = 0;
         $.each(TimeSeriesController.getTimeseriesCollection(), $.proxy(function (index, ts) {
             if (ts.getValues().length > 0) {

@@ -108,6 +108,9 @@ var TimeSeriesController = {
     getTimeseries: function(id) {
         return this.timeseries[id];
     },
+    hasTimeseries: function() {
+        return Object.keys(TimeSeriesController.getTimeseriesCollection()).length > 0;
+    },
     deselectAllTs: function() {
         $.each(this.getTimeseriesCollection(), $.proxy(function(idx, elem){
             elem.setSelected(false);
