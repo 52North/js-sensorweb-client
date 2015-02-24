@@ -169,7 +169,7 @@ i18n.de = {
         },
         step2: {
             header: 'Zur Karte',
-            text: 'Hier kann man die zur Kartenansicht wechseln.'
+            text: 'Hier kann man zur Kartenansicht wechseln.'
         },
         step3: {
             header: 'Kartenansicht',
@@ -185,7 +185,7 @@ i18n.de = {
         },
         step6: {
             header: 'Listenauswahl',
-            text: 'Hier ist einen Zeitreihenauswahl durch geortnete Listen möglich.'
+            text: 'Hier ist eine Zeitreihenauswahl durch geordnete Listen möglich.'
         },
         step7: {
             header: 'Auswahl einer Station',
@@ -193,7 +193,7 @@ i18n.de = {
         },
         step8: {
             header: 'Zeitreihe auswählen',
-            text: 'Wähle einen Zeitreihe durch anklicken der Checkbox. Liegt an dieser Station nur eine Zeitreihe vor, ist diese direkt angewählt. Durch klicken des OK-Buttons wird die Zeitreihe eingeladen.'
+            text: 'Wähle eine Zeitreihe durch Anklicken der Checkbox. Liegt an dieser Station nur eine Zeitreihe vor, ist diese direkt angewählt. Durch klicken des OK-Buttons wird die Zeitreihe eingeladen.'
         },
         step9: {
             header: 'Legendeneintrag',
@@ -217,7 +217,7 @@ i18n.de = {
         },
         step14: {
             header: 'Fertig',
-            text: 'Super!<br> Dieser Client ist ein Produkt von <a href="http://52north.org" target="_blank">52&deg;North GmbH</a>. Auf <a href="https://github.com/52North/js-sensorweb-client" target="_blank">GitHub</a> findest du den aktuellen Entwicklungsstand.'
+            text: 'Super!<br> Dieser Client ist ein Produkt von der <a href="http://52north.org" target="_blank">52&deg;North GmbH</a>. Auf <a href="https://github.com/52North/js-sensorweb-client" target="_blank">GitHub</a> findest du den aktuellen Entwicklungsstand.'
         }
     },
     favorite:{
