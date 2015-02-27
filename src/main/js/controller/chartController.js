@@ -41,7 +41,8 @@ var ChartController = {
         yaxis: {
             show: true,
             additionalWidth: 17,
-            panRange: false
+            panRange: false,
+            min: null
 //			tickFormatter : function(val, axis) {
 //				var factor = axis.tickDecimals ? Math.pow(10, axis.tickDecimals) : 1;
 //				var formatted = "" + Math.round(val * factor) / factor;
@@ -192,6 +193,7 @@ var ChartController = {
     },
     zeroScaled: function(event, ts) {
         // get regarding yaxis
+        debugger;
         var yaxis;
         $.each(this.data, function(idx, elem) {
             if(elem.id === ts.getInternalId()){
@@ -428,13 +430,14 @@ var ChartController = {
             }
         });
         var axes = [];
-        $.each(axesList, function(idx, elem) {
+        $.each(axesList, $.proxy(function(idx, elem) {
+            debugger;
             axes.splice(elem.id - 1, 0, {
                 uom: elem.uom,
                 tsColors: elem.tsColors,
-                min: elem.zeroScaled ? 0 : null
+                min: elem.zeroScaled ? 0 : this.defaultOptions.yaxis.min
             });
-        });
+        },this));
         return axes;
     },
     dataAlreadyIn: function(id) {
