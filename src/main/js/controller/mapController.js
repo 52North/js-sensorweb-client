@@ -181,8 +181,13 @@ var Map = {
                             fillOpacity: 0.8
                         });
                     } else {
-                        marker = new L.Marker([geom[1], geom[0]], {
-                            id: elem.getStationId()
+                        marker = new L.circleMarker([geom[1], geom[0]], {
+                            id: elem.getStationId(),
+                            fillColor: Settings.defaultMarkerColor,
+                            color: "#000",
+                            opacity: 1,
+                            weight: 2,
+                            fillOpacity: 0.2
                         });
                     }
                     marker.on('click', $.proxy(that.markerClicked, that));
@@ -200,10 +205,10 @@ var Map = {
         if (elem.getLastValue() && elem.getStatusIntervals()) {
             var lastValue = elem.getLastValue().value;
             $.each(elem.getStatusIntervals(), function(idx, interval) {
-                if (interval.upper == null) {
+                if (interval.upper === null) {
                     interval.upper = Number.MAX_VALUE;
                 }
-                if (interval.lower == null) {
+                if (interval.lower === null) {
                     interval.lower = Number.MIN_VALUE;
                 }
                 if (!isNaN(interval.upper) && !isNaN(interval.lower) && parseFloat(interval.lower) < lastValue && lastValue < parseFloat(interval.upper)) {
