@@ -340,7 +340,7 @@ var Map = {
                         phenomenon: elem.id
                     }).done($.proxy(function(result) {
                         Pages.togglePhenomenon(false, elem.label);
-                        this.createStationMarker(result, false);
+                        this.createStationMarker(result, Status.get('clusterStations'));
                     }, this)).always($.proxy(function() {
                         $('[data-id=' + elem.id + ']').find('.item').removeClass('loadPhen');
                     }));
