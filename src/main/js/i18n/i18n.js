@@ -46,7 +46,7 @@ function createLanguageChooser() {
     };
     //$(".language-chooser-box button").append(createFlagImage(currentLanguage()));
     $.each(languagesAvailable(), function(idx, code) {
-        if (code.indexOf('_') === -1 && code !== currentLanguage()) {
+        if (code.indexOf('_') === -1 && currentLanguage().indexOf(code) !== 0) {
             var item = $("<li />", {
                 role: "menuitem"
             })
