@@ -281,6 +281,8 @@ var Map = {
                     if (Map.timeseriesCache[elem.internalId] === undefined) {
                         Rest.timeseries(elem.id, url).done(function(timeseries) {
                             Map.updateTsEntry(timeseries);
+                        }).fail(function(){
+                            Map.removeTsEntry(elem.id);
                         });
                     } else {
                         Map.updateTsEntry(Map.timeseriesCache[elem.internalId]);
@@ -297,6 +299,9 @@ var Map = {
             $('[data-id=' + timeseries.getTsId() + ']').find('.additionalInfo').text(lastValue).show();
         }
         Map.timeseriesCache[timeseries.getInternalId()] = timeseries;
+    },
+    removeTsEntry: function(id) {
+        $('[data-id=' + id + ']').remove();
     },
     addTimeseries: function(timeseries) {
         Pages.navigateToChart();
