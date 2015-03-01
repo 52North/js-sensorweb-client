@@ -193,7 +193,6 @@ var ChartController = {
     },
     zeroScaled: function(event, ts) {
         // get regarding yaxis
-        debugger;
         var yaxis;
         $.each(this.data, function(idx, elem) {
             if(elem.id === ts.getInternalId()){
@@ -431,7 +430,6 @@ var ChartController = {
         });
         var axes = [];
         $.each(axesList, $.proxy(function(idx, elem) {
-            debugger;
             axes.splice(elem.id - 1, 0, {
                 uom: elem.uom,
                 tsColors: elem.tsColors,
