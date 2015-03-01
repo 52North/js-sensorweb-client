@@ -27,7 +27,11 @@ function _(key) {
 }
 
 function currentLanguage() {
-    return Permalink.getUrlParameter('lang') || Permalink.getUrlParameter('locale') || navigator.language || navigator.userLanguage;
+    var lang = Permalink.getUrlParameter('lang') || Permalink.getUrlParameter('locale') || navigator.language || navigator.userLanguage;
+    if(lang.indexOf('-') > -1) {
+        lang.substring(0, lang.indexOf('-'));
+    }
+    return lang;
 }
 
 function languagesAvailable() {
