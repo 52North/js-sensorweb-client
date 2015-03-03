@@ -26,7 +26,15 @@
     margin: 3px;
 }
 
-/* show datpicker dropdown menu in modal window */
+/* show datepicker dropdown menu in modal window */
 .datepicker.dropdown-menu {
     z-index: 2000 !important;
+}
+
+/* resize datepicker pop-up to make all days selectable on all screen sizes */
+.datepicker.dropdown-menu.above {
+  position: absolute !important;
+  left: 10% !important;
+  width: 594px !important;
+  max-width: 80%;
 }
