@@ -21,6 +21,7 @@ i18n.en = {
         legend: 'Legend',
         diagram: 'Diagram',
         mapView: 'Map view',
+        favoriteView: 'Favorites',
         settings: 'Settings',
         stationSelection: 'Select a station',
         chartView: 'Chart view',
@@ -29,13 +30,14 @@ i18n.en = {
         favoritesList: 'Favorites',
         importFavorites: 'Import',
         exportFavorites: 'Export',
-        importExportHelp: 'Choose a file to import or export favorites',
+        importExportHelp: 'To import a file, please choose a file you exported before.',
         noFileSelected: 'No file selected'
     },
     chart: {
-        noTimeseriesSelected: 'You have selected no timeseries or the selected timeseries have no values in the given time range.',
+        noTimeseriesSelected: 'You have selected no timeseries, the selected timeseries have no values in the given time range or the timeseries are hidden.',
         outsideOfDataRange: 'Outside of data range!',
-        annotation: 'Data without warrenty!'
+        annotation: 'Data without warranty!',
+        monthNames: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     },
     table: {
         time: "Time"
@@ -49,7 +51,8 @@ i18n.en = {
         stationLocation: {
             station: 'Station',
             timeseries: 'Timeseries',
-            provider: 'Provider'
+            provider: 'Provider',
+            jumpBackToChart: 'back to chart'
         },
         providerList: {
             provider: 'Provider',
@@ -83,7 +86,7 @@ i18n.en = {
         }
     },
     "export": {
-        label: 'get data as CSV-File'
+        label: 'Data as CSV (Zip Archive)'
     },
     timeSelection: {
         header: 'Time Range',
@@ -126,7 +129,6 @@ i18n.en = {
     },
     settings: {
         header: 'Settings',
-        resetStatus: 'Reset status',
         chooseLanguage: 'Switch language',
         requiresRestart: 'Needs Restart!',
         permalink: {
@@ -134,16 +136,20 @@ i18n.en = {
             inWindow: 'link in a new window',
             inMail: 'link in an email',
             inClipboard: 'Link to clipboard',
-            clipboardInfo: 'Copy to clipboard: Ctrl+C, Enter',
+            clipboardInfo: 'Copy to clipboard:',
             inQrCode: 'as QR-Code',
-            favorite: 'Status as favorite entry'
+            favorite: 'Save working environment as favorite entry'
         },
         clusterMarker: 'cluster marker',
         markerWithLastInfo: {
             header: 'marker with last value information',
             label: 'attention - some data provider are very slow'
         },
-        saveStatus: 'save status',
+        saveStatus: {
+            header: 'Save environment',
+            label: 'All timeseries, the selected timespan and the settings are saved continuous.'
+        },
+        resetStatus: 'Reset environment',
         generalizeData: 'generalize Data',
         imprint: {
             header: 'Imprint',
@@ -155,6 +161,9 @@ i18n.en = {
         noMatchingTimeseriesFound: 'No matching timeseries is found.'
     },
     guide: {
+        start: {
+            request: 'When you start this guide, the the current state will be reset.'
+        },
         step1: {
             header: 'JavaScript Client - Guided Tour',
             text: 'This tour gives in a few steps an overview how to use this client. First we add a timeseries from the map.'
@@ -215,6 +224,7 @@ i18n.en = {
     favorite: {
         firstValueAt: 'First value at',
         lastValueAt: 'Last value at',
+        label: 'favorite',
         edit: {
             header: "Edit favorite"
         },
@@ -229,6 +239,20 @@ i18n.en = {
             remove: "The favorite '{0}' is removed.",
             exists: "This favorite still exists.",
             notSupported: "The provider of the favorite '{0}' isn't supported and can't be loaded."
+        },
+        import: {
+            override: "Do you want to override your current favorites?",
+            wrongFile: "Could not read the file",
+            noValidJson: "The JSON file is not valid!",
+            header: "Import favorites",
+            text: "Here you can import your exported favorites. Just paste the JSON in this text field:"
+        },
+        export: {
+            header: "Export favorites",
+            text: "Here you can export your favorites. Just copy the JSON out of this textbox and save it in a file to import it later:"
+        },
+        error: {
+            fileApiNotSupported: "The File APIs are not fully supported in this browser."
         }
     },
     inform: {

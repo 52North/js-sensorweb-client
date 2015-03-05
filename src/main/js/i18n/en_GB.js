@@ -16,12 +16,13 @@
  */
 i18n.en_GB = {
     main: {
-        favoritesList: 'Favourites'
+        favoritesList: 'Favourites',
+        favoriteView: 'Favourites'
     },
     settings: {
         permalink: {
-            favorite: 'Status as favourite entry'
-        },
+            favorite: 'Save working environment as favourite entry'
+        }
     },
     guide: {
         step13: {
@@ -30,6 +31,7 @@ i18n.en_GB = {
         }
     },
     favorite: {
+        label: 'favourite',
         edit: {
             header: "Edit favourite"
         },

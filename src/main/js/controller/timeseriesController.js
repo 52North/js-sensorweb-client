@@ -19,6 +19,8 @@ var TimeSeriesController = {
     init: function() {
         EventManager.subscribe("resetStatus", $.proxy(this.removeAllTS, this));
         EventManager.subscribe("timeextent:change", $.proxy(this.changeTimeExtent, this));
+        EventManager.subscribe("timeseries:changeStyle", $.proxy(this.updateTS, this));
+        EventManager.subscribe("timeseries:zeroScaled", $.proxy(this.updateTS, this));
         this.loadSavedTimeseries();
     },
     loadSavedTimeseries: function() {
@@ -26,11 +28,8 @@ var TimeSeriesController = {
             var promise = Rest.timeseries(elem.tsId, elem.apiUrl);
             var that = this;
             promise.done(function(ts) {
-                if (elem.style) {
-                    var style = ts.getStyle();
-                    style.setColor(elem.style.color);
-                    style.setChartType(elem.style.chartType);
-                    style.setIntervalByHours(elem.style.interval);
+                if (elem.style !== undefined) {
+                    ts.setStyle(TimeseriesStyle.createStyleOfPersisted(elem.style));
                 }
                 that.addTS(ts);
             });
@@ -56,12 +55,12 @@ var TimeSeriesController = {
             till: till
         });
     },
+    updateTS: function(evt, ts) {
+        Status.addTimeseries(ts);
+    },
     loadTsData: function(ts, timespan) {
         EventManager.publish("timeseries:data:load", [ts]);
-        ts.fetchData(timespan, $.proxy(this.finishedGetData, this)).fail($.proxy(function(id) {
-            this.removeTS(this.timeseries[id]);
-            this.checkSyncedStatus();
-        }, this));
+        ts.fetchData(timespan, $.proxy(this.finishedGetData, this));
     },
     finishedGetData: function(ts) {
         EventManager.publish("timeseries:data:loadfinished", [ts]);
@@ -106,17 +105,30 @@ var TimeSeriesController = {
     getTimeseriesCollection: function() {
         return this.timeseries;
     },
+    getTimeseries: function(id) {
+        return this.timeseries[id];
+    },
+    hasTimeseries: function() {
+        return Object.keys(TimeSeriesController.getTimeseriesCollection()).length > 0;
+    },
+    deselectAllTs: function() {
+        $.each(this.getTimeseriesCollection(), $.proxy(function(idx, elem){
+            elem.setSelected(false);
+        }, this));
+    },
     getMaxTimeExtent: function() {
         var earliestStart;
         var latestEnd;
         $.each(this.timeseries, $.proxy(function(index,elem) {
-            if (elem.getFirstValue() || elem.getLastValue()) {
+            if (elem.getFirstValue()) {
                 var start = moment(elem.getFirstValue().timestamp);
-                var end = moment(elem.getLastValue().timestamp);
-                if ( !earliestStart || start.isAfter(earliestStart)) {
+                if ( !earliestStart || start.isBefore(earliestStart)) {
                     earliestStart = start;
                 }
-                if ( !latestEnd || end.isBefore(latestEnd)) {
+            }
+            if (elem.getLastValue()) {
+                var end = moment(elem.getLastValue().timestamp);
+                if ( !latestEnd || end.isAfter(latestEnd)) {
                     latestEnd = end;
                 }
             }

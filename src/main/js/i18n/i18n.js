@@ -27,7 +27,11 @@ function _(key) {
 }
 
 function currentLanguage() {
-    return Permalink.getUrlParameter('lang') || Permalink.getUrlParameter('locale') || navigator.language || navigator.userLanguage;
+    var lang = Permalink.getUrlParameter('lang') || Permalink.getUrlParameter('locale') || navigator.language || navigator.userLanguage;
+    if(lang.indexOf('-') > -1) {
+        lang.substring(0, lang.indexOf('-'));
+    }
+    return lang;
 }
 
 function languagesAvailable() {
@@ -46,7 +50,7 @@ function createLanguageChooser() {
     };
     //$(".language-chooser-box button").append(createFlagImage(currentLanguage()));
     $.each(languagesAvailable(), function(idx, code) {
-        if (code.indexOf('_') === -1) {
+        if (code.indexOf('_') === -1 && currentLanguage().indexOf(code) !== 0) {
             var item = $("<li />", {
                 role: "menuitem"
             })
@@ -55,6 +59,7 @@ function createLanguageChooser() {
                     .on("click", function() {
                         var ok = window.confirm(_("settings.requiresRestart"));
                         if (ok) {
+                            Settings.additionalParameters.locale = code;
                             window.location = PermalinkController.createPermalink() + "&locale=" + code;
                         }
                     });

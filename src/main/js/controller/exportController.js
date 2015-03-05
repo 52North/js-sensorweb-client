@@ -16,65 +16,29 @@
  */
 var ExportController = {
     init: function() {
-        var version = this.msieversion();
-        if (!version || version > 9) {
-            EventManager.subscribe('timeseries:add', $.proxy(this.loadTimeseries, this));
-        }
+        EventManager.subscribe('timeseries:add', $.proxy(this.loadTimeseries, this));
     },
     loadTimeseries: function(event, ts) {
         tsId = ts.getInternalId();
         var button = $('<div class="additionalLegendEntry"><span class="glyphicon glyphicon-download"></span><span> ' + _('export.label') + '</span></div>');
         $('.legendItem[data-id="' + tsId + '"]').find('.collapseLegendEntry').append(button);
         button.on('click', $.proxy(function() {
-            this.createCSVforTS(ts);
+            window.open(this.createCsvDownloadLink(ts));
         }, this));
     },
-    createCSVforTS: function(ts) {
-        // create header
-        var csvContent = 'Sensor Station;Sensor Phenomenon;Date;Value\n';
-        // create value body
-        $.each(ts.getValues(), function(idx, valueTuple) {
-            // add station
-            csvContent += ts.getStationLabel() + ';';
-            // add phenomenon
-            csvContent += ts.getPhenomenonLabel() + ' (' + ts.getUom() + ');';
-            // add timestamp
-            csvContent += moment(valueTuple[0]).format() + ';';
-            // add value
-            csvContent += valueTuple[1];
-            csvContent += '\n';
-        });
-        this.triggerDownload(csvContent, ts.getLabel());
-    },
-    triggerDownload: function(content, suggestedFilename) {
-        var filename = suggestedFilename;
-        if (!filename) {
-            filename = 'export.csv';
-        }
-        if (filename.indexOf('.csv') == -1) {
-            filename += '.csv';
-        }
-        if (navigator.msSaveBlob) {
-            // IE 10 or greater...
-            var blob = new Blob(["\uFEFF" + content], {
-                type: 'text/csv;charset=utf-8;',
-                encoding: "utf-8"
-            });
-            navigator.msSaveBlob(blob, filename);
-        } else {
-            // FF, Chrome ...
-            var a = document.createElement('a');
-            a.href = 'data:text/csv;base64,' + btoa(content);
-            a.target = '_blank';
-            a.download = filename;
-            document.body.appendChild(a);
-            a.click();
-        }
-    },
-    msieversion: function() {
-        var ua = window.navigator.userAgent;
-        var msie = ua.indexOf("MSIE ");
-        if (msie > 0)      // If Internet Explorer, return version number
-            return parseInt(ua.substring(msie + 5, ua.indexOf(".", msie)));
+    createCsvDownloadLink: function(ts) {
+        var from = TimeController.currentTimespan.from;
+        var till = TimeController.currentTimespan.till;
+        var timespan = moment(from).format() + "/" + moment(till).format();
+
+        var kvp = "?generalize=" + Settings.generalizeData;
+        kvp = kvp + "&timespan=" + encodeURIComponent(timespan);
+        kvp = kvp + "&locale=" + currentLanguage();
+        kvp = kvp + "&zip=true";
+        kvp = kvp + "&bom=true";
+
+        var tsId = ts.getTsId();
+        var apiUrl = ts.getApiUrl();
+        return apiUrl + "/timeseries/" + tsId + "/getData.zip" + kvp;
     }
 };

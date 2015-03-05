@@ -53,17 +53,21 @@ var Settings = {
     saveStatus: false,
     // default setting for concentration marker
     concentrationMarker: false,
+    // map options of leaflet
+    mapOptions: {},
     // zoom level in the map, used for user location and station position
     zoom: 13,
+    // how long a station popup to visualize the location should be visible on the map (in msec)
+    stationPopupDuration: 10000,
     // date/time format which is used on several places
-    dateformat: 'DD.MM.YY HH:mmZ',
+    dateformat: 'DD.MM.YY HH:mm',
     shortDateformat: 'DD.MM.YY',
     // duration after which latest values shall be ignored when rendering marker in the map
     ignoreAfterDuration: moment.duration(1, 'y'),
-    // duration buffer for time series request
-    timeseriesDataBuffer: moment.duration(2, 'h'),
     // default color for circled marker, when last value is older than 'ignoreAfterDuration' or the timeseries has no last value
     defaultMarkerColor: '#123456',
+    // duration buffer for time series request
+    timeseriesDataBuffer: moment.duration(2, 'h'),
     // default scaling of loaded diagram
     defaultZeroScale: false,
     // default grouping timeseries with same uom
@@ -100,7 +104,7 @@ var Settings = {
                 name: 'lastHour',
                 label: _('timeSelection.presets.lastHour'),
                 interval: {
-                    from: moment().subtract('hours', 1),
+                    from: moment().subtract(1, 'hours'),
                     till: moment(),
                     mode: 'minutes'
                 }
@@ -118,8 +122,8 @@ var Settings = {
                 name: 'yesterday',
                 label: _('timeSelection.presets.yesterday'),
                 interval: {
-                    from: moment().subtract('days', 1).startOf('day'),
-                    till: moment().subtract('days', 1).endOf('day'),
+                    from: moment().subtract(1, 'days').startOf('day'),
+                    till: moment().subtract(1, 'days').endOf('day'),
                     mode: 'day'
                 }
             },
@@ -127,7 +131,7 @@ var Settings = {
                 name: 'todayYesterday',
                 label: _('timeSelection.presets.todayYesterday'),
                 interval: {
-                    from: moment().subtract('days', 1).startOf('day'),
+                    from: moment().subtract(1, 'days').startOf('day'),
                     //till: moment(),
                     mode: 'day'
                 }
@@ -145,8 +149,8 @@ var Settings = {
                 name: 'lastWeek',
                 label: _('timeSelection.presets.lastWeek'),
                 interval: {
-                    from: moment().subtract('weeks', 1).startOf('week'),
-                    till: moment().subtract('weeks', 1).endOf('week'),
+                    from: moment().subtract(1, 'weeks').startOf('week'),
+                    till: moment().subtract(1, 'weeks').endOf('week'),
                     mode: 'week'
                 }
             },
@@ -163,8 +167,8 @@ var Settings = {
                 name: 'lastMonth',
                 label: _('timeSelection.presets.lastMonth'),
                 interval: {
-                    from: moment().subtract('months', 1).startOf('month'),
-                    till: moment().subtract('months', 1).endOf('month'),
+                    from: moment().subtract(1, 'months').startOf('month'),
+                    till: moment().subtract(1, 'months').endOf('month'),
                     mode: 'month'
                 }
             },
@@ -181,12 +185,18 @@ var Settings = {
                 name: 'lastYear',
                 label: _('timeSelection.presets.lastYear'),
                 interval: {
-                    from: moment().subtract('years', 1).startOf('year'),
-                    till: moment().subtract('years', 1).endOf('year'),
+                    from: moment().subtract(1, 'years').startOf('year'),
+                    till: moment().subtract(1, 'years').endOf('year'),
                     mode: 'year'
                 }
             }
         ]
+    },
+    notifyOptions: {
+        position: 'bottom-left',
+        fade_in_speed: 1000,
+        fade_out_speed: 1000,
+        time: 2000
     },
     wmsLayer: [],
     // configuration for the tile layer in the leaflet map (see for more information: http://leafletjs.com/reference.html#tilelayer )

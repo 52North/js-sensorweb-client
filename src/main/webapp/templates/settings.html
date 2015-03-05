@@ -17,8 +17,13 @@
                     </div>
                     <div id="collapseSettings" class="panel-collapse collapse in">
                         <div class="panel-body">
-                            <button type="button" class="btn btn-block btn-default resetStatus" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>{{_i}}settings.resetStatus{{/i}}</button>
-                            <button type="button" class="btn btn-block btn-default saveStatus" data-dismiss="modal">{{_i}}settings.saveStatus{{/i}}</button>
+                            <a class="btn btn-block btn-default saveStatus" data-dismiss="modal">
+                                <div>{{_i}}settings.saveStatus.header{{/i}}</div>
+                                <div class="btn-subtitle">{{_i}}settings.saveStatus.label{{/i}}</div>
+                            </a>
+                            <a class="btn btn-block btn-default resetStatus" data-dismiss="modal">
+                                {{_i}}settings.resetStatus{{/i}}
+                            </a>
                             <div class="language-chooser">
 
                                 <div class="language-chooser-box dropdown btn-group">

@@ -52,5 +52,22 @@ var Time = {
     },
     getFormatedTime: function(timestamp) {
         return moment(timestamp).format(Settings.dateformat);
+    },
+    removeOverlappingValues: function(values) {
+        // remove values before start
+        var start = TimeController.getCurrentStartAsMillis();
+        var count = 0;
+        while (values[count][0] < start) count++;
+        values.splice(0, count);
+        // remove values after the end
+        var idx = values.length-1;
+        var end = TimeController.getCurrentEndAsMillis();
+        count = 0;
+        while (values[idx][0] > end) {
+            count++;
+            idx--;
+        }
+        values.splice(++idx, count);
+        return values;
     }
 };

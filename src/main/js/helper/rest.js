@@ -83,17 +83,21 @@ var Rest = {
             data = {};
         }
         data.expanded = true;
+        data.force_latest_values = true;
+        data.status_intervals = true;
         data.rendering_hints = true;
         return Rest.request(apiUrl + "timeseries/"
-                + this._createIdString(id), data, function(promise, result) {
+                + this._createIdString(id), data, function (promise, result) {
             if ($.isArray(result)) {
-                var timeseriesList = $.map(result, function(elem) {
+                var timeseriesList = $.map(result, function (elem) {
                     return new TimeSeries(elem.id, elem, apiUrl);
                 });
                 promise.resolve(timeseriesList);
             } else {
                 promise.resolve(new TimeSeries(result.id, result, apiUrl));
             }
+        }, function (promise, error) {
+            promise.reject();
         });
     },
     categories: function(id, apiUrl, data) {

@@ -12,7 +12,7 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * limitations under the License.
+ * limitations under the License.sta
  */
 var FavoriteController = {
     favorites: {},
@@ -23,20 +23,20 @@ var FavoriteController = {
         this.favoriteButton = $('.favoriteButton');
         this.favoriteButton.show();
         this.favoriteButton.on('click', $.proxy(function(event) {
-            /*
-             * This is a bit hacky, as the page navigation
-             * should be refactored to have a cleaner way
-             * in extending it
-             */
-            var backLink = Pages.current();
+//            /*
+//             * This is a bit hacky, as the page navigation
+//             * should be refactored to have a cleaner way
+//             * in extending it
+//             */
+//            var backLink = Pages.current();
             this.showFavoritesView();
-            var favoritePageButton = $('#favoriteButton');
-            favoritePageButton.on('click', $.proxy(function(event) {
-                Pages.navigateToPage("#" + backLink);
-
-            }));
+//            var favoritePageButton = $('#favoriteButton');
+//            favoritePageButton.on('click', $.proxy(function(event) {
+//                Pages.navigateToPage("#" + backLink);
+//
+//            }));
         }, this));
-        this.createFavoritesListView();
+//        this.createFavoritesListView();
         this.activateImportExportHandlers();
         EventManager.subscribe('timeseries:add', $.proxy(this.addLegendStar, this));
         EventManager.subscribe('timeseries:changeStyle', $.proxy(this.addLegendStar, this));
@@ -59,11 +59,6 @@ var FavoriteController = {
             }, this));
         }, this));
         this.loadFavorites();
-    },
-    navigateToFavoritesView: function() {
-        Pages.navigateToPage('#favorite-page');
-        Pages.toggleLegend(false);
-        Pages.togglePhenomenon(false);
     },
     clearFavoritesView: function() {
         $('#favorites-list').empty();
@@ -109,18 +104,12 @@ var FavoriteController = {
         this.addGroupClickEvents(idx);
     },
     showFavoritesView: function() {
-        this.navigateToFavoritesView();
+        Pages.navigateToFavoritesView();
     },
     addFavoriteClickEvent: function(id) {
         // delete
         this.addClickEvents(id, 'single-id', 'delete', $.proxy(function(evt) {
             this.removeFavorite(id);
-//            delete this.favorites[id];
-//            $('[data-single-id=' + id + ']').remove();
-//            var star = $('.star', '[data-id=' + id + ']');
-//            if (star) {
-//                star.addClass('glyphicon-star-empty').removeClass('glyphicon-star');
-//            }
             this.saveFavorites();
         }, this));
         // edit
@@ -129,9 +118,10 @@ var FavoriteController = {
         }, this));
         // add to diagram
         this.addClickEvents(id, 'single-id', 'addToDiagram', $.proxy(function(evt) {
+            TimeSeriesController.removeAllTS();
             var ts = this.favorites[id];
             Pages.navigateToChart();
-            TimeSeriesController.addTS(ts.timeseries);
+            TimeSeriesController.addTS(ts.timeseries.clone());
         }, this));
     },
     addGroupClickEvents: function(id) {
@@ -147,6 +137,7 @@ var FavoriteController = {
         }, this));
         // add to diagram
         this.addClickEvents(id, 'group-id', 'addToDiagram', $.proxy(function(evt) {
+            TimeSeriesController.removeAllTS();
             var group = this.favoriteGroups[id];
             Pages.navigateToChart();
             $.each(group.collection, function(idx, elem) {
@@ -154,8 +145,8 @@ var FavoriteController = {
             });
         }, this));
     },
-    addClickEvents: function(id, typeId, action, todo) {
-        $('[data-' + typeId + '=' + id + '] .' + action).on('click', todo);
+    addClickEvents: function(id, typeId, action, cb) {
+        $('[data-' + typeId + '=' + id + '] .' + action).on('click', cb);
     },
     openEditWindow: function(entry) {
         Modal.show("favorite-edit", {
@@ -172,12 +163,6 @@ var FavoriteController = {
         var list = Template.createHtml('favorites-main');
         $('.swc-main').append(list);
         Pages.activateNavButtonsHandler();
-    },
-    activateImportExportHandlers: function() {
-        var fileImport = $('#favorites-file-import');
-        var fileExport = $('#favorites-file-export');
-        fileImport.change($.proxy(this.importFavorites, this));
-        fileExport.click($.proxy(this.exportFavorites, this));
     },
     createEmptyStar: function() {
         return $('<span class="glyphicon glyphicon-star-empty star"></span>');
@@ -212,7 +197,7 @@ var FavoriteController = {
         $.each($('.stationContent .tsItem'), $.proxy(function(idx, item) {
             var star;
             var onClick;
-            var internalID = item.dataset.internalid;
+            var internalID = $(item).data('internalid');
             $(item).find('.checkbox .star').remove();
             if (this.favorites.hasOwnProperty(internalID)) {
                 star = this.createFilledStar();
@@ -225,8 +210,9 @@ var FavoriteController = {
             } else {
                 star = this.createEmptyStar();
                 onClick = $.proxy(function(event) {
+                    star.off('click', onClick);
                     event.stopPropagation();
-                    var promise = Rest.timeseries(item.dataset.id, Status.get('provider').apiUrl);
+                    var promise = Rest.timeseries($(item).data('id'), Status.get('provider').apiUrl);
                     promise.done($.proxy(function(ts) {
                         var label = this.addFavorite(ts);
                         NotifyController.notify(_('favorite.single.add').replace('{0}', label));
@@ -239,7 +225,7 @@ var FavoriteController = {
         }, this));
     },
     addFavorite: function(ts, label) {
-        label = this.addFavoriteToList(ts, label);
+        label = this.addFavoriteToList(ts.clone(), label);
         this.addLegendStar(null, ts);
         return label;
     },
@@ -268,7 +254,7 @@ var FavoriteController = {
         return Object.getOwnPropertyNames(this.favorites).length !== 0;
     },
     addFavoriteGroup: function(tsColl, label) {
-        label = label || 'Status ' + this.groupIdx;
+        label = label || _('favorite.label') + ' ' + this.groupIdx;
         this.favoriteGroups[this.groupIdx] = {
             label: label,
             collection: $.map(tsColl, function(elem, idx) {
@@ -316,31 +302,49 @@ var FavoriteController = {
             $.each(values.single, $.proxy(function(idx, elem) {
                 var ts = elem.timeseries;
                 if (this.isSupported(ts)) {
+                    this.drawLoadingSpinner(ts.tsId, elem.label);
                     var promise = Rest.timeseries(ts.tsId, ts.apiUrl);
-                    var that = this;
-                    promise.done(function (ts) {
-                        that.addFavorite(ts, elem.label);
-                    });
+                    promise.done($.proxy(function (loadedTs) {
+                        loadedTs.setStyle(TimeseriesStyle.createStyleOfPersisted(ts.style));
+                        this.addFavorite(loadedTs, elem.label);
+                    }, this));
+                    promise.always($.proxy(function () {
+                        this.removeLoadingSpinner(ts.tsId);
+                    }, this));
                 } else {
                     NotifyController.notify(_('favorite.single.notSupported').replace('{0}', elem.label));
                 }
             }, this));
             $.each(values.groups, $.proxy(function(idx, group) {
                 var label = group.label;
+                this.drawLoadingSpinner("grp" + idx, label);
                 var deferreds = $.map(group.collection, $.proxy(function(ts) {
                     if (this.isSupported(ts)) {
                         var promise = Rest.timeseries(ts.tsId, ts.apiUrl);
+                        promise.done(function (loadedTs) {
+                            loadedTs.setStyle(TimeseriesStyle.createStyleOfPersisted(ts.style));
+                        });
                         return promise;
                     } else {
                         NotifyController.notify(_('favorite.group.notSupported').replace('{0}', label));
                     }
                 }, this));
                 $.when.apply(null, deferreds).done($.proxy(function() {
-                    debugger
+                    this.removeLoadingSpinner("grp" + idx);
                     this.addFavoriteGroup(arguments, label);
                 }, this));
             }, this));
         }
+    },
+    drawLoadingSpinner: function(id, label) {
+        var elem = Template.createHtml("data-loading-entry", {
+                id: id,
+                label: label
+            });
+        $('#favorites-list').append(elem);
+    },
+    removeLoadingSpinner: function(id) {
+        $('#favorites-list').find('[data-id=' + id + ']').remove();
     },
     // checks if the provider of the timeseries is configured in the client
     isSupported: function(ts) {
@@ -355,19 +359,30 @@ var FavoriteController = {
             single: $.map(this.favorites, function(elem, idx) {
                 return {
                     label: elem.label,
-                    timeseries: elem.timeseries.persist()
+                    timeseries: elem.timeseries.toJSON()
                 };
             }),
             groups: $.map(this.favoriteGroups, function(group, idx) {
                 return {
                     label: group.label,
                     collection: $.map(group.collection, function(ts, idx) {
-                        return ts.persist();
+                        return ts.toJSON();
                     })
                 };
             })
         };
         return favorites;
+    },
+    activateImportExportHandlers: function() {
+        var fileImport = $('#favorites-file-import');
+        var fileExport = $('#favorites-file-export');
+        if(this.isFileAPISupported()){
+            fileImport.change($.proxy(this.importFavorites, this));
+        } else {
+            fileImport.parent().on('click', ($.proxy(this.importByText, this)));
+            fileImport.remove();
+        }
+        fileExport.click($.proxy(this.exportFavorites, this));
     },
     exportFavorites: function() {
         if (this.isFileAPISupported()) {
@@ -382,46 +397,84 @@ var FavoriteController = {
             } else {
                 // FF, Chrome ...
                 var a = document.createElement('a');
-                a.href = 'data:application/json,' + encodeURI(content);
+                a.href = 'data:application/json,' + encodeURIComponent(content);
                 a.target = '_blank';
                 a.download = filename;
                 document.body.appendChild(a);
                 a.click();
             }
         } else {
-            Inform.warn('The File APIs are not fully supported in this browser.');
+            this.exportByText();
         }
     },
     importFavorites: function(event) {
         if (this.isFileAPISupported()) {
             var override = true;
             if (this.hasFavorites()) {
-                override = confirm('Override favorites?');
+                override = confirm(_('favorite.import.override'));
             }
             if (override) {
                 this.favorites = {};
+                this.favoriteGroups = {};
                 this.clearFavoritesView();
                 var files = event.target.files;
                 if (files && files.length > 0) {
                     var reader = new FileReader();
                     reader.readAsText(files[0]);
                     reader.onerror = function() {
-                        Inform.error('Could not read file!');
+                        Inform.error(_('favorite.import.wrongFile'));
                     };
-                    var that = this;
-                    reader.onload = function(e) {
-                        var content = JSON.parse(e.target.result);
-                        that.unserializeFavorites(content);
-                        that.saveFavorites();
-                    };
+                    reader.onload = $.proxy(function(e) {
+                        this.importJson(e.target.result);
+                    }, this);
                 }
             }
         } else {
-            Inform.warn('The File APIs are not fully supported in this browser.');
+            this.importByText();
+        }
+    },
+    importJson: function(json) {
+        try {
+            var content = JSON.parse(json);
+            this.unserializeFavorites(content);
+            this.saveFavorites();
+        } catch (exception) {
+            Inform.error(_('favorite.import.noValidJson'));
         }
     },
     isFileAPISupported: function() {
-        return window.File && window.FileReader && window.Blob;
-    }
-
+        var isIOS = navigator.userAgent.match(/(iPad|iPhone|iPod)/g) !== null;
+        return (window.File && window.FileReader && window.Blob) && !isIOS;
+    },
+    exportByText: function(){
+        var data = {
+            header: _('favorite.export.header'),
+            text: _('favorite.export.text'),
+            content: JSON.stringify(this.serializeFavorites(), undefined, 1)
+        };
+        Modal.show("import-export", data);
+        $('#confirmImportExport').off('click');
+    },
+    importByText: function(){
+        var override = true;
+        if (this.hasFavorites()) {
+            override = confirm(_('favorite.import.override'));
+        }
+        if (override) {
+            this.favorites = {};
+            this.favoriteGroups = {};
+            this.clearFavoritesView();
+            var data = {
+                header: _('favorite.import.header'),
+                text: _('favorite.import.text'),
+                content: ""
+            };
+            Modal.show("import-export", data);
+            $('#confirmImportExport').on('click', $.proxy(function () {
+                $('#confirmImportExport').off('click');
+                var json = $('#importContent').val();
+                this.importJson(json);
+            }, this));
+        }
+    }   
 };

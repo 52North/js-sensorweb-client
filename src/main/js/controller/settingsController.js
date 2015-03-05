@@ -54,6 +54,7 @@ var SettingsController = {
                 $('.concentrationMarker').on('click', function(e) {
                     var concentMarker = Button.switchToggleButton(e.currentTarget);
                     Status.set('concentrationMarker', concentMarker);
+                    EventManager.publish('triggerConcentrationMarker');
                 });
                 // permalink
                 $('.permalink .link').on('click', function() {

@@ -1,18 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
-
-    <script type="text/javascript">
-        /* window.onerror = function(msg, url, linenumber) {
-         alert('Error message: '+msg+'\n\nURL: '+url+'\n\nLine Number: '+linenumber);
-         return true;
-         }; */
-    </script>
-
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, minimal-ui">
         <meta name="description" content="">
         <meta name="author" content="">
         <!-- <link rel="shortcut icon" href="../../docs-assets/ico/favicon.png"> -->
@@ -23,6 +14,10 @@
         <link href="css/jsc-${project.version}.${minifiedPostfix}css" rel="stylesheet">
 
         <script>
+            /* window.onerror = function(msg, url, linenumber) {
+            alert('Error message: '+msg+'\n\nURL: '+url+'\n\nLine Number: '+linenumber);
+            return true;
+            }; */
             window.isMobile = function() {
                 var check = false;
                 (function(a, b) {
@@ -36,7 +31,8 @@
                 // TODO switch to Modenizr for reliable test?
                 // TODO good article for touch AND mouse: http://www.html5rocks.com/en/mobile/touchandmouse/
 
-                return window.navigator.msMaxTouchPoints // IE 10
+                return window.navigator.MaxTouchPoints > 0 // IE
+                    || window.navigator.msMaxTouchPoints > 0 // < IE11
                     || 'ontouchstart' in document.documentElement;
             };
         </script>

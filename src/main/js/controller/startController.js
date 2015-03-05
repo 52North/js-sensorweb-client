@@ -20,6 +20,8 @@ var StartController = {
         this.loadMainPage();
         // merge settings
         $.extend(Settings, settings);
+        Settings.additionalParameters.locale = currentLanguage();
+
         NotifyController.init();
         Status.init();
         // Call all controller

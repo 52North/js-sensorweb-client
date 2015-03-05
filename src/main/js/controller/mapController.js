@@ -36,10 +36,11 @@ var Map = {
         EventManager.subscribe("resetStatus", $.proxy(this.loadStations, this));
         EventManager.subscribe("clusterStations", $.proxy(this.loadStations, this));
         EventManager.subscribe("timeseries:showInMap", $.proxy(this.showTsInMap, this));
+        EventManager.subscribe("triggerConcentrationMarker", $.proxy(this.triggerPhenomenaEntry, this));
     },
     createMap: function() {
         if ($("#map").length > 0) {
-            this.map = L.map('map');
+            this.map = L.map('map',Settings.mapOptions);
             L.tileLayer(this.tileLayerUrl, this.tileLayerOptions).addTo(this.map);
             var overlayMaps = {};
             $.each(Settings.wmsLayer, $.proxy(function(idx, layer) {
@@ -180,8 +181,13 @@ var Map = {
                             fillOpacity: 0.8
                         });
                     } else {
-                        marker = new L.Marker([geom[1], geom[0]], {
-                            id: elem.getStationId()
+                        marker = new L.circleMarker([geom[1], geom[0]], {
+                            id: elem.getStationId(),
+                            fillColor: Settings.defaultMarkerColor,
+                            color: "#000",
+                            opacity: 1,
+                            weight: 2,
+                            fillOpacity: 0.2
                         });
                     }
                     marker.on('click', $.proxy(that.markerClicked, that));
@@ -199,10 +205,10 @@ var Map = {
         if (elem.getLastValue() && elem.getStatusIntervals()) {
             var lastValue = elem.getLastValue().value;
             $.each(elem.getStatusIntervals(), function(idx, interval) {
-                if (interval.upper == null) {
+                if (interval.upper === null) {
                     interval.upper = Number.MAX_VALUE;
                 }
-                if (interval.lower == null) {
+                if (interval.lower === null) {
                     interval.lower = Number.MIN_VALUE;
                 }
                 if (!isNaN(interval.upper) && !isNaN(interval.lower) && parseFloat(interval.lower) < lastValue && lastValue < parseFloat(interval.upper)) {
@@ -226,7 +232,7 @@ var Map = {
             var phenomena = {};
             $.each(results.properties.timeseries, function(id, elem) {
                 var phenomID = elem.phenomenon.id;
-                if (Map.selectedPhenomenon == null || Map.selectedPhenomenon == phenomID) {
+                if (Map.selectedPhenomenon === null || Map.selectedPhenomenon === phenomID) {
                     if (!phenomena.hasOwnProperty(phenomID)) {
                         phenomena[phenomID] = {};
                         phenomena[phenomID].timeseries = [];
@@ -265,11 +271,18 @@ var Map = {
             } else {
                 $('.tsItem').find(':checkbox').prop('checked', true);
             }
+            $('.tsItem :checkbox').on('click', function(evt) {
+                if(!$(evt.target).is(':checked')) {
+                    $('.selectAllOption').find(':checkbox').prop('checked',false);
+                }
+            });
             $.each(phenomena, function(id, elem) {
                 $.each(elem.timeseries, function(id, elem) {
-                    if (Map.timeseriesCache[elem.internalId] == null) {
+                    if (Map.timeseriesCache[elem.internalId] === undefined) {
                         Rest.timeseries(elem.id, url).done(function(timeseries) {
                             Map.updateTsEntry(timeseries);
+                        }).fail(function(){
+                            Map.removeTsEntry(elem.id);
                         });
                     } else {
                         Map.updateTsEntry(Map.timeseriesCache[elem.internalId]);
@@ -286,6 +299,9 @@ var Map = {
             $('[data-id=' + timeseries.getTsId() + ']').find('.additionalInfo').text(lastValue).show();
         }
         Map.timeseriesCache[timeseries.getInternalId()] = timeseries;
+    },
+    removeTsEntry: function(id) {
+        $('[data-id=' + id + ']').remove();
     },
     addTimeseries: function(timeseries) {
         Pages.navigateToChart();
@@ -329,7 +345,7 @@ var Map = {
                         phenomenon: elem.id
                     }).done($.proxy(function(result) {
                         Pages.togglePhenomenon(false, elem.label);
-                        this.createStationMarker(result, false);
+                        this.createStationMarker(result, Status.get('clusterStations'));
                     }, this)).always($.proxy(function() {
                         $('[data-id=' + elem.id + ']').find('.item').removeClass('loadPhen');
                     }));
@@ -359,6 +375,9 @@ var Map = {
         $('[data-id=all]').append("<hr />");
         $('[data-id=all]').find('.item').addClass('selected');
     },
+    triggerPhenomenaEntry: function () {
+        $('.phenomena-entry [data-id=' + this.selectedPhenomenon + ']').click();
+    },
     /*----- provider list -----*/
     openProviderList: function() {
         this.loading(true);
@@ -374,7 +393,7 @@ var Map = {
         $.each(results, $.proxy(function(idx, elem) {
             var blacklisted = false;
             $.each(Settings.providerBlackList, $.proxy(function(idx, black) {
-                if (black.serviceID == elem.id && black.apiUrl == apiUrl) {
+                if (black.serviceID === elem.id && black.apiUrl === apiUrl) {
                     blacklisted = true;
                     return;
                 }
@@ -389,7 +408,7 @@ var Map = {
                     "url": elem.serviceUrl,
                     "apiUrl": apiUrl,
                     "id": elem.id,
-                    "selected": currProv.serviceID == elem.id && currProv.apiUrl == apiUrl,
+                    "selected": currProv.serviceID === elem.id && currProv.apiUrl === apiUrl,
                     "type": elem.type
                 });
             }
@@ -435,7 +454,7 @@ var Map = {
         Map.map.setView(pos, Settings.zoom);
         var station = null;
         $.each(this.stationMarkers.getLayers(), function(idx, marker) {
-            if (marker.options.id == ts.getStationId()) {
+            if (marker.options.id === ts.getStationId()) {
                 station = marker;
             }
         });
@@ -447,18 +466,18 @@ var Map = {
             timeseries: ts.getLabel(),
             service: ts.getServiceLabel()
         }));
-        if (station) {
-            setTimeout(function() {
-                station.bindPopup(popup).openPopup();
-            }, 1000);
-        } else {
-            popup.setLatLng(pos);
-            popup.openOn(Map.map);
-        }
-        popup.on('close', function() {
+        popup.setLatLng(pos);
+        Map.map.openPopup(popup);
+        popup.on('close', function () {
             if (station) {
                 station.unbindPopup();
             }
         });
+        $('.backToChart').on('click', function(){
+            Pages.navigateToChart();
+        });
+        setTimeout($.proxy(function(){
+            Map.map.closePopup(popup);
+        }, this), Settings.stationPopupDuration);
     }
 };

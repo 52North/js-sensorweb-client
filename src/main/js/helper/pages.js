@@ -23,13 +23,23 @@ var Pages = {
         $(toPage).addClass('swc-page-current');
     },
     navigateToMap: function() {
+        ChartController.visible = false;
         Pages.navigateToPage("#map-page");
         location.href = "#map";
         Pages.toggleLegend(false);
     },
     navigateToChart: function() {
+        ChartController.showChart();
+        TableController.closeTable();
         Pages.navigateToPage("#chart-page");
         location.href = "#chart";
+        Pages.togglePhenomenon(false);
+    },
+    navigateToFavoritesView: function() {
+        ChartController.visible = false;
+        Pages.navigateToPage('#favorites-page');
+        location.href = "#favorites";
+        Pages.toggleLegend(false);
         Pages.togglePhenomenon(false);
     },
     toggleLegend: function(active) {
@@ -37,6 +47,7 @@ var Pages = {
             $('.legend').toggleClass('active');
             if ($('.legend').hasClass('active')) {
                 $('[data-toggle="legend"]').text("X");
+                $('[data-toggle="legend"]').show();
             } else {
                 $('[data-toggle="legend"]').text(_('main.legend'));
             }
@@ -86,7 +97,7 @@ var Pages = {
     },
     routeToPage: function() {
         var hash = window.location.hash;
-        if (hash.indexOf('?') != -1) {
+        if (hash.indexOf('?') !== -1) {
             hash = hash.substring(hash.indexOf('#'), hash.indexOf('?'));
         }
 
@@ -95,10 +106,13 @@ var Pages = {
     _routeToPage: function(hash) {
         switch (hash) {
             case "#map":
-                Pages.navigateToPage("#map-page");
+                Pages.navigateToMap();
                 break;
             case "#chart":
-                Pages.navigateToPage("#chart-page");
+                Pages.navigateToChart();
+                break;
+            case "#favorites":
+                Pages.navigateToFavoritesView();
                 break;
             default:
                 if (Status.hasTimeseries()) {

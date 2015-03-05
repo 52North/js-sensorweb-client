@@ -21,6 +21,7 @@ i18n.de = {
         legend: 'Legende',
         diagram: 'Diagramm',
         mapView: 'Kartenansicht',
+        favoriteView: 'Favoriten',
         settings: 'Einstellungen',
         stationSelection: 'Wähle eine Station aus',
         chartView: 'Diagrammansicht',
@@ -29,16 +30,17 @@ i18n.de = {
         favoritesList: 'Favoriten',
         importFavorites: 'Importieren',
         exportFavorites: 'Exportieren',
-        importExportHelp: 'Datei für den Im- oder Exportieren wählen',
+        importExportHelp: 'Zum Import wählen sie eine zuvor exportierten JSON-Datei.',
         noFileSelected: 'Keine Datei ausgewählt'
     },
     table: {
         time: "Zeit"
     },
     chart: {
-        noTimeseriesSelected: 'Sie haben keine Zeitreihe ausgewählt oder die gewählten Zeitreihen haben keine Werte in dem derzeitigen Zeitraum.',
+        noTimeseriesSelected: 'Sie haben keine Zeitreihe ausgewählt, die gewählten Zeitreihen haben keine Werte in dem derzeitigen Zeitraum oder die Zeitreihen sind unsichtbar.',
         outsideOfDataRange: 'Außerhalb des Datenbereichs!',
-        annotation: 'Daten ohne Gewähr!'
+        annotation: 'Daten ohne Gewähr!',
+        monthNames: ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"]
     },
     map: {
         userLocation: 'Hier ist ihr Standort',
@@ -49,7 +51,8 @@ i18n.de = {
         stationLocation: {
             station: 'Station',
             timeseries: 'Zeitreihe',
-            provider: 'Datenanbieter'
+            provider: 'Datenanbieter',
+            jumpBackToChart: 'zurück zum Diagramm'
         },
         providerList: {
             provider: 'Datenanbieter',
@@ -83,7 +86,7 @@ i18n.de = {
         }
     },
     "export": {
-        label: 'Daten als CSV-File'
+        label: 'Daten als CSV (Zip-Archiv)'
     },
     timeSelection: {
         header: 'Zeitraum',
@@ -126,7 +129,6 @@ i18n.de = {
     },
     settings: {
         header: 'Einstellungen',
-        resetStatus: 'Lösche den Status',
         chooseLanguage: 'Sprache wechseln',
         requiresRestart: 'Erfordert Neustart!',
         permalink: {
@@ -134,16 +136,20 @@ i18n.de = {
             inWindow: 'öffnen im neuen Fenster',
             inMail: 'öffnen in leerer Mail',
             inClipboard: 'Link in die Zwischenablage',
-            clipboardInfo: 'Kopiere in die Zwischenablage: Ctrl+C, Enter',
+            clipboardInfo: 'Kopiere in die Zwischenablage:',
             inQrCode: 'als QR-Code',
-            favorite: 'Status in die Favoritenliste übernehmen'
+            favorite: 'Arbeitsumgebung als Favorit speichern'
         },
         clusterMarker: 'Marker gruppieren',
         markerWithLastInfo: {
             header: 'Marker mit Wert der letzten Messung',
-            label: 'Achtung - dies kann bei einigen Providern zu langen Afragen führen'
+            label: 'Achtung - dies kann bei einigen Providern zu langen Abfragen führen'
         },
-        saveStatus: 'Status mitzeichnen',
+        saveStatus: {
+            header: 'Arbeitsumgebung abspeichern',
+            label: 'Alle Zeitreihen, der ausgewählte Zeitraum und die Einstellungen werden kontinuierlich abgespeichert.'
+        },
+        resetStatus: 'Arbeitsumgebung zurücksetzen',
         generalizeData: 'Daten generalisiert abfragen',
         imprint: {
             header: 'Impressum',
@@ -155,20 +161,23 @@ i18n.de = {
         noMatchingTimeseriesFound: 'Keine passende Zeitreihe gefunden.'
     },
     guide: {
+        start: {
+            request: 'Wenn du den Guide startest wird der aktuellen Zustand zurückgesetzt.'
+        },
         step1: {
             header: 'JavaScript Client - Geführte Tour',
             text: 'Die Tour gibt in ein paar Schritten einen Überblick über den Client. Zuerst fügen wir eine Zeitreihe von der Karte hinzu.'
         },
         step2: {
             header: 'Zur Karte',
-            text: 'Hier kann man die zur Kartenansicht wechseln.'
+            text: 'Hier kann man zur Kartenansicht wechseln.'
         },
         step3: {
-            header: 'Karten Ansicht',
+            header: 'Kartenansicht',
             text: 'In der Karte siehst du die Stationen als Marker oder Markergruppen.'
         },
         step4: {
-            header: 'Änder den Datenanbieter',
+            header: 'Datenanbieter',
             text: 'Hier kannst du aus einer Liste von Datenanbieter auswählen.'
         },
         step5: {
@@ -177,7 +186,7 @@ i18n.de = {
         },
         step6: {
             header: 'Listenauswahl',
-            text: 'Hier ist einen Zeitreihenauswahl durch geortnete Listen möglich.'
+            text: 'Hier ist eine Zeitreihenauswahl durch geordnete Listen möglich.'
         },
         step7: {
             header: 'Auswahl einer Station',
@@ -185,7 +194,7 @@ i18n.de = {
         },
         step8: {
             header: 'Zeitreihe auswählen',
-            text: 'Wähle einen Zeitreihe durch anklicken der Checkbox. Liegt an dieser Station nur eine Zeitreihe vor, ist diese direkt angewählt. Durch klicken des OK-Buttons wird die Zeitreihe eingeladen.'
+            text: 'Wähle eine Zeitreihe durch Anklicken der Checkbox. Liegt an dieser Station nur eine Zeitreihe vor, ist diese direkt angewählt. Durch klicken des OK-Buttons wird die Zeitreihe eingeladen.'
         },
         step9: {
             header: 'Legendeneintrag',
@@ -209,12 +218,13 @@ i18n.de = {
         },
         step14: {
             header: 'Fertig',
-            text: 'Super!<br> Dieser Client ist ein Produkt von <a href="http://52north.org" target="_blank">52&deg;North GmbH</a>. Auf <a href="https://github.com/52North/js-sensorweb-client" target="_blank">GitHub</a> findest du den aktuellen Entwicklungsstand.'
+            text: 'Super!<br> Dieser Client ist ein Produkt von der <a href="http://52north.org" target="_blank">52&deg;North GmbH</a>. Auf <a href="https://github.com/52North/js-sensorweb-client" target="_blank">GitHub</a> findest du den aktuellen Entwicklungsstand.'
         }
     },
     favorite:{
         firstValueAt: 'Erster Wert bei',
         lastValueAt: 'Letzter Wert bei',
+        label: 'Favorit',
         edit: {
             header: "Favorit editieren"
         },
@@ -229,6 +239,20 @@ i18n.de = {
             remove: "Der Favorit '{0}' ist entfernt worden.",
             exists: "Dieser Favorit existiert bereits.",
             notSupported: "Der Datenanbieter des Favoriten '{0}' wird nicht unterstützt und kann deswegen nicht eingeladen werden."
+            },
+        import: {
+            override: "Wollen Sie die aktuellen Favoriten überschreiben?",
+            wrongFile: "Die Datei kann nicht gelesen werden.",
+            noValidJson: "Die JSON Datei ist nicht valide.",
+            header: "Importiere Favoriten",
+            text: "Hier können Sie ihre Favoriten importieren. Einfach das JSON in das Textfeld einfügen:"
+        },
+        export: {
+            header: "Exportiere Favortien",
+            text: "Hier können Sie ihre Favoriten exportieren. Einfah das JSON aus dem Textfeld kopieren und speichern, um es später wieder zu importieren:"
+        },
+        error: {
+            fileApiNotSupported: "Die File-API wird in diesem Browser nicht unterstüzt."
         }
     },
     inform: {

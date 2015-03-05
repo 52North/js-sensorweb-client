@@ -119,7 +119,8 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
         pan: {
             interactive: false,
             cursor: "move",
-            frameRate: 20
+            frameRate: 20,
+            touch: false
         }
     };
 
@@ -144,14 +145,18 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
             panTimeout = null;
 
         function onDragStart(e) {
-            if (e.which != 1)  // only accept left-click
-                return false;
+            if (e.type === "touchstart" && e.originalEvent.touches.length === 1) { // only accept single touch
+                options.pan.touch = true;
+            } else if (e.which !== 1 || e.originalEvent.touches && e.originalEvent.touches.length > 1) { // only accept left-click
+                return;
+            }
             var c = plot.getPlaceholder().css('cursor');
             if (c)
                 prevCursor = c;
             plot.getPlaceholder().css('cursor', plot.getOptions().pan.cursor);
-            prevPageX = e.pageX;
-            prevPageY = e.pageY;
+            var coordHolder = options.pan.touch ? e.originalEvent.changedTouches[0] : e;
+            prevPageX = coordHolder.pageX;
+            prevPageY = coordHolder.pageY;
         }
         
         function onDrag(e) {
@@ -160,10 +165,11 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
                 return;
 
             panTimeout = setTimeout(function () {
-                plot.pan({ left: prevPageX - e.pageX,
-                           top: prevPageY - e.pageY });
-                prevPageX = e.pageX;
-                prevPageY = e.pageY;
+                var coordHolder = options.pan.touch ? e.originalEvent.changedTouches[0] : e;
+                plot.pan({ left: prevPageX - coordHolder.pageX,
+                           top: prevPageY - coordHolder.pageY });
+                prevPageX = coordHolder.pageX;
+                prevPageY = coordHolder.pageY;
                                                     
                 panTimeout = null;
             }, 1 / frameRate * 1000);
@@ -174,14 +180,18 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
                 clearTimeout(panTimeout);
                 panTimeout = null;
             }
-                    
+            
+            var coordHolder = options.pan.touch ? e.originalEvent.changedTouches[0] : e;
             plot.getPlaceholder().css('cursor', prevCursor);
-            plot.pan({ left: prevPageX - e.pageX,
-                       top: prevPageY - e.pageY });
+            plot.pan({ left: prevPageX - coordHolder.pageX,
+                       top: prevPageY - coordHolder.pageY });
             plot.getPlaceholder().trigger("plotpanEnd", [ plot ]);
         }
         
-        function bindEvents(plot, eventHolder) {
+        var eventHolder;
+        
+        function bindEvents(plot, evtHolder) {
+            eventHolder = evtHolder;
             var o = plot.getOptions();
             if (o.zoom.interactive) {
                 eventHolder[o.zoom.trigger](onZoomClick);
@@ -192,8 +202,30 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
                 eventHolder.bind("dragstart", { distance: 10 }, onDragStart);
                 eventHolder.bind("drag", onDrag);
                 eventHolder.bind("dragend", onDragEnd);
+                eventHolder.bind("touchstart", function(e) {
+                    eventHolder.unbind("dragstart", onDragStart);
+                    onDragStart(e);
+                });
+                eventHolder.bind("touchmove", function(e) {
+                    eventHolder.unbind("drag", onDrag);
+                    onDrag(e);
+                });
+                eventHolder.bind("touchend", function(e) {
+                    eventHolder.unbind("dragend", onDragEnd);
+                    onDragEnd(e);
+                });
             }
         }
+        
+        plot.unbindPanZoomEvents = function (args) {
+            eventHolder.unbind("mousewheel", onMouseWheel);
+            eventHolder.unbind("dragstart", onDragStart);
+            eventHolder.unbind("drag", onDrag);
+            eventHolder.unbind("dragend", onDragEnd);
+            eventHolder.unbind("touchstart");
+            eventHolder.unbind("touchmove");
+            eventHolder.unbind("touchend");
+        };
 
         plot.zoomOut = function (args) {
             if (!args)
@@ -330,6 +362,9 @@ Licensed under the MIT License ~ http://threedubmedia.googlecode.com/files/MIT-L
             eventHolder.unbind("dragstart", onDragStart);
             eventHolder.unbind("drag", onDrag);
             eventHolder.unbind("dragend", onDragEnd);
+            eventHolder.unbind("touchstart");
+            eventHolder.unbind("touchmove");
+            eventHolder.unbind("touchend");
             if (panTimeout)
                 clearTimeout(panTimeout);
         }

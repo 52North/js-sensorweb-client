@@ -31,7 +31,8 @@ var ChartController = {
         },
         xaxis: {
             mode: "time",
-            timezone: "browser"
+            timezone: "browser",
+            monthNames: _("chart.monthNames")
 //            timeformat: "%Y/%m/%d",
                     //use these the following two lines to have small ticks at the bottom ob the diagram
 //            tickLength: 5,
@@ -40,7 +41,8 @@ var ChartController = {
         yaxis: {
             show: true,
             additionalWidth: 17,
-            panRange: false
+            panRange: false,
+            min: null
 //			tickFormatter : function(val, axis) {
 //				var factor = axis.tickDecimals ? Math.pow(10, axis.tickDecimals) : 1;
 //				var formatted = "" + Math.round(val * factor) / factor;
@@ -68,15 +70,13 @@ var ChartController = {
         EventManager.subscribe("timeseries:remove:referenceValue", $.proxy(this.removeReferenceValue, this));
         EventManager.subscribe("timeseries:remove", $.proxy(this.removeTS, this));
         EventManager.subscribe("timeseries:removeAll", $.proxy(this.clearChart, this));
-        EventManager.subscribe("timeseries:selected", $.proxy(this.selectTs, this));
-        EventManager.subscribe("timeseries:unselectAll", $.proxy(this.unselectAll, this));
+        EventManager.subscribe("timeseries:selectionChanged", $.proxy(this.selectionChanged, this));
         EventManager.subscribe("timeseries:hide", $.proxy(this.hideData, this));
         EventManager.subscribe("timeseries:show", $.proxy(this.showData, this));
-        EventManager.subscribe("navigation:open", $.proxy(this.hideChart, this));
-        EventManager.subscribe("navigation:close", $.proxy(this.showChart, this));
+        EventManager.subscribe("table:open", $.proxy(this.hideChart, this));
+        EventManager.subscribe("table:close", $.proxy(this.showChart, this));
         EventManager.subscribe("timeseries:changeStyle", $.proxy(this.changeStyle, this));
         EventManager.subscribe("timeseries:zeroScaled", $.proxy(this.zeroScaled, this));
-        EventManager.subscribe("timeseries:groupedAxis", $.proxy(this.changeStyle, this));
 
         $(window).resize($.proxy(function() {
             var newRatio = $(document).width() / $(document).height();
@@ -110,35 +110,61 @@ var ChartController = {
         this.plotChart();
     },
     hideData: function(event, id) {
+        var ts = TimeSeriesController.getTimeseriesCollection()[id];
+        $.each(ts.getRefValues(), $.proxy(function(idx, refValue) {
+            if(refValue.isSelected()) {
+                this.removeData(idx);
+            }
+        }, this));
         this.removeData(id);
         this.plotChart();
     },
     showData: function(event, id) {
         var ts = TimeSeriesController.getTimeseriesCollection()[id];
+        $.each(ts.getRefValues(), $.proxy(function(idx, refValue) {
+            if(refValue.isSelected()) {
+                this.showReferenceValue(null, {
+                    "tsId": ts.getInternalId(),
+                    "refId": idx
+                });
+            }
+        }, this));
         this.loadDataFinished(null, ts);
         this.plotChart();
+        this.selectionChanged();
     },
-    selectTs: function(event, id) {
+    selectTs: function(id, selected) {
         if (this.plot) {
             $.each(this.plot.getData(), function(idx, ts) {
                 if (ts.id === id) {
-                    ts.lines.lineWidth = ChartController.selectedLineWidth;
-                    ts.bars.lineWidth = ChartController.selectedLineWidth;
-                    ts.selected = true;
-                    $.each($('.axisTarget'), function(idx, axis) {
-                        if (ts.yaxis.n === $(axis).data('axis.n')) {
-                            $(axis).toggleClass("selected");
-                        }
-                    });
+                    ts.selected = selected;
+                    if(selected) {
+                        ts.lines.lineWidth = ChartController.selectedLineWidth;
+                        ts.bars.lineWidth = ChartController.selectedLineWidth;
+                        $.each($('.axisTarget'), function(idx, axis) {
+                            if (ts.yaxis.n === $(axis).data('axis.n')) {
+                                $(axis).addClass('selected');
+                            }
+                        });
+                    } else {
+                        ts.lines.lineWidth = ChartController.commonLineWidth;
+                        ts.bars.lineWidth = ChartController.commonLineWidth;
+                    }
                 }
             });
-            this.plot.draw();
             $.each(this.data, function(index, elem) {
                 if (elem.id === id) {
-                    elem.selected = true;
+                    elem.selected = selected;
                 }
             });
         }
+    },
+    selectionChanged: function() {
+        $('.axisTarget').removeClass('selected');
+        $.each(TimeSeriesController.getTimeseriesCollection(), $.proxy(function(idx, ts) {
+            this.selectTs(ts.getInternalId(), ts.isSelected());
+        }, this));
+        this.plot.draw();
     },
     unselectAll: function(event) {
         if (this.plot) {
@@ -150,11 +176,11 @@ var ChartController = {
             $.each(this.data, function(index, elem) {
                 elem.selected = false;
             });
-            $('.axisTarget').removeClass('selected');
             this.plot.draw();
         }
     },
     loadDataForChart: function(event, ts) {
+        if (this.plot) this.plot.unbindPanZoomEvents();
         if (this.visible) {
             var label = ts.getLabel();
             var html = Template.createHtml("data-loading-entry", {
@@ -166,16 +192,18 @@ var ChartController = {
         }
     },
     zeroScaled: function(event, ts) {
-        // update all timeseries
-        $.each(TimeSeriesController.getTimeseriesCollection(), function(idx, elem) {
-            if (ts.getUom() === elem.getUom()) {
-                elem.setZeroScaled(ts.isZeroScaled());
+        // get regarding yaxis
+        var yaxis;
+        $.each(this.data, function(idx, elem) {
+            if(elem.id === ts.getInternalId()){
+                yaxis = elem.yaxis;
             }
         });
         // update data of timeseries
         $.each(this.data, function(idx, elem) {
-            if (elem.uom === ts.getUom()) {
-                elem.zeroScaled = ts.isZeroScaled();
+            if (elem.yaxis === yaxis) {
+                elem.zeroScaled = ts.getStyle().isZeroScaled();
+                TimeSeriesController.getTimeseries(elem.id).getStyle().setZeroScaled(ts.getStyle().isZeroScaled());
             }
         });
         this.changeStyle(null, ts);
@@ -192,7 +220,7 @@ var ChartController = {
                 refVal.data = elem.getValues();
             }
         }, this));
-        if (ts.hasData()) {
+        if (ts.hasData() && !ts.isHidden()) {
             var temp = this.dataAlreadyIn(ts.getInternalId());
             if (temp) {
                 this.updateData(temp, ts);
@@ -218,8 +246,8 @@ var ChartController = {
     addStyleAndValues: function(data, ts) {
         var style = ts.getStyle();
         data.color = style.getColor();
-        data.zeroScaled = ts.isZeroScaled();
-        data.groupedAxis = ts.isGroupedAxis();
+        data.zeroScaled = style.isZeroScaled();
+        data.groupedAxis = style.isGroupedAxis();
         data.stationLabel = ts.getStationLabel();
         if (style.isBarChart()) {
             data.bars = {
@@ -235,7 +263,7 @@ var ChartController = {
             var entry = values[idx];
             while (entry) {
                 var startInterval = entry[0];
-                var endInterval = moment(entry[0]).add('hours', style.getIntervalByHours());
+                var endInterval = moment(entry[0]).add(style.getIntervalByHours(), 'hours');
                 var sum = 0;
                 while (entry && moment(entry[0]).isBefore(endInterval)) {
                     idx++;
@@ -302,7 +330,6 @@ var ChartController = {
         if (this.visible) {
             var placeholder = $('#placeholder');
             //placeholder.show();
-
             if (this.data.length === 0) {
                 placeholder.empty();
                 placeholder.append(Template.createHtml('chart-empty'));
@@ -310,7 +337,6 @@ var ChartController = {
             }
             this.updateXAxis();
             this.options.yaxes = this.createYAxis();
-
             this.plot = $.plot('#placeholder', this.data, this.options);
             placeholder.append("<div class='chart-annotation'>" + _('chart.annotation') +  "</div>");
             $.each(this.plot.getAxes(), $.proxy(function(i, axis) {
@@ -319,34 +345,32 @@ var ChartController = {
                 var box = axis.box;
                 if (axis.direction === "y") {
                     $("<div class='axisTarget' style='position:absolute; left:" + box.left + "px; top:" + box.top + "px; width:" + box.width + "px; height:" + box.height + "px'></div>")
-                        .data("axis.n", axis.n)
-                        .appendTo(this.plot.getPlaceholder())
-                        .click($.proxy(function(event) {
-                            var target = $(event.currentTarget);
-                            var selected = false;
-                            $.each($('.axisTarget'), function(index, elem) {
-                                elem = $(elem);
-                                if (target.data('axis.n') === elem.data('axis.n')) {
-                                    selected = elem.hasClass("selected");
-                                    return false; // break loop
-                                }
-                            });
-                            EventManager.publish("timeseries:unselectAll");
-                            $.each(this.plot.getData(), function(index, elem) {
-                                if (elem.yaxis.n === axis.n && !selected) {
-                                    EventManager.publish("timeseries:selected", elem.id);
-                                    target.addClass("selected");
-                                    if ( !elem.groupedAxis) {
+                            .data("axis.n", axis.n)
+                            .appendTo(this.plot.getPlaceholder())
+                            .click($.proxy(function (event) {
+                                var target = $(event.currentTarget);
+                                var selected = false;
+                                $.each($('.axisTarget'), function (index, elem) {
+                                    elem = $(elem);
+                                    if (target.data('axis.n') === elem.data('axis.n')) {
+                                        selected = elem.hasClass("selected");
                                         return false; // break loop
                                     }
+                                });
+                                $.each(this.plot.getData(), function (index, elem) {
+                                    if (target.data('axis.n') === elem.yaxis.n) {
+                                        TimeSeriesController.getTimeseries(elem.id).setSelected(!selected);
+                                    } else {
+                                        TimeSeriesController.getTimeseries(elem.id).setSelected(false);
+                                    }
+                                });
+                                EventManager.publish("timeseries:selectionChanged");
+                                if (!selected) {
+                                    target.addClass("selected");
                                 }
-                            });
-                            this.plot.draw();
-                        }, this));
-
-
+                            }, this));
                     var yaxisLabel = $("<div class='axisLabel yaxisLabel' style=left:" + box.left + "px;></div>").text(axis.options.uom).appendTo('#placeholder');
-                    $.each(axis.options.tsColors, function(idx, color) {
+                    $.each(axis.options.tsColors, function (idx, color) {
                         $('<span>').html('&nbsp;&#x25CF;').css('color', color).addClass('labelColorMarker').appendTo(yaxisLabel);
                     });
                     yaxisLabel.css("margin-left", -(yaxisLabel.width() - yaxisLabel.height()) / 2 - 3);
@@ -405,13 +429,13 @@ var ChartController = {
             }
         });
         var axes = [];
-        $.each(axesList, function(idx, elem) {
+        $.each(axesList, $.proxy(function(idx, elem) {
             axes.splice(elem.id - 1, 0, {
                 uom: elem.uom,
                 tsColors: elem.tsColors,
-                min: elem.zeroScaled ? 0 : null
+                min: elem.zeroScaled ? 0 : this.defaultOptions.yaxis.min
             });
-        });
+        },this));
         return axes;
     },
     dataAlreadyIn: function(id) {
@@ -426,7 +450,7 @@ var ChartController = {
     removeData: function(id) {
         var idx = -1;
         $.each(this.data, function(i, elem) {
-            if (id == elem.id) {
+            if (id === elem.id) {
                 idx = i;
                 return;
             }

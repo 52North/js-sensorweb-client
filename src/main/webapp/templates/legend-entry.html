@@ -4,13 +4,13 @@
             <!-- <span class="glyphicon glyphicon-refresh loading icon-spin"></span> -->
             <span>{{station}}</span>
         </div>
-        <div class="noDataWarning" style="display: none;">
+        <div class="noDataWarning firstLastEntry" data-lastTime="{{lastValueTime}}" style="display: none;">
             <div>
                 <span class="glyphicon glyphicon-warning-sign red"></span>
                 <span class="small">{{_i}}legend.entry.noData{{/i}}</span>
             </div>
             {{#lastValueTime}}
-            <div class="firstLastEntry additionalLegendEntry" data-lastTime="{{lastValueTime}}">
+            <div class="additionalLegendEntry">
                 <span class="glyphicon glyphicon-chevron-right"></span>
                 <span class="small">{{_i}}legend.entry.jumpToLastValue{{/i}}</span>
             </div>
@@ -48,7 +48,7 @@
         </div>
         {{/lastValueTime}}
         {{#referenceValues}}
-        <div class="refEntry additionalLegendEntry" data-refid="{{id}}" style='border-color: {{color}}'>
+        <div class="refEntry additionalLegendEntry" refid="{{id}}" style='border-color: {{color}}'>
             <span class="glyphicon glyphicon-chevron-right"></span>
             <span>{{label}}</span>
         </div>

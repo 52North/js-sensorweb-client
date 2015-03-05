@@ -15,7 +15,15 @@
  * limitations under the License.
  */
 function TimeseriesStyle(chartType, width, color, intervalString, lineType) {
-    createInterval = function(interval) {
+    this.chartType = chartType || "line";
+    this.width = width || Settings.commonLineWidth;
+    this.color = color || "#000000";
+    this.lineType = lineType || "solid";
+    
+    this.zeroScaled = Settings.defaultZeroScale;
+    this.groupedAxis = Settings.defaultGroupedAxis;
+    
+    createInterval = function (interval) {
         switch (interval) {
             case "byHour":
                 return 1;
@@ -30,61 +38,83 @@ function TimeseriesStyle(chartType, width, color, intervalString, lineType) {
         }
     };
 
-    var interval = createInterval(intervalString);
+    this.interval = createInterval(intervalString);
 
-    this.getColor = function() {
-        return color;
+    this.getColor = function () {
+        return this.color;
     };
 
-    this.setColor = function(setcolor) {
-        color = setcolor;
+    this.setColor = function (setcolor) {
+        this.color = setcolor;
     };
 
-    this.getChartType = function() {
-        return chartType;
+    this.getChartType = function () {
+        return this.chartType;
     };
 
-    this.setChartType = function(ct) {
-        chartType = ct;
+    this.setChartType = function (ct) {
+        this.chartType = ct;
     };
 
-    this.isBarChart = function() {
-        return chartType == "bar";
+    this.isBarChart = function () {
+        return this.chartType === "bar";
     };
 
-    this.isLineChart = function() {
-        return chartType == "line";
+    this.isLineChart = function () {
+        return this.chartType === "line";
     };
 
-    this.getIntervalByHours = function() {
-        return interval;
+    this.getIntervalByHours = function () {
+        return this.interval;
     };
 
-    this.getLineType = function() {
-        return lineType;
+    this.getLineType = function () {
+        return this.lineType;
     };
 
-    this.getWidth = function() {
-        return width;
+    this.getWidth = function () {
+        return this.width;
+    };
+    
+    this.isZeroScaled = function() {
+        return this.zeroScaled;
     };
 
-    this.persist = function() {
+    this.setZeroScaled = function(bool) {
+        this.zeroScaled = bool;
+    };
+    
+    this.isGroupedAxis = function(){
+        return this.groupedAxis;
+    };
+    
+    this.setGroupedAxis = function(bool) {
+        this.groupedAxis = bool;
+    };
+    
+    this.toJSON = function(){
         return {
-            chartType: chartType,
-            color: color,
-            interval: interval,
-            lineType: lineType
+            width: this.width,
+            chartType: this.chartType,
+            color: this.color,
+            lineType: this.lineType,
+            zeroScaled: this.zeroScaled,
+            groupedAxis: this.groupedAxis,
+            interval: this.interval
         };
     };
-
-    this.setIntervalByHours = function(inter) {
-        interval = inter;
+    
+    this.setIntervalByHours = function (inter) {
+        this.interval = inter;
     };
 
+    this.clone = function () {
+        return $.extend(new TimeseriesStyle(), this);
+    };
 }
 ;
 /* create a default timeseries style constructor */
-TimeseriesStyle.createDefault = function(id) {
+TimeseriesStyle.createDefault = function (id) {
     var chartType = "line";
     var width = Settings.commonLineWidth;
     var color = Color.stringToColor(id);
@@ -93,3 +123,7 @@ TimeseriesStyle.createDefault = function(id) {
     return new TimeseriesStyle(chartType, width, color, interval, lineType);
 };
 
+TimeseriesStyle.createStyleOfPersisted = function (style) {
+    var tsStyle = $.extend(new TimeseriesStyle(),style);
+    return tsStyle;
+};

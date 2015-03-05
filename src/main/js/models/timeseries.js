@@ -20,8 +20,8 @@ function TimeSeries(tsId, meta, apiUrl) {
     var values = [];
     var refValues = {};
     var synced = false;
-    var zeroScaled = Settings.defaultZeroScale;
-    var groupedAxis = Settings.defaultGroupedAxis;
+    var hidden = false;
+    var selected = false;
     var timeBuffer = Settings.timeseriesDataBuffer || moment.duration(2, 'h');
     $.each(meta.referenceValues, $.proxy(function(index, elem) {
         refValues[elem.referenceValueId] = new ReferenceValue(elem.referenceValueId, elem.label);
@@ -53,23 +53,27 @@ function TimeSeries(tsId, meta, apiUrl) {
     this.getStyle = function() {
         return style;
     };
-
-    this.isZeroScaled = function() {
-        return zeroScaled;
+    
+    this.setStyle = function(newStyle) {
+        style = newStyle;
     };
 
-    this.setZeroScaled = function(bool) {
-        zeroScaled = bool;
+    this.isHidden = function() {
+        return hidden;
     };
     
-    this.isGroupedAxis = function(){
-        return groupedAxis;
+    this.setHidden = function(bool) {
+        hidden = bool;
+    };  
+    
+    this.isSelected = function() {
+        return selected;
     };
     
-    this.setGroupedAxis = function(bool) {
-        groupedAxis = bool;
+    this.setSelected = function(bool) {
+        selected = bool;
     };
-
+    
     this.isSynced = function() {
         return synced;
     };
@@ -98,7 +102,7 @@ function TimeSeries(tsId, meta, apiUrl) {
     };
 
     this.isCurrent = function() {
-        return this.getLastValue() != null && moment().subtract(Settings.ignoreAfterDuration).isBefore(moment(this.getLastValue().timestamp));
+        return this.getLastValue() !== null && moment().subtract(Settings.ignoreAfterDuration).isBefore(moment(this.getLastValue().timestamp));
     };
 
     this.getLastValueFormatted = function() {
@@ -147,7 +151,7 @@ function TimeSeries(tsId, meta, apiUrl) {
     };
 
     this.getCategoryLabel = function() {
-        if (meta.parameters.category && (meta.parameters.phenomenon.label != meta.parameters.category.label)) {
+        if (meta.parameters.category && (meta.parameters.phenomenon.label !== meta.parameters.category.label)) {
             return meta.parameters.category.label;
         }
         return "";
@@ -158,7 +162,7 @@ function TimeSeries(tsId, meta, apiUrl) {
     };
 
     this.hasData = function() {
-        return values.length != 0;
+        return values.length !== 0;
     };
 
     this.getRefValuesForId = function(id) {
@@ -168,16 +172,16 @@ function TimeSeries(tsId, meta, apiUrl) {
         return [];
     };
 
-    this.getRefValues = function(id) {
+    this.getRefValues = function() {
         return refValues;
     };
 
-    this.persist = function() {
+    this.toJSON = function() {
         return {
-            style: style.persist(),
+            style: style,
             apiUrl: apiUrl,
             tsId: tsId
-        };
+        }
     };
 
     this.fetchData = function(timespan, complete) {
@@ -186,6 +190,7 @@ function TimeSeries(tsId, meta, apiUrl) {
         timespan = Time.getRequestTimespan(from, till);
         this.promise = Rest.tsData(tsId, apiUrl, timespan, internalId);
         this.promise.done($.proxy(this.fetchedDataFinished, {context: this, complete: complete}));
+        this.promise.fail($.proxy(this.fetchedDataError, {context: this, complete: complete}));
         return this.promise;
     };
 
@@ -200,11 +205,22 @@ function TimeSeries(tsId, meta, apiUrl) {
         synced = true;
         this.complete(this.context);
     };
+    
+    this.fetchedDataError = function(data, bla) {
+        synced = true;
+        this.complete(this.context);
+    };
 
     this.createTimeBuffer = function(data) {
         if (data.length >= 2) {
             timeBuffer = moment.duration(data[1][0] - data[0][0]);
         }
+    };
+    
+    this.clone = function() {
+        var clone = new TimeSeries(tsId, meta, apiUrl);
+        clone.setStyle(this.getStyle().clone());
+        return clone;
     };
 
     this.destroy = function() {

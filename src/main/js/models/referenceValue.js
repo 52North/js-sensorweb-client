@@ -44,7 +44,7 @@ function ReferenceValue(id, label) {
         return selected;
     };
 
-    this.selected = function(s) {
+    this.setSelected = function(s) {
         selected = s;
     };
 }

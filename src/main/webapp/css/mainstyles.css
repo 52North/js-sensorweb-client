@@ -29,6 +29,7 @@ body,html,.container,.row-offcanvas,.mainPanel {
     top: 0px;
     bottom: 45px;
     width: 100%;
+    -ms-touch-action: none;
 }
 
 .timeButtons {
@@ -61,7 +62,7 @@ body,html,.container,.row-offcanvas,.mainPanel {
 
 .leftPanelButton {
     position: absolute;
-    z-index: 50;
+    z-index: 1001;
     right: 20px;
     top: 5px;
 }

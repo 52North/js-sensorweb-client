@@ -29,7 +29,7 @@ var GuidedTourController = (function() {
         EventManager.unsubscribe("map:stationLoaded", stationLoaded);
         setTimeout($.proxy(function() {
             this.showNext();
-        }, this), 200);
+        }, this), 500);
     };
 
     /*
@@ -43,6 +43,7 @@ var GuidedTourController = (function() {
             anchor: '.navbar-header.chart',
             title: _('guide.step1.header'),
             text: _('guide.step1.text'),
+            previous: false,
             initStep: function() {
                 Pages.navigateToChart();
             }
@@ -50,6 +51,7 @@ var GuidedTourController = (function() {
             anchor: '[data-target="#map"]',
             title: _('guide.step2.header'),
             text: _('guide.step2.text'),
+            previous: false,
             arrow: true,
             initStep: function() {
                 Pages.navigateToChart();
@@ -58,6 +60,7 @@ var GuidedTourController = (function() {
             anchor: '.navbar-header.map',
             title: _('guide.step3.header'),
             text: _('guide.step3.text'),
+            previous: false,
             initStep: function() {
                 Pages.navigateToMap();
             }
@@ -65,33 +68,40 @@ var GuidedTourController = (function() {
             anchor: '[data-action="provider"]',
             title: _('guide.step4.header'),
             text: _('guide.step4.text'),
+            previous: false,
             arrow: true,
             initStep: function() {
+                Pages.navigateToMap();
             }
         }, {
             anchor: '[data-action="locate"]',
             title: _('guide.step5.header'),
             text: _('guide.step5.text'),
+            previous: false,
             arrow: true,
             initStep: function() {
+                Pages.navigateToMap();
             }
         }, {
             anchor: '[data-action="listSelection"]',
             title: _('guide.step6.header'),
             text: _('guide.step6.text'),
+            previous: false,
             arrow: true,
             initStep: function() {
+                Pages.navigateToMap();
             }
         }, {
             anchor: '.navbar-header.map',
-           title: _('guide.step7.header'),
+            title: _('guide.step7.header'),
             text: _('guide.step7.text'),
+            previous: false,
             next: false,
             initStep: function(context) {
                 EventManager.subscribe("map:stationLoaded", $.proxy(stationLoaded, context));
             }
         }, {
-            anchor: '.tsItem input',
+            anchor: '.tsItem',
             title: _('guide.step8.header'),
             text: _('guide.step8.text'),
             previous: false,
@@ -99,7 +109,7 @@ var GuidedTourController = (function() {
             arrow: true,
             initStep: function(context) {
                 EventManager.subscribe("timeseries:data:loadfinished", $.proxy(timeseriesAdd, context));
-            }
+                    }
         }, {
             anchor: '.legend-entry',
             title: _('guide.step9.header'),
@@ -113,6 +123,7 @@ var GuidedTourController = (function() {
             anchor: '.navbar-header.chart',
             title: _('guide.step10.header'),
             text: _('guide.step10.text'),
+            previous: false,
             initStep: function() {
                 Pages.toggleLegend(false);
             }
@@ -120,6 +131,7 @@ var GuidedTourController = (function() {
             anchor: '.btn-group.timeSelection',
             title: _('guide.step11.header'),
             text: _('guide.step11.text'),
+            previous: false,
             arrow: true,
             initStep: function() {
             }
@@ -127,6 +139,7 @@ var GuidedTourController = (function() {
             anchor: '[data-action="dataTable"]',
             title: _('guide.step12.header'),
             text: _('guide.step12.text'),
+            previous: false,
             arrow: true,
             initStep: function() {
             }
@@ -134,6 +147,7 @@ var GuidedTourController = (function() {
             anchor: '[data-target="#favorites"]',
             title: _('guide.step13.header'),
             text: _('guide.step13.text'),
+            previous: false,
             arrow: true,
             initStep: function() {
             }
@@ -141,6 +155,7 @@ var GuidedTourController = (function() {
             anchor: '.navbar-header.chart',
             title: _('guide.step14.header'),
             text: _('guide.step14.text'),
+            previous: false,
             initStep: function() {
             }
         }];
@@ -164,9 +179,11 @@ var GuidedTourController = (function() {
             // guidedtour
         },
         start: function() {
-            this.closeLast();
-            this.show(1);
-            Status.reset();
+            if (confirm(_('guide.start.request'))) {
+                this.closeLast();
+                this.show(1);
+                Status.reset();
+            }
         },
         showNext: function() {
             this.closeLast();
@@ -188,25 +205,24 @@ var GuidedTourController = (function() {
                 content: Template.createHtml('guidedtour', {
                     title: step.title,
                     text: step.text,
-                    previous: idx - 1 >= 1 && step.previous != false ? idx - 1 : null,
+                    previous: idx - 1 >= 1 && step.previous !== false ? idx - 1 : null,
                     step: idx,
-                    next: idx + 1 <= steps.length && step.next != false ? idx + 1 : null,
+                    next: idx + 1 <= steps.length && step.next !== false ? idx + 1 : null,
                     steps: steps.length
                 }),
                 placement: 'auto'
             });
             $(step.anchor).popover('show');
             $('.paging.guidedtour li a').on('click', $.proxy(function(target) {
-                var idx = parseInt(target.currentTarget.dataset.step);
+                var idx = parseInt($(target.currentTarget).data('step'));
                 if (!isNaN(idx)) {
                     this.closeLast();
                     this.show(idx);
                 }
             }, this));
             $('.guidedtour .close').on('click', $.proxy(function() {
-                this.closeLast();
-            }, this));
-            this.gtWindow.on('hidden.bs.popover', $.proxy(function() {
+                EventManager.unsubscribe("timeseries:data:loadfinished", timeseriesAdd);
+                EventManager.unsubscribe("map:stationLoaded", stationLoaded);
                 this.closeLast();
             }, this));
         }
