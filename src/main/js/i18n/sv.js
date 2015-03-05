@@ -37,20 +37,7 @@ i18n.sv = {
     noTimeseriesSelected: 'Du har valt några Visa, de utvalda Visa har inga värden i given tidsintervall eller Visa är dolda.',
     outsideOfDataRange: 'Utanför dataområdet!',
     annotation: 'Data utan garanti!',
-    monthNames: {
-      0: 'Jan',
-      1: 'Februari',
-      2: 'Mar',
-      3: 'April',
-      4: 'Maj',
-      5: 'Juni',
-      6: 'Juli',
-      7: 'Augusti',
-      8: 'September',
-      9: 'Oktober',
-      10: 'November',
-      11: 'December'
-    }
+    monthNames: [ 'Jan', 'Februari', 'Mar', 'April', 'Maj', 'Juni', 'Juli', 'Augusti', 'September', 'Oktober', 'November', 'December' ]
   },
   table: {
     time: 'Tid'

@@ -37,20 +37,7 @@ i18n.mt = {
     noTimeseriesSelected: 'Inti għazilt ebda timeseries, il timeseries magħżula jkollhom l-ebda valuri fil-firxa ta &#39;żmien partikolari jew il-timeseries huma moħbija.',
     outsideOfDataRange: 'Barra mill-firxa data!',
     annotation: 'Data mingħajr garanzija!',
-    monthNames: {
-      0: 'Jan',
-      1: 'Frar',
-      2: 'Mar',
-      3: 'April',
-      4: 'Mejju',
-      5: 'Ġunju',
-      6: 'Lulju',
-      7: 'Awissu',
-      8: 'Settembru',
-      9: 'Ottubru',
-      10: 'Novembru',
-      11: 'Diċembru'
-    }
+    monthNames: [ 'Jan', 'Frar', 'Mar', 'April', 'Mejju', 'Ġunju', 'Lulju', 'Awissu', 'Settembru', 'Ottubru', 'Novembru', 'Diċembru' ]
   },
   table: {
     time: 'Ħin'

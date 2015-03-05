@@ -37,20 +37,7 @@ i18n.et = {
     noTimeseriesSelected: 'Oled valinud ei timeseries, valitud timeseries pole väärtused antud aja piires või timeseries on peidetud.',
     outsideOfDataRange: 'Väljaspool andmete valikut!',
     annotation: 'Andmed ilma garantii!',
-    monthNames: {
-      0: 'Jan',
-      1: 'Veebruar',
-      2: 'Moonutama',
-      3: 'Aprill',
-      4: 'Mai',
-      5: 'Juuni',
-      6: 'Juuli',
-      7: 'August',
-      8: 'September',
-      9: 'Oktoober',
-      10: 'November',
-      11: 'Detsember'
-    }
+    monthNames: [ 'Jan', 'Veebruar', 'Moonutama', 'Aprill', 'Mai', 'Juuni', 'Juuli', 'August', 'September', 'Oktoober', 'November', 'Detsember' ]
   },
   table: {
     time: 'Aeg'

@@ -37,20 +37,7 @@ i18n.da = {
     noTimeseriesSelected: 'Du har valgt ikke Timeseries, de valgte Timeseries har ingen værdier i det givne tidsinterval eller Timeseries er skjult.',
     outsideOfDataRange: 'Uden for dataområde!',
     annotation: 'Data uden garanti!',
-    monthNames: {
-      0: 'Jan',
-      1: 'Februar',
-      2: 'Mar',
-      3: 'April',
-      4: 'Maj',
-      5: 'Juni',
-      6: 'Juli',
-      7: 'August',
-      8: 'September',
-      9: 'Oktober',
-      10: 'November',
-      11: 'December'
-    }
+    monthNames: [ 'Jan', 'Februar', 'Mar', 'April', 'Maj', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'December' ]
   },
   table: {
     time: 'Tid'

@@ -37,20 +37,7 @@ i18n.fi = {
     noTimeseriesSelected: 'Et ole valinnut Palkat, valittu Palkat ei ole arvoja tietyn ajan alue tai Palkat ovat piilossa.',
     outsideOfDataRange: 'Ulkopuolella tietojen valikoima!',
     annotation: 'Tiedot ilman takuuta!',
-    monthNames: {
-      0: 'Tammikuu',
-      1: 'Helmikuu',
-      2: 'Maaliskuu',
-      3: 'Huhtikuu',
-      4: 'Toukokuu',
-      5: 'Kesäkuu',
-      6: 'Heinäkuu',
-      7: 'Elokuu',
-      8: 'Syyskuu',
-      9: 'Lokakuu',
-      10: 'Marraskuu',
-      11: 'Joulukuu'
-    }
+    monthNames: [ 'Tammikuu', 'Helmikuu', 'Maaliskuu', 'Huhtikuu', 'Toukokuu', 'Kesäkuu', 'Heinäkuu', 'Elokuu', 'Syyskuu', 'Lokakuu', 'Marraskuu', 'Joulukuu' ]
   },
   table: {
     time: 'Aika'

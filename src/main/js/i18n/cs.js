@@ -37,20 +37,7 @@ i18n.cs = {
     noTimeseriesSelected: 'Vybrali jste žádné TimeSeries, vybrané TimeSeries nemají hodnoty v daném časovém rozmezí nebo TimeSeries jsou skryté.',
     outsideOfDataRange: 'Mimo oblast dat!',
     annotation: 'Údaje bez záruky!',
-    monthNames: {
-      0: 'Leden',
-      1: 'Únor',
-      2: 'Kazit',
-      3: 'Dubna',
-      4: 'Květen',
-      5: 'Června',
-      6: 'Července',
-      7: 'Srpna',
-      8: 'Sep',
-      9: 'Říjen',
-      10: 'Listopad',
-      11: 'Prosince'
-    }
+    monthNames: [ 'Leden', 'Únor', 'Kazit', 'Dubna', 'Květen', 'Června', 'Července', 'Srpna', 'Sep', 'Říjen', 'Listopad', 'Prosince' ]
   },
   table: {
     time: 'Čas'

@@ -37,20 +37,7 @@ i18n.it = {
     noTimeseriesSelected: 'Hai selezionato non timeseries, le serie storica selezionati non hanno valori nella determinato intervallo di tempo o le serie temporali sono nascosti.',
     outsideOfDataRange: 'Al di fuori del campo di dati!',
     annotation: 'Dati senza garanzia!',
-    monthNames: {
-      0: 'Jan',
-      1: 'Febbraio',
-      2: 'Mar',
-      3: 'Aprile',
-      4: 'Maggio',
-      5: 'Giugno',
-      6: 'Luglio',
-      7: 'Agosto',
-      8: 'Settembre',
-      9: 'Ottobre',
-      10: 'Novembre',
-      11: 'Dicembre'
-    }
+    monthNames: [ 'Jan', 'Febbraio', 'Mar', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre' ]
   },
   table: {
     time: 'Tempo'

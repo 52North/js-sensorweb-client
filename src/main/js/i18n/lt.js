@@ -37,20 +37,7 @@ i18n.lt = {
     noTimeseriesSelected: 'Jūs nepasirinkote jokių timeseries, pasirinkti timeseries neturi reikšmes nurodytą laikotarpį arba timeseries yra paslėptas.',
     outsideOfDataRange: 'Už duomenų diapazone!',
     annotation: 'Duomenų be garantija!',
-    monthNames: {
-      0: 'Sau',
-      1: 'Vasaris',
-      2: 'Sugadinti',
-      3: 'Balandis',
-      4: 'Gegužė',
-      5: 'Birželis',
-      6: 'Liepa',
-      7: 'Rugpjūtis',
-      8: 'Rugsėjis',
-      9: 'Spalis',
-      10: 'Lapkritis',
-      11: 'Gruodis'
-    }
+    monthNames: [ 'Sau', 'Vasaris', 'Sugadinti', 'Balandis', 'Gegužė', 'Birželis', 'Liepa', 'Rugpjūtis', 'Rugsėjis', 'Spalis', 'Lapkritis', 'Gruodis' ]
   },
   table: {
     time: 'Laikas'

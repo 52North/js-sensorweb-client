@@ -37,20 +37,7 @@ i18n.hu = {
     noTimeseriesSelected: 'Nem választott ki előre definiált, a kiválasztott előre definiált nincs értékeket az adott időben tartomány vagy a előre definiált rejtett.',
     outsideOfDataRange: 'Kívül adatok körét!',
     annotation: 'Az adatok garancia nélkül!',
-    monthNames: {
-      0: 'Január',
-      1: 'Február',
-      2: 'Elront',
-      3: 'Április',
-      4: 'Május',
-      5: 'Június',
-      6: 'Július',
-      7: 'Augusztus',
-      8: 'Szeptember',
-      9: 'Október',
-      10: 'November',
-      11: 'December'
-    }
+    monthNames: [ 'Január', 'Február', 'Elront', 'Április', 'Május', 'Június', 'Július', 'Augusztus', 'Szeptember', 'Október', 'November', 'December' ]
   },
   table: {
     time: 'Idő'

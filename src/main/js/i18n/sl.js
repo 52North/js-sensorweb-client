@@ -37,20 +37,7 @@ i18n.sl = {
     noTimeseriesSelected: 'Ki ste jo izbrali nobenega timeseries, izbrane timeseries nimajo vrednosti v določenem časovnem obdobju ali timeseries so skrite.',
     outsideOfDataRange: 'Zunaj obsega podatkov!',
     annotation: 'Podatki brez garancije!',
-    monthNames: {
-      0: 'Jan',
-      1: 'Februar',
-      2: 'Mar',
-      3: 'April',
-      4: 'Maj',
-      5: 'Junij',
-      6: 'Julij',
-      7: 'Avgust',
-      8: 'September',
-      9: 'Oktober',
-      10: 'November',
-      11: 'December'
-    }
+    monthNames: [ 'Jan', 'Februar', 'Mar', 'April', 'Maj', 'Junij', 'Julij', 'Avgust', 'September', 'Oktober', 'November', 'December' ]
   },
   table: {
     time: 'Čas'

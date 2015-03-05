@@ -37,20 +37,7 @@ i18n.ro = {
     noTimeseriesSelected: 'Ați selectat nici timeseries, de timeseries selectate nu au valori în intervalul de timp dat sau timeseries sunt ascunse.',
     outsideOfDataRange: 'În afara din gama de date!',
     annotation: 'Datele fără garanție!',
-    monthNames: {
-      0: 'Jan',
-      1: 'Februarie',
-      2: 'Strica',
-      3: 'Aprilie',
-      4: 'Mai',
-      5: 'Iunie',
-      6: 'Iulie',
-      7: 'August',
-      8: 'Septembrie',
-      9: 'Octombrie',
-      10: 'Noiembrie',
-      11: 'Decembrie'
-    }
+    monthNames: [ 'Jan', 'Februarie', 'Strica', 'Aprilie', 'Mai', 'Iunie', 'Iulie', 'August', 'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie' ]
   },
   table: {
     time: 'Timp'

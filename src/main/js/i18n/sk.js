@@ -37,20 +37,7 @@ i18n.sk = {
     noTimeseriesSelected: 'Vybrali ste žiadne TimeSeries, vybrané TimeSeries nemajú hodnoty v danom časovom rozmedzí alebo TimeSeries sú skryté.',
     outsideOfDataRange: 'Mimo oblasť dát!',
     annotation: 'Údaje bez záruky!',
-    monthNames: {
-      0: 'Január',
-      1: 'Február',
-      2: 'Kaziť',
-      3: 'Apríla',
-      4: 'Máj',
-      5: 'Júna',
-      6: 'Júla',
-      7: 'Augusta',
-      8: 'Septembra',
-      9: 'Október',
-      10: 'November',
-      11: 'Decembra'
-    }
+    monthNames: [ 'Január', 'Február', 'Kaziť', 'Apríla', 'Máj', 'Júna', 'Júla', 'Augusta', 'Septembra', 'Október', 'November', 'Decembra' ]
   },
   table: {
     time: 'Čas'

@@ -37,20 +37,7 @@ i18n.ga = {
     noTimeseriesSelected: 'Tá tú a roghnaigh aon timeseries, tá na timeseries roghnaithe bith luachanna sa réimse am ar leith nó na timeseries bhfolach.',
     outsideOfDataRange: 'Taobh amuigh de raon sonraí!',
     annotation: 'Sonraí gan bharántas!',
-    monthNames: {
-      0: 'Jan',
-      1: 'Feabhra',
-      2: 'Mar',
-      3: 'Aibreán',
-      4: 'Bealtaine',
-      5: 'Meitheamh',
-      6: 'Iúil',
-      7: 'Lúnasa',
-      8: 'Meán Fómhair',
-      9: 'Deireadh Fómhair',
-      10: 'Samhain',
-      11: 'Nollaig'
-    }
+    monthNames: [ 'Jan', 'Feabhra', 'Mar', 'Aibreán', 'Bealtaine', 'Meitheamh', 'Iúil', 'Lúnasa', 'Meán Fómhair', 'Deireadh Fómhair', 'Samhain', 'Nollaig' ]
   },
   table: {
     time: 'Am'

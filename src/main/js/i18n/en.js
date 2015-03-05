@@ -37,20 +37,7 @@ i18n.en = {
     noTimeseriesSelected: 'You have selected no timeseries, the selected timeseries have no values in the given time range or the timeseries are hidden.',
     outsideOfDataRange: 'Outside of data range!',
     annotation: 'Data without warranty!',
-    monthNames: {
-      0: 'Jan',
-      1: 'Feb',
-      2: 'Mar',
-      3: 'Apr',
-      4: 'May',
-      5: 'Jun',
-      6: 'Jul',
-      7: 'Aug',
-      8: 'Sep',
-      9: 'Oct',
-      10: 'Nov',
-      11: 'Dec'
-    }
+    monthNames: [ 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ]
   },
   table: {
     time: 'Time'

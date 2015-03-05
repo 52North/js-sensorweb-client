@@ -37,20 +37,7 @@ i18n.nl = {
     noTimeseriesSelected: 'Je hebt geen tijdreeks geselecteerd, worden de geselecteerde tijdreeksen hebben geen waarden in de gegeven tijd bereik of de tijdreeksen zijn verborgen.',
     outsideOfDataRange: 'Buitenkant van data range!',
     annotation: 'Gegevens zonder garantie!',
-    monthNames: {
-      0: 'Jan',
-      1: 'Februari',
-      2: 'Ontsieren',
-      3: 'April',
-      4: 'Mei',
-      5: 'Juni',
-      6: 'Juli',
-      7: 'Augustus',
-      8: 'September',
-      9: 'Oktober',
-      10: 'November',
-      11: 'December'
-    }
+    monthNames: [ 'Jan', 'Februari', 'Ontsieren', 'April', 'Mei', 'Juni', 'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December' ]
   },
   table: {
     time: 'Tijd'

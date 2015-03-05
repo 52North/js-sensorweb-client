@@ -37,20 +37,7 @@ i18n.lv = {
     noTimeseriesSelected: 'Jūs esat izvēlējies neviens timeseries, izvēlētie timeseries nav vērtības, kas dotajā laika intervālā vai timeseries ir slēpta.',
     outsideOfDataRange: 'Ārpus datu klāsts!',
     annotation: 'Datu bez garantijas!',
-    monthNames: {
-      0: 'Jan',
-      1: 'Februāris',
-      2: 'Sagandēt',
-      3: 'Aprīlis',
-      4: 'Maijs',
-      5: 'Jūnijs',
-      6: 'Jūlijs',
-      7: 'Augusts',
-      8: 'Septembris',
-      9: 'Oktobris',
-      10: 'Novembris',
-      11: 'Decembris'
-    }
+    monthNames: [ 'Jan', 'Februāris', 'Sagandēt', 'Aprīlis', 'Maijs', 'Jūnijs', 'Jūlijs', 'Augusts', 'Septembris', 'Oktobris', 'Novembris', 'Decembris' ]
   },
   table: {
     time: 'Laiks'

@@ -37,20 +37,7 @@ i18n.pl = {
     noTimeseriesSelected: 'Wybrałeś nie timeseries, wybrane timeseries nie mają wartości w danym przedziale czasowym lub timeseries są ukryte.',
     outsideOfDataRange: 'Poza zakresem danych!',
     annotation: 'Dane bez gwarancji!',
-    monthNames: {
-      0: 'Jan',
-      1: 'Lutego',
-      2: 'Zniszczyć',
-      3: 'Kwietnia',
-      4: 'Maj',
-      5: 'Czerwca',
-      6: 'Lipca',
-      7: 'Sierpień',
-      8: 'Września',
-      9: 'Październik',
-      10: 'Listopada',
-      11: 'Grudzień'
-    }
+    monthNames: [ 'Jan', 'Lutego', 'Zniszczyć', 'Kwietnia', 'Maj', 'Czerwca', 'Lipca', 'Sierpień', 'Września', 'Październik', 'Listopada', 'Grudzień' ]
   },
   table: {
     time: 'Czas'

@@ -37,20 +37,7 @@ i18n.de = {
     noTimeseriesSelected: 'Sie haben keine Zeitreihe ausgewählt, die gewählten Zeitreihen haben keine Werte in dem derzeitigen Zeitraum oder die Zeitreihen sind unsichtbar.',
     outsideOfDataRange: 'Außerhalb des Datenbereichs!',
     annotation: 'Daten ohne Gewähr!',
-    monthNames: {
-      0: 'Jan',
-      1: 'Feb',
-      2: 'Mär',
-      3: 'Apr',
-      4: 'Mai',
-      5: 'Jun',
-      6: 'Jul',
-      7: 'Aug',
-      8: 'Sep',
-      9: 'Okt',
-      10: 'Nov',
-      11: 'Dez'
-    }
+    monthNames: [ 'Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez' ]
   },
   table: {
     time: 'Zeit'

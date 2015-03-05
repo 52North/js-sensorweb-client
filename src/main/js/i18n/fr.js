@@ -37,20 +37,7 @@ i18n.fr = {
     noTimeseriesSelected: 'Vous avez sélectionné aucun timeseries, les séries chronologiques sélectionnées ne ont pas de valeurs dans l&#39;intervalle de temps donné ou les séries chronologiques sont cachés.',
     outsideOfDataRange: 'En dehors de la plage de données!',
     annotation: 'Données sans garantie!',
-    monthNames: {
-      0: 'Jan',
-      1: 'Février',
-      2: 'Mar',
-      3: 'Avril',
-      4: 'Mai',
-      5: 'Juin',
-      6: 'Juillet',
-      7: 'Août',
-      8: 'Septembre',
-      9: 'Octobre',
-      10: 'Novembre',
-      11: 'Décembre'
-    }
+    monthNames: [ 'Jan', 'Février', 'Mar', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre' ]
   },
   table: {
     time: 'Temps'

@@ -37,20 +37,7 @@ i18n.hr = {
     noTimeseriesSelected: 'Odabrali ste ne timeseries, odabrani timeseries nemaju vrijednosti u određenom vremenskom rasponu ili timeseries su skriveni.',
     outsideOfDataRange: 'Izvan raspona podataka!',
     annotation: 'Podaci bez jamstva!',
-    monthNames: {
-      0: 'Jan',
-      1: 'Veljače',
-      2: 'Pokvariti',
-      3: 'Travnja',
-      4: 'Svibanj',
-      5: 'Lipnja',
-      6: 'Srpnja',
-      7: 'Kolovoz',
-      8: 'Rujna',
-      9: 'Listopada',
-      10: 'Studeni',
-      11: 'Prosinca'
-    }
+    monthNames: [ 'Jan', 'Veljače', 'Pokvariti', 'Travnja', 'Svibanj', 'Lipnja', 'Srpnja', 'Kolovoz', 'Rujna', 'Listopada', 'Studeni', 'Prosinca' ]
   },
   table: {
     time: 'Vrijeme'
