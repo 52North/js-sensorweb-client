@@ -1,259 +1,259 @@
 i18n.fi = {
-  fullName: "Englanti",
-  ok: "Kunnossa",
+  fullName: 'Englanti',
+  ok: 'Kunnossa',
   main: {
-    legend: "Legenda",
-    diagram: "Kaavio",
-    mapView: "Kartta näkymä",
-    favoriteView: "Suosikit",
-    settings: "Asetukset",
-    stationSelection: "Valitse asema",
-    chartView: "Kuvionäyttöä",
-    allPhenomena: "Kaikki ilmiöt",
-    phenomenon: "Ilmiö",
-    favoritesList: "Suosikit",
-    importFavorites: "Tuonti",
-    exportFavorites: "Vienti",
-    importExportHelp: "Jos haluat tuoda tiedoston, valitse tiedosto viedä ennen.",
-    noFileSelected: "Ei tiedostoa valittuna"
+    legend: 'Legenda',
+    diagram: 'Kaavio',
+    mapView: 'Kartta näkymä',
+    favoriteView: 'Suosikit',
+    settings: 'Asetukset',
+    stationSelection: 'Valitse asema',
+    chartView: 'Kuvionäyttöä',
+    allPhenomena: 'Kaikki ilmiöt',
+    phenomenon: 'Ilmiö',
+    favoritesList: 'Suosikit',
+    importFavorites: 'Tuonti',
+    exportFavorites: 'Vienti',
+    importExportHelp: 'Jos haluat tuoda tiedoston, valitse tiedosto viedä ennen.',
+    noFileSelected: 'Ei tiedostoa valittuna'
   },
   chart: {
-    noTimeseriesSelected: "Et ole valinnut Palkat, valittu Palkat ei ole arvoja tietyn ajan alue tai Palkat ovat piilossa.",
-    outsideOfDataRange: "Ulkopuolella tietojen valikoima!",
-    annotation: "Tiedot ilman takuuta!",
+    noTimeseriesSelected: 'Et ole valinnut Palkat, valittu Palkat ei ole arvoja tietyn ajan alue tai Palkat ovat piilossa.',
+    outsideOfDataRange: 'Ulkopuolella tietojen valikoima!',
+    annotation: 'Tiedot ilman takuuta!',
     monthNames: {
-      0: "Tammikuu",
-      1: "Helmikuu",
-      2: "Maaliskuu",
-      3: "Huhtikuu",
-      4: "Toukokuu",
-      5: "Kesäkuu",
-      6: "Heinäkuu",
-      7: "Elokuu",
-      8: "Syyskuu",
-      9: "Lokakuu",
-      10: "Marraskuu",
-      11: "Joulukuu"
+      0: 'Tammikuu',
+      1: 'Helmikuu',
+      2: 'Maaliskuu',
+      3: 'Huhtikuu',
+      4: 'Toukokuu',
+      5: 'Kesäkuu',
+      6: 'Heinäkuu',
+      7: 'Elokuu',
+      8: 'Syyskuu',
+      9: 'Lokakuu',
+      10: 'Marraskuu',
+      11: 'Joulukuu'
     }
   },
   table: {
-    time: "Aika"
+    time: 'Aika'
   },
   map: {
-    userLocation: "Tässä on nykyinen sijainti",
+    userLocation: 'Tässä on nykyinen sijainti',
     stationSelection: {
-      station: "Asema",
-      selectAllTimeseries: "Valitse kaikki Palkat"
+      station: 'Asema',
+      selectAllTimeseries: 'Valitse kaikki Palkat'
     },
     stationLocation: {
-      station: "Asema",
-      timeseries: "Palkat",
-      provider: "Toimittaja",
-      jumpBackToChart: "takaisin kaavioon"
+      station: 'Asema',
+      timeseries: 'Palkat',
+      provider: 'Toimittaja',
+      jumpBackToChart: 'takaisin kaavioon'
     },
     providerList: {
-      provider: "Toimittaja",
-      stations: "Asemat",
-      timeseries: "Palkat",
-      phenomena: "Ilmiöt"
+      provider: 'Toimittaja',
+      stations: 'Asemat',
+      timeseries: 'Palkat',
+      phenomena: 'Ilmiöt'
     },
     search: {
-      label: "etsi osoite ...",
-      noResult: "Anteeksi, että osoitetta ei löytynyt."
+      label: 'etsi osoite ...',
+      noResult: 'Anteeksi, että osoitetta ei löytynyt.'
     }
   },
   listSelection: {
-    header: "Valitse Palkat mukaan lista",
+    header: 'Valitse Palkat mukaan lista',
     headers: {
-      category: "Luokka",
-      station: "Asema",
-      phenomenon: "Ilmiö",
-      procedure: "Anturi"
+      category: 'Luokka',
+      station: 'Asema',
+      phenomenon: 'Ilmiö',
+      procedure: 'Anturi'
     },
     warning: {
-      moreThanOneTimeseries: "havaittu useampi kuin yksi Palkat"
+      moreThanOneTimeseries: 'havaittu useampi kuin yksi Palkat'
     }
   },
   legend: {
     entry: {
-      noData: "tietoja ei ole käytettävissä",
-      jumpToLastValue: "Siirry viimeiselle arvo",
-      firstValueAt: "Ensimmäinen arvo",
-      lastValueAt: "Viimeinen arvo"
+      noData: 'tietoja ei ole käytettävissä',
+      jumpToLastValue: 'Siirry viimeiselle arvo',
+      firstValueAt: 'Ensimmäinen arvo',
+      lastValueAt: 'Viimeinen arvo'
     }
   },
   export: {
-    label: "Data CSV (Zip-arkisto)"
+    label: 'Data CSV (Zip-arkisto)'
   },
   timeSelection: {
-    header: "Aikaväli",
-    presetsHeader: "esiasetukset",
+    header: 'Aikaväli',
+    presetsHeader: 'esiasetukset',
     presets: {
-      lastHour: "viimeisen tunnin",
-      today: "tänään",
-      yesterday: "eilen",
-      todayYesterday: "tänään &amp; eilen",
-      thisWeek: "tällä viikolla",
-      lastWeek: "viime viikolla",
-      thisMonth: "tässä kuussa",
-      lastMonth: "viime kuussa",
-      thisYear: "tänä vuonna",
-      lastYear: "viime vuonna"
+      lastHour: 'viimeisen tunnin',
+      today: 'tänään',
+      yesterday: 'eilen',
+      todayYesterday: 'tänään &amp; eilen',
+      thisWeek: 'tällä viikolla',
+      lastWeek: 'viime viikolla',
+      thisMonth: 'tässä kuussa',
+      lastMonth: 'viime kuussa',
+      thisYear: 'tänä vuonna',
+      lastYear: 'viime vuonna'
     },
     custom: {
-      header: "asiakassuhde",
-      start: "Aloituspäivä",
-      end: "Päättymispäivä"
+      header: 'asiakassuhde',
+      start: 'Aloituspäivä',
+      end: 'Päättymispäivä'
     },
     warning: {
-      startBeforeEnd: "Alkamispäivä ei voi olla suurempi silloin lopetuspäivä",
-      maxTimeRange: "Aikaväli ei voi olla suurempi silloin yksi vuosi"
+      startBeforeEnd: 'Alkamispäivä ei voi olla suurempi silloin lopetuspäivä',
+      maxTimeRange: 'Aikaväli ei voi olla suurempi silloin yksi vuosi'
     }
   },
   styleChange: {
-    header: "Muuta tyyliä",
-    currentColor: "Nykyinen väri",
-    selectColor: "Valitse uusi väri",
-    selectBarInterval: "Valitse bar aikaväli",
+    header: 'Muuta tyyliä',
+    currentColor: 'Nykyinen väri',
+    selectColor: 'Valitse uusi väri',
+    selectBarInterval: 'Valitse bar aikaväli',
     barChartInterval: {
-      hour: "Tunti",
-      day: "Päivä",
-      week: "Viikko",
-      month: "Kuukausi"
+      hour: 'Tunti',
+      day: 'Päivä',
+      week: 'Viikko',
+      month: 'Kuukausi'
     },
-    zeroScaled: "nolla skaalata Y-akselilla",
-    groupedAxis: "ryhmitelty akseli"
+    zeroScaled: 'nolla skaalata Y-akselilla',
+    groupedAxis: 'ryhmitelty akseli'
   },
   settings: {
-    header: "Asetukset",
-    chooseLanguage: "Vaihda kieltä",
-    requiresRestart: "Tarvitsee Restart!",
+    header: 'Asetukset',
+    chooseLanguage: 'Vaihda kieltä',
+    requiresRestart: 'Tarvitsee Restart!',
     permalink: {
-      create: "Luo permalink kuin",
-      inWindow: "linkki uuteen ikkunaan",
-      inMail: "linkki sähköpostitse",
-      inClipboard: "Linkki leikepöydälle",
-      clipboardInfo: "Kopioi leikepöydälle:",
-      inQrCode: "kuten QR-koodi",
-      favorite: "Säästä työympäristöä suosikkikohdetta"
+      create: 'Luo permalink kuin',
+      inWindow: 'linkki uuteen ikkunaan',
+      inMail: 'linkki sähköpostitse',
+      inClipboard: 'Linkki leikepöydälle',
+      clipboardInfo: 'Kopioi leikepöydälle:',
+      inQrCode: 'kuten QR-koodi',
+      favorite: 'Säästä työympäristöä suosikkikohdetta'
     },
-    clusterMarker: "klusterin merkki",
+    clusterMarker: 'klusterin merkki',
     markerWithLastInfo: {
-      header: "markkeri viime arvotiedon",
-      label: "huomiota - joidenkin tietojen toimittaja ovat hyvin hitaita"
+      header: 'markkeri viime arvotiedon',
+      label: 'huomiota - joidenkin tietojen toimittaja ovat hyvin hitaita'
     },
     saveStatus: {
-      header: "Tallenna ympäristö",
-      label: "Kaikki Palkat, valittu aikajänne ja asetukset tallennetaan jatkuvasti."
+      header: 'Tallenna ympäristö',
+      label: 'Kaikki Palkat, valittu aikajänne ja asetukset tallennetaan jatkuvasti.'
     },
-    resetStatus: "Nollaa ympäristö",
-    generalizeData: "yleistää Data",
+    resetStatus: 'Nollaa ympäristö',
+    generalizeData: 'yleistää Data',
     imprint: {
-      header: "Jälki",
-      github: "Etsi tätä hanketta <a href=\"https://github.com/52North/js-sensorweb-client\" target=\"_blank\">GitHub</a>",
-      text: "<p> <a href=\"http://52north.org\" target=\"_blank\">52 ° North GmbH</a> vastaa tällä sivustolla. </p><p> 52 ° North aloitteen Geospatiaalinen Open Source Software GmbH <br> Martin-Luther-King-Weg 24 <br> 48155 Münster, Saksa </p>"
+      header: 'Jälki',
+      github: 'Etsi tätä hanketta <a href="https://github.com/52North/js-sensorweb-client" target="_blank">GitHub</a>',
+      text: '<p> <a href="http://52north.org" target="_blank">52 ° North GmbH</a> vastaa tällä sivustolla. </p><p> 52 ° North aloitteen Geospatiaalinen Open Source Software GmbH <br> Martin-Luther-King-Weg 24 <br> 48155 Münster, Saksa </p>'
     }
   },
   permalink: {
-    noMatchingTimeseriesFound: "Ei vastaavia Palkat löytyy."
+    noMatchingTimeseriesFound: 'Ei vastaavia Palkat löytyy.'
   },
   guide: {
     start: {
-      request: "Kun käynnistät tämän oppaan, nykytilaa nollataan."
+      request: 'Kun käynnistät tämän oppaan, nykytilaa nollataan.'
     },
     step1: {
-      header: "JavaScript Client - Opastettu kierros",
-      text: "Tämä kiertue tarjoaa muutaman askeleen yleiskuvan miten käyttää tätä asiakkaalle. Ensin lisätään Palkat kartalta."
+      header: 'JavaScript Client - Opastettu kierros',
+      text: 'Tämä kiertue tarjoaa muutaman askeleen yleiskuvan miten käyttää tätä asiakkaalle. Ensin lisätään Palkat kartalta.'
     },
     step2: {
-      header: "Siirry kartalla",
-      text: "Täällä vaihtaa näkymän saada kartan."
+      header: 'Siirry kartalla',
+      text: 'Täällä vaihtaa näkymän saada kartan.'
     },
     step3: {
-      header: "Kartta näkymä",
-      text: "Tämä on karttanäkymässä. Vuonna karttaa näet markkereita tai markergroups."
+      header: 'Kartta näkymä',
+      text: 'Tämä on karttanäkymässä. Vuonna karttaa näet markkereita tai markergroups.'
     },
     step4: {
-      header: "Muuta Provider",
-      text: "Täällä voit valita toisen Palkat tarjoaja."
+      header: 'Muuta Provider',
+      text: 'Täällä voit valita toisen Palkat tarjoaja.'
     },
     step5: {
-      header: "Näytä sijainti",
-      text: "Ja täällä voit paikantaa laitteen kartalta."
+      header: 'Näytä sijainti',
+      text: 'Ja täällä voit paikantaa laitteen kartalta.'
     },
     step6: {
-      header: "Luettelo valinta",
-      text: "Täällä voit valita Palkat ulos tilata luetteloita."
+      header: 'Luettelo valinta',
+      text: 'Täällä voit valita Palkat ulos tilata luetteloita.'
     },
     step7: {
-      header: "Valitse asema",
-      text: "Valitse nyt asema kartalla."
+      header: 'Valitse asema',
+      text: 'Valitse nyt asema kartalla.'
     },
     step8: {
-      header: "Valitse Palkat",
-      text: "Valitse tämä valintaruutu. Jos on vain yksi Palkat tämän aseman, valintaruutu on jo valittuna. Nyt voit mennä &quot;OK&quot; -painiketta ladataksesi Palkat."
+      header: 'Valitse Palkat',
+      text: 'Valitse tämä valintaruutu. Jos on vain yksi Palkat tämän aseman, valintaruutu on jo valittuna. Nyt voit mennä &quot;OK&quot; -painiketta ladataksesi Palkat.'
     },
     step9: {
-      header: "Legend merkintä",
-      text: "Täällä näet lisätty aikasarjoja. Voit poistaa tai paikantaa aikasarjan tai muuttaa väriä."
+      header: 'Legend merkintä',
+      text: 'Täällä näet lisätty aikasarjoja. Voit poistaa tai paikantaa aikasarjan tai muuttaa väriä.'
     },
     step10: {
-      header: "Kaavio",
-      text: "Tämä on kaavio aikasarjaotoksen."
+      header: 'Kaavio',
+      text: 'Tämä on kaavio aikasarjaotoksen.'
     },
     step11: {
-      header: "Muuta aikaa",
-      text: "Täällä voit muuttaa aikaa määrin valitsemallesi aikasarjoja."
+      header: 'Muuta aikaa',
+      text: 'Täällä voit muuttaa aikaa määrin valitsemallesi aikasarjoja.'
     },
     step12: {
-      header: "Table View",
-      text: "Täältä saat taulukko raakadatan arvoja valitsemasi aikasarjoja."
+      header: 'Table View',
+      text: 'Täältä saat taulukko raakadatan arvoja valitsemasi aikasarjoja.'
     },
     step13: {
-      header: "Suosikki hallinta",
-      text: "Legenda merkinnät / Palkat voitaisiin suosikeiksi. Tässä näkymässä kaikki suosikit on lueteltu ja voidaan säilyttää."
+      header: 'Suosikki hallinta',
+      text: 'Legenda merkinnät / Palkat voitaisiin suosikeiksi. Tässä näkymässä kaikki suosikit on lueteltu ja voidaan säilyttää.'
     },
     step14: {
-      header: "Valmiit",
-      text: "Hyvin tehty! <br> Tämä asiakas on tuotteen <a href=\"http://52north.org\" target=\"_blank\">52 ° North GmbH</a> . Löydät lähdekoodia <a href=\"https://github.com/52North/js-sensorweb-client\" target=\"_blank\">GitHub</a> ."
+      header: 'Valmiit',
+      text: 'Hyvin tehty! <br> Tämä asiakas on tuotteen <a href="http://52north.org" target="_blank">52 ° North GmbH</a> . Löydät lähdekoodia <a href="https://github.com/52North/js-sensorweb-client" target="_blank">GitHub</a> .'
     }
   },
   favorite: {
-    firstValueAt: "Ensimmäinen arvo",
-    lastValueAt: "Viimeinen arvo",
-    label: "suosikki",
+    firstValueAt: 'Ensimmäinen arvo',
+    lastValueAt: 'Viimeinen arvo',
+    label: 'suosikki',
     edit: {
-      header: "Muokkaa suosikki"
+      header: 'Muokkaa suosikki'
     },
     group: {
-      add: "Tila &quot;{0}&quot; lisätään suosikkilistan.",
-      exists: "Tämä asema on edelleen olemassa.",
-      noTimeseries: "Tällä hetkellä ei ole Palkat valitaan.",
-      notSupported: "Tarjoajan tulon tila &quot;{0}&quot; ei tueta, eikä sitä voi ladata."
+      add: 'Tila &quot;{0}&quot; lisätään suosikkilistan.',
+      exists: 'Tämä asema on edelleen olemassa.',
+      noTimeseries: 'Tällä hetkellä ei ole Palkat valitaan.',
+      notSupported: 'Tarjoajan tulon tila &quot;{0}&quot; ei tueta, eikä sitä voi ladata.'
     },
     single: {
-      add: "Uusi suosikki &quot;{0}&quot; on lisätty luetteloon.",
-      remove: "Suosikki &quot;{0}&quot; on poistettu.",
-      exists: "Tämä suosikki on edelleen olemassa.",
-      notSupported: "Tarjoaja suosikki &quot;{0}&quot; ei tueta, eikä sitä voi ladata."
+      add: 'Uusi suosikki &quot;{0}&quot; on lisätty luetteloon.',
+      remove: 'Suosikki &quot;{0}&quot; on poistettu.',
+      exists: 'Tämä suosikki on edelleen olemassa.',
+      notSupported: 'Tarjoaja suosikki &quot;{0}&quot; ei tueta, eikä sitä voi ladata.'
     },
     import: {
-      override: "Haluatko ohittaa nykyisen suosikkeja?",
-      wrongFile: "Ei voitu lukea tiedostoa",
-      noValidJson: "JSON-tiedosto ei kelpaa!",
-      header: "Tuo suosikit",
-      text: "Täällä voit tuoda viedä suosikkeja. Vain liitä JSON tällä tekstikenttään:"
+      override: 'Haluatko ohittaa nykyisen suosikkeja?',
+      wrongFile: 'Ei voitu lukea tiedostoa',
+      noValidJson: 'JSON-tiedosto ei kelpaa!',
+      header: 'Tuo suosikit',
+      text: 'Täällä voit tuoda viedä suosikkeja. Vain liitä JSON tällä tekstikenttään:'
     },
     export: {
-      header: "Vie suosikit",
-      text: "Täällä voit viedä suosikkisi. Kopioi JSON pois tässä kentässä ja tallentaa sen tiedostoon tuoda sen myöhemmin:"
+      header: 'Vie suosikit',
+      text: 'Täällä voit viedä suosikkisi. Kopioi JSON pois tässä kentässä ja tallentaa sen tiedostoon tuoda sen myöhemmin:'
     },
     error: {
-      fileApiNotSupported: "File API eivät täysin tue tätä selainta."
+      fileApiNotSupported: 'File API eivät täysin tue tätä selainta.'
     }
   },
   inform: {
-    error: "Virhe:",
-    warn: "Muista, että:"
+    error: 'Virhe:',
+    warn: 'Muista, että:'
   }
 };
