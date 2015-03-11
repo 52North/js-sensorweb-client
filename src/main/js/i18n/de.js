@@ -135,8 +135,8 @@ i18n.de = {
             create: 'Erstelle Permalink',
             inWindow: 'öffnen im neuen Fenster',
             inMail: 'öffnen in leerer Mail',
-            inClipboard: 'Link in die Zwischenablage',
-            clipboardInfo: 'Kopiere in die Zwischenablage:',
+            inClipboard: 'Link für die Zwischenablage',
+            clipboardInfo: 'Bitte kopiere den folgenden Link selbstständig in die Zwischenablage:',
             inQrCode: 'als QR-Code',
             favorite: 'Arbeitsumgebung als Favorit speichern'
         },

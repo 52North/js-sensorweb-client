@@ -135,8 +135,8 @@ i18n.en = {
             create: 'Create a permalink as',
             inWindow: 'link in a new window',
             inMail: 'link in an email',
-            inClipboard: 'Link to clipboard',
-            clipboardInfo: 'Copy to clipboard:',
+            inClipboard: 'link for the clipboard',
+            clipboardInfo: 'Please copy the following link by yourself to clipboard:',
             inQrCode: 'as QR-Code',
             favorite: 'Save working environment as favorite entry'
         },
