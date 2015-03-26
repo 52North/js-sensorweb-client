@@ -1,4 +1,9 @@
 {
-    "selectedLineWidth" : 4,
-    "commonLineWidth" : 1
+    "selectedLineWidth": 4,
+    "commonLineWidth": 1,
+    "chartOptions":{
+        "yaxis":{
+            "tickDecimals" : 2
+        }
+    }
 }
