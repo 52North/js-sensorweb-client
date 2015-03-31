@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 i18n.fr = {
-  fullName: 'Anglais',
+  fullName: 'Français',
   ok: 'D&#39;ACCORD',
   main: {
     legend: 'Légende',
