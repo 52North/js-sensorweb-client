@@ -60,7 +60,7 @@ var Settings = {
     // how long a station popup to visualize the location should be visible on the map (in msec)
     stationPopupDuration: 10000,
     // date/time format which is used on several places
-    dateformat: 'DD.MM.YY HH:mm',
+    dateformat: 'DD.MM.YY HH:mm [h]',
     shortDateformat: 'DD.MM.YY',
     // duration after which latest values shall be ignored when rendering marker in the map
     ignoreAfterDuration: moment.duration(1, 'y'),
