@@ -37,10 +37,10 @@ i18n.en = {
         noTimeseriesSelected: 'You have selected no timeseries, the selected timeseries have no values in the given time range or the timeseries are hidden.',
         outsideOfDataRange: 'Outside of data range!',
         annotation: 'Data without warranty!',
-        monthNames: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+        monthNames: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     },
     table: {
-        time: "Time"
+        time: 'Time'
     },
     map: {
         userLocation: 'Here is your current location',
@@ -85,7 +85,7 @@ i18n.en = {
             lastValueAt: 'Last value at'
         }
     },
-    "export": {
+    export: {
         label: 'Data as CSV (Zip Archive)'
     },
     timeSelection: {
@@ -226,37 +226,37 @@ i18n.en = {
         lastValueAt: 'Last value at',
         label: 'favorite',
         edit: {
-            header: "Edit favorite"
+            header: 'Edit favorite'
         },
         group: {
-            add: "The status '{0}' is added to the favorite list.",
-            exists: "This status still exists.",
-            noTimeseries: "Currently no timeseries are selected.",
-            notSupported: "The provider of an entry of the status '{0}' isn't supported and can't be loaded."
+            add: 'The status &#39;{0}&#39; is added to the favorite list.',
+            exists: 'This status still exists.',
+            noTimeseries: 'Currently no timeseries are selected.',
+            notSupported: 'The provider of an entry of the status &#39;{0}&#39; isn&#39;t supported and can&#39;t be loaded.'
         },
         single: {
-            add: "A new favorite '{0}' is added to the list.",
-            remove: "The favorite '{0}' is removed.",
-            exists: "This favorite still exists.",
-            notSupported: "The provider of the favorite '{0}' isn't supported and can't be loaded."
+            add: 'A new favorite &#39;{0}&#39; is added to the list.',
+            remove: 'The favorite &#39;{0}&#39; is removed.',
+            exists: 'This favorite still exists.',
+            notSupported: 'The provider of the favorite &#39;{0}&#39; isn&#39;t supported and can&#39;t be loaded.'
         },
         import: {
-            override: "Do you want to override your current favorites?",
-            wrongFile: "Could not read the file",
-            noValidJson: "The JSON file is not valid!",
-            header: "Import favorites",
-            text: "Here you can import your exported favorites. Just paste the JSON in this text field:"
+            override: 'Do you want to override your current favorites?',
+            wrongFile: 'Could not read the file',
+            noValidJson: 'The JSON file is not valid!',
+            header: 'Import favorites',
+            text: 'Here you can import your exported favorites. Just paste the JSON in this text field:'
         },
         export: {
-            header: "Export favorites",
-            text: "Here you can export your favorites. Just copy the JSON out of this textbox and save it in a file to import it later:"
+            header: 'Export favorites',
+            text: 'Here you can export your favorites. Just copy the JSON out of this textbox and save it in a file to import it later:'
         },
         error: {
-            fileApiNotSupported: "The File APIs are not fully supported in this browser."
+            fileApiNotSupported: 'The File APIs are not fully supported in this browser.'
         }
     },
     inform: {
-        error: "An error occured: ",
-        warn: "Please remember that: "
+        error: 'An error occured: ',
+        warn: 'Please remember that: '
     }
 };
