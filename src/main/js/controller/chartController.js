@@ -62,7 +62,7 @@ var ChartController = {
     init: function() {
         this.selectedLineWidth = Settings.selectedLineWidth;
         this.commonLineWidth = Settings.commonLineWidth;
-        this.options = $.extend(this.defaultOptions, Settings.chartOptions);
+        this.options = $.extend(true, this.defaultOptions, Settings.chartOptions);
         EventManager.subscribe("timeseries:data:load", $.proxy(this.loadDataForChart, this));
         EventManager.subscribe("timeseries:data:loadfinished", $.proxy(this.loadDataFinished, this));
         EventManager.subscribe("timeseries:synced", $.proxy(this.plotChart, this));
@@ -433,7 +433,7 @@ var ChartController = {
             axes.splice(elem.id - 1, 0, {
                 uom: elem.uom,
                 tsColors: elem.tsColors,
-                min: elem.zeroScaled ? 0 : this.defaultOptions.yaxis.min
+                min: elem.zeroScaled ? 0 : this.options.yaxis.min
             });
         },this));
         return axes;
