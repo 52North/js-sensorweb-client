@@ -135,8 +135,8 @@ i18n.de = {
       create: 'Erstelle Permalink',
       inWindow: 'öffnen im neuen Fenster',
       inMail: 'öffnen in leerer Mail',
-      inClipboard: 'Link in die Zwischenablage',
-      clipboardInfo: 'Kopiere in die Zwischenablage:',
+            inClipboard: 'Link für die Zwischenablage',
+            clipboardInfo: 'Bitte kopiere den folgenden Link selbstständig in die Zwischenablage:',
       inQrCode: 'als QR-Code',
       favorite: 'Arbeitsumgebung als Favorit speichern'
     },
@@ -145,36 +145,9 @@ i18n.de = {
       header: 'Marker mit Wert der letzten Messung',
       label: 'Achtung - dies kann bei einigen Providern zu langen Abfragen führen'
     },
-
-    settings: {
-        header: 'Einstellungen',
-        chooseLanguage: 'Sprache wechseln',
-        requiresRestart: 'Erfordert Neustart!',
-        permalink: {
-            create: 'Erstelle Permalink',
-            inWindow: 'öffnen im neuen Fenster',
-            inMail: 'öffnen in leerer Mail',
-            inClipboard: 'Link für die Zwischenablage',
-            clipboardInfo: 'Bitte kopiere den folgenden Link selbstständig in die Zwischenablage:',
-            inQrCode: 'als QR-Code',
-            favorite: 'Arbeitsumgebung als Favorit speichern'
-        },
-        clusterMarker: 'Marker gruppieren',
-        markerWithLastInfo: {
-            header: 'Marker mit Wert der letzten Messung',
-            label: 'Achtung - dies kann bei einigen Providern zu langen Abfragen führen'
-        },
-        saveStatus: {
-            header: 'Arbeitsumgebung abspeichern',
-            label: 'Alle Zeitreihen, der ausgewählte Zeitraum und die Einstellungen werden kontinuierlich abgespeichert.'
-        },
-        resetStatus: 'Arbeitsumgebung zurücksetzen',
-        generalizeData: 'Daten generalisiert abfragen',
-        imprint: {
-            header: 'Impressum',
-            github: 'Zur <a href="https://github.com/52North/js-sensorweb-client" target="_blank">GitHub</a>-Seite dieses Projekts',
-            text: '<p><a href="http://52north.org" target="_blank">52&deg;North GmbH</a> ist für diese Website verantwortlich.</p><p>52&deg;North Initiative for Geospatial Open Source Software GmbH<br>Martin-Luther-King-Weg 24<br>48155 Muenster, Deutschland</p>'
-        }
+    saveStatus: {
+      header: 'Arbeitsumgebung abspeichern',
+      label: 'Alle Zeitreihen, der ausgewählte Zeitraum und die Einstellungen werden kontinuierlich abgespeichert.'
     },
     resetStatus: 'Arbeitsumgebung zurücksetzen',
     generalizeData: 'Daten generalisiert abfragen',
@@ -256,16 +229,16 @@ i18n.de = {
       header: 'Favorit editieren'
     },
     group: {
-      add: 'Der Status wird mit dem Name '{0}' in den Favoriten abgelegt.',
+      add: 'Der Status wird mit dem Name &#39;{0}&#39; in den Favoriten abgelegt.',
       exists: 'Dieser Status existiert bereits.',
       noTimeseries: 'Derzeit sind keine Zeitreihen ausgewählt.',
-      notSupported: 'Der Datenanbieter eines Eintrag aus '{0}' wird nicht unterstützt und kann deswegen nicht eingeladen werden.'
+      notSupported: 'Der Datenanbieter eines Eintrag aus &#39;{0}&#39; wird nicht unterstützt und kann deswegen nicht eingeladen werden.'
     },
     single: {
-      add: 'Einer neuer Favorit mit dem Name '{0}' ist abgelegt worden.',
-      remove: 'Der Favorit '{0}' ist entfernt worden.',
+      add: 'Einer neuer Favorit mit dem Name &#39;{0}&#39; ist abgelegt worden.',
+      remove: 'Der Favorit &#39;{0}&#39; ist entfernt worden.',
       exists: 'Dieser Favorit existiert bereits.',
-      notSupported: 'Der Datenanbieter des Favoriten '{0}' wird nicht unterstützt und kann deswegen nicht eingeladen werden.'
+      notSupported: 'Der Datenanbieter des Favoriten &#39;{0}&#39; wird nicht unterstützt und kann deswegen nicht eingeladen werden.'
     },
     import: {
       override: 'Wollen Sie die aktuellen Favoriten überschreiben?',
