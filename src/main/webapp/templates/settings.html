@@ -1,0 +1,91 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <div class="modal-title">
+                <h4>{{_i}}settings.header{{/i}}</h4>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="panel-group" id="accordionSettings">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordionSettings"
+                               href="#collapseSettings">{{_i}}settings.header{{/i}}</a>
+                        </h4>
+                    </div>
+                    <div id="collapseSettings" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <a class="btn btn-block btn-default saveStatus" data-dismiss="modal">
+                                <div>{{_i}}settings.saveStatus.header{{/i}}</div>
+                                <div class="btn-subtitle">{{_i}}settings.saveStatus.label{{/i}}</div>
+                            </a>
+                            <a class="btn btn-block btn-default resetStatus" data-dismiss="modal">
+                                {{_i}}settings.resetStatus{{/i}}
+                            </a>
+                            <div class="language-chooser">
+
+                                <div class="language-chooser-box dropdown btn-group">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                            id="choose-language-box">
+                                        <span>{{_i}}settings.chooseLanguage{{/i}}:</span>
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu scrollable-menu" role="menu">
+
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="panel panel-default permalink">
+                                <div class="panel-heading">{{_i}}settings.permalink.create{{/i}}:</div>
+                                <div class="panel-body">
+                                    <div class="item link">
+                                        <span class="glyphicon glyphicon-link"></span>
+                                        <span>{{_i}}settings.permalink.inWindow{{/i}}</span>
+                                    </div>
+                                    <div class="item mail">
+                                        <span class="glyphicon glyphicon-envelope"></span>
+                                        <span>{{_i}}settings.permalink.inMail{{/i}}</span>
+                                    </div>
+                                    <div class="item clipboard">
+                                        <span class="glyphicon glyphicon-paperclip"></span>
+                                        <span>{{_i}}settings.permalink.inClipboard{{/i}}</span>
+                                    </div>
+                                    <div class="item qr">
+                                        <span class="glyphicon glyphicon-qrcode"></span>
+                                        <span>{{_i}}settings.permalink.inQrCode{{/i}}</span>
+                                    </div>
+                                    <span class="qr-code"></span>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-block btn-default clusteringStations" data-dismiss="modal">{{_i}}settings.clusterMarker{{/i}}</button>
+                            <a class="btn btn-block btn-default concentrationMarker" data-dismiss="modal">
+                                <div>{{_i}}settings.markerWithLastInfo.header{{/i}}</div>
+                                <div class="btn-subtitle">{{_i}}settings.markerWithLastInfo.label{{/i}}</div>
+                            </a>
+                            <button type="button" class="btn btn-block btn-default generalizeData" data-dismiss="modal">{{_i}}settings.generalizeData{{/i}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-group" id="accordionImprint">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordionImprint"
+                               href="#collapseImprint">{{_i}}settings.imprint.header{{/i}}</a>
+                        </h4>
+                    </div>
+                    <div id="collapseImprint" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <h4>{{_i}}settings.imprint.header{{/i}}</h4>
+                            <p>{{_i}}settings.imprint.github{{/i}}</p>
+                            <p>{{_i}}settings.imprint.text{{/i}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

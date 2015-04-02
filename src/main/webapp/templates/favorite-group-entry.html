@@ -1,0 +1,15 @@
+<div class="favorite-entry" data-group-id="{{id}}">
+    <span class="favorite-header">{{label}}</span>
+    <span class="favorite-icons">
+        <span class="glyphicon glyphicon-edit edit"></span>
+        <span class="glyphicon glyphicon-stats addToDiagram"></span>
+        <span class="glyphicon glyphicon-trash delete"></span>
+    </span>
+    {{#collection}}
+    <div class="favorite-group-entry">
+        <div>{{label}}</div>
+        <span>{{_i}}favorite.lastValueAt{{/i}}:</span>
+        <span>{{lastValue}} {{uom}} ({{lastValueTimeFormatted}})</span>
+    </div>
+    {{/collection}}
+</div>

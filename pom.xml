@@ -4,10 +4,15 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.n52</groupId>
+		<artifactId>52-North</artifactId>
+		<version>5.6.12</version>
+	</parent>
 
-    <groupId>org.n52.mobileclient</groupId>
-    <artifactId>jsClient</artifactId>
-    <version>0.2.0</version>
+    <groupId>org.n52.sensorweb</groupId>
+    <artifactId>restful-timeseries-client</artifactId>
+    <version>1.0.0</version>
     <packaging>war</packaging>
 
     <name>JavaScript SensorWeb Client</name>
@@ -16,17 +21,8 @@
     <inceptionYear>2014</inceptionYear>
 
     <build>
+        <sourceDirectory>${basedir}/src/main/js</sourceDirectory>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
-                <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -57,124 +53,201 @@
                         </manifest>
                         <addMavenDescriptor>false</addMavenDescriptor>
                     </archive> -->
-                    <webXml>WebContent/WEB-INF/web.xml</webXml>
+                    <webXml>${basedir}/src/main/webapp/WEB-INF/web.xml</webXml>
                     <webResources>
-						<resource>
-							<directory>WebContent/</directory>
-							<filtering>false</filtering>
-							<excludes>
-								<exclude>**/*.css</exclude>
-								<exclude>**/*.js</exclude>
-								<!-- <exclude>css/fonts/entypo*</exclude>
-								<exclude>css/fonts/opensans*</exclude>
-								<exclude>css/fonts/*.ttf</exclude>
-								<exclude>css/fonts/*.eot</exclude>
-								<exclude>css/fonts/*.svg</exclude>
-								<exclude>icon.png</exclude>
-								<exclude>config.xml</exclude>
-								<exclude>res/**</exclude> -->
-								<exclude>index.html</exclude>
-								<exclude>test.html</exclude>
- 						</excludes>
-						</resource>
-	 					<resource>
-						    <directory>WebContent/</directory>
-						    <filtering>true</filtering>
-						    <includes>
-						        <include>index.html</include>
-						        <include>test.html</include>
-						    </includes>
-						</resource>
-					</webResources>
+                        <resource>
+                            <directory>${basedir}/src/main/webapp/</directory>
+                            <filtering>false</filtering>
+                            <excludes>
+                                <exclude>**/*.css</exclude>
+                                <exclude>**/*.js</exclude>
+                                <!-- <exclude>css/fonts/entypo*</exclude>
+                                <exclude>css/fonts/opensans*</exclude>
+                                <exclude>css/fonts/*.ttf</exclude>
+                                <exclude>css/fonts/*.eot</exclude>
+                                <exclude>css/fonts/*.svg</exclude>
+                                <exclude>icon.png</exclude>
+                                <exclude>config.xml</exclude>
+                                <exclude>res/**</exclude> -->
+                                <exclude>index.html</exclude>
+                                <exclude>**/*.xml</exclude>
+                                <exclude>version-info.txt</exclude>
+                            </excludes>
+                        </resource>
+                        <resource>
+                            <directory>${basedir}/src/main/webapp/</directory>
+                            <filtering>true</filtering>
+                            <includes>
+                                <include>index.html</include>
+                                <include>**/web.xml</include>
+                                <include>version-info.txt</include>
+                            </includes>
+                        </resource>
+                    </webResources>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <version>2.1.9</version>
+                <executions>
+                    <execution>
+                        <id>git-commit-id</id>
+                        <goals>
+                            <goal>revision</goal>
+                        </goals>
+                        <phase>validate</phase>
+                        <configuration>
+                            <dateFormat>yyyy-MM-dd HH:mm:ssZ</dateFormat>
+                            <!-- Only changing prefix since properties conflicts with jgit above
+                            <prefix>git-commit-id</prefix>-->
+                            <!-- We're using a pom in this example
+                            <skipPoms>false</skipPoms>-->
+                            <gitDescribe>
+                                <!-- Faster to get just branch if skip = true -->
+                                <skip>false</skip>
+                            </gitDescribe>
+                            <failOnNoGitDirectory>false</failOnNoGitDirectory>
+                            <timestampFormat>{0,date,yyyy-MM-dd HH:mm:ss}</timestampFormat>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>com.samaxes.maven</groupId>
                 <artifactId>minify-maven-plugin</artifactId>
                 <version>1.7.2</version>
+                <configuration>
+                    <jsEngine>CLOSURE</jsEngine>
+                    <closureCompilationLevel>SIMPLE_OPTIMIZATIONS</closureCompilationLevel>
+                    <!--closureExterns>
+                        <closureExtern>extern/external-lib.js</closureExtern>
+                    </closureExterns-->
+                    <skipMinify>${skipMinify}</skipMinify>
+                    <webappSourceDir>${basedir}/src/main/</webappSourceDir>
+                    <cssSourceDir>webapp/css</cssSourceDir>
+                    <cssTargetDir>css</cssTargetDir>
+                </configuration>
                 <executions>
                     <execution>
-                        <id>default-minify</id>
+                        <id>deps</id>
                         <configuration>
-							<cssSourceFiles>
-								<!-- <cssSourceFile>libs/bootstrap-full.css</cssSourceFile> -->
-								<cssSourceFile>libs/bootstrap.css</cssSourceFile>
-								<cssSourceFile>libs/datepicker.css</cssSourceFile>
-								<cssSourceFile>offcanvas.css</cssSourceFile>
-								<!-- <cssSourceFile>libs/leaflet-full.css</cssSourceFile> -->
-								<cssSourceFile>libs/leaflet-full.css</cssSourceFile>
-								<cssSourceFile>libs/leafletMarkerCluster.css</cssSourceFile>
-								<cssSourceFile>libs/l.geosearch.css</cssSourceFile>
-								<cssSourceFile>mainstyles.css</cssSourceFile>
-								<cssSourceFile>list.css</cssSourceFile>
-								<cssSourceFile>map.css</cssSourceFile>
-								<cssSourceFile>time.css</cssSourceFile>
-								<cssSourceFile>chart.css</cssSourceFile>
-								<cssSourceFile>settings.css</cssSourceFile>
-								<cssSourceFile>legend.css</cssSourceFile>
-								<cssSourceFile>selectionList.css</cssSourceFile>
-								<cssSourceFile>animation.css</cssSourceFile>
-								<cssSourceFile>table.css</cssSourceFile>
-								<cssSourceFile>guidedtour.css</cssSourceFile>
-							</cssSourceFiles>
-							<cssFinalFile>jsc.${project.version}.css</cssFinalFile>
-							<jsSourceFiles>
-							    <!-- <jsSourceFile>libs/jquery-2.0.3.js</jsSourceFile> -->
-							    <jsSourceFile>libs/jquery-1.10.2.js</jsSourceFile>
-							    <!-- <jsSourceFile>libs/jquery-1.11.0.js</jsSourceFile> -->
-							    <!-- <jsSourceFile>libs/bootstrap-full.js</jsSourceFile> -->
-							    <jsSourceFile>libs/bootstrap.js</jsSourceFile>
-							    <jsSourceFile>libs/bootstrap-datepicker.js</jsSourceFile>
-							    <jsSourceFile>libs/leaflet-full.js</jsSourceFile>
-							    <!-- <jsSourceFile>libs/leaflet-src.js</jsSourceFile> -->
-							    <jsSourceFile>libs/leaflet.markercluster-src.js</jsSourceFile>
-							    <jsSourceFile>libs/l.control.geosearch.js</jsSourceFile>
-							    <jsSourceFile>libs/l.geosearch.provider.openstreetmap.js</jsSourceFile>
-							    <jsSourceFile>libs/jquery.flot.js</jsSourceFile>
-							    <jsSourceFile>libs/jquery.flot.time.js</jsSourceFile>
-							    <jsSourceFile>libs/jquery.total-storage.js</jsSourceFile>
-							    <jsSourceFile>libs/mustache.js</jsSourceFile>
-							    <jsSourceFile>libs/moment.min.js</jsSourceFile>
-							    <jsSourceFile>libs/sorttable.js</jsSourceFile>
-							    <jsSourceFile>models/timeseries.js</jsSourceFile>
-							    <jsSourceFile>models/referenceValue.js</jsSourceFile>
-							    <jsSourceFile>models/tsStyle.js</jsSourceFile>
-							    <jsSourceFile>models/settings.js</jsSourceFile>
-							    <jsSourceFile>templates/template.js</jsSourceFile>
-							    <jsSourceFile>helper/time.js</jsSourceFile>
-							    <jsSourceFile>helper/color.js</jsSourceFile>
-							    <jsSourceFile>helper/rest.js</jsSourceFile>
-							    <jsSourceFile>helper/pages.js</jsSourceFile>
-							    <jsSourceFile>helper/modal.js</jsSourceFile>
-							    <jsSourceFile>helper/event.js</jsSourceFile>
-							    <jsSourceFile>helper/status.js</jsSourceFile>
-							    <jsSourceFile>helper/button.js</jsSourceFile>
-							    <jsSourceFile>helper/permalink.js</jsSourceFile>
-							    <jsSourceFile>helper/bootstrap-fix.js</jsSourceFile>
-							    <jsSourceFile>helper/tsHelper.js</jsSourceFile>
-							    <jsSourceFile>controller/startController.js</jsSourceFile>
-							    <jsSourceFile>controller/permalinkController.js</jsSourceFile>
-							    <jsSourceFile>controller/settingsController.js</jsSourceFile>
-							    <jsSourceFile>controller/timeseriesController.js</jsSourceFile>
-							    <jsSourceFile>controller/timeController.js</jsSourceFile>
-							    <jsSourceFile>controller/mapController.js</jsSourceFile>
-							    <jsSourceFile>controller/listSelectionController.js</jsSourceFile>
-							    <jsSourceFile>controller/chartController.js</jsSourceFile>
-							    <jsSourceFile>controller/legendController.js</jsSourceFile>
-							    <jsSourceFile>controller/styleChangeController.js</jsSourceFile>
-							    <jsSourceFile>controller/tableController.js</jsSourceFile>
-							    <jsSourceFile>controller/guidedTourController.js</jsSourceFile>
-							</jsSourceFiles>
-							<jsFinalFile>jsc.${project.version}.js</jsFinalFile>
-                            <jsEngine>CLOSURE</jsEngine>
-                            <closureCompilationLevel>SIMPLE_OPTIMIZATIONS</closureCompilationLevel>
-                            <!--closureExterns>
-                                <closureExtern>extern/external-lib.js</closureExtern>
-                            </closureExterns-->
-                            <skipMinify>${skipMinify}</skipMinify>
-                            <webappSourceDir>
-                                ${basedir}/WebContent/
-                            </webappSourceDir>
+                            <cssFinalFile>jsc-${project.version}.deps.css</cssFinalFile>
+                            <jsFinalFile>jsc-${project.version}.deps.js</jsFinalFile>
+                            <cssSourceFiles>
+                                <cssSourceFile>libs/bootstrap.css</cssSourceFile>
+                                <cssSourceFile>libs/bootstrap-datetimepicker.css</cssSourceFile>
+                                <cssSourceFile>libs/leaflet-full.css</cssSourceFile>
+                                <cssSourceFile>libs/leafletMarkerCluster.css</cssSourceFile>
+                                <cssSourceFile>libs/l.geosearch.css</cssSourceFile>
+                                <cssSourceFile>libs/jquery.gritter.css</cssSourceFile>
+                            </cssSourceFiles>
+                            <jsSourceFiles>
+                                <jsSourceFile>libs/jquery-1.10.2.js</jsSourceFile>
+                                <jsSourceFile>libs/jquery.XDomainRequest.js</jsSourceFile>
+                                <jsSourceFile>libs/jquery.flot.js</jsSourceFile>
+                                <jsSourceFile>libs/jquery.flot.time.js</jsSourceFile>
+                                <jsSourceFile>libs/jquery.flot.navigate.js</jsSourceFile>
+                                <jsSourceFile>libs/jquery.gritter.js</jsSourceFile>
+                                <jsSourceFile>libs/jquery.total-storage.js</jsSourceFile>
+                                <jsSourceFile>libs/leaflet-full.js</jsSourceFile>
+                                <jsSourceFile>libs/leaflet.markercluster-src.js</jsSourceFile>
+                                <jsSourceFile>libs/l.control.geosearch.js</jsSourceFile>
+                                <jsSourceFile>libs/l.geosearch.provider.openstreetmap.js</jsSourceFile>
+                                <jsSourceFile>libs/bootstrap.js</jsSourceFile>
+                                <jsSourceFile>libs/bootstrap-datetimepicker.js</jsSourceFile>
+                                <jsSourceFile>libs/bootstrap-datetimepicker.de.js</jsSourceFile>
+                                <jsSourceFile>libs/mustache.js</jsSourceFile>
+                                <jsSourceFile>libs/moment.js</jsSourceFile>
+                                <jsSourceFile>libs/qr.min.js</jsSourceFile>
+                            </jsSourceFiles>
+                        </configuration>
+                        <goals>
+                            <goal>minify</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>jsc</id>
+                        <configuration>
+                            <jsFinalFile>jsc-${project.version}.js</jsFinalFile>
+                            <cssFinalFile>jsc-${project.version}.css</cssFinalFile>
+                            <cssSourceFiles>
+                                <cssSourceFile>offcanvas.css</cssSourceFile>
+                                <cssSourceFile>mainstyles.css</cssSourceFile>
+                                <cssSourceFile>list.css</cssSourceFile>
+                                <cssSourceFile>map.css</cssSourceFile>
+                                <cssSourceFile>time.css</cssSourceFile>
+                                <cssSourceFile>chart.css</cssSourceFile>
+                                <cssSourceFile>settings.css</cssSourceFile>
+                                <cssSourceFile>legend.css</cssSourceFile>
+                                <cssSourceFile>selectionList.css</cssSourceFile>
+                                <cssSourceFile>animation.css</cssSourceFile>
+                                <cssSourceFile>table.css</cssSourceFile>
+                                <cssSourceFile>guidedtour.css</cssSourceFile>
+                                <cssSourceFile>favorite.css</cssSourceFile>
+                                <cssSourceFile>flags.css</cssSourceFile>
+                            </cssSourceFiles>
+                            <jsSourceFiles>
+                                <jsSourceFile>helper/permalink.js</jsSourceFile>
+                                <jsSourceFile>i18n/i18n.js</jsSourceFile>
+                                <jsSourceFile>i18n/en.js</jsSourceFile>
+                                <jsSourceFile>i18n/en_GB.js</jsSourceFile>
+                                <jsSourceFile>i18n/de.js</jsSourceFile>
+                                <jsSourceFile>i18n/bg.js</jsSourceFile>
+                                <jsSourceFile>i18n/cz.js</jsSourceFile>
+                                <jsSourceFile>i18n/dk.js</jsSourceFile>
+                                <jsSourceFile>i18n/gr.js</jsSourceFile>
+                                <jsSourceFile>i18n/es.js</jsSourceFile>
+                                <jsSourceFile>i18n/ee.js</jsSourceFile>
+                                <jsSourceFile>i18n/fi.js</jsSourceFile>
+                                <jsSourceFile>i18n/fr.js</jsSourceFile>
+                                <jsSourceFile>i18n/ga.js</jsSourceFile>
+                                <jsSourceFile>i18n/hr.js</jsSourceFile>
+                                <jsSourceFile>i18n/hu.js</jsSourceFile>
+                                <jsSourceFile>i18n/it.js</jsSourceFile>
+                                <jsSourceFile>i18n/lt.js</jsSourceFile>
+                                <jsSourceFile>i18n/lv.js</jsSourceFile>
+                                <jsSourceFile>i18n/mt.js</jsSourceFile>
+                                <jsSourceFile>i18n/nl.js</jsSourceFile>
+                                <jsSourceFile>i18n/pl.js</jsSourceFile>
+                                <jsSourceFile>i18n/pt.js</jsSourceFile>
+                                <jsSourceFile>i18n/ro.js</jsSourceFile>
+                                <jsSourceFile>i18n/sk.js</jsSourceFile>
+                                <jsSourceFile>i18n/si.js</jsSourceFile>
+                                <jsSourceFile>i18n/se.js</jsSourceFile>
+                                <jsSourceFile>models/timeseries.js</jsSourceFile>
+                                <jsSourceFile>models/referenceValue.js</jsSourceFile>
+                                <jsSourceFile>models/tsStyle.js</jsSourceFile>
+                                <jsSourceFile>models/settings.js</jsSourceFile>
+                                <jsSourceFile>templates/template.js</jsSourceFile>
+                                <jsSourceFile>helper/storage.js</jsSourceFile>
+                                <jsSourceFile>helper/error.js</jsSourceFile>
+                                <jsSourceFile>helper/time.js</jsSourceFile>
+                                <jsSourceFile>helper/color.js</jsSourceFile>
+                                <jsSourceFile>helper/rest.js</jsSourceFile>
+                                <jsSourceFile>helper/pages.js</jsSourceFile>
+                                <jsSourceFile>helper/modal.js</jsSourceFile>
+                                <jsSourceFile>helper/event.js</jsSourceFile>
+                                <jsSourceFile>helper/status.js</jsSourceFile>
+                                <jsSourceFile>helper/button.js</jsSourceFile>
+                                <jsSourceFile>helper/bootstrap-fix.js</jsSourceFile>
+                                <jsSourceFile>helper/tsHelper.js</jsSourceFile>
+                                <jsSourceFile>controller/startController.js</jsSourceFile>
+                                <jsSourceFile>controller/permalinkController.js</jsSourceFile>
+                                <jsSourceFile>controller/settingsController.js</jsSourceFile>
+                                <jsSourceFile>controller/timeseriesController.js</jsSourceFile>
+                                <jsSourceFile>controller/timeController.js</jsSourceFile>
+                                <jsSourceFile>controller/mapController.js</jsSourceFile>
+                                <jsSourceFile>controller/listSelectionController.js</jsSourceFile>
+                                <jsSourceFile>controller/chartController.js</jsSourceFile>
+                                <jsSourceFile>controller/legendController.js</jsSourceFile>
+                                <jsSourceFile>controller/styleChangeController.js</jsSourceFile>
+                                <jsSourceFile>controller/tableController.js</jsSourceFile>
+                                <jsSourceFile>controller/exportController.js</jsSourceFile>
+                                <jsSourceFile>controller/guidedTourController.js</jsSourceFile>
+                                <jsSourceFile>controller/favoriteController.js</jsSourceFile>
+                                <jsSourceFile>controller/notifyController.js</jsSourceFile>
+                            </jsSourceFiles>
                         </configuration>
                         <goals>
                             <goal>minify</goal>
@@ -182,56 +255,151 @@
                     </execution>
                 </executions>
             </plugin>
-			<plugin>
-				<groupId>com.mycila</groupId>
-				<artifactId>license-maven-plugin</artifactId>
-				<version>2.2</version>
-				<configuration>
-					<header>misc/license_header.txt</header>
-					<properties>
-						<inceptionYear>${project.inceptionYear}</inceptionYear>
-         				<latestYearOfContribution>${currentYear}</latestYearOfContribution>
-					</properties>
-					<includes>
-						<include>**/*.js</include>
-						<include>**/*.css</include>
-					</includes>
-					<excludes>
-						<exclude>**/js/libs/**</exclude>
-						<exclude>**/css/libs/**</exclude>
-					</excludes>
-				</configuration>
-				<executions>
-				    <execution>
-				        <id>check-headers</id>
-				        <phase>initialize</phase>
-				        <goals>
-				            <goal>check</goal>
-				        </goals>
-				    </execution>
-				</executions>
-			</plugin>
+            <plugin>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <header>${basedir}/src/main/misc/license_header.txt</header>
+                    <properties>
+                        <inceptionYear>${project.inceptionYear}</inceptionYear>
+                        <latestYearOfContribution>${currentYear}</latestYearOfContribution>
+                    </properties>
+                    <includes>
+                        <include>${basedir}/src/**/*.js</include>
+                        <include>${basedir}/src/**/*.css</include>
+                    </includes>
+                    <excludes>
+                        <exclude>${basedir}/src/**/js/libs/**</exclude>
+                        <exclude>${basedir}/src/**/css/libs/**</exclude>
+                    </excludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>check-headers</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.2.2.v20140723</version>
+                <configuration>
+                    <webAppConfig>
+                    <contextPath>/</contextPath>
+                    <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
+                        <resourcesAsCSV>${basedir}/src/main/js,${basedir}/target/${project.build.finalName}</resourcesAsCSV>
+                    </baseResource>
+                    </webAppConfig>
+                    <reload>manual</reload>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-    
+
     <profiles>
-		<profile>
-		    <id>minify</id>
-		    <properties>
-		        <skipMinify>false</skipMinify>
-    			<minifiedPostfix>min.</minifiedPostfix>
-		    </properties>
-		</profile>        
+        <profile>
+            <id>minify</id>
+            <properties>
+                <skipMinify>false</skipMinify>
+                <minifiedPostfix>min.</minifiedPostfix>
+            </properties>
+        </profile>
+        <profile>
+            <id>shiny</id>
+            <properties>
+                <skipMinify>false</skipMinify>
+                <minifiedPostfix>min.</minifiedPostfix>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.samaxes.maven</groupId>
+                        <artifactId>minify-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>deps</id>
+                                <configuration>
+                                    <cssFinalFile>jsc-${project.version}.deps.css</cssFinalFile>
+                                    <jsFinalFile>jsc-${project.version}.deps.js</jsFinalFile>
+                                    <cssSourceFiles>
+                                        <cssSourceFile>libs/bootstrap.css</cssSourceFile>
+                                        <cssSourceFile>libs/bootstrap-datetimepicker.css</cssSourceFile>
+                                        <cssSourceFile>libs/leaflet-full.css</cssSourceFile>
+                                        <cssSourceFile>libs/leafletMarkerCluster.css</cssSourceFile>
+                                        <cssSourceFile>libs/l.geosearch.css</cssSourceFile>
+                                        <cssSourceFile>libs/jquery.gritter.css</cssSourceFile>
+                                    </cssSourceFiles>
+                                    <jsSourceFiles>
+                                        <jsSourceFile>libs/jquery.XDomainRequest.js</jsSourceFile>
+                                        <jsSourceFile>libs/jquery.flot.js</jsSourceFile>
+                                        <jsSourceFile>libs/jquery.flot.time.js</jsSourceFile>
+                                        <jsSourceFile>libs/jquery.flot.navigate.js</jsSourceFile>
+                                        <jsSourceFile>libs/jquery.gritter.js</jsSourceFile>
+                                        <jsSourceFile>libs/jquery.total-storage.js</jsSourceFile>
+                                        <jsSourceFile>libs/leaflet-full.js</jsSourceFile>
+                                        <jsSourceFile>libs/leaflet.markercluster-src.js</jsSourceFile>
+                                        <jsSourceFile>libs/l.control.geosearch.js</jsSourceFile>
+                                        <jsSourceFile>libs/l.geosearch.provider.openstreetmap.js</jsSourceFile>
+                                        <jsSourceFile>libs/bootstrap.js</jsSourceFile>
+                                        <jsSourceFile>libs/bootstrap-datetimepicker.js</jsSourceFile>
+                                        <jsSourceFile>libs/bootstrap-datetimepicker.de.js</jsSourceFile>
+                                        <jsSourceFile>libs/mustache.js</jsSourceFile>
+                                        <jsSourceFile>libs/moment.js</jsSourceFile>
+                                        <jsSourceFile>libs/qr.min.js</jsSourceFile>
+                                    </jsSourceFiles>
+                                </configuration>
+                                <goals>
+                                    <goal>minify</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>shiny</id>
+                                <phase>package</phase>
+                                <configuration>
+                                    <descriptor>${basedir}/src/assembly/shiny.xml</descriptor>
+                                </configuration>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
-        <maven.compiler.source>1.5</maven.compiler.source>
-        <maven.compiler.target>1.5</maven.compiler.target>
         <maven.build.timestamp.format>yyyy</maven.build.timestamp.format>
-    	<currentYear>${maven.build.timestamp}</currentYear>
-    	<skipMinify>true</skipMinify>
-    	<minifiedPostfix></minifiedPostfix>
+        <currentYear>${maven.build.timestamp}</currentYear>
+        <skipMinify>true</skipMinify>
+        <minifiedPostfix></minifiedPostfix>
     </properties>
+
+    <scm>
+		<connection>scm:git:git://github.com/52North/js-sensorweb-client.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/52North/js-sensorweb-client.git</developerConnection>
+        <url>https://github.com/52North/js-sensorweb-client</url>
+	</scm>
+
+	<repositories>
+		<repository>
+			<id>n52-releases</id>
+			<name>52n Releases</name>
+			<url>http://52north.org/maven/repo/releases/</url>
+		</repository>
+	</repositories>
 </project>

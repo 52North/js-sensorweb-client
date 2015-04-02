@@ -1,0 +1,22 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <div class="modal-title">{{_i}}map.providerList.provider{{/i}}</div>
+        </div>
+        <div class="modal-body">
+            {{#providers}}
+            <div class="providerItem" data-id="{{id}}" data-api="{{apiUrl}}">
+                <div class="item {{#selected}}selected{{/selected}}">
+                    <div>{{name}}</div>
+                    <div class="small">{{type}}, {{version}}</div>
+                    <div class="small">{{url}}</div>
+                    <span class="small">{{_i}}map.providerList.stations{{/i}}: {{stations}}</span>
+                    <span class="small">{{_i}}map.providerList.timeseries{{/i}}: {{timeseries}}</span>
+                    <span class="small">{{_i}}map.providerList.phenomena{{/i}}: {{phenomena}}</span>
+                </div> 
+            </div>
+            {{/providers}}
+        </div>
+    </div>
+</div>
