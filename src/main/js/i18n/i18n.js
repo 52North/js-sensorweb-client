@@ -42,7 +42,7 @@ function createLanguageChooser() {
     var options = $(".language-chooser-box ul");
     createFlagImage = function(code) {
         return $("<img />", {
-            src: "images/blank.gif",
+            src: "../images/blank.gif",
             name: readI18n(code, 'fullName')
         })
                 .addClass("flag flag-" + code)
