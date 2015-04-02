@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 i18n.sk = {
-  fullName: 'Angličtina',
+  fullName: 'Slovenčina',
   ok: 'OK',
   main: {
     legend: 'Legenda',

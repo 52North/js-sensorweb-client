@@ -193,6 +193,28 @@
                                 <jsSourceFile>i18n/en.js</jsSourceFile>
                                 <jsSourceFile>i18n/en_GB.js</jsSourceFile>
                                 <jsSourceFile>i18n/de.js</jsSourceFile>
+                                <jsSourceFile>i18n/bg.js</jsSourceFile>
+                                <jsSourceFile>i18n/cz.js</jsSourceFile>
+                                <jsSourceFile>i18n/dk.js</jsSourceFile>
+                                <jsSourceFile>i18n/gr.js</jsSourceFile>
+                                <jsSourceFile>i18n/es.js</jsSourceFile>
+                                <jsSourceFile>i18n/ee.js</jsSourceFile>
+                                <jsSourceFile>i18n/fi.js</jsSourceFile>
+                                <jsSourceFile>i18n/fr.js</jsSourceFile>
+                                <jsSourceFile>i18n/ga.js</jsSourceFile>
+                                <jsSourceFile>i18n/hr.js</jsSourceFile>
+                                <jsSourceFile>i18n/hu.js</jsSourceFile>
+                                <jsSourceFile>i18n/it.js</jsSourceFile>
+                                <jsSourceFile>i18n/lt.js</jsSourceFile>
+                                <jsSourceFile>i18n/lv.js</jsSourceFile>
+                                <jsSourceFile>i18n/mt.js</jsSourceFile>
+                                <jsSourceFile>i18n/nl.js</jsSourceFile>
+                                <jsSourceFile>i18n/pl.js</jsSourceFile>
+                                <jsSourceFile>i18n/pt.js</jsSourceFile>
+                                <jsSourceFile>i18n/ro.js</jsSourceFile>
+                                <jsSourceFile>i18n/sk.js</jsSourceFile>
+                                <jsSourceFile>i18n/si.js</jsSourceFile>
+                                <jsSourceFile>i18n/se.js</jsSourceFile>
                                 <jsSourceFile>models/timeseries.js</jsSourceFile>
                                 <jsSourceFile>models/referenceValue.js</jsSourceFile>
                                 <jsSourceFile>models/tsStyle.js</jsSourceFile>

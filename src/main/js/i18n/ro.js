@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 i18n.ro = {
-  fullName: 'Engleză',
+  fullName: 'Român',
   ok: 'BINE',
   main: {
     legend: 'Legendă',

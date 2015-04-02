@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 i18n.hu = {
-  fullName: 'Angol',
+  fullName: 'Magyar',
   ok: 'Rendben',
   main: {
     legend: 'Legenda',

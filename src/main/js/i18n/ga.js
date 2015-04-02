@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 i18n.ga = {
-  fullName: 'Béarla',
+  fullName: 'Gaeilge',
   ok: 'OK',
   main: {
     legend: 'Finscéal',

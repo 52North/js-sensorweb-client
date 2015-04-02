@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 i18n.mt = {
-  fullName: 'Ingliż',
+  fullName: 'Malti',
   ok: 'OK',
   main: {
     legend: 'Leġġenda',

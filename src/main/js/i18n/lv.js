@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 i18n.lv = {
-  fullName: 'Angļu',
+  fullName: 'Latvijas',
   ok: 'Labi',
   main: {
     legend: 'Leģenda',

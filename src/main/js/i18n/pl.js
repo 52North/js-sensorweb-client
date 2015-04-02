@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 i18n.pl = {
-  fullName: 'Angielski',
+  fullName: 'Polski',
   ok: 'W porządku',
   main: {
     legend: 'Legenda',

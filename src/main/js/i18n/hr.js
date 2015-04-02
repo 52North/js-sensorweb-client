@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 i18n.hr = {
-  fullName: 'Engleski',
+  fullName: 'Hrvatski',
   ok: 'OK',
   main: {
     legend: 'Legenda',

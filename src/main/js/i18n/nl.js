@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 i18n.nl = {
-  fullName: 'Engels',
+  fullName: 'Nederlands',
   ok: 'OK',
   main: {
     legend: 'Legende',

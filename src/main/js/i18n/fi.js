@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 i18n.fi = {
-  fullName: 'Englanti',
+  fullName: 'Suomi',
   ok: 'Kunnossa',
   main: {
     legend: 'Legenda',

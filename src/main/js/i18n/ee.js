@@ -14,8 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-i18n.et = {
-  fullName: 'Inglise',
+i18n.ee = {
+  fullName: 'eesti',
   ok: 'Korras',
   main: {
     legend: 'Legend',

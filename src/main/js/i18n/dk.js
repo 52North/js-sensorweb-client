@@ -14,8 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-i18n.da = {
-  fullName: 'Engelsk',
+i18n.dk = {
+  fullName: 'Dansk',
   ok: 'OK',
   main: {
     legend: 'Legend',

@@ -14,8 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-i18n.el = {
-  fullName: 'Αγγλικά',
+i18n.gr = {
+  fullName: 'ελληνικά',
   ok: 'OK',
   main: {
     legend: 'Θρύλος',

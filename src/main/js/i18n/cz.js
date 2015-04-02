@@ -14,8 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-i18n.cs = {
-  fullName: 'Angličtina',
+i18n.cz = {
+  fullName: 'čeština',
   ok: 'OK',
   main: {
     legend: 'Legenda',

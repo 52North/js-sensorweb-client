@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 i18n.bg = {
-  fullName: 'Английски',
+  fullName: 'български',
   ok: 'Добре',
   main: {
     legend: 'Легенда',

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 i18n.es = {
-  fullName: 'Inglés',
+  fullName: 'Español',
   ok: 'OKAY',
   main: {
     legend: 'Leyenda',

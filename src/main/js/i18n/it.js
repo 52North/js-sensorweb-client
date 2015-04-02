@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 i18n.it = {
-  fullName: 'Inglese',
+  fullName: 'Italiano',
   ok: 'OK',
   main: {
     legend: 'Leggenda',

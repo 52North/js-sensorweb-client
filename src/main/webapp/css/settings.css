@@ -60,3 +60,9 @@
 .language-chooser-box .dropdown-menu img {
     margin-top: 4px;
 }
+
+.language-chooser-box .scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
