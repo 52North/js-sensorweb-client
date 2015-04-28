@@ -16,7 +16,6 @@
  */
 var TimeController = {
     currentTimespan: {},
-    timeRangeData: Settings.timeRangeData,
     momentFormat: 'YYYY-MM-DD HH:mm',
     internalFormat: 'yyyy-mm-dd hh:ii',
     init: function () {
@@ -36,6 +35,7 @@ var TimeController = {
         EventManager.subscribe("timeseries:update:complete", $.proxy(this.updateTimeExtent, this));
     },
     openTimeSettings: function () {
+        this.timeRangeData = Settings.timeRangeData;
         Modal.show("time-range-settings", this.timeRangeData);
         var from = moment(this.currentTimespan.from);
         var till = moment(this.currentTimespan.till);
