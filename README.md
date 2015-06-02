@@ -14,6 +14,21 @@ mvn clean install -P minify
 ```
 To change the configuration, update the ```settings.js``` located in ```WebContent/js/models/``` to your needs. Do not remove any setting property, but provide empty lists if you remove all predefined values for a property.
 
+### Used Libraries
+
+* [bootstrap 3.1.1](https://github.com/twbs/bootstrap)
+* [jquery 1.10.2](https://jquery.com/)
+* [bootstrap-datetimepicker](http://www.malot.fr/bootstrap-datetimepicker/)
+* [jquery XDomainRequest 1.0.3](https://github.com/MoonScript/jQuery-ajaxTransport-XDomainRequest)
+* [flot chart 0.8.2](http://www.flotcharts.org/)
+* [gritter 1.7.4](https://github.com/jboesch/Gritter)
+* [total-storage 1.1.2](https://github.com/Upstatement/jquery-total-storage)
+* [leaflet 0.7.1](http://leafletjs.com/)
+* [moment 2.9.0](http://momentjs.com/)
+* [mustache](https://mustache.github.com/)
+* [qr 1.1.2](https://github.com/neocotic/qr.js)
+* [respond](https://github.com/scottjehl/Respond)
+
 ### Contacts
 
 Take a look at the documentation: http://52north.github.io/js-sensorweb-client/
