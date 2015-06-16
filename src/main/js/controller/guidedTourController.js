@@ -48,7 +48,7 @@ var GuidedTourController = (function() {
                 Pages.navigateToChart();
             }
         }, {
-            anchor: '[data-target="#map"]',
+            anchor: '.swc-page-current [data-target="#map"]',
             title: _('guide.step2.header'),
             text: _('guide.step2.text'),
             previous: false,
@@ -144,7 +144,7 @@ var GuidedTourController = (function() {
             initStep: function() {
             }
         }, {
-            anchor: '[data-target="#favorites"]',
+            anchor: '.swc-page-current [data-target="#favorites"]',
             title: _('guide.step13.header'),
             text: _('guide.step13.text'),
             previous: false,
