@@ -4,7 +4,7 @@ project = 52North Client Implementation (${artifactId})
 version = ${project.version}
 builddate = ${git.build.time}
 
-Subversion Infos:
+Git Infos:
 =================
 repository = ${git.repository}
 path = ${git.branch}
