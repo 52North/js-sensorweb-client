@@ -80,8 +80,8 @@ var Map = {
                 }).addTo(this.map);
             }
             this.map.fitBounds([
-            [-80, -170],
-            [80, 170]]);
+                [-80, -170],
+                [80, 170]]);
         }
     },
     /*----- stations -----*/
@@ -353,20 +353,44 @@ var Map = {
             }, this));
         }, this));
     },
-    createPhenomenaEntry: function(phenomenon) {
-        this.selectedPhenomenon = null;
-        var html = Template.createHtml("phenomenon-entry", {
-            id: phenomenon.id,
-            label: phenomenon.label
-        });
-        return html;
+    createPhenomenaEntry: function (phenomenon, valid) {
+        if (valid || this.isPhenomenonAllowed(phenomenon)) {
+            this.selectedPhenomenon = null;
+            var html = Template.createHtml("phenomenon-entry", {
+                id: phenomenon.id,
+                label: phenomenon.label
+            });
+            return html;
+        }
     },
-    createDefaultPhenomenaEntry: function() {
+    isPhenomenonAllowed: function(phenomenon) {
+        var serviceId = Status.get('provider').serviceID;
+        if (Settings.phenomenonsInMap && Settings.phenomenonsInMap[serviceId]) {
+            var isAllowed = false;
+            $.each(Settings.phenomenonsInMap[serviceId], function (idx, id){
+                if (phenomenon.id === id) {
+                    isAllowed = true;
+                }
+            });
+            return isAllowed;
+        }
+        if (Settings.phenomenonsNotInMap && Settings.phenomenonsNotInMap[serviceId]) {
+            var isAllowed = true;
+            $.each(Settings.phenomenonsNotInMap[serviceId], function (idx, id){
+                if (phenomenon.id === id) {
+                    isAllowed = false;
+                }
+            });
+            return isAllowed;
+        }
+        return true;
+    },
+    createDefaultPhenomenaEntry: function () {
         $('.phenomena-entry').append(this.createPhenomenaEntry({
             id: "all",
             label: _('main.allPhenomena')
-        }));
-        $('[data-id=all]').click($.proxy(function(event, bla) {
+        }, true));
+        $('[data-id=all]').click($.proxy(function (event, bla) {
             $('.phenomena-entry').find('.selected').removeClass('selected');
             $('[data-id=all]').find('.item').addClass('selected');
             Pages.togglePhenomenon(false);
