@@ -32,7 +32,12 @@ var Map = {
             });
         });
         this.createMap();
-        this.loadStations();
+        this.loadPhenomena();
+        if (Settings.selectedPhenomenon !== null) {
+            this.loadStations4Phenomenon(Settings.selectedPhenomenon);
+        } else {
+            this.loadStations();
+        }
         EventManager.subscribe("resetStatus", $.proxy(this.loadStations, this));
         EventManager.subscribe("clusterStations", $.proxy(this.loadStations, this));
         EventManager.subscribe("timeseries:showInMap", $.proxy(this.showTsInMap, this));
@@ -79,10 +84,20 @@ var Map = {
                     zoomLevel: 13
                 }).addTo(this.map);
             }
-            this.map.fitBounds([
-                [-80, -170],
-                [80, 170]]);
+            var extent;
+            if (Settings.mapExtent !== null) {
+                extent = Settings.mapExtent;
+            } else {
+                extent = [[-80, -170], [80, 170]];
+            }
+            this.map.fitBounds(extent);
         }
+    },
+    loadPhenomena: function () {
+        var provider = Status.get('provider');
+        Rest.phenomena(null, provider.apiUrl, {
+            service: provider.serviceID
+        }).done($.proxy(this.fillPhenomenaList, this));
     },
     /*----- stations -----*/
     loadStations: function() {
@@ -94,9 +109,6 @@ var Map = {
             this.createStationMarker(result, Status.get('clusterStations'));
             this.loading(false);
         }, this));
-        Rest.phenomena(null, provider.apiUrl, {
-            service: provider.serviceID
-        }).done($.proxy(this.fillPhenomenaList, this));
     },
     createStationMarker: function(results, clustering) {
         if (!this.map) {
@@ -317,45 +329,52 @@ var Map = {
             var html = this.createPhenomenaEntry(elem);
             $('.phenomena-entry').append(html);
             $('[data-id=' + elem.id + ']').click($.proxy(function(event) {
-                $('.phenomena-entry').find('.selected').removeClass('selected');
-                $('[data-id=' + elem.id + ']').find('.item').addClass('selected').addClass('loadPhen');
-                this.selectedPhenomenon = elem.id;
-                var coloredMarkers = Status.get('concentrationMarker');
-                var provider = Status.get('provider');
-                Rest.abortRequest(this.phenomenonPromise);
-                if (coloredMarkers) {
-                    this.phenomenonPromise = Rest.timeseries(null, provider.apiUrl, {
-                        service: provider.serviceID,
-                        phenomenon: elem.id,
-                        expanded: true,
-                        force_latest_values: true,
-                        status_intervals: true
-                    }).done($.proxy(function(result) {
-                        $.each(result, function(idx, elem) {
-                            Map.timeseriesCache[elem.getInternalId()] = elem;
-                        });
-                        Pages.togglePhenomenon(false, elem.label);
-                        this.createColoredMarkers(result);
-                    }, this)).always($.proxy(function() {
-                        $('[data-id=' + elem.id + ']').find('.item').removeClass('loadPhen');
-                    }));
-                } else {
-                    this.phenomenonPromise = Rest.stations(null, provider.apiUrl, {
-                        service: provider.serviceID,
-                        phenomenon: elem.id
-                    }).done($.proxy(function(result) {
-                        Pages.togglePhenomenon(false, elem.label);
-                        this.createStationMarker(result, Status.get('clusterStations'));
-                    }, this)).always($.proxy(function() {
-                        $('[data-id=' + elem.id + ']').find('.item').removeClass('loadPhen');
-                    }));
-                }
+                this.loadStations4Phenomenon(elem.id);
             }, this));
+            if (this.selectedPhenomenon === elem.id) {
+                this.loadStations4Phenomenon(elem.id);
+            }
         }, this));
+        this.selectedPhenomenon = null;
+    },
+    loadStations4Phenomenon: function (phenomenonId) {
+        $('.phenomena-entry').find('.selected').removeClass('selected');
+        var item = $('[data-id=' + phenomenonId + ']').find('.item');
+        item.addClass('selected').addClass('loadPhen');
+        this.selectedPhenomenon = phenomenonId;
+        var coloredMarkers = Status.get('concentrationMarker');
+        var provider = Status.get('provider');
+        Rest.abortRequest(this.phenomenonPromise);
+        if (coloredMarkers) {
+            this.phenomenonPromise = Rest.timeseries(null, provider.apiUrl, {
+                service: provider.serviceID,
+                phenomenon: phenomenonId,
+                expanded: true,
+                force_latest_values: true,
+                status_intervals: true
+            }).done($.proxy(function (result) {
+                $.each(result, function (idx, elem) {
+                    Map.timeseriesCache[elem.getInternalId()] = elem;
+                });
+                Pages.togglePhenomenon(false, item.text().trim());
+                this.createColoredMarkers(result);
+            }, this)).always($.proxy(function () {
+                $('[data-id=' + phenomenonId + ']').find('.item').removeClass('loadPhen');
+            }));
+        } else {
+            this.phenomenonPromise = Rest.stations(null, provider.apiUrl, {
+                service: provider.serviceID,
+                phenomenon: phenomenonId
+            }).done($.proxy(function (result) {
+                Pages.togglePhenomenon(false, item.text().trim());
+                this.createStationMarker(result, Status.get('clusterStations'));
+            }, this)).always($.proxy(function () {
+                $('[data-id=' + phenomenonId + ']').find('.item').removeClass('loadPhen');
+            }));
+        }
     },
     createPhenomenaEntry: function (phenomenon, valid) {
         if (valid || this.isPhenomenonAllowed(phenomenon)) {
-            this.selectedPhenomenon = null;
             var html = Template.createHtml("phenomenon-entry", {
                 id: phenomenon.id,
                 label: phenomenon.label
