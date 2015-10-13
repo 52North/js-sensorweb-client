@@ -6,3 +6,6 @@ bin/
 target/
 nbactions.xml
 gh-pages
+/src/main/webapp/WEB-INF/
+/src/main/webapp/META-INF/
+/nb-configuration.xml

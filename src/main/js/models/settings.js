@@ -55,6 +55,10 @@ var Settings = {
     concentrationMarker: false,
     // map options of leaflet
     mapOptions: {},
+    // default map extent
+    mapExtent: [[47.2, 5.8],[55.1, 15.1]],
+    // selected phenomenon id in map,
+    selectedPhenomenon: null,
     // zoom level in the map, used for user location and station position
     zoom: 13,
     // how long a station popup to visualize the location should be visible on the map (in msec)
