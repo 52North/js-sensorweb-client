@@ -335,7 +335,6 @@ var Map = {
                 this.loadStations4Phenomenon(elem.id);
             }
         }, this));
-        this.selectedPhenomenon = null;
     },
     loadStations4Phenomenon: function (phenomenonId) {
         $('.phenomena-entry').find('.selected').removeClass('selected');
@@ -410,11 +409,12 @@ var Map = {
             label: _('main.allPhenomena')
         }, true));
         $('[data-id=all]').click($.proxy(function (event, bla) {
+            this.selectedPhenomenon = null;
             $('.phenomena-entry').find('.selected').removeClass('selected');
             $('[data-id=all]').find('.item').addClass('selected');
             Pages.togglePhenomenon(false);
             Map.loadStations();
-        }));
+        }, this));
         $('[data-id=all]').append("<hr />");
         $('[data-id=all]').find('.item').addClass('selected');
     },
