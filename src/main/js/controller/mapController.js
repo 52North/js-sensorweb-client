@@ -244,7 +244,7 @@ var Map = {
             var phenomena = {};
             $.each(results.properties.timeseries, function(id, elem) {
                 var phenomID = elem.phenomenon.id;
-                if (Map.selectedPhenomenon === null || Map.selectedPhenomenon === phenomID) {
+                if (Map.selectedPhenomenon === undefined || Map.selectedPhenomenon === null || Map.selectedPhenomenon === phenomID) {
                     if (!phenomena.hasOwnProperty(phenomID)) {
                         phenomena[phenomID] = {};
                         phenomena[phenomID].timeseries = [];
