@@ -15,10 +15,10 @@
  * limitations under the License.
  */
 var TableController = {
-    isVisible: false,
-    pageStart: 0,
-    pageSize: Settings.pagesize || 10,
     init: function () {
+        this.isVisible = false,
+        this.pageStart = 0,
+        this.pageSize = Settings.pagesize || 10,
         this.tableButton = $('[data-action="dataTable"]');
         this.legendButton = $('[data-toggle="legend"]');
         this.tableView = $('#tableView');
