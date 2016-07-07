@@ -1,3 +1,5 @@
+DEPRECATED -- Parts of this project was transfered to [Helgoland](https://github.com/52North/helgoland)
+
 ## 52°North JavaScript Sensor Web Client
 
 This client consumes instances of the [timeseries-api](https://github.com/52north/timeseries-api). By requesting the REST interface it gets stations and regarding timeseries.
